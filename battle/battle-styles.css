@@ -1,0 +1,22 @@
+#game-div{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-gap: 20px;
+
+    width: 500px;
+}
+
+#player-div, #enemy-div{
+    padding: 20px;
+    border: 2px solid red;
+}
+
+.game-text {
+    display:inline;
+}
+
+#battle-text-div{
+    border: 2px solid red;
+    width: 500px;
+    padding: 20px;
+}
