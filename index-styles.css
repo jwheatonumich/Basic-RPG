@@ -3,9 +3,11 @@
 }
 
 #page-div{
+    max-width:500px;
+
     display:grid;
 
-    grid-template-columns: 250px 250px;
+    grid-template-columns: 50% 50%;
     grid-template-areas:
       "nav nav"
       "character links";

@@ -1,5 +1,22 @@
 #page-div {
     max-width:500px;
+    border: solid black;
+}
+
+#game-div{
+    display:grid;
+    grid-template-columns: 75px auto;
+    grid-template-areas:
+      "blank dryad"
+      "character dryad";
+}
+
+#player-div{
+    grid-area: character;
+}
+
+#dryad-div{
+    grid-area: dryad;
 }
 
 .game-text {

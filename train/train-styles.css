@@ -1,19 +1,32 @@
 #page-div {
     max-width:500px;
+    border: solid black;
+}
+
+#game-div{
+    display:grid;
+    grid-template-columns: 75px auto;
+    grid-template-areas:
+      "blank trainer"
+      "character trainer";
+}
+
+#player-div{
+    grid-area: character;
+}
+
+#trainer-div{
+    grid-area: trainer;
 }
 
 .game-text {
     display:inline;
 }
 
-#character-div{
-    grid-area:character;
-    border: solid black;
-
-    text-align:center;
+#character-image{
+    max-width:75px;
 }
 
-#player-name{
-    font-size:32;
-    font-weight:bold;
+#trainer-image{
+    max-width:425px;
 }

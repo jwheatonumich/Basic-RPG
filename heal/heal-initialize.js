@@ -21,12 +21,9 @@ function playerSetup() {
 
 //Function that sets text on the website equal to various stat variables
 function setStats() {
-    
+    document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("character-stats").innerHTML = 
-        'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
-        'Attack: ' + playerAttack + '<br />' +
-        'Defense: ' + playerDefense + '<br />' +
-        'Experience:' + playerExperience
+        'Health: ' + playerHealth + '/' +  playerMaxHealth
 }
 
 //Populate player stats on page load
