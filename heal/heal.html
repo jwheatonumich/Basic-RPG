@@ -4,7 +4,32 @@
 
         <!--Game setup-->
         <script src="heal-initialize.js" defer></script>
+    
+    <head>
+        <!--Load CSS-->
+        <link rel="stylesheet" href= "navbar.css">
+        <link rel="stylesheet" href= "heal-styles.css">
+    </head>
+    
     <body>
-        <button onClick="healMax()">Heal</button>
+        <div id="page-div">
+
+            <div class="navbar">
+            <a href="../index.html">Home</a>
+            <a href="../battle/battle-select.html">Battle</a>
+            <a href="../heal/heal.html">Heal</a>
+            <a href="../train/train.html">Train</a>
+            </div>
+
+            <img id="dryad-image" alt = "Dryad" src="./dryad.png">
+
+            <div id="player-div">
+                <div id="player-name">Player</div>
+                <img id="character-image" alt = "Character" src="./little-goblin.png">
+                <p id="character-stats">Stats</p>
+            </div>
+
+            <button onClick="healMax()">Heal</button>
+        </div>
     </body>
 </html>

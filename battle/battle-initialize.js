@@ -10,9 +10,10 @@ if (localStorage.getItem("storedPlayerStats") === null) {
 }
 
 var stats = [
-    {"name":"Enemy1", "enemyID":"0001", "health":50, "maxhealth":50, "attack":10, "defense":5, "experience":1 },
-    {"name":"Enemy2", "enemyID":"0002", "health":100, "maxhealth":100, "attack":15, "defense":7, "experience":2 } ,
-    {"name":"Enemy3", "enemyID":"0003", "health":200, "maxhealth":200, "attack":20, "defense":10, "experience":4 } ,
+    {"name":"Wimpy Wombat", "enemyID":"0001", "health":50, "maxhealth":50, "attack":10, "defense":5, "experience":1 },
+    {"name":"Ordinary Otter", "enemyID":"0002", "health":100, "maxhealth":100, "attack":15, "defense":7, "experience":2 } ,
+    {"name":"Significant Squirrel", "enemyID":"0003", "health":200, "maxhealth":200, "attack":20, "defense":10, "experience":4 } ,
+    {"name":"Precarious Porcupine", "enemyID":"0003", "health":50, "maxhealth":50, "attack":100, "defense":10, "experience":5 } 
 ]
 
 //Set the various fields on the webpage as it loads

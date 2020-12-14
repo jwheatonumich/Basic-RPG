@@ -6,52 +6,66 @@
     <!--Game setup-->
     <script src="battle-initialize.js" defer></script>
 
+    <!--Populate ability dropdown-->
+    <script src="ability-select.js" defer></script>
+
     <head>
         <!--Load CSS-->
         <link rel="stylesheet" href= "battle-styles.css">
+        <link rel="stylesheet" href= "navbar.css">
     </head>
 
     <body>
-        <div id="game-div">
-            <div id="player-div">
-                <div id="player-name">Player</div>
-                <div>
-                    <div class="game-text">Health:</div>
-                    <div class="game-text" id="player-health">XYZ</div>
-                </div>
-                <div>
-                    <div class="game-text">Attack:</div>
-                    <div class="game-text" id="player-attack">XYZ</div>
-                </div>
-                <div>
-                    <div class="game-text">Defense:</div>
-                    <div class="game-text" id="player-defense">XYZ</div></div>
-                <div>
-                    <div class="game-text">Experience:</div>
-                    <div class="game-text" id="player-experience">XYZ</div></div>
+        <div id="page-div">
+            <div class="navbar">
+                <a href="../index.html">Home</a>
+                <a href="../battle/battle-select.html">Battle</a>
+                <a href="../heal/heal.html">Heal</a>
+                <a href="../train/train.html">Train</a>
             </div>
-            <div id="enemy-div">
-                <div id="enemy-name">Enemy</div>
-                <div>
-                    <div class="game-text">Health:</div>
-                    <div class="game-text" id="enemy-health">XYZ</div>
+            
+            <div id="game-div">
+                <div id="player-div">
+                    <div id="player-name">Player</div>
+                    <div>
+                        <div class="game-text">Health:</div>
+                        <div class="game-text" id="player-health">XYZ</div>
+                    </div>
+                    <div>
+                        <div class="game-text">Attack:</div>
+                        <div class="game-text" id="player-attack">XYZ</div>
+                    </div>
+                    <div>
+                        <div class="game-text">Defense:</div>
+                        <div class="game-text" id="player-defense">XYZ</div></div>
+                    <div>
+                        <div class="game-text">Experience:</div>
+                        <div class="game-text" id="player-experience">XYZ</div></div>
                 </div>
-                <div>
-                    <div class="game-text">Attack:</div>
-                    <div class="game-text" id="enemy-attack">XYZ</div>
-                </div>
-                <div>
-                    <div class="game-text">Defense:</div>
-                    <div class="game-text" id="enemy-defense">XYZ</div>
-                <div>
-                    <div class="game-text">Experience:</div>
-                    <div class="game-text" id="enemy-experience">XYZ</div></div>
+                <div id="enemy-div">
+                    <div id="enemy-name">Enemy</div>
+                    <div>
+                        <div class="game-text">Health:</div>
+                        <div class="game-text" id="enemy-health">XYZ</div>
+                    </div>
+                    <div>
+                        <div class="game-text">Attack:</div>
+                        <div class="game-text" id="enemy-attack">XYZ</div>
+                    </div>
+                    <div>
+                        <div class="game-text">Defense:</div>
+                        <div class="game-text" id="enemy-defense">XYZ</div>
+                    <div>
+                        <div class="game-text">Experience:</div>
+                        <div class="game-text" id="enemy-experience">XYZ</div></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="control-div">
-            <div id="battle-text-div">Click the "Attack" button to begin.<br><br></div>
-            <button id="attack-button" onclick="attack()">Attack</button>
+            <div id="control-div">
+                <div id="battle-text-div">Click the "Attack" button to begin.<br><br></div>
+                <button id="attack-button" onclick="attack()">Attack</button><br>
+                <select id="ability" name="ability"></select>
+            </div>
         </div>
     </body>
 </html>

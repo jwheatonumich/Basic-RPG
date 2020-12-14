@@ -1,5 +1,5 @@
 //Array of enemy names
-var enemies = ["Enemy1","Enemy2","Enemy3"];
+var enemies = ["Wimpy Wombat","Ordinary Otter","Significant Squirrel","Precarious Porcupine"];
 
 //Store the dropdown element
 selectMenu = document.getElementById("enemies")

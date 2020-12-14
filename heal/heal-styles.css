@@ -1,0 +1,11 @@
+#page-div {
+    max-width:500px;
+}
+
+.game-text {
+    display:inline;
+}
+
+#character-image{
+    max-width:75px;
+}

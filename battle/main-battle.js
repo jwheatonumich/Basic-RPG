@@ -15,7 +15,9 @@ var playerAttack = 0;
 var playerDefense = 0;
 var playerExperience = 0;
 
-var battleText = ``
+var battleText = ``;
+var attackMultiplier = 1;
+var defenseMultiplier = 1;
 
 //Enemy Setup
 function enemySetup() {
@@ -58,6 +60,7 @@ function battleStatus(){
     if (playerHealth <= 0){
         battleText = `Game Over<br><br>`;
         level = 1;
+        battleCleanup();
     }
 
     if (enemyHealth <= 0){
@@ -71,6 +74,7 @@ function battleStatus(){
 //At the end of the battle, save variables back to JSON and save JSON to local storage
 function battleCleanup(){
     //Save health and xp after battle ends
+    if (playerHealth < 0) {playerHealth = 0};
     playerStats.health = playerHealth ;
     playerStats.experience = playerExperience; 
 
@@ -80,23 +84,42 @@ function battleCleanup(){
 
 //Script that is run when clicking the attack button
 function attack() {
+    //Check if player or enemy is dead before running the battle function
+    if(playerHealth>0 && enemyHealth>0){
+        
+        //Determine which ability was chosen
+        var abilitySelect = document.getElementById("ability");
+        var chosenAbility = abilitySelect.value;
 
-    //Calculate player and enemy attack
-    var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack - playerDefense),0);
-    var enemyDamage = Math.max(Math.floor(Math.random()*2*enemyAttack - enemyDefense),0);
+        //Determine multiplier if using a multiplier ability
+        switch (chosenAbility) {
+            case "None": attackMultiplier = 1; defenseMultiplier = 1; break;
+            case "Charge": attackMultiplier = 1.2; defenseMultiplier = 0.8; break;
+            case "Block": attackMultiplier = 0.8; defenseMultiplier = 1.2; break;
+        }
 
-    //Update health based on damage
-    playerHealth -= enemyDamage;
-    enemyHealth -= playerDamage;
+        console.log(chosenAbility);
+        console.log(attackMultiplier);
+        console.log(defenseMultiplier);
 
-    //Store the text that will display this turn
-    battleText = `You deal ` + playerDamage + ` damage to the enemy.<br>
-    The enemy deals ` + enemyDamage +` damage to you.`;
+        //Calculate player and enemy attack
+        var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense),1);
+        var enemyDamage = Math.max(Math.floor(Math.random()*2*enemyAttack - playerDefense*defenseMultiplier),1);
 
-    battleStatus();
+        //Update health based on damage
+        playerHealth -= enemyDamage;
+        enemyHealth -= playerDamage;
 
-    //Update text on site based on new health
-    setStats();
+        //Store the text that will display this turn
+        battleText = `You deal ` + playerDamage + ` damage to the enemy.<br>
+        The enemy deals ` + enemyDamage +` damage to you.`;
+        
+
+        battleStatus();
+
+        //Update text on site based on new health
+        setStats();
+    }
 
     //Update the battle text for the current turn
     document.getElementById("battle-text-div").innerHTML = battleText;

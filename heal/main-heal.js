@@ -8,4 +8,7 @@ function healMax(){
 
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+    playerSetup();
+    setStats();
 }

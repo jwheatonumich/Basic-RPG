@@ -1,0 +1,31 @@
+.main-link{
+    max-width: 150px;
+}
+
+#page-div{
+    display:grid;
+
+    grid-template-columns: 250px 250px;
+    grid-template-areas:
+      "nav nav"
+      "character links";
+}
+
+#character-div{
+    grid-area:character;
+    border: solid black;
+
+    text-align:center;
+}
+
+#links-div{
+    grid-area:links;
+    border: solid black;
+
+    text-align:center;
+}
+
+#player-name{
+    font-size:32;
+    font-weight:bold;
+}

@@ -1,0 +1,33 @@
+<html>
+        <script src="train-select.js" defer></script>
+
+
+        <head>
+            <!--Load CSS-->
+            <link rel="stylesheet" href= "train-styles.css">
+            <link rel="stylesheet" href= "navbar.css">
+        </head>
+    
+    <body>
+        <div id="page-div">
+            <div class="navbar">
+                <a href="../index.html">Home</a>
+                <a href="../battle/battle-select.html">Battle</a>
+                <a href="../heal/heal.html">Heal</a>
+                <a href="../train/train.html">Train</a>
+            </div>
+
+          <div id = "character-div">
+            <p id="player-name">Name</p>
+            <img id="character-image" alt = "Character" src="./little-goblin.png">
+            <p id="character-stats">Stats</p>
+          </div>
+
+          <div id="control-div">
+            <select id="select-training" name="select-training"></select>
+            <button id="start-training" onclick="startTraining()">Start Training</button>
+          </div>
+        </div>
+
+    </body>
+</html>

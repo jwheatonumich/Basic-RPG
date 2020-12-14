@@ -1,13 +1,7 @@
-//Check if there is stored data for player stats. Otherwise, start from level 1
-if (localStorage.getItem("storedPlayerStats") === null) {
-    //Set player and enemy stats
-    var playerStats = {"name":"Fred", "health":100, "maxhealth":100, "attack":10, "defense":5, "experience":0 }
+//Load player stats in localstorage
+var retrievedObject = localStorage.getItem('storedPlayerStats');
+var playerStats = JSON.parse(retrievedObject)
 
-}else{
-    //If using the stored file, retrieve it and convert the string into a JSON
-    var retrievedObject = localStorage.getItem('storedPlayerStats');
-    var playerStats = JSON.parse(retrievedObject);
-}
 
 //Load each player stat into a variable
 function playerSetup() {
@@ -22,6 +16,7 @@ function playerSetup() {
 //Function that sets text on the website equal to various stat variables
 function setStats() {
     
+    document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("character-stats").innerHTML = 
         'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
         'Attack: ' + playerAttack + '<br />' +
@@ -29,6 +24,5 @@ function setStats() {
         'Experience:' + playerExperience
 }
 
-//Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
