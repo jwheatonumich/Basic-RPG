@@ -1,5 +1,5 @@
 #page-div {
-    max-width:500px;
+    max-width:90vw;
     border: solid black;
 }
 
@@ -17,7 +17,11 @@
 
 #dryad-div{
     grid-area: dryad;
-    max-height:70vh;
+    
+}
+
+#dryad-image{
+    height:50vh;
 }
 
 .game-text {

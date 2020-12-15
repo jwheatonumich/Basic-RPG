@@ -3,14 +3,15 @@
 }
 
 #page-div{
-    max-width:500px;
+    max-width:90vw;
 
     display:grid;
 
     grid-template-columns: 50% 50%;
     grid-template-areas:
-      "nav nav"
-      "character links";
+      "nav"
+      "character"
+      "links";
 }
 
 #character-div{

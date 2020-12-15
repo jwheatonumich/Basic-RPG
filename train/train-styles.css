@@ -1,4 +1,5 @@
 #page-div {
+    max-width:90vw;
     border: solid black;
 }
 
@@ -23,13 +24,13 @@
 }
 
 #character-image{
-    max-height:15vh;
+    height:15vh;
 }
 
 #trainer-image{
-    max-height:70vh;
+    height:50vh;
 }
 
 #select-training, #start-training{
-    height: 5vh;
+    height:5vh;
 }
