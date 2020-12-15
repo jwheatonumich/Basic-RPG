@@ -25,7 +25,7 @@
 
 #control-div{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:30vw 30vw;
     grid-gap:0;
     padding:0;
 }
