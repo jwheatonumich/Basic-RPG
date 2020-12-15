@@ -17,6 +17,7 @@
 
 #dryad-div{
     grid-area: dryad;
+    max-height:70vh;
 }
 
 .game-text {
@@ -24,5 +25,9 @@
 }
 
 #character-image{
-    max-width:75px;
+    max-height:15vh;
+}
+
+#heal-button{
+    height: 5vh;
 }

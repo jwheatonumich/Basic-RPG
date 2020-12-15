@@ -24,3 +24,7 @@
     width: 500px;
     padding: 20px;
 }
+
+#enemies, #startBattle{
+    height: 5vh;
+}
