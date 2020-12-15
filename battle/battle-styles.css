@@ -33,3 +33,7 @@
     height: 5vh;
     font-size:32px;
 }
+
+#enemy-image{
+    max-height:400px;
+}

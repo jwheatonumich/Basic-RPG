@@ -5,7 +5,7 @@ var enemies = ["Wimpy Wombat","Ordinary Otter","Significant Squirrel","Precariou
 var pictureList = [
     "./wimpy-wombat.png",
     "./ordinary-otter.png",
-    "./wimpy-wombat.png",
+    "./significant-squirrel.png",
     "./wimpy-wombat.png" ];
 
 //Store the dropdown element
