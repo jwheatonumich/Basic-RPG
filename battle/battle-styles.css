@@ -23,6 +23,11 @@
     display:inline;
 }
 
+#control-div{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
 #battle-text-div{
     border: 2px solid red;
     width: 500px;
