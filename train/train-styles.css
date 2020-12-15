@@ -5,7 +5,7 @@
 
 #game-div{
     display:grid;
-    grid-template-columns: 75px auto;
+    grid-template-columns: auto auto;
     grid-template-areas:
       "blank trainer"
       "character trainer";
@@ -33,5 +33,5 @@
 }
 
 #select-training, #start-training{
-    max-height:5vh;
+    height:5vh;
 }
