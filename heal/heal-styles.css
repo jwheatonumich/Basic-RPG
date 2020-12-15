@@ -21,7 +21,8 @@
 }
 
 #dryad-image{
-    height:50vh;
+    max-height:50vh;
+    max-width: 60vw;
 }
 
 .game-text {
