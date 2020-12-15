@@ -30,3 +30,7 @@
 #trainer-image{
     max-height:70vh;
 }
+
+#select-training, #start-training{
+    height: 5vh;
+}
