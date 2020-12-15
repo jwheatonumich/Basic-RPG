@@ -26,6 +26,8 @@
 #control-div{
     display:grid;
     grid-template-columns:1fr 1fr;
+    grid-gap:0;
+    padding:0;
 }
 
 #battle-text-div{

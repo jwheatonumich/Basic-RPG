@@ -6,7 +6,7 @@ var pictureList = [
     "./wimpy-wombat.png",
     "./ordinary-otter.png",
     "./significant-squirrel.png",
-    "./wimpy-wombat.png" ];
+    "./precarious-porcupine.png" ];
 
 //Store the dropdown element
 selectMenu = document.getElementById("enemies")
