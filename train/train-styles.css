@@ -1,5 +1,5 @@
 #page-div {
-    max-width:500px;
+    max-width:100%;
     border: solid black;
 }
 
@@ -24,9 +24,9 @@
 }
 
 #character-image{
-    max-width:75px;
+    max-height:15vh;
 }
 
 #trainer-image{
-    max-width:425px;
+    max-height:70vh;
 }
