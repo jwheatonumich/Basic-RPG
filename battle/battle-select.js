@@ -1,8 +1,16 @@
 //Array of enemy names
 var enemies = ["Wimpy Wombat","Ordinary Otter","Significant Squirrel","Precarious Porcupine"];
 
+//Array of enemy images
+var pictureList = [
+    "./wimpy-wombat.png",
+    "./ordinary-otter.png",
+    "./wimpy-wombat.png",
+    "./wimpy-wombat.png" ];
+
 //Store the dropdown element
 selectMenu = document.getElementById("enemies")
+enemyImage = document.getElementById("enemy-image")
 
 //Create drop-down from enemy name array
 function popDropdown() {
@@ -19,6 +27,12 @@ function popDropdown() {
         }
 }
 
+//Populate the enemy image based on the dropdown selection
+function selectImage(){
+    enemyImage.src = pictureList[selectMenu.value]; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+};
+
+//Start the battle
 function startBattle(){
     var enemySelect = document.getElementById("enemies");
     var chosenEnemy = enemySelect.value;
