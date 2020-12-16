@@ -16,7 +16,7 @@ function playerSetup() {
     playerMaxHealth = playerStats.maxhealth;
     playerAttack = playerStats.attack;
     playerDefense = playerStats.defense;
-    playerExperience = playerStats.experience; 
+    leafCoin = playerStats.leafcoin;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -24,6 +24,7 @@ function setStats() {
     document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("character-stats").innerHTML = 
         'Health: ' + playerHealth + '/' +  playerMaxHealth
+    document.getElementById("leaf-coin").innerHTML = leafCoin;
 }
 
 //Populate player stats on page load

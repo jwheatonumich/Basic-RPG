@@ -2,6 +2,10 @@
     font-size:32px;
 }
 
+.item{
+    max-width: 150px;
+}
+
 #page-div {
     max-width:90vw;
     border: solid black;
