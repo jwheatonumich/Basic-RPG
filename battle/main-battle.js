@@ -1,5 +1,6 @@
 //Global Variables
 var level = localStorage.getItem('chosenEnemy') //Get the enemy choice based on local storage
+var enemyImageSelect = localStorage.getItem('enemyImageSelect')
 
 var enemyName = "";
 var enemyHealth = 0;
@@ -44,15 +45,11 @@ function setStats() {
     
     document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("player-health").innerHTML = playerHealth + '/' +  playerMaxHealth;
-    document.getElementById("player-attack").innerHTML = playerAttack;
-    document.getElementById("player-defense").innerHTML = playerDefense;
-    document.getElementById("player-experience").innerHTML = playerExperience;
 
     document.getElementById("enemy-name").innerHTML = enemyName;
     document.getElementById("enemy-health").innerHTML = enemyHealth + '/' + enemyMaxHealth;
-    document.getElementById("enemy-attack").innerHTML = enemyAttack;
-    document.getElementById("enemy-defense").innerHTML = enemyDefense;
-    document.getElementById("enemy-experience").innerHTML = enemyExperience;
+
+    document.getElementById("enemy-image").src = enemyImageSelect; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
 }
 
 //Function to check if the battle is over

@@ -11,6 +11,7 @@ var pictureList = [
 //Store the dropdown element
 selectMenu = document.getElementById("enemies")
 enemyImage = document.getElementById("enemy-image")
+enemyImageSelect = ""
 
 //Create drop-down from enemy name array
 function popDropdown() {
@@ -29,7 +30,9 @@ function popDropdown() {
 
 //Populate the enemy image based on the dropdown selection
 function selectImage(){
-    enemyImage.src = pictureList[selectMenu.value]; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+    enemyImageSelect = pictureList[selectMenu.value]
+    enemyImage.src = enemyImageSelect; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+    localStorage.setItem('enemyImageSelect', enemyImageSelect);
 };
 
 //Start the battle
