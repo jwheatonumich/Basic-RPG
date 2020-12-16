@@ -45,3 +45,4 @@ function startBattle(){
 
 //Populate dropdown on page load
 window.onload = popDropdown();
+window.onload = selectImage();//Set the image to the default choice on page load

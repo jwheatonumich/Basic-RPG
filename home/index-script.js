@@ -10,7 +10,10 @@ function playerSetup() {
     playerMaxHealth = playerStats.maxhealth;
     playerAttack = playerStats.attack;
     playerDefense = playerStats.defense;
-    playerExperience = playerStats.experience; 
+    acornCoin = playerStats.acorncoin; 
+    mushroomCoin = playerStats.mushroomcoin;
+    bearclawCoin = playerStats.bearclawcoin;
+    leafCoin = playerStats.leafcoin;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -20,8 +23,11 @@ function setStats() {
     document.getElementById("character-stats").innerHTML = 
         'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
         'Attack: ' + playerAttack + '<br />' +
-        'Defense: ' + playerDefense + '<br />' +
-        'Experience:' + playerExperience
+        'Defense: ' + playerDefense + '<br />';
+    document.getElementById("acorn-coin").innerHTML = acornCoin;
+    document.getElementById("mushroom-coin").innerHTML = mushroomCoin;
+    document.getElementById("bearclaw-coin").innerHTML = bearclawCoin;
+    document.getElementById("leaf-coin").innerHTML = leafCoin;
 }
 
 window.onload = playerSetup();

@@ -25,9 +25,9 @@ function popDropdown() {
 function startTraining(){
     var trainingSelect = document.getElementById("select-training");
     var chosenTraining = trainingSelect.value;
-    if (playerStats["experience"] >= 5){
+    if (playerStats["acorncoin"] >= 5){
         playerStats[chosenTraining] +=1;
-        playerStats["experience"] -=5;
+        playerStats["acorncoin"] -=5;
         localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
         playerSetup();
         setStats();
@@ -41,7 +41,9 @@ function playerSetup() {
     playerMaxHealth = playerStats.maxhealth;
     playerAttack = playerStats.attack;
     playerDefense = playerStats.defense;
-    playerExperience = playerStats.experience; 
+    playerAcornCoin = playerStats.acorncoin;
+    playerMushroomCoin = playerStats.mushroomcoin;
+    playerBearclawCoin = playerStats.bearclawcoin;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -51,8 +53,10 @@ function setStats() {
     document.getElementById("character-stats").innerHTML = 
         'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
         'Attack: ' + playerAttack + '<br />' +
-        'Defense: ' + playerDefense + '<br />' +
-        'Experience:' + playerExperience
+        'Defense: ' + playerDefense
+    document.getElementById("acorn-coin").innerHTML = playerAcornCoin;
+    document.getElementById("mushroom-coin").innerHTML = playerMushroomCoin;
+    document.getElementById("bearclaw-coin").innerHTML = playerBearclawCoin;
 }
 
 //Populate dropdown on page load

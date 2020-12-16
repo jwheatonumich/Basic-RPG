@@ -7,14 +7,18 @@ var enemyHealth = 0;
 var enemyMaxHealth = 0;
 var enemyAttack = 0;
 var enemyDefense = 0;
-var enemyExperience = 0;
+var enemyAcornCoin = 0;
+var enemyMushroomCoin = 0
+var enemyBearclawCoin = 0
 
 var playerName = "";
 var playerHealth = 0;
 var playerMaxHealth = 0;
 var playerAttack = 0;
 var playerDefense = 0;
-var playerExperience = 0;
+var playerAcornCoin = 0
+var playerMushroomCoin = 0;
+var playerBearclawCoin = 0;
 
 var battleText = ``;
 var attackMultiplier = 1;
@@ -27,7 +31,9 @@ function enemySetup() {
     enemyMaxHealth = stats[level].maxhealth;
     enemyAttack = stats[level].attack;
     enemyDefense = stats[level].defense;
-    enemyExperience = stats[level].experience;
+    enemyAcornCoin = stats[level].acorncoin;
+    enemyMushroomCoin = stats[level].mushroomcoin;
+    enemyBearclawCoin = stats[level].bearclawcoin;
 }
 
 //Player Setup
@@ -37,7 +43,9 @@ function playerSetup() {
     playerMaxHealth = playerStats.maxhealth;
     playerAttack = playerStats.attack;
     playerDefense = playerStats.defense;
-    playerExperience = playerStats.experience; 
+    playerAcornCoin = playerStats.acorncoin;
+    playerMushroomCoin = playerStats.mushroomcoin;
+    playerBearclawCoin = playerStats.bearclawcoin;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -63,7 +71,9 @@ function battleStatus(){
     if (enemyHealth <= 0){
         battleText = `Enemy Defeated<br><br>`;
         level += 1;
-        playerExperience += enemyExperience;
+        playerAcornCoin += enemyAcornCoin;
+        playerMushroomCoin += enemyMushroomCoin;
+        playerBearclawCoin += enemyBearclawCoin;
         battleCleanup();
     }
 }
@@ -73,7 +83,9 @@ function battleCleanup(){
     //Save health and xp after battle ends
     if (playerHealth < 0) {playerHealth = 0};
     playerStats.health = playerHealth ;
-    playerStats.experience = playerExperience; 
+    playerStats.acorncoin = playerAcornCoin; 
+    playerStats.mushroomcoin = playerMushroomCoin; 
+    playerStats.bearclawcoin = playerBearclawCoin; 
 
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
