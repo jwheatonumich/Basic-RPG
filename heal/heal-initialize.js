@@ -16,6 +16,9 @@ function playerSetup() {
     playerMaxHealth = playerStats.maxhealth;
     playerAttack = playerStats.attack;
     playerDefense = playerStats.defense;
+    acornCoin = playerStats.acorncoin; 
+    mushroomCoin = playerStats.mushroomcoin;
+    bearclawCoin = playerStats.bearclawcoin;
     leafCoin = playerStats.leafcoin;
 }
 
@@ -24,6 +27,9 @@ function setStats() {
     document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("character-stats").innerHTML = 
         'Health: ' + playerHealth + '/' +  playerMaxHealth
+    document.getElementById("acorn-coin").innerHTML = acornCoin;
+    document.getElementById("mushroom-coin").innerHTML = mushroomCoin;
+    document.getElementById("bearclaw-coin").innerHTML = bearclawCoin;
     document.getElementById("leaf-coin").innerHTML = leafCoin;
 }
 

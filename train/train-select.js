@@ -44,6 +44,7 @@ function playerSetup() {
     playerAcornCoin = playerStats.acorncoin;
     playerMushroomCoin = playerStats.mushroomcoin;
     playerBearclawCoin = playerStats.bearclawcoin;
+    leafCoin = playerStats.leafcoin;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -57,6 +58,7 @@ function setStats() {
     document.getElementById("acorn-coin").innerHTML = playerAcornCoin;
     document.getElementById("mushroom-coin").innerHTML = playerMushroomCoin;
     document.getElementById("bearclaw-coin").innerHTML = playerBearclawCoin;
+    document.getElementById("leaf-coin").innerHTML = leafCoin;
 }
 
 //Populate dropdown on page load

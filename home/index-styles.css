@@ -6,6 +6,24 @@
     max-width: 150px;
 }
 
+.currency{
+    font-size:12px;
+    max-width: 70px;
+}
+
+#currency-table{
+    table-layout:fixed;
+
+    width: auto;
+    margin-right: 20px;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+.currency-number{
+    color:white;
+}
+
 #page-div{
     max-width:90vw;
 

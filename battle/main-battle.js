@@ -69,6 +69,7 @@ function playerSetup() {
     playerAcornCoin = playerStats.acorncoin;
     playerMushroomCoin = playerStats.mushroomcoin;
     playerBearclawCoin = playerStats.bearclawcoin;
+    playerLeafCoin = playerStats.leafcoin;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -81,6 +82,12 @@ function setStats() {
     document.getElementById("enemy-health").innerHTML = enemyHealth + '/' + enemyMaxHealth;
 
     document.getElementById("enemy-image").src = enemyImageSelect; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+
+    //Set the coin balances equal to the loaded variables
+    document.getElementById("acorn-coin").innerHTML = playerAcornCoin;
+    document.getElementById("mushroom-coin").innerHTML = playerMushroomCoin;
+    document.getElementById("bearclaw-coin").innerHTML = playerBearclawCoin;
+    document.getElementById("leaf-coin").innerHTML = playerLeafCoin;
 }
 
 //Function to check if the battle is over
