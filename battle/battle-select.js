@@ -1,11 +1,11 @@
 //Array of enemy names
-var enemies = ["Wimpy Wombat","Ordinary Otter","Significant Squirrel","Precarious Porcupine","Riku the Bear"];
+var enemies = ["Wimpy Wombat","Ordinary Otter","Samleton the Squirrel","Precarious Porcupine","Riku the Bear"];
 
 //Array of enemy images
 var pictureList = [
     "../images/wimpy-wombat.png",
     "../images/ordinary-otter.png",
-    "../images/significant-squirrel.png",
+    "../images/squirrel-avatar.png",
     "../images/precarious-porcupine.png",
     "../images/bear-avatar.png" ];
 

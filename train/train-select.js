@@ -2,6 +2,7 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
+/*
 //Array of stats
 var trainingOptions = ["Health","Attack","Defense"];
 var trainingOutputs = ["maxhealth","attack","defense"]
@@ -33,6 +34,37 @@ function startTraining(){
         setStats();
     }
 }
+*/
+
+function acornTraining(stat){
+    if (playerStats["acorncoin"] >= 3){
+        playerStats[stat] +=1;
+        playerStats["acorncoin"] -=3;
+        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+        playerSetup();
+        setStats();
+    } 
+}
+
+function mushroomTraining(stat){
+    if (playerStats["mushroomcoin"] >= 2){
+        playerStats[stat] +=1;
+        playerStats["mushroomcoin"] -=2;
+        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+        playerSetup();
+        setStats();
+    } 
+}
+
+function bearclawTraining(stat){
+    if (playerStats["bearclawcoin"] >= 1){
+        playerStats[stat] +=1;
+        playerStats["bearclawcoin"] -=1;
+        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+        playerSetup();
+        setStats();
+    } 
+}
 
 //Load each player stat into a variable
 function playerSetup() {
@@ -62,7 +94,7 @@ function setStats() {
 }
 
 //Populate dropdown on page load
-window.onload = popDropdown();
+//window.onload = popDropdown();
 
 //Populate player stats on page load
 window.onload = playerSetup();

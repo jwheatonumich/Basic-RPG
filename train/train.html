@@ -47,15 +47,49 @@
             <div id = "player-div">
               <p id="player-name">Name</p>
               <img id="character-image" alt = "Character" src="../images/little-goblin.png">
-              
+              <p id="character-stats">Stats</p>
             </div>
 
           </div>
     
+          <!--
           <div id="control-div">
-            <p id="character-stats">Stats</p>
             <select id="select-training" name="select-training"></select>
             <button id="start-training" onclick="startTraining()">Start Training</button>
+          </div>
+          -->
+
+          <div id="training-div">
+            <table id="cost-table">
+              <tr>
+                <th></th>
+                <th>Acorn Training</th>
+                <th>Mushroom Training</th>
+                <th>Bearclaw Training</th>
+              </tr>
+
+              <tr>
+                <th>Health</th>
+                <th><a onClick="acornTraining('maxhealth')" href=?><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"></a></th>
+                <th><a onClick="mushroomTraining('maxhealth')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/mushroom-coin.png"><img class = "cost" alt = "Mushroom Coins" src="../images/mushroom-coin.png"></a></th>
+                <th><a onClick="bearclawTraining('maxhealth')" href=?><img class = "cost" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></a></th>
+              </tr>
+
+              <tr>
+                <th>Attack</th>
+                <th><a onClick="acornTraining('attack')" href=?><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"></a></th>
+                <th><a onClick="mushroomTraining('attack')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/mushroom-coin.png"><img class = "cost" alt = "Mushroom Coins" src="../images/mushroom-coin.png"></a></th>
+                <th><a onClick="bearclawTraining('attack')" href=?><img class = "cost" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></a></th>
+              </tr>
+    
+              <tr>
+                <th>Defense</th>
+                <th><a onClick="acornTraining('defense')" href=?><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"><img class = "cost" alt = "Acorn Coins" src="../images/acorn-coin.png"></a></th>
+                <th><a onClick="mushroomTraining('defense')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/mushroom-coin.png"><img class = "cost" alt = "Mushroom Coins" src="../images/mushroom-coin.png"></a></th>
+                <th><a onClick="bearclawTraining('defense')" href=?><img class = "cost" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></a></th>
+              </tr>
+
+              </table>
           </div>
 
         </div>
