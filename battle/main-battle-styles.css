@@ -29,8 +29,12 @@
 #control-div{
     display:grid;
     grid-template-columns:30vw 30vw;
-    grid-gap:0;
+    grid-template-rows: 5vh 5vh;;
+    grid-gap:20px;
     padding:0;
+    grid-template-areas:
+        "attackSelect attackButton"
+        "restartButton restartButton"
 }
 
 #battle-text-div{
@@ -38,10 +42,22 @@
     padding: 20px;
 }
 
-#enemies, #startBattle, #attack-button, #ability{
+#attack-button {
     height: 5vh;
     width: 30vw;
-    font-size:32px;
+    grid-area:"attackButton"
+}
+
+#ability {
+    height: 5vh;
+    width: 30vw;
+    grid-area:"attackSelect"
+}
+
+#restart-button{
+    height: 5vh;
+    width: 60vw; 
+    grid-area:"restartButton"
 }
 
 #enemy-image{

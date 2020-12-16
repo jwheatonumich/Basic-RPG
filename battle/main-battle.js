@@ -1,6 +1,8 @@
 //Global Variables
-var level = localStorage.getItem('chosenEnemy') //Get the enemy choice based on local storage
-var enemyImageSelect = localStorage.getItem('enemyImageSelect')
+var level = localStorage.getItem('chosenEnemy'); //Get the enemy choice based on local storage
+var enemyImageSelect = localStorage.getItem('enemyImageSelect');
+var playerStats = {};
+var stats = [];
 
 var enemyName = "";
 var enemyHealth = 0;
@@ -23,6 +25,27 @@ var playerBearclawCoin = 0;
 var battleText = ``;
 var attackMultiplier = 1;
 var defenseMultiplier = 1;
+
+//Load data from either local storage or create if no local storage exists
+function dataLoad(){
+    //Check if there is stored data for player stats. Otherwise, start from level 1
+    if (localStorage.getItem("storedPlayerStats") === null) {
+        //Set player and enemy stats
+        playerStats = {"name":"Fred", "health":100, "maxhealth":100, "attack":10, "defense":5, "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":10}
+
+    }else{
+        //If using the stored file, retrieve it and convert the string into a JSON
+        var retrievedObject = localStorage.getItem('storedPlayerStats');
+        playerStats = JSON.parse(retrievedObject)
+    }
+
+    stats = [
+        {"name":"Wimpy Wombat", "enemyID":"0001", "health":50, "maxhealth":50, "attack":10, "defense":5, "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0 },
+        {"name":"Ordinary Otter", "enemyID":"0002", "health":100, "maxhealth":100, "attack":15, "defense":7, "acorncoin":2, "mushroomcoin":0, "bearclawcoin":0 } ,
+        {"name":"Significant Squirrel", "enemyID":"0003", "health":200, "maxhealth":200, "attack":20, "defense":10, "acorncoin":0,"mushroomcoin":1, "bearclawcoin":0 } ,
+        {"name":"Precarious Porcupine", "enemyID":"0003", "health":50, "maxhealth":50, "attack":100, "defense":10, "mushroomcoin":1,"acorncoin":2, "bearclawcoin":0 } 
+    ]
+}
 
 //Enemy Setup
 function enemySetup() {
@@ -64,13 +87,11 @@ function setStats() {
 function battleStatus(){
     if (playerHealth <= 0){
         battleText = `Game Over<br><br>`;
-        level = 1;
         battleCleanup();
     }
 
     if (enemyHealth <= 0){
         battleText = `Enemy Defeated<br><br>`;
-        level += 1;
         playerAcornCoin += enemyAcornCoin;
         playerMushroomCoin += enemyMushroomCoin;
         playerBearclawCoin += enemyBearclawCoin;
