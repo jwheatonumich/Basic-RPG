@@ -44,7 +44,7 @@ function dataLoad(){
         {"name":"Ordinary Otter", "enemyID":"0002", "health":100, "maxhealth":100, "attack":15, "defense":7, "acorncoin":2, "mushroomcoin":0, "bearclawcoin":0 } ,
         {"name":"Significant Squirrel", "enemyID":"0003", "health":200, "maxhealth":200, "attack":20, "defense":10, "acorncoin":0,"mushroomcoin":1, "bearclawcoin":0 } ,
         {"name":"Precarious Porcupine", "enemyID":"0003", "health":50, "maxhealth":50, "attack":100, "defense":10, "mushroomcoin":1,"acorncoin":2, "bearclawcoin":0 } ,
-        {"name":"Riku the Bear", "enemyID":"0004", "health":400, "maxhealth":400, "attack":100, "defense":50, "mushroomcoin":2,"acorncoin":5, "bearclawcoin":1 }
+        {"name":"Riku the Bear", "enemyID":"0004", "health":400, "maxhealth":400, "attack":50, "defense":50, "mushroomcoin":2,"acorncoin":5, "bearclawcoin":1 }
     ]
 }
 
