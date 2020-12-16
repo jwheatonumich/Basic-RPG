@@ -5,7 +5,7 @@ var enemies = ["Wimpy Wombat","Ordinary Otter","Samleton the Squirrel","Precario
 var pictureList = [
     "../images/wimpy-wombat.png",
     "../images/ordinary-otter.png",
-    "../images/squirrel-avatar.png",
+    "../images/squirrel-avatar-mini.png",
     "../images/precarious-porcupine.png",
     "../images/bear-avatar.png" ];
 
