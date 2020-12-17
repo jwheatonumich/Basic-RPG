@@ -31,7 +31,9 @@ function dataLoad(){
     //Check if there is stored data for player stats. Otherwise, start from level 1
     if (localStorage.getItem("storedPlayerStats") === null) {
         //Set player and enemy stats
-        playerStats = {"name":"Fred", "health":100, "maxhealth":100, "attack":10, "defense":5,  "day":1, "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":10}
+        playerStats = {"name":"Fred", "health":100, "maxhealth":100, "attack":10, "defense":5,  
+        "day":1, "caveday":0,"treeday":0,
+        "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":10}
 
     }else{
         //If using the stored file, retrieve it and convert the string into a JSON

@@ -102,6 +102,17 @@ function shakeTree() {
     setStats();
 }
 
+//Function that gets run when the tree is shaken. Can only be used once each day.
+function onceDaily(){
+    if(playerStats["day"] > playerStats["treeday"]){
+        shakeTree()
+        playerStats["treeday"] = playerStats["day"]
+    }else{
+        document.getElementById("textbox").innerHTML = 'You shake the tree but nothing falls out. Try again tomorrow.<br>'
+    }
+
+}
+
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();

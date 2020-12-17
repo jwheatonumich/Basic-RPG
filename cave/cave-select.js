@@ -24,47 +24,61 @@ function setStats() {
     document.getElementById("leaf-coin").innerHTML = leafCoin;
 }
 
+//Update image
+function updateImage(){
+    if (playerStats["caveday"] >= playerStats["day"]){
+        //Change the image after user tries to steal a coin
+        document.getElementById("cave-image").src = "../images/bear-cave-eyes.png"
+    }
+}
+
 //Add random numbers of coins to the player's inventory
 function enterCave() {
-    
-    var caveResult = Math.floor(Math.random()*2 + 1);
-    console.log(caveResult);
 
-    if(caveResult == 1){
-        playerStats["bearclawcoin"] +=1;
+    //Check if the user has entered the cave today
+    if (playerStats["caveday"] < playerStats["day"]){
 
-        //Text explaining they got items
-        document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. As you pick it up, you hear growling and run!<br>'
+        //Make sure the player can't try to steal a coin again today
+        playerStats["caveday"]=playerStats["day"];
 
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/bearclaw-coin.png';
-        elem.setAttribute("class", "item");
+        //Player can steal a coin the first four days
+        if(playerStats["day"] <= 4){
+            playerStats["bearclawcoin"] +=1;
 
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
-    }
+            //Text explaining they got items
+            document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. As you pick it up, you hear growling and run!<br>'
 
-    if(caveResult == 2){
-        playerStats["health"] -=25;
+            //Create the images
+            var elem = document.createElement("img");
+            elem.src = '../images/bearclaw-coin.png';
+            elem.setAttribute("class", "item");
 
-        //Text explaining they got items
-        document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. Just as you bend over to pick it up, a beast attacks you! You lose 25 health.<br>'
+            //Append the images
+            document.getElementById("textbox").appendChild(elem);
+        };
 
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/bear-avatar.png';
-        elem.setAttribute("class", "bear-avatar");
+        //After day 4, the player has to fight the bear for a coin
+        if(playerStats["day"]>4){
+            
+            //Start the battle
+            localStorage.setItem('chosenEnemy', 4);
+            localStorage.setItem('enemyImageSelect', "../images/bear-avatar.png");
+            window.location.href = "../battle/battle.html";
+        };
 
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
+        //Change the image after user tries to steal a coin
+        document.getElementById("cave-image").src = "../images/bear-cave-eyes.png"
+
+    }else{
+        document.getElementById("textbox").innerHTML = 'Something is watching you from the cave. Wait until tomorrow.'
     }
 
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
     playerSetup();
     setStats();
-}
+};
 
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
+window.onload = updateImage()
