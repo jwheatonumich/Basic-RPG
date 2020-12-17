@@ -1,0 +1,71 @@
+*{
+    font-size:32px;
+}
+
+.currency{
+    font-size:12px;
+    max-width: 70px;
+}
+
+#currency-table{
+    table-layout:fixed;
+
+    width: auto;
+    margin-right: 20px;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+.currency-number{
+    color:white;
+}
+
+.cost{
+    max-width:100px;
+}
+
+#cost-table, #cost-table th, #cost-table td{
+    border: 1px black solid;
+}
+
+.item{
+    max-width: 150px;
+}
+
+#page-div {
+    max-width:90vw;
+    border: solid black;
+}
+
+#game-div{
+    display:grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "blank trainer"
+      "character trainer";
+}
+
+#player-div{
+    grid-area: character;
+}
+
+#trainer-div{
+    grid-area: trainer;
+}
+
+.game-text {
+    display:inline;
+}
+
+#character-image{
+    max-height:10vh;
+}
+
+#spaceship-image{
+    max-height:50vh;
+    max-width: 60vw;
+}
+
+#sleep{
+    height:5vh;
+}
