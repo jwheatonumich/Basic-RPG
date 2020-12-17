@@ -53,3 +53,7 @@
     font-size:32;
     font-weight:bold;
 }
+
+#tree{
+    max-width:250px;
+}
