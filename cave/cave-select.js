@@ -25,53 +25,16 @@ function setStats() {
 }
 
 //Add random numbers of coins to the player's inventory
-function shakeTree() {
-    //Calculate how many of each coin to add
-    var treeAcornCoin = Math.floor(Math.random()*10 + 1)
-    var treeMushroomCoin = Math.floor(Math.random()*3 + 1)
-    var treeBearclawCoin =  Math.floor(Math.random()*2)
-    var treeLeafCoin = Math.floor(Math.random()*6 + 5)
+function enterCave() {
+    
+    var caveResult = Math.floor(Math.random()*2 + 1);
+    console.log(caveResult);
 
-    //Add to player's stats
-    playerStats["acorncoin"] +=treeAcornCoin;
-    playerStats["mushroomcoin"] +=treeMushroomCoin;
-    playerStats["bearclawcoin"] +=treeBearclawCoin;
-    playerStats["leafcoin"] +=treeLeafCoin;
+    if(caveResult == 1){
+        playerStats["bearclawcoin"] +=1;
 
-    //Text explaining they got items
-    document.getElementById("textbox").innerHTML = 'You shake the tree and coins fall to the ground!<br>'
-
-    //Loop to create acorn icons
-    var i = 1;
-    while (i <= treeAcornCoin){
-
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/acorn-coin.png';
-        elem.setAttribute("class", "item");
-
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
-        i++;
-    }
-
-    //Loop to create mushroom icons
-    var i = 1;
-    while (i <= treeMushroomCoin){
-
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/mushroom-coin.png';
-        elem.setAttribute("class", "item");
-
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
-        i++;
-    }
-
-    //Loop to create bearclaw icons
-    var i = 1;
-    while (i <= treeBearclawCoin){
+        //Text explaining they got items
+        document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. As you pick it up, you hear growling and run!<br>'
 
         //Create the images
         var elem = document.createElement("img");
@@ -80,21 +43,21 @@ function shakeTree() {
 
         //Append the images
         document.getElementById("textbox").appendChild(elem);
-        i++;
     }
 
-    //Loop to create leaf icons
-    var i = 1;
-    while (i <= treeLeafCoin){
+    if(caveResult == 2){
+        playerStats["health"] -=25;
+
+        //Text explaining they got items
+        document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. Just as you bend over to pick it up, a beast attacks you! You lose 25 health.<br>'
 
         //Create the images
         var elem = document.createElement("img");
-        elem.src = '../images/leaf-coin.png';
-        elem.setAttribute("class", "item");
+        elem.src = '../images/bear-avatar.png';
+        elem.setAttribute("class", "bear-avatar");
 
         //Append the images
         document.getElementById("textbox").appendChild(elem);
-        i++;
     }
 
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));

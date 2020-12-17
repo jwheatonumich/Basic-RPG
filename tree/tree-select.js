@@ -28,8 +28,8 @@ function setStats() {
 function shakeTree() {
     //Calculate how many of each coin to add
     var treeAcornCoin = Math.floor(Math.random()*10 + 1)
-    var treeMushroomCoin = Math.floor(Math.random()*3 + 1)
-    var treeBearclawCoin =  Math.floor(Math.random()*2)
+    var treeMushroomCoin = 0
+    var treeBearclawCoin =  0
     var treeLeafCoin = Math.floor(Math.random()*6 + 5)
 
     //Add to player's stats
