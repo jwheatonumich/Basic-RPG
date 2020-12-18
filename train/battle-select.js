@@ -1,13 +1,13 @@
 //Array of enemy names
-var enemies = ["A Squirrel","Two Squirrels","Little Mushroom","Precarious Porcupine","Riku the Bear"];
+var enemies = ["Little Mushroom"];
+
+//Where in the enemy list mushrooms start
+var enemyStart = 2
 
 //Array of enemy images
 var pictureList = [
-    "../images/squirrel-avatar-mini.png",
-    "../images/two-squirrels-mini.png",
-    "../images/little-mushroom.png",
-    "../images/precarious-porcupine.png",
-    "../images/bear-avatar.png" ];
+    "../images/little-mushroom.png"
+];
 
 //Store the dropdown element
 selectMenu = document.getElementById("enemies")
@@ -59,9 +59,9 @@ function selectImage(){
 //Start the battle
 function startBattle(){
     var enemySelect = document.getElementById("enemies");
-    var chosenEnemy = enemySelect.value;
+    var chosenEnemy = parseInt(enemySelect.value + enemyStart); //Add enemy start so we don't select the first enemies in the enemy list
     localStorage.setItem('chosenEnemy', chosenEnemy);
-    window.location.href = "./battle.html"
+    window.location.href = "../battle/battle.html"
 }
 
 //Populate dropdown on page load

@@ -2,7 +2,7 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
-var maxStats = 25
+var maxStats = 40
 
 //function to set player stats based on the button clicked
 function acornTraining(stat){
