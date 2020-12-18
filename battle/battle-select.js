@@ -1,12 +1,12 @@
 //Array of enemy names
-var enemies = ["A Squirrel","Two Squirrels","Little Mushroom","Precarious Porcupine","Riku the Bear"];
+var enemies = ["A Squirrel","Two Squirrels","Little Mushroom","Tall Mushroom","Riku the Bear"];
 
 //Array of enemy images
 var pictureList = [
     "../images/squirrel-avatar-mini.png",
     "../images/two-squirrels-mini.png",
     "../images/little-mushroom.png",
-    "../images/precarious-porcupine.png",
+    "../images/tall-mushroom.png",
     "../images/bear-avatar.png" ];
 
 //Store the dropdown element

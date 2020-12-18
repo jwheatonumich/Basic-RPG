@@ -1,12 +1,13 @@
 //Array of enemy names
-var enemies = ["Little Mushroom"];
+var enemies = ["Little Mushroom","Tall Mushroom"];
 
 //Where in the enemy list mushrooms start
 var enemyStart = 2
 
 //Array of enemy images
 var pictureList = [
-    "../images/little-mushroom.png"
+    "../images/little-mushroom.png",
+    "../images/tall-mushroom.png"
 ];
 
 //Store the dropdown element
@@ -59,7 +60,7 @@ function selectImage(){
 //Start the battle
 function startBattle(){
     var enemySelect = document.getElementById("enemies");
-    var chosenEnemy = parseInt(enemySelect.value + enemyStart); //Add enemy start so we don't select the first enemies in the enemy list
+    var chosenEnemy = parseInt(enemySelect.value) + parseInt(enemyStart); //Add enemy start so we don't select the first enemies in the enemy list
     localStorage.setItem('chosenEnemy', chosenEnemy);
     window.location.href = "../battle/battle.html"
 }
