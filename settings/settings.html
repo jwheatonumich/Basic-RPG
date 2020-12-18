@@ -1,10 +1,10 @@
 <html>
 
     <!--Load dynamic page data-->
-    <script src="index-script.js" defer></script>
+    <script src="settings-script.js" defer></script>
 
     <head>
-      <link rel="stylesheet" href= "index-styles.css">  
+      <link rel="stylesheet" href= "settings-styles.css">  
       <link rel="stylesheet" href= "navbar.css">
     </head>
 
@@ -12,7 +12,7 @@
       <div id="page-div">
         <div class="navbar">
           <div>
-            <a href=?>Home</a>
+            <a href="../home/index.html">Home</a>
             <a href="../battle/battle-select.html">Battle</a>
             <a href="../settings/settings.html">Settings</a>
           </div>
@@ -38,23 +38,11 @@
           </div>
         </div>
 
-        <div id = "character-div">
-          <p id="player-name">Name</p>
-          <img id="character-image" alt = "Character" src="../images/little-goblin.png">
-          <p id="character-stats">Stats</p>
+        <div id="settings">
+          <button id="newGame" onclick="newGame()">New Game</button>
         </div>
 
-        <div id="map">
-          <a href="../spaceship/spaceship.html"><img id="spaceship" class="link-image" alt = "spaceship" src="../images/spaceship-crash.png"></a>
-          <a href="../heal/heal.html"><img id="heal" class="link-image" alt = "heal link" src="../images/dryad.png"></a>
-          <a href="../tree/tree.html"><img id="tree" class="link-image" alt = "tree link" src="../images/bountiful-tree.png"></a>
-          <a href="../squirrel-master/train.html"><img id="cave" class="link-image" alt = "squirrel trainer link" src="../images/squirrel-trainer.png"></a>
-          <a href="../train/train.html"><img id="cave" class="link-image" alt = "mushroom trainer link" src="../images/mushroom-man.png"></a>
-          <a href="../cave/cave.html"><img id="cave" class="link-image" alt = "tree link" src="../images/bear-cave.png"></a>
-        </div>
 
-        <div id="inventory-div">
-        </div>
       </div>
     </body>
 </html>

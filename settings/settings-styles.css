@@ -1,0 +1,54 @@
+*{
+    font-size:32px;
+}
+
+.item{
+    max-width: 150px;
+}
+
+.currency{
+    font-size:12px;
+    max-width: 70px;
+}
+
+#currency-table{
+    table-layout:fixed;
+
+    width: auto;
+    margin-right: 20px;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+.currency-number{
+    color:white;
+}
+
+#page-div{
+    max-width:90vw;
+
+    display:grid;
+
+    grid-template-areas:
+      "nav"
+      "character"
+      "links";
+}
+
+#character-div{
+    grid-area:character;
+    border: solid black;
+
+    text-align:center;
+}
+
+#links-div{
+    grid-area:links;
+    border: solid black;
+
+    text-align:center;
+}
+
+#newGame{
+    height:5vh;
+}
