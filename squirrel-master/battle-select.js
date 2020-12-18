@@ -58,7 +58,7 @@ function startBattle(){
     var enemySelect = document.getElementById("enemies");
     var chosenEnemy = enemySelect.value;
     localStorage.setItem('chosenEnemy', chosenEnemy);
-    window.location.href = "./battle.html"
+    window.location.href = "../battle/battle.html"
 }
 
 //Populate dropdown on page load
