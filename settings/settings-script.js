@@ -7,6 +7,7 @@ function dataLoad(){
     playerStats = {"name":"Fred", "health":100, "maxhealth":100, "attack":10, "defense":5,  
     "day":1, "caveday":0,"treeday":0,
     "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":10}
+    playerStats["name"] = document.getElementById("name").value
 };
 
 //Function to store player stats variable to local storage

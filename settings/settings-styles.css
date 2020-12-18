@@ -49,6 +49,6 @@
     text-align:center;
 }
 
-#newGame{
+#newGame, #name{
     height:5vh;
 }

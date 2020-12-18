@@ -2,40 +2,6 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
-/*
-//Array of stats
-var trainingOptions = ["Health","Attack","Defense"];
-var trainingOutputs = ["maxhealth","attack","defense"]
-
-//Store the dropdown element
-selectMenu = document.getElementById("select-training")
-
-//Create drop-down from enemy name array
-function popDropdown() {
-    for(element in trainingOptions)
-        {
-        var opt = document.createElement("option");
-        opt.value= trainingOutputs[element];
-        opt.innerHTML = trainingOptions[element];
-
-        //Append to the dropdown
-        selectMenu.appendChild(opt);
-        }
-}
-
-function startTraining(){
-    var trainingSelect = document.getElementById("select-training");
-    var chosenTraining = trainingSelect.value;
-    if (playerStats["acorncoin"] >= 5){
-        playerStats[chosenTraining] +=1;
-        playerStats["acorncoin"] -=5;
-        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-        playerSetup();
-        setStats();
-    }
-}
-*/
-
 function acornTraining(stat){
     if (playerStats["acorncoin"] >= 3){
         playerStats[stat] +=1;
@@ -82,11 +48,10 @@ function playerSetup() {
 //Function that sets text on the website equal to various stat variables
 function setStats() {
     
-    document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("character-stats").innerHTML = 
-        'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
         'Attack: ' + playerAttack + '<br />' +
-        'Defense: ' + playerDefense
+        'Defense: ' + playerDefense + '<br />' +
+        'Health: ' + playerHealth
     document.getElementById("acorn-coin").innerHTML = playerAcornCoin;
     document.getElementById("mushroom-coin").innerHTML = playerMushroomCoin;
     document.getElementById("bearclaw-coin").innerHTML = playerBearclawCoin;
