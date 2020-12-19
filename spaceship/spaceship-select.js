@@ -28,6 +28,7 @@ function setStats() {
 function sleep() {
     
     playerStats["day"] +=1;
+    playerStats["caveday"] = 0; //Let the player steal another bear coin
     document.getElementById("textbox").innerHTML = 'Day '+ playerStats["day"] + '<br><br>You wake up. You don\'t feel very refreshed.<br><br> Where is the coffee?'
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 }

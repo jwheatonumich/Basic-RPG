@@ -26,7 +26,7 @@ function setStats() {
 
 //Update image
 function updateImage(){
-    if (playerStats["caveday"] >= playerStats["day"]){
+    if (playerStats["caveday"] >= 1){
         //Change the image after user tries to steal a coin
         document.getElementById("cave-image").src = "../images/bear-cave-eyes-imagemap.png"
     }
@@ -36,41 +36,33 @@ function updateImage(){
 function enterCave() {
 
     //Check if the user has entered the cave today
-    if (playerStats["caveday"] < playerStats["day"]){
+    if (playerStats["caveday"] < 1){
 
         //Make sure the player can't try to steal a coin again today
-        playerStats["caveday"]=playerStats["day"];
+        playerStats["caveday"]=1;
 
-        //Player can steal a coin the first four days
-        if(playerStats["day"] <= 4){
-            playerStats["bearclawcoin"] +=1;
+        //Give the player a bearclaw coin
+        playerStats["bearclawcoin"] +=1;
 
-            //Text explaining they got items
-            document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. As you pick it up, you hear growling and run!<br>'
+        //Text explaining they got items
+        document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. As you pick it up, you hear growling and run!<br>'
 
-            //Create the images
-            var elem = document.createElement("img");
-            elem.src = '../images/bearclaw-coin.png';
-            elem.setAttribute("class", "item");
+        //Create the images
+        var elem = document.createElement("img");
+        elem.src = '../images/bearclaw-coin.png';
+        elem.setAttribute("class", "item");
 
-            //Append the images
-            document.getElementById("textbox").appendChild(elem);
-        };
-
-        //After day 4, the player has to fight the bear for a coin
-        if(playerStats["day"]>4){
-            
-            //Start the battle
-            localStorage.setItem('chosenEnemy', 4);
-            localStorage.setItem('enemyImageSelect', "../images/bear-avatar.png");
-            window.location.href = "../battle/battle.html";
-        };
+        //Append the images
+        document.getElementById("textbox").appendChild(elem);
 
         //Change the image after user tries to steal a coin
-        document.getElementById("cave-image").src = "../images/bear-cave-eyes.png"
+        document.getElementById("cave-image").src = "../images/bear-cave-eyes-imagemap.png"
 
     }else{
-        document.getElementById("textbox").innerHTML = 'Something is watching you from the cave. Wait until tomorrow.'
+        //Start the battle
+        localStorage.setItem('chosenEnemy', 4);
+        localStorage.setItem('enemyImageSelect', "../images/bearsuit-avatar.png");
+        window.location.href = "../battle/battle.html";
     }
 
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
