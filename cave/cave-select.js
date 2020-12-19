@@ -61,7 +61,7 @@ function enterCave() {
     }else{
         //Start the battle
         localStorage.setItem('chosenEnemy', 4);
-        localStorage.setItem('enemyImageSelect', "../images/bearsuit-avatar.png");
+        localStorage.setItem('enemyImageSelect', "../images/blackbear.png");
         window.location.href = "../battle/battle.html";
     }
 

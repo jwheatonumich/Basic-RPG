@@ -46,7 +46,7 @@ function dataLoad(){
         {"name":"Two Squirrels", "enemyID":"0003", "health":40, "maxhealth":40, "attack":20, "defense":5, "acorncoin":3,"mushroomcoin":0, "bearclawcoin":0 } ,
         {"name":"Little Mushroom", "enemyID":"0002", "health":80, "maxhealth":80, "attack":30, "defense":15, "acorncoin":0, "mushroomcoin":1, "bearclawcoin":0 } ,
         {"name":"Tall Mushroom", "enemyID":"0003", "health":120, "maxhealth":120, "attack":40, "defense":15, "acorncoin":0, "mushroomcoin":3, "bearclawcoin":0 } ,
-        {"name":"Riku the Bear", "enemyID":"0004", "health":160, "maxhealth":160, "attack":40, "defense":40, "acorncoin":0, "mushroomcoin":0, "bearclawcoin":1 }
+        {"name":"Blackbear", "enemyID":"0004", "health":160, "maxhealth":160, "attack":40, "defense":40, "acorncoin":0, "mushroomcoin":0, "bearclawcoin":1 }
     ]
 }
 
