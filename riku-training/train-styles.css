@@ -37,20 +37,46 @@
     border: solid black;
 }
 
-#game-div{
+#training-div{
     display:grid;
     grid-template-columns: auto auto;
     grid-template-areas:
-      "blank trainer"
-      "character trainer";
+      "character training";
 }
 
 #player-div{
     grid-area: character;
+    border:  black solid 1px;
 }
 
+/*Center character image*/
+#character-div{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+
+    padding:10px;
+}
+
+/*Center stats text*/
+#stats-div{
+    text-align: center;
+}
+
+#cost-table-div{
+    grid-area: training;
+
+    display: flex;
+    align-items: center;
+}
+
+/*Center the trainer image*/
 #trainer-div{
-    grid-area: trainer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
 }
 
 .game-text {
@@ -58,7 +84,12 @@
 }
 
 #character-image{
-    max-height:10vh;
+    max-height:7vh;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 #trainer-image{
@@ -66,6 +97,6 @@
     max-width: 60vw;
 }
 
-#enterCave, #riku{
+#select-training, #start-training{
     height:5vh;
 }

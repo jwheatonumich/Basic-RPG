@@ -28,7 +28,7 @@ function setStats() {
 function updateImage(){
     if (playerStats["caveday"] >= playerStats["day"]){
         //Change the image after user tries to steal a coin
-        document.getElementById("cave-image").src = "../images/bear-cave-eyes.png"
+        document.getElementById("cave-image").src = "../images/bear-cave-eyes-imagemap.png"
     }
 }
 

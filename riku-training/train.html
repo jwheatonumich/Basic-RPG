@@ -1,0 +1,93 @@
+
+<html>
+        <script src="train-select.js" defer></script>
+
+
+        <head>
+            <!--Load CSS-->
+            <link rel="stylesheet" href= "train-styles.css">
+            <link rel="stylesheet" href= "navbar.css">
+        </head>
+    
+    <body>
+        <div id="page-div">
+            <div class="navbar">
+                <a href="../home/index.html">Home</a>
+                <a href="../battle/battle-select.html">Battle</a>
+                <a href="../settings/settings.html">Settings</a>
+
+                <div id="currency-bar">
+                  <table id="currency-table">
+          
+                    <tr>
+                      <th><img class = "currency" alt = "Acorn Coins" src="../images/acorn-coin.png"></th>
+                      <th id="acorn-coin" class="currency-number">100</th>
+      
+                      <th><img class = "currency" alt = "Mushroom Coins" src="../images/mushroom-coin.png"></th>
+                      <th id="mushroom-coin" class="currency-number">5</th>
+      
+                      <th><img class = "currency" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></th>
+                      <th id="bearclaw-coin" class="currency-number">1</th>
+      
+                      <th><img class = "currency" alt = "Leaf Coins" src="../images/leaf-coin.png"></th>
+                      <th id="leaf-coin" class="currency-number">1</th>
+                    </tr>
+          
+                    </table>
+                </div>
+
+            </div>
+
+          <div id="game-div">
+            <div>
+            <div id="trainer-div">
+              <img id="trainer-image" alt = "Trainer" src="../images/bearsuit-avatar.png">
+            </div>
+
+          </div>
+  
+          <div id="training-div">
+
+            <div id = "player-div">
+
+              <div id="character-div">
+                <img id="character-image" alt = "Character" src="../images/little-goblin.png">
+              </div>
+
+              <div id="stats-div">
+                <p id="character-stats">Stats</p>
+              </div>
+
+            </div>
+
+            <div id="cost-table-div">
+              <table id="cost-table">
+                <tr>
+                  <th></th>
+                  <th>Mushroom Training</th>
+                </tr>
+  
+                <tr>
+                  <th>Attack</th>
+                  <th><a onClick="bearclawTraining('attack')" href=?><img class = "cost" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></a></th>
+                </tr>
+      
+                <tr>
+                  <th>Defense</th>
+                  <th><a onClick="bearclawTraining('defense')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/bearclaw-coin.png"></a></th>
+                </tr>
+  
+                <tr>
+                  <th>Endurance</th>
+                  <th><a onClick="bearclawTraining('endurance')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/bearclaw-coin.png"></a></th>
+                </tr>
+
+                </table>
+              </div>
+
+          </div>
+
+        </div>
+
+    </body>
+</html>
