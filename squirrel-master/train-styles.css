@@ -85,6 +85,10 @@
 
 #character-image{
     max-height:7vh;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #trainer-image{
