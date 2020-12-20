@@ -34,23 +34,27 @@
 
 #page-div {
     max-width:90vw;
-    border: solid black;
-}
 
-#game-div{
     display:grid;
-    grid-template-columns: auto auto;
+
     grid-template-areas:
-      "blank trainer"
-      "character trainer";
+      "nav nav"
+      "character game";
 }
 
-#player-div{
-    grid-area: character;
+#character-div{
+    grid-area:character;
+    border: solid black;
+
+    text-align:center;
 }
 
 #trainer-div{
-    grid-area: trainer;
+    grid-area: game;
+
+    border: solid black;
+
+    text-align:center;
 }
 
 .game-text {

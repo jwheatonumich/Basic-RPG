@@ -3,6 +3,7 @@
   overflow: hidden;
   background-color: #333;
   font-family: Arial;
+  grid-area:nav;
 }
 
 /* Links inside the navbar */

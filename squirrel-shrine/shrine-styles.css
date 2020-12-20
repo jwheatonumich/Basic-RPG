@@ -2,8 +2,8 @@
     font-size:32px;
 }
 
-.item{
-    max-width: 150px;
+p{
+    font-size:26px;
 }
 
 .currency{
@@ -24,6 +24,10 @@
     color:white;
 }
 
+.item{
+    max-width: 150px;
+}
+
 #page-div{
     max-width:90vw;
 
@@ -34,13 +38,6 @@
       "character links";
 }
 
-#character-div{
-    grid-area:character;
-    border: solid black;
-
-    text-align:center;
-}
-
 #game-div{
     grid-area:links;
     border: solid black;
@@ -48,11 +45,31 @@
     text-align:center;
 }
 
-#player-name{
-    font-size:32;
-    font-weight:bold;
+#character-div{
+    grid-area:character;
+    border: solid black;
+
+    text-align:center;
 }
 
-.link-image{
-    max-width:250px;
+#dryad-div{
+    grid-area: dryad;
+    
+}
+
+#dryad-image{
+    max-height:50vh;
+    max-width: 60vw;
+}
+
+.game-text {
+    display:inline;
+}
+
+#character-image{
+    max-height:10vh;
+}
+
+#heal-button{
+    height: 5vh;
 }

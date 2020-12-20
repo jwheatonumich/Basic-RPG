@@ -32,31 +32,28 @@
     max-width: 150px;
 }
 
-#page-div {
+#page-div{
     max-width:90vw;
-    border: solid black;
-}
 
-#training-div{
     display:grid;
-    grid-template-columns: auto auto;
+
     grid-template-areas:
-      "character training";
+      "nav nav"
+      "character links";
 }
 
-#player-div{
-    grid-area: character;
-    border:  black solid 1px;
-}
-
-/*Center character image*/
 #character-div{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60%;
+    grid-area:character;
+    border: solid black;
 
-    padding:10px;
+    text-align:center;
+}
+
+#game-div{
+    grid-area:links;
+    border: solid black;
+
+    text-align:center;
 }
 
 /*Center stats text*/

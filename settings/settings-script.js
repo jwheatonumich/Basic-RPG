@@ -4,7 +4,8 @@ var playerStats = JSON.parse(retrievedObject)
 
 //Function to set player stats variable to new game stats
 function dataLoad(){
-    playerStats = {"name":"Fred", "health":40, "maxhealth":40, "attack":10, "defense":10, "endurance":10, 
+    playerStats = {"name":"Fred", "costume":"None", "image":"../images/little-goblin.png",
+    "health":40, "maxhealth":40, "attack":10, "defense":10, "endurance":10, 
     "day":1, "caveday":0,"treeday":0,
     "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":10}
     playerStats["name"] = document.getElementById("name").value

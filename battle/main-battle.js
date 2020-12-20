@@ -91,6 +91,9 @@ function setStats() {
     document.getElementById("mushroom-coin").innerHTML = playerMushroomCoin;
     document.getElementById("bearclaw-coin").innerHTML = playerBearclawCoin;
     document.getElementById("leaf-coin").innerHTML = playerLeafCoin;
+
+    //Set the player image to their costume
+    document.getElementById("character-image").src = playerStats.image;
 }
 
 //Function to check if the battle is over

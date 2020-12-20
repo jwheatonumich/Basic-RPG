@@ -32,31 +32,28 @@
     max-width: 150px;
 }
 
-#page-div {
+#page-div{
     max-width:90vw;
-    border: solid black;
-}
 
-#training-div{
     display:grid;
-    grid-template-columns: auto auto;
+
     grid-template-areas:
-      "character training";
+      "nav nav"
+      "character links";
 }
 
-#player-div{
-    grid-area: character;
-    border:  black solid 1px;
-}
 
-/*Center character image*/
 #character-div{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60%;
+    grid-area:character;
+    border: solid black;
 
-    padding:10px;
+    text-align:center;
+}
+
+#game-div{
+    border: solid black;
+
+    text-align:center;
 }
 
 /*Center stats text*/
@@ -65,7 +62,6 @@
 }
 
 #cost-table-div{
-    grid-area: training;
 
     display: flex;
     align-items: center;
@@ -76,7 +72,6 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 30%;
 }
 
 .game-text {
@@ -94,7 +89,7 @@
 
 #trainer-image{
     max-height:50vh;
-    max-width: 60vw;
+    max-width: 40vw;
 }
 
 #select-training, #start-training{

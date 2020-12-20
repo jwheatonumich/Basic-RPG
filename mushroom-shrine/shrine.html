@@ -1,14 +1,14 @@
 <html>
         <!--Main game loop-->
-        <script src="main-heal.js"></script>
+        <script src="main-shrine.js"></script>
 
         <!--Game setup-->
-        <script src="heal-initialize.js" defer></script>
+        <script src="shrine-initialize.js" defer></script>
     
     <head>
         <!--Load CSS-->
         <link rel="stylesheet" href= "navbar.css">
-        <link rel="stylesheet" href= "heal-styles.css">
+        <link rel="stylesheet" href= "shrine-styles.css">
     </head>
     
     <body>
@@ -48,17 +48,14 @@
             <div id="game-div">
                 
                 <div id="dryad-div">
-                    <img id="dryad-image" alt = "Dryad" src="../images/healing-shrine.png">
+                    <img id="dryad-image" alt = "Dryad" src="../images/mushroom-shrine.png">
                 </div>
 
-                <p>Would you like to heal for 1 Leaf Coin?</p>
+                <p>Legend is that the shrine will transform you into a mushroom if you leave 20 mushroom coins.</p>
                 <div id="control">
-                    <a id="heal-button" onClick="healMax()" href=?><img class = "item" alt = "Leaf Coins" src="../images/leaf-coin.png"></a>
+                    <a id="heal-button" onClick="healMax()" href=?><img class = "item" alt = "Leaf Coins" src="../images/mushroom-coin.png"></a>
                 </div>
-
             </div>
-
-
 
         </div>
     </body>

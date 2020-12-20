@@ -30,6 +30,9 @@ function setStats() {
     document.getElementById("mushroom-coin").innerHTML = mushroomCoin;
     document.getElementById("bearclaw-coin").innerHTML = bearclawCoin;
     document.getElementById("leaf-coin").innerHTML = leafCoin;
+
+    //Set the player image to their costume
+    document.getElementById("character-image").src = playerStats.image;
 }
 
 window.onload = playerSetup();

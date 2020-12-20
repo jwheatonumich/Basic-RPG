@@ -32,21 +32,28 @@
     max-width: 150px;
 }
 
-#page-div {
+#page-div{
     max-width:90vw;
+
+    display:grid;
+
+    grid-template-areas:
+      "nav nav"
+      "character links";
+}
+
+#character-div{
+    grid-area:character;
     border: solid black;
+
+    text-align:center;
 }
 
 #game-div{
-    display:grid;
-    grid-template-columns: auto auto;
-    grid-template-areas:
-      "blank trainer"
-      "character trainer";
-}
+    grid-area:links;
+    border: solid black;
 
-#player-div{
-    grid-area: character;
+    text-align:center;
 }
 
 #trainer-div{

@@ -1,14 +1,14 @@
 <html>
         <!--Main game loop-->
-        <script src="main-heal.js"></script>
+        <script src="main-shrine.js"></script>
 
         <!--Game setup-->
-        <script src="heal-initialize.js" defer></script>
+        <script src="shrine-initialize.js" defer></script>
     
     <head>
         <!--Load CSS-->
         <link rel="stylesheet" href= "navbar.css">
-        <link rel="stylesheet" href= "heal-styles.css">
+        <link rel="stylesheet" href= "shrine-styles.css">
     </head>
     
     <body>
@@ -43,22 +43,20 @@
                 <p id="player-name">Name</p>
                 <img id="character-image" alt = "Character" src="../images/little-goblin.png">
                 <p id="character-stats">Stats</p>
-              </div>
+            </div>
 
             <div id="game-div">
                 
                 <div id="dryad-div">
-                    <img id="dryad-image" alt = "Dryad" src="../images/healing-shrine.png">
+                    <img id="dryad-image" alt = "Dryad" src="../images/bear-shrine.png">
                 </div>
 
-                <p>Would you like to heal for 1 Leaf Coin?</p>
+                <p>Myth says that for an offering of 10 bearclaw coins, the shrine will transform you into a bear!</p>
                 <div id="control">
-                    <a id="heal-button" onClick="healMax()" href=?><img class = "item" alt = "Leaf Coins" src="../images/leaf-coin.png"></a>
+                    <a id="heal-button" onClick="healMax()" href=?><img class = "item" alt = "Bear Coins" src="../images/bearclaw-coin.png"></a>
                 </div>
 
             </div>
-
-
 
         </div>
     </body>
