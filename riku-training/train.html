@@ -1,10 +1,11 @@
+
 <html>
-        <script src="tree-select.js" defer></script>
+        <script src="train-select.js" defer></script>
 
 
         <head>
             <!--Load CSS-->
-            <link rel="stylesheet" href= "tree-styles.css">
+            <link rel="stylesheet" href= "train-styles.css">
             <link rel="stylesheet" href= "navbar.css">
         </head>
     
@@ -38,26 +39,49 @@
             </div>
 
 
+
             <div id = "character-div">
               <p id="player-name">Name</p>
               <img id="character-image" alt = "Character" src="../images/little-goblin.png">
               <p id="character-stats">Stats</p>
             </div>
 
+          <div id="game-div">
+            <div>
             <div id="trainer-div">
-              <img id="trainer-image" alt = "Trainer" src="../images/forest-imagemap.png">
-              
-              <div id="control">
-                <button id="startBattle" onclick="location.href='../squirrel-master/train.html'">Visit the squirrels</button>
-                <button id="startBattle" onclick="onceDaily()">Shake the tree</button>
-                <button id="startBattle" onclick="location.href='../heal/heal.html'">Approach the healing shrine</button>
-                <button id="startBattle" onclick="location.href='../squirrel-shrine/shrine.html'">Visit the squirrel shrine</button>
-              </div>
-
-              <div id="textbox">
-              </div>
-
+              <img id="trainer-image" alt = "Trainer" src="../images/bearsuit-avatar.png">
             </div>
+
+            <div id="training-div">
+
+              <div id="cost-table-div">
+                <table id="cost-table">
+                  <tr>
+                    <th></th>
+                    <th>Mushroom Training</th>
+                  </tr>
+    
+                  <tr>
+                    <th>Attack</th>
+                    <th><a onClick="bearclawTraining('attack')" href=?><img class = "cost" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></a></th>
+                  </tr>
+        
+                  <tr>
+                    <th>Defense</th>
+                    <th><a onClick="bearclawTraining('defense')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/bearclaw-coin.png"></a></th>
+                  </tr>
+    
+                  <tr>
+                    <th>Endurance</th>
+                    <th><a onClick="bearclawTraining('endurance')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/bearclaw-coin.png"></a></th>
+                  </tr>
+  
+                  </table>
+                </div>
+  
+            </div>
+          </div>
+  
 
         </div>
 
