@@ -1,0 +1,26 @@
+#page-div {
+    max-width:90vw;
+
+    display:grid;
+
+    grid-template-areas:
+      "nav nav"
+      "character game";
+
+      grid-template-columns: 30vw 60vw;
+}
+
+#character-div{
+    grid-area:character;
+    border: solid black;
+
+    text-align:center;
+}
+
+#game-div{
+    grid-area: game;
+
+    border: solid black;
+
+    text-align:center;
+}

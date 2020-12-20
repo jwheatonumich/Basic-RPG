@@ -1,0 +1,28 @@
+*{
+    font-size:32px;
+}
+
+#cost-table, #cost-table th, #cost-table td{
+    border: 1px black solid;
+}
+
+.item{
+    max-width: 150px;
+}
+
+#trainer-div{
+    grid-area: trainer;
+}
+
+.game-text {
+    display:inline;
+}
+
+#trainer-image{
+    max-height:50vh;
+    max-width: 60vw;
+}
+
+#enterCave, #riku{
+    height:5vh;
+}

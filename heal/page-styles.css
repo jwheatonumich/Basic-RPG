@@ -1,0 +1,25 @@
+*{
+    font-size:32px;
+}
+
+.item{
+    max-width: 150px;
+}
+
+#dryad-div{
+    grid-area: dryad;
+    
+}
+
+#dryad-image{
+    max-height:50vh;
+    max-width: 60vw;
+}
+
+.game-text {
+    display:inline;
+}
+
+#heal-button{
+    height: 5vh;
+}

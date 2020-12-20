@@ -15,6 +15,28 @@
   text-decoration: none;
 }
 
+/* styling for currency area*/
+.currency{
+  font-size:12px;
+  max-width: 70px;
+}
+
+/* Color of text in the coin numbers*/
+.currency-number{
+  color:white;
+}
+
+/* Formatting for the table holding the coin counts*/
+#currency-table{
+  table-layout:fixed;
+
+  width: auto;
+  margin-right: 20px;
+  margin-left: auto;
+  margin-top: 10px;
+}
+
+
 /* The dropdown container */
 .dropdown {
   float: left;
