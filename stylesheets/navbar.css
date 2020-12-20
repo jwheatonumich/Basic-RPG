@@ -11,14 +11,13 @@
   float: left;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 12px 4px;
   text-decoration: none;
 }
 
 /* styling for currency area*/
 .currency{
-  font-size:12px;
-  max-width: 70px;
+  max-width: 5vw;
 }
 
 /* Color of text in the coin numbers*/

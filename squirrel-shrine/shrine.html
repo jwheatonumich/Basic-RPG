@@ -1,6 +1,7 @@
 <html>
     
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--Load CSS-->
         <link rel="stylesheet" href= "../stylesheets/navbar.css">
         <link rel="stylesheet" href= "page-styles.css">
@@ -18,7 +19,6 @@
         <div id="page-div">
             <div class="navbar">
                 <a href="../home/index.html">Home</a>
-                <a href="../battle/battle-select.html">Battle</a>
                 <a href="../settings/settings.html">Settings</a>
 
                 <div id="currency-bar">
@@ -51,12 +51,12 @@
             <div id="game-div">
                 
                 <div id="dryad-div">
-                    <img id="dryad-image" alt = "Dryad" src="../images/squirrel-shrine.png">
+                    <img id="page-image" alt = "squirrel shrine" src="../images/squirrel-shrine.png">
                 </div>
                 <div>
                     <p>Legend is that the shrine will transform you into a squirrel if you leave 50 acorn coins.</p>
                     <div id="control">
-                        <a id="heal-button" onClick="healMax()" href=?><img class = "item" alt = "Leaf Coins" src="../images/acorn-coin.png"></a>
+                        <a id="heal-button" onClick="healMax()" href=?><img class = "cost" alt = "Leaf Coins" src="../images/acorn-coin.png"></a>
                     </div>
     
                 </div>

@@ -1,42 +1,14 @@
-*{
-    font-size:32px;
-}
-
-.currency{
-    font-size:12px;
-    max-width: 70px;
-}
-
-#currency-table{
-    table-layout:fixed;
-
-    width: auto;
-    margin-right: 20px;
-    margin-left: auto;
-    margin-top: 10px;
-}
-
-.currency-number{
-    color:white;
-}
-
 #page-div {
     max-width:90vw;
 }
 
 #game-div{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:45vw 45vw;
     grid-gap: 20px;
-
-    width: 500px;
 }
 
 #player-div, #enemy-div{
-    display: flex;
-    
-    align-items: flex-end;
-
     padding: 20px;
 }
 
@@ -56,7 +28,6 @@
 }
 
 #battle-text-div{
-    width: 500px;
     padding: 20px;
 }
 
@@ -79,7 +50,7 @@
 }
 
 #enemy-image{
-    max-height:300px;
+    max-height:10vh;
 }
 
 #character-image{

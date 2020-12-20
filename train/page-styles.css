@@ -1,18 +1,7 @@
-*{
-    font-size:32px;
-}
-
-.cost{
-    max-width:100px;
-}
-
 #cost-table, #cost-table th, #cost-table td{
     border: 1px black solid;
 }
 
-.item{
-    max-width: 150px;
-}
 
 /*Center stats text*/
 #stats-div{
@@ -36,10 +25,6 @@
     display:inline;
 }
 
-#trainer-image{
-    max-height:50vh;
-    max-width: 40vw;
-}
 
 #select-training, #start-training{
     height:5vh;

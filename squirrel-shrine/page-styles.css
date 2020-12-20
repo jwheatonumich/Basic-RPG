@@ -1,13 +1,5 @@
-*{
-    font-size:32px;
-}
-
-p{
-    font-size:26px;
-}
-
 .item{
-    max-width: 150px;
+    max-width: 25vw;;
 }
 
 #dryad-div{
@@ -15,15 +7,7 @@ p{
     
 }
 
-#dryad-image{
-    max-height:50vh;
-    max-width: 60vw;
-}
-
 .game-text {
     display:inline;
 }
 
-#heal-button{
-    height: 5vh;
-}

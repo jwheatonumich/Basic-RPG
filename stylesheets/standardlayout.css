@@ -1,3 +1,7 @@
+*{
+    font-size:1em;
+}
+
 #page-div {
     max-width:90vw;
 
@@ -23,4 +27,28 @@
     border: solid black;
 
     text-align:center;
+}
+
+#cost-table, #cost-table th, #cost-table td{
+    border: 1px black solid;
+}
+
+#character-image{
+    max-width:25vw;
+}
+
+#page-image{
+    max-width:55vw;
+}
+
+#enemy-image{
+    max-width:25vw;
+}
+
+.item{
+    max-width: 10vw;
+}
+
+.cost{
+    max-width:10vw;
 }
