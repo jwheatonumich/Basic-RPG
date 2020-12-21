@@ -43,6 +43,20 @@ function sleep() {
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 }
 
+//Transform back to original alien
+function repairDNA(){
+    //Save health and xp after battle ends
+    playerStats.costume = "none" ;
+    playerStats.image = "../images/little-goblin.png" ;
+    
+
+    //Store the updated data object in local storage, after turning the JSON to a string
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+    playerSetup();
+    setStats();
+}
+
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();

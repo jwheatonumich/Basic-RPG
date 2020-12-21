@@ -37,10 +37,10 @@ function setStats() {
 //Add random numbers of coins to the player's inventory
 function shakeTree() {
     //Calculate how many of each coin to add
-    var treeAcornCoin = Math.floor(Math.random()*10 + 1)
+    var treeAcornCoin = 0
     var treeMushroomCoin = 0
     var treeBearclawCoin =  0
-    var treeLeafCoin = Math.floor(Math.random()*6 + 5)
+    var treeLeafCoin = Math.floor(Math.random()*2 + 2)
 
     //Add to player's stats
     playerStats["acorncoin"] +=treeAcornCoin;
