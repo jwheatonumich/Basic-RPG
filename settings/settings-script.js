@@ -26,16 +26,18 @@ function setStats() {
 }
 
 //Data that gets sent to the narrative screen
-var script = "Hello " + playerStats["name"] + '. Welcome to Creatura. You have been sent to this planet to subjugate the native lifeforms. Investigate the surrounding area and identify any threats. Should your DNA become corrupted, you can return to the ship to repair it.';
-var image = "../images/spaceship-crash.png"
+var script = "Hello " + playerStats["name"] + ', welcome to Creatura. You have been sent to this planet to subjugate the native lifeforms. Investigate the surrounding area and identify any threats. Should your DNA become corrupted, you can return to the ship to repair it.';
+var image = "../images/spaceship-crash.png";
+var buttonName = "Explore";
+var buttonClick = "location.href='../home/index.html'";
 
 //Function that gets called when the new game button is clicked
 function newGame(){
     dataLoad();
     dataStore();
     setStats();
-    narrative(script, image)
-    window.location.href = '../narrative/narrative.html';
+    narrativeStore(script, image, buttonName, buttonClick); //Store the narrative data in local storage
+    window.location.href = '../narrative/narrative.html'; //Go to the narrative page
 };
 
 //Load current player stats when the page loads
