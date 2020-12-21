@@ -52,3 +52,16 @@
 .cost{
     max-width:10vw;
 }
+
+.pay-button{
+    max-width:20vw;
+}
+
+.button{
+    padding:10px 10px 10px 10px
+}
+
+/*Dropdown for selecting an enemy*/
+#enemies{
+    padding:10px 10px 10px 10px
+}
