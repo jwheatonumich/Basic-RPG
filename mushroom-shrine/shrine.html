@@ -21,6 +21,8 @@
         <!--Game setup-->
         <script src="shrine-initialize.js" defer></script>
 
+        <!--Standard page code-->
+        <script src="../script/standard-script.js" defer></script>
     </head>
     
     <body>
@@ -64,7 +66,8 @@
 
                 <p>Legend is that the shrine will transform you into a mushroom if you leave 20 mushroom coins.</p>
                 <div id="control">
-                    <a id="heal-button" onClick="healMax()" href=?><img class="pay-button"  alt = "Mushroom Coins" src="../images/mushroom-coin.png"></a>
+                    <a id="heal-button" onClick="healMax();" href=?><img class="pay-button"  alt = "Mushroom Coins" src="../images/mushroom-coin.png"></a><br>
+                    <button id="back" class="button" onclick="location.href='../mushroom-village/mushroom-village.html';">Back</button>
                 </div>
             </div>
 

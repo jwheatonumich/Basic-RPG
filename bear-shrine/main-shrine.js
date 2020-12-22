@@ -2,6 +2,9 @@ var playerHealth = 0;
 
 var healText = ``;
 
+//Relative link back to this page
+var page = "../squirrel-master/train.html";
+
 function healMax(){
     //Save health and xp after battle ends
     if (playerStats.bearclawcoin >= 10 && playerStats.costume != "bear"){

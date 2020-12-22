@@ -1,3 +1,6 @@
+//Relative link back to this page
+var page = "../mushroom-village/mushroom-village.html"
+
 //Load player stats in localstorage
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)

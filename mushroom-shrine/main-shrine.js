@@ -2,6 +2,9 @@ var playerHealth = 0;
 
 var healText = ``;
 
+//Relative link back to this page
+var page = "../mushroom-shrine/shrine.html"
+
 function healMax(){
     //Save health and xp after battle ends
     if (playerStats.mushroomcoin > 25 && playerStats.costume != "mushroom"){

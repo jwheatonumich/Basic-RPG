@@ -4,6 +4,9 @@ var playerStats = JSON.parse(retrievedObject)
 
 var maxStats = 50
 
+//Relative link back to this page
+var page = "../riku-training/train.html"
+
 //function to set player stats based on the button clicked
 function acornTraining(stat){
     if (playerStats["acorncoin"] >= 3 &&  playerStats[stat] < maxStats){

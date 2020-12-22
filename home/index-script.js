@@ -2,6 +2,8 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
+//Relative link back to this page
+var page = "../home/index.html"
 
 //Load each player stat into a variable
 function playerSetup() {
