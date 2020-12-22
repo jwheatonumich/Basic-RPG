@@ -1,4 +1,6 @@
-
+*{
+    touch-action: none;
+}
 
 #page-div {
     max-width:90vw;
