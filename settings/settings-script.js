@@ -36,7 +36,6 @@ function newGame(){
     dataLoad();
     dataStore();
     setStats();
-    narrativeStore(script, image, buttonName, buttonClick); //Store the narrative data in local storage
     window.location.href = '../narrative/narrative.html'; //Go to the narrative page
 };
 

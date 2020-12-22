@@ -77,18 +77,6 @@ function setStats() {
     document.getElementById("character-image").src = playerStats.image;
 }
 
-//Data for Riku's narrative page
-var script="Riku is clearly not a real bear.";
-var image = "../images/bearsuit-avatar.png";
-var buttonName="Back";
-var buttonClick ="location.href='../riku-training/train.html'";
-
-function rikuNarrative(){
-    narrativeStore(script, image, buttonName, buttonClick)
-    window.location.href = '../narrative/narrative.html';
-};
-
-
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();

@@ -1,0 +1,4 @@
+narrativeJSON = [
+    {"scriptName":"NewGame","script":'Hello cadet, welcome to Creatura. You have been sent to this planet to subjugate the native lifeforms. Investigate the surrounding area and identify any threats. Should your DNA become corrupted, you can return to the ship to repair it.',"image" : "../images/spaceship-crash.png","buttonName":"Explore","buttonClick" :"location.href='../home/index.html'"},
+    {"scriptName":"Riku1","script":"Riku is clearly not a real bear.","image" : "../images/bearsuit-avatar.png","buttonName":"Back","buttonClick" :"location.href='../riku-training/train.html'"}
+]

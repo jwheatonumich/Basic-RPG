@@ -7,7 +7,7 @@ function healMax(){
     if (playerStats.mushroomcoin > 25 && playerStats.costume != "mushroom"){
         playerStats.mushroomcoin-=25;
         playerStats.costume = "mushroom" ;
-        playerStats.image = "../images/little-mushroom.png" ;
+        playerStats.image = "../images/little-mushroom-scanner.png" ;
     }
     
 
