@@ -1,3 +1,7 @@
+#body{
+    touch-action: manipulation;
+}
+
 #page-div {
     max-width:90vw;
 }
