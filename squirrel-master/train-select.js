@@ -2,6 +2,21 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
+//Relative link back to this page
+var page = "../squirrel-master/train.html"
+
+//Array of enemy names
+var enemies = ["A Squirrel","Two Squirrels"];
+
+//Where in the enemy list squirrels start
+var enemyStart = 0
+
+//Array of enemy images
+var pictureList = [
+    "../images/squirrel-avatar-mini.png",
+    "../images/two-squirrels-mini.png" 
+];
+
 var maxStats = 25
 
 //function to set player stats based on the button clicked
@@ -80,3 +95,7 @@ function setStats() {
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
+
+//Populate dropdown on page load
+window.onload = popDropdown();
+window.onload = selectImage();//Set the image to the default choice on page load

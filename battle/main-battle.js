@@ -167,3 +167,8 @@ function attack() {
     //Update the battle text for the current turn
     document.getElementById("battle-text-div").innerHTML = battleText;
 }
+
+//Setup back button
+function backButton(buttonClick){
+    document.getElementById("back-button").setAttribute('onClick', "location.href=\"" + buttonClick + "\";"); //Set the code it runs
+}

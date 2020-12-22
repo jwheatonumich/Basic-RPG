@@ -2,6 +2,9 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
+//Relative link back to this page
+var page = "../cave/cave.html"
+
 //Load each player stat into a variable
 function playerSetup() {
     playerName = playerStats.name;
@@ -73,6 +76,7 @@ function enterCave() {
         localStorage.setItem('chosenEnemy', 4);
         localStorage.setItem('enemyImageSelect', "../images/blackbear.png");
         window.location.href = "../battle/battle.html";
+        lastPage(page);
     }
 
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
