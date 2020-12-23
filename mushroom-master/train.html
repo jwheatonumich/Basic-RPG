@@ -15,7 +15,6 @@
           <link rel="stylesheet" href= "../stylesheets/navbar.css">
           <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
 
-          <script src="../script/new-battle-script.js" defer></script>
           <script src="train-select.js" defer></script>
 
         </head>
@@ -86,14 +85,10 @@
 
                 </table>
               </div>
-
-              <div id="battle-div">
-                <img id="enemy-image" alt = "Enemy" src="../images/wimpy-wombat.png"><br>
-                <div id="control-div">
-                    <select id="enemies" name="enemies" onChange="selectImage();"></select>
-                    <button id="startBattle" class="button" onclick="startBattle()">Fight</button><br>
-                    <button id="back" class="button" onclick="location.href='../mushroom-village/mushroom-village.html';">Back</button>
-                </div>
+              
+              <div id="control-div">
+                <button id="back" class="button" onclick="location.href='../mushroom-village/mushroom-village.html';">Back</button>
+              </div>
             </div>
 
 

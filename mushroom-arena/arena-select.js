@@ -1,34 +1,21 @@
 //Load player stats in localstorage
 var retrievedObject = localStorage.getItem('storedPlayerStats');
-var playerStats = JSON.parse(retrievedObject);
+var playerStats = JSON.parse(retrievedObject)
 
 //Relative link back to this page
-var page = "../squirrel-master/train.html";
+var page = "../mushroom-arena/arena.html"
+
+//Array of enemy names
+var enemies = ["Little Mushroom","Tall Mushroom"];
+
+//Where in the enemy list mushrooms start
+var enemyStart = 2
 
 //Array of enemy images
 var pictureList = [
-    "../images/squirrel-avatar-mini.png",
-    "../images/two-squirrels-mini.png" 
+    "../images/little-mushroom.png",
+    "../images/tall-mushroom.png"
 ];
-
-var maxStats = 25
-
-//function to set player stats based on the button clicked
-function acornTraining(stat){
-    if (playerStats["acorncoin"] >= 3 &&  playerStats[stat] < maxStats){
-        playerStats[stat] +=1;
-        playerStats["acorncoin"] -=3;
-        healthCalc();
-        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-        playerSetup();
-        setStats();
-    } 
-}
-
-//Function to calculate max health from endurance
-function healthCalc(){
-    playerStats["maxhealth"] = 4 * playerStats["endurance"]
-};
 
 //Load each player stat into a variable
 function playerSetup() {
@@ -65,3 +52,7 @@ function setStats() {
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
+
+//Populate dropdown on page load
+window.onload = popDropdown();
+window.onload = selectImage();//Set the image to the default choice on page load

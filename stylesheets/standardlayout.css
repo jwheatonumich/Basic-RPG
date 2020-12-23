@@ -65,3 +65,7 @@
 #enemies{
     padding:10px 10px 10px 10px
 }
+
+.image-link{
+    max-width:75px;
+}

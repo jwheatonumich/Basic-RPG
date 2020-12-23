@@ -58,16 +58,15 @@
           <div id="game-div">
 
             <div id="cave-div">
-              <img id="page-image" alt = "cave" src="../images/bear-cave-imagemap.png">
+              <a onclick="enterCave();"><img id="page-image" alt = "cave" src="../images/bear-cave.png"></a>
               
+              <div id="textbox"></div>
+
               <div id="control">
-                <button id="enterCave" class="button" onclick="enterCave();">Enter the cave</button>
-                <button id="Riku" class="button" onclick="location.href='../riku-training/train.html';">Approach Riku</button>
-                <button id="bearShrine" class="button" onclick="location.href='../bear-shrine/shrine.html';">Approach bear shrine</button>
+                <a href='../riku-training/train.html'><img class="image-link" alt="Riku" src="../images/bear-avatar.png"></a>
+                <a href='../bear-shrine/shrine.html'><img class="image-link" alt="Bear Shrine" src="../images/bear-shrine.png"></a></br>
                 <button id="back" class="button" onclick="location.href='../home/index.html';">Back</button>
               </div>
-
-              <div id="textbox"></div>
 
             </div>
           </div>

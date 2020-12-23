@@ -1,3 +1,4 @@
+
 <html>
 
         <head>
@@ -14,10 +15,9 @@
           <link rel="stylesheet" href= "../stylesheets/navbar.css">
           <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
 
-          <script src="tree-select.js" defer></script>
+          <script src="../script/new-battle-script.js" defer></script>
+          <script src="arena-select.js" defer></script>
 
-          <!--Standard page code-->
-          <script src="../script/standard-script.js" defer></script>
         </head>
     
     <body>
@@ -56,22 +56,19 @@
           </div>
 
           <div id="game-div">
-
             <div id="trainer-div">
-              <img id="page-image" alt = "Trainer" src="../images/mushroom-village.png">
-              
-              <div id="control">
-                <a href='../mushroom-master/train.html'><img class="image-link" alt="Mushroom Master" src="../images/mushroom-man.png"></a>
-                <a href='../mushroom-shrine/shrine.html'><img class="image-link" alt="Mushroom Shrine" src="../images/mushroom-shrine.png"></a>
-                <a href='../mushroom-arena/arena.html'><img class="image-link" alt="Mushroom Arena" src="../images/little-mushroom.png"></a><br>
-                <button id="back" class="button" onclick="location.href='../home/index.html';">Back</button>
-              </div>
-
-              <div id="textbox">
-              </div>
-
+              <img id="page-image" alt = "Trainer" src="../images/little-mushroom.png">
             </div>
-          </div>
+
+              <div id="battle-div">
+                <img id="enemy-image" alt = "Enemy" src="../images/wimpy-wombat.png"><br>
+                <div id="control-div">
+                    <select id="enemies" name="enemies" onChange="selectImage();"></select>
+                    <button id="startBattle" class="button" onclick="startBattle()">Fight</button><br>
+                    <button id="back" class="button" onclick="location.href='../mushroom-village/mushroom-village.html';">Back</button>
+                </div>
+            </div>
+
 
         </div>
 

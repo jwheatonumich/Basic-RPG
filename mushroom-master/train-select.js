@@ -3,52 +3,16 @@ var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
 //Relative link back to this page
-var page = "../train/train.html"
-
-//Array of enemy names
-var enemies = ["Little Mushroom","Tall Mushroom"];
-
-//Where in the enemy list mushrooms start
-var enemyStart = 2
-
-//Array of enemy images
-var pictureList = [
-    "../images/little-mushroom.png",
-    "../images/tall-mushroom.png"
-];
+var page = "../mushroom-master/train.html"
 
 //Max stats for this trainer
 var maxStats = 40
-
-//function to set player stats based on the button clicked
-function acornTraining(stat){
-    if (playerStats["acorncoin"] >= 3 &&  playerStats[stat] < maxStats){
-        playerStats[stat] +=1;
-        playerStats["acorncoin"] -=3;
-        healthCalc();
-        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-        playerSetup();
-        setStats();
-    } 
-}
 
 //function to set player stats based on the button clicked
 function mushroomTraining(stat){
     if (playerStats["mushroomcoin"] >= 2 &&  playerStats[stat] < maxStats){
         playerStats[stat] +=1;
         playerStats["mushroomcoin"] -=2;
-        healthCalc();
-        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-        playerSetup();
-        setStats();
-    } 
-}
-
-//function to set player stats based on the button clicked
-function bearclawTraining(stat){
-    if (playerStats["bearclawcoin"] >= 1 &&  playerStats[stat] < maxStats){
-        playerStats[stat] +=1;
-        playerStats["bearclawcoin"] -=1;
         healthCalc();
         localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
         playerSetup();
@@ -96,7 +60,3 @@ function setStats() {
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
-
-//Populate dropdown on page load
-window.onload = popDropdown();
-window.onload = selectImage();//Set the image to the default choice on page load
