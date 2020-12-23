@@ -1,0 +1,69 @@
+*{
+    touch-action: none;
+}
+
+#page-div {
+    max-width:90vw;
+}
+
+#game-div{
+    display:grid;
+    grid-template-columns:45vw 45vw;
+    grid-gap: 20px;
+}
+
+#player-div, #enemy-div{
+    padding: 20px;
+}
+
+.game-text {
+    display:inline;
+}
+
+#control-div{
+    display:grid;
+    grid-template-columns:30vw 30vw;
+    grid-template-rows: 5vh 5vh 5vh;
+    grid-gap:20px;
+    padding:0;
+    grid-template-areas:
+        "attackSelect attackButton"
+        "restartButton restartButton"
+        "backButton backButton"
+}
+
+#battle-text-div{
+    padding: 20px;
+}
+
+#attack-button {
+    height: 5vh;
+    width: 30vw;
+    grid-area:attackButton
+}
+
+#ability {
+    height: 5vh;
+    width: 30vw;
+    grid-area:attackSelect
+}
+
+#restart-button{
+    height: 5vh;
+    width: 60vw; 
+    grid-area:restartButton
+}
+
+#back-button{
+    height: 5vh;
+    width: 60vw; 
+    grid-area:backButton
+}
+
+#enemy-image{
+    max-height:10vh;
+}
+
+#character-image{
+    max-height:10vh;
+}
