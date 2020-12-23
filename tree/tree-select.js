@@ -40,7 +40,7 @@ function shakeTree() {
     var treeAcornCoin = 0
     var treeMushroomCoin = 0
     var treeBearclawCoin =  0
-    var treeLeafCoin = Math.floor(Math.random()*2 + 2)
+    var treeLeafCoin = Math.floor(Math.random()*3 + 2)
 
     //Add to player's stats
     playerStats["acorncoin"] +=treeAcornCoin;
