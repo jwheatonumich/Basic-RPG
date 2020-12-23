@@ -13,6 +13,8 @@ var enemyAcornCoin = 0;
 var enemyMushroomCoin = 0
 var enemyBearclawCoin = 0
 
+var enemyPowerlevel = 0
+
 var playerName = "";
 var playerHealth = 0;
 var playerMaxHealth = 0;
@@ -50,18 +52,6 @@ function dataLoad(){
     ]
 }
 
-//Enemy Setup
-function enemySetup() {
-    enemyName = stats[level].name;
-    enemyHealth = stats[level].health;
-    enemyMaxHealth = stats[level].maxhealth;
-    enemyAttack = stats[level].attack;
-    enemyDefense = stats[level].defense;
-    enemyAcornCoin = stats[level].acorncoin;
-    enemyMushroomCoin = stats[level].mushroomcoin;
-    enemyBearclawCoin = stats[level].bearclawcoin;
-}
-
 //Player Setup
 function playerSetup() {
     playerName = playerStats.name;
@@ -73,6 +63,20 @@ function playerSetup() {
     playerMushroomCoin = playerStats.mushroomcoin;
     playerBearclawCoin = playerStats.bearclawcoin;
     playerLeafCoin = playerStats.leafcoin;
+}
+
+//Enemy Setup
+function enemySetup() {
+    enemyName = stats[level].name;
+    enemyHealth = stats[level].health;
+    enemyMaxHealth = stats[level].maxhealth;
+    enemyAttack = stats[level].attack;
+    enemyDefense = stats[level].defense;
+    enemyAcornCoin = stats[level].acorncoin;
+    enemyMushroomCoin = stats[level].mushroomcoin;
+    enemyBearclawCoin = stats[level].bearclawcoin;
+
+    enemyPowerlevel = 5*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -94,6 +98,9 @@ function setStats() {
 
     //Set the player image to their costume
     document.getElementById("character-image").src = playerStats.image;
+
+    //Set the enemy powerlevel
+    document.getElementById("powerlevel").value = enemyPowerlevel
 }
 
 //Function to check if the battle is over
