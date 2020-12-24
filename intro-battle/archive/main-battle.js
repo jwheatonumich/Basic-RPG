@@ -13,10 +13,7 @@ var enemyAcornCoin = 0;
 var enemyMushroomCoin = 0
 var enemyBearclawCoin = 0
 
-var enemyPowerlevel = 0
-
 var playerName = "";
-var playerSpecies = "";
 var playerHealth = 0;
 var playerMaxHealth = 0;
 var playerAttack = 0;
@@ -31,10 +28,18 @@ var defenseMultiplier = 1;
 
 //Load data from either local storage or create if no local storage exists
 function dataLoad(){
+    //Check if there is stored data for player stats. Otherwise, start from level 1
+    if (localStorage.getItem("storedPlayerStats") === null) {
+        //Set player and enemy stats
+        playerStats = {"name":"Fred", "health":100, "maxhealth":100, "attack":10, "defense":5,  
+        "day":1, "caveday":0,"treeday":0,
+        "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":10}
 
-    //Retrieve player stats from local storage and convert the string into a JSON
-    var retrievedObject = localStorage.getItem('storedPlayerStats');
-    playerStats = JSON.parse(retrievedObject)
+    }else{
+        //If using the stored file, retrieve it and convert the string into a JSON
+        var retrievedObject = localStorage.getItem('storedPlayerStats');
+        playerStats = JSON.parse(retrievedObject)
+    }
 
     stats = [
         {"name":"A Squirrel", "enemyID":"0001", "health":20, "maxhealth":20, "attack":10, "defense":5, "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0 },
@@ -43,22 +48,6 @@ function dataLoad(){
         {"name":"Tall Mushroom", "enemyID":"0003", "health":120, "maxhealth":120, "attack":40, "defense":15, "acorncoin":0, "mushroomcoin":3, "bearclawcoin":0 } ,
         {"name":"Blackbear", "enemyID":"0004", "health":160, "maxhealth":160, "attack":40, "defense":40, "acorncoin":0, "mushroomcoin":0, "bearclawcoin":1 }
     ]
-}
-
-//Player Setup
-function playerSetup() {
-    playerName = playerStats.name;
-    playerSpecies = playerStats.species;
-
-    playerHealth = playerStats.health;
-    playerMaxHealth = playerStats.maxhealth;
-    playerAttack = playerStats.attack;
-    playerDefense = playerStats.defense;
-
-    playerAcornCoin = playerStats.acorncoin;
-    playerMushroomCoin = playerStats.mushroomcoin;
-    playerBearclawCoin = playerStats.bearclawcoin;
-    playerLeafCoin = playerStats.leafcoin;
 }
 
 //Enemy Setup
@@ -71,8 +60,19 @@ function enemySetup() {
     enemyAcornCoin = stats[level].acorncoin;
     enemyMushroomCoin = stats[level].mushroomcoin;
     enemyBearclawCoin = stats[level].bearclawcoin;
+}
 
-    enemyPowerlevel = 5*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
+//Player Setup
+function playerSetup() {
+    playerName = playerStats.name;
+    playerHealth = playerStats.health;
+    playerMaxHealth = playerStats.maxhealth;
+    playerAttack = playerStats.attack;
+    playerDefense = playerStats.defense;
+    playerAcornCoin = playerStats.acorncoin;
+    playerMushroomCoin = playerStats.mushroomcoin;
+    playerBearclawCoin = playerStats.bearclawcoin;
+    playerLeafCoin = playerStats.leafcoin;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -94,24 +94,6 @@ function setStats() {
 
     //Set the player image to their costume
     document.getElementById("character-image").src = playerStats.image;
-
-    //Set the enemy powerlevel
-    document.getElementById("powerlevel").value = enemyPowerlevel
-}
-
-function setAbilities(){
-    //Set the attack button images based on the species
-    document.getElementById("attack-button-1").src = speciesData[playerSpecies]["attackbutton1"];
-    document.getElementById("attack-button-2").src = speciesData[playerSpecies]["attackbutton2"];
-    document.getElementById("attack-button-3").src = speciesData[playerSpecies]["attackbutton3"];
-    document.getElementById("attack-button-4").src = speciesData[playerSpecies]["attackbutton4"];
-
-    //Set the onclick for each ability to the correct attack function based on the player's species
-    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack1"])
-    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack2"])
-    document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies]["attack3"])
-    document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies]["attack4"])
-    
 }
 
 //Function to check if the battle is over
@@ -126,7 +108,6 @@ function battleStatus(){
         playerAcornCoin += enemyAcornCoin;
         playerMushroomCoin += enemyMushroomCoin;
         playerBearclawCoin += enemyBearclawCoin;
-
         battleCleanup();
     }
 }
@@ -145,18 +126,24 @@ function battleCleanup(){
 }
 
 //Script that is run when clicking the attack button
-function attack(ability) {
+function attack() {
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
         
+        //Determine which ability was chosen
+        var abilitySelect = document.getElementById("ability");
+        var chosenAbility = abilitySelect.value;
+
         //Determine multiplier if using a multiplier ability
-        switch (ability) {
+        switch (chosenAbility) {
             case "None": attackMultiplier = 1; defenseMultiplier = 1; break;
             case "Charge": attackMultiplier = 1.2; defenseMultiplier = 0.8; break;
             case "Block": attackMultiplier = 0.8; defenseMultiplier = 1.2; break;
-            case "QuickAttack": attackMultiplier = 2; defenseMultiplier = 0; break;
-            case "Powerup": playerAttack = playerAttack * 1.2;attackMultiplier = 0; break;
         }
+
+        console.log(chosenAbility);
+        console.log(attackMultiplier);
+        console.log(defenseMultiplier);
 
         //Calculate player and enemy attack
         var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense),1);
@@ -179,58 +166,6 @@ function attack(ability) {
 
     //Update the battle text for the current turn
     document.getElementById("battle-text-div").innerHTML = battleText;
-
-    //Add loot icons if the enemy is dead
-    if (enemyHealth <= 0){
-        //Loop to create acorn icons
-        var i = 1;
-        while (i <= enemyAcornCoin){
-
-            //Create the images
-            var elem = document.createElement("img");
-            elem.src = '../images/acorn-coin.png';
-            elem.setAttribute("class", "item");
-            console.log(elem)
-
-            //Append the images
-            document.getElementById("battle-text-div").appendChild(elem);
-            i++;
-        }
-        
-        //Loop to create mushroom icons
-        var i = 1;
-        while (i <= enemyMushroomCoin){
-
-            //Create the images
-            var elem = document.createElement("img");
-            elem.src = '../images/mushroom-coin.png';
-            elem.setAttribute("class", "item");
-
-            //Append the images
-            document.getElementById("battle-text-div").appendChild(elem);
-            i++;
-        }
-
-        //Loop to create bearclaw icons
-        var i = 1;
-        while (i <= enemyBearclawCoin){
-
-            //Create the images
-            var elem = document.createElement("img");
-            elem.src = '../images/bearclaw-coin.png';
-            elem.setAttribute("class", "item");
-
-            //Append the images
-            document.getElementById("battle-text-div").appendChild(elem);
-            i++;
-        }
-
-    }
-}
-
-//Clear the battle text
-function resetText(){
-    document.getElementById("battle-text-div").innerHTML = "Click the 'Attack' button to begin.";
 }
 
 //Setup back button

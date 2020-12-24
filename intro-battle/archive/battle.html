@@ -19,9 +19,8 @@
         <!--Game setup-->
         <script src="battle-initialize.js" defer></script>
 
-        <!--Game setup-->
-        <script src="species-data.js"></script>
-
+        <!--Populate ability dropdown-->
+        <script src="ability-select.js" defer></script>
     </head>
 
     <body>
@@ -68,25 +67,17 @@
                             <div class="game-text">Health:</div>
                             <div class="game-text" id="enemy-health">XYZ</div>
                         </div>
-                        <br>
-                        <label for="powerlevel">Power Level:</label> <meter id="powerlevel" value="5" min="0" max="10">5 out of 10</meter>
                     </div>
                 </div>
             </div>
 
             <div id="battle-text-div">Click the "Attack" button to begin.<br><br></div>
 
-            <div id="abilities">
-                <a id="attack1" onclick="attack('None')"><img class="attack-button" id="attack-button-1" src=../images/attack-button.png></a>
-                <a id="attack2" onclick="attack('Charge')"><img class="attack-button" id="attack-button-2" src=../images/charge-button.png></a>
-                <a id="attack3" onclick="attack('Block')"><img class="attack-button" id="attack-button-3" src=../images/block-button.png></a>
-                <a id="attack4" onclick="attack('Powerup')"><img class="attack-button" id="attack-button-4" src=../images/powerup-button.png></a>
-            </div>
-
             <div id="control-div">
+                <select id="ability" name="ability"></select>
+                <button id="attack-button" onclick="attack()">Attack</button>
                 <button id="back-button" >Back</button>
             </div>
-        
 
         </div>
     </body>
