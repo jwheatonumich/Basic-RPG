@@ -39,8 +39,13 @@ function sleep() {
     
     playerStats["day"] +=1;
     playerStats["caveday"] = 0; //Let the player steal another bear coin
+    if(playerStats.health < playerStats.maxhealth/2){ //If health is less than 50%
+        playerStats.health = Math.floor(playerStats.maxhealth/2); //Heal to 50% of max health
+    }
     document.getElementById("textbox").innerHTML = 'Day '+ playerStats["day"] + '<br><br>You wake up. You don\'t feel very refreshed.<br><br> Where is the coffee?'
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+    playerSetup(); //Pull updated stats from local storage
+    setStats(); //Update stats on page
 }
 
 //Transform back to original alien
