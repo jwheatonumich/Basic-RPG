@@ -2,16 +2,19 @@
     font-size:1em;
 }
 
-#page-div {
-    max-width:90vw;
+body{
+    width:100%;
+    max-width:400px;
+}
 
+#page-div {
     display:grid;
 
     grid-template-areas:
       "nav nav"
       "character game";
 
-      grid-template-columns: 30vw 60vw;
+      grid-template-columns: 30 60;
 }
 
 #character-div{
@@ -34,27 +37,27 @@
 }
 
 #character-image{
-    max-width:25vw;
+    max-width:80px;
 }
 
 #page-image{
-    max-width:55vw;
+    max-width:220px;
 }
 
 #enemy-image{
-    max-width:25vw;
+    max-width:100px;
 }
 
 .item{
-    max-width: 10vw;
+    max-width: 40px;
 }
 
 .cost{
-    max-width:10vw;
+    max-width:40px;
 }
 
 .pay-button{
-    max-width:20vw;
+    max-width:80px;
 }
 
 .button{
@@ -68,4 +71,8 @@
 
 .map-image-link{
     max-width:75px;
+}
+
+.link-image{
+    max-width:112px;
 }
