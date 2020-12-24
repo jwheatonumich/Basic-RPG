@@ -115,6 +115,7 @@ function battleStatus(){
         playerAcornCoin += enemyAcornCoin;
         playerMushroomCoin += enemyMushroomCoin;
         playerBearclawCoin += enemyBearclawCoin;
+
         battleCleanup();
     }
 }
@@ -133,24 +134,17 @@ function battleCleanup(){
 }
 
 //Script that is run when clicking the attack button
-function attack() {
+function attack(ability) {
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
         
-        //Determine which ability was chosen
-        var abilitySelect = document.getElementById("ability");
-        var chosenAbility = abilitySelect.value;
-
         //Determine multiplier if using a multiplier ability
-        switch (chosenAbility) {
+        switch (ability) {
             case "None": attackMultiplier = 1; defenseMultiplier = 1; break;
             case "Charge": attackMultiplier = 1.2; defenseMultiplier = 0.8; break;
             case "Block": attackMultiplier = 0.8; defenseMultiplier = 1.2; break;
+            case "Powerup": playerAttack = playerAttack * 1.2;attackMultiplier = 0; break;
         }
-
-        console.log(chosenAbility);
-        console.log(attackMultiplier);
-        console.log(defenseMultiplier);
 
         //Calculate player and enemy attack
         var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense),1);
@@ -173,6 +167,60 @@ function attack() {
 
     //Update the battle text for the current turn
     document.getElementById("battle-text-div").innerHTML = battleText;
+
+    if (enemyHealth <= 0){
+        //Loop to create acorn icons
+        var i = 1;
+        while (i <= enemyAcornCoin){
+
+            //Create the images
+            var elem = document.createElement("img");
+            elem.src = '../images/acorn-coin.png';
+            elem.setAttribute("class", "item");
+            console.log(elem)
+
+            //Append the images
+            document.getElementById("battle-text-div").appendChild(elem);
+            i++;
+        }
+        
+        //Loop to create mushroom icons
+        var i = 1;
+        while (i <= enemyMushroomCoin){
+
+            //Create the images
+            var elem = document.createElement("img");
+            elem.src = '../images/mushroom-coin.png';
+            elem.setAttribute("class", "item");
+
+            //Append the images
+            document.getElementById("battle-text-div").appendChild(elem);
+            i++;
+        }
+
+        //Loop to create bearclaw icons
+        var i = 1;
+        while (i <= enemyBearclawCoin){
+
+            //Create the images
+            var elem = document.createElement("img");
+            elem.src = '../images/bearclaw-coin.png';
+            elem.setAttribute("class", "item");
+
+            //Append the images
+            document.getElementById("battle-text-div").appendChild(elem);
+            i++;
+        }
+
+    }
+}
+
+function charge(){
+    attackMultiplier = 1.2; 
+    defenseMultiplier = 0.8;
+    console.log(attackMultiplier)
+    console.log(defenseMultiplier)
+    attack()
 }
 
 //Setup back button

@@ -2,13 +2,14 @@
     touch-action: none;
 }
 
-#page-div {
-    max-width:90vw;
+body{
+    width:100vw;
+    max-width:400px;
 }
 
 #game-div{
     display:grid;
-    grid-template-columns:45vw 45vw;
+    grid-template-columns:1fr 1fr;
     grid-gap: 20px;
 }
 
@@ -22,7 +23,7 @@
 
 #control-div{
     display:grid;
-    grid-template-columns:30vw 30vw;
+    grid-template-columns:1fr 1fr;
     grid-template-rows: 5vh 5vh 5vh;
     grid-gap:20px;
     padding:0;
@@ -38,26 +39,28 @@
 
 #attack-button {
     height: 5vh;
-    width: 30vw;
+    width: 190px;
     grid-area:attackButton
 }
 
 #ability {
     height: 5vh;
-    width: 30vw;
-    grid-area:attackSelect
+    width: 190px;
+    grid-area:attackSelect;
 }
 
 #restart-button{
     height: 5vh;
-    width: 60vw; 
-    grid-area:restartButton
+    width:90vw;
+    max-width:400px;
+    grid-area:restartButton;
 }
 
 #back-button{
     height: 5vh;
-    width: 60vw; 
-    grid-area:backButton
+    width:90vw;
+    max-width:400px;
+    grid-area:backButton;
 }
 
 #enemy-image{
@@ -66,4 +69,13 @@
 
 #character-image{
     max-height:10vh;
+}
+
+.attack-button{
+    width:22vw;
+    max-width:90px;
+}
+
+.item{
+    max-width: 40px;
 }
