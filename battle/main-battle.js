@@ -168,6 +168,7 @@ function attack(ability) {
     //Update the battle text for the current turn
     document.getElementById("battle-text-div").innerHTML = battleText;
 
+    //Add loot icons if the enemy is dead
     if (enemyHealth <= 0){
         //Loop to create acorn icons
         var i = 1;
@@ -215,12 +216,9 @@ function attack(ability) {
     }
 }
 
-function charge(){
-    attackMultiplier = 1.2; 
-    defenseMultiplier = 0.8;
-    console.log(attackMultiplier)
-    console.log(defenseMultiplier)
-    attack()
+//Clear the battle text
+function resetText(){
+    document.getElementById("battle-text-div").innerHTML = "Click the 'Attack' button to begin.";
 }
 
 //Setup back button

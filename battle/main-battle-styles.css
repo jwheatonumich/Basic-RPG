@@ -35,6 +35,7 @@ body{
 
 #battle-text-div{
     padding: 20px;
+    height:100px;
 }
 
 #attack-button {
