@@ -9,7 +9,7 @@ function healMax(){
     //Save health and xp after battle ends
     if (playerStats.bearclawcoin >= 10 && playerStats.costume != "bear"){
         playerStats.bearclawcoin-=10;
-        playerStats.costume = "bear" ;
+        playerStats.species = "bear" ;
         playerStats.image = "../images/small-bear-avatar.png" ;
     }
     

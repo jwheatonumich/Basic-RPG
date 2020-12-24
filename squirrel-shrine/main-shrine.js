@@ -6,7 +6,7 @@ function healMax(){
     //Save health and xp after battle ends
     if (playerStats.acorncoin >= 50 && playerStats.costume != "squirrel"){
         playerStats.acorncoin -= 50;
-        playerStats.costume = "squirrel" ;
+        playerStats.species = "squirrel" ;
         playerStats.image = "../images/squirrel-avatar.png" ;
     }
     

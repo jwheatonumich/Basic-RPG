@@ -16,6 +16,7 @@ var enemyBearclawCoin = 0
 var enemyPowerlevel = 0
 
 var playerName = "";
+var playerSpecies = "";
 var playerHealth = 0;
 var playerMaxHealth = 0;
 var playerAttack = 0;
@@ -30,18 +31,10 @@ var defenseMultiplier = 1;
 
 //Load data from either local storage or create if no local storage exists
 function dataLoad(){
-    //Check if there is stored data for player stats. Otherwise, start from level 1
-    if (localStorage.getItem("storedPlayerStats") === null) {
-        //Set player and enemy stats
-        playerStats = {"name":"Fred", "health":100, "maxhealth":100, "attack":10, "defense":5,  
-        "day":1, "caveday":0,"treeday":0,
-        "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":10}
 
-    }else{
-        //If using the stored file, retrieve it and convert the string into a JSON
-        var retrievedObject = localStorage.getItem('storedPlayerStats');
-        playerStats = JSON.parse(retrievedObject)
-    }
+    //Retrieve player stats from local storage and convert the string into a JSON
+    var retrievedObject = localStorage.getItem('storedPlayerStats');
+    playerStats = JSON.parse(retrievedObject)
 
     stats = [
         {"name":"A Squirrel", "enemyID":"0001", "health":20, "maxhealth":20, "attack":10, "defense":5, "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0 },
@@ -55,10 +48,13 @@ function dataLoad(){
 //Player Setup
 function playerSetup() {
     playerName = playerStats.name;
+    playerSpecies = playerStats.species;
+
     playerHealth = playerStats.health;
     playerMaxHealth = playerStats.maxhealth;
     playerAttack = playerStats.attack;
     playerDefense = playerStats.defense;
+
     playerAcornCoin = playerStats.acorncoin;
     playerMushroomCoin = playerStats.mushroomcoin;
     playerBearclawCoin = playerStats.bearclawcoin;
@@ -103,6 +99,21 @@ function setStats() {
     document.getElementById("powerlevel").value = enemyPowerlevel
 }
 
+function setAbilities(){
+    //Set the attack button images based on the species
+    document.getElementById("attack-button-1").src = speciesData[playerSpecies]["attackbutton1"];
+    document.getElementById("attack-button-2").src = speciesData[playerSpecies]["attackbutton2"];
+    document.getElementById("attack-button-3").src = speciesData[playerSpecies]["attackbutton3"];
+    document.getElementById("attack-button-4").src = speciesData[playerSpecies]["attackbutton4"];
+
+    //Set the onclick for each ability to the correct attack function based on the player's species
+    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack1"])
+    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack2"])
+    document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies]["attack3"])
+    document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies]["attack4"])
+    
+}
+
 //Function to check if the battle is over
 function battleStatus(){
     if (playerHealth <= 0){
@@ -143,6 +154,7 @@ function attack(ability) {
             case "None": attackMultiplier = 1; defenseMultiplier = 1; break;
             case "Charge": attackMultiplier = 1.2; defenseMultiplier = 0.8; break;
             case "Block": attackMultiplier = 0.8; defenseMultiplier = 1.2; break;
+            case "QuickAttack": attackMultiplier = 2; defenseMultiplier = 0; break;
             case "Powerup": playerAttack = playerAttack * 1.2;attackMultiplier = 0; break;
         }
 

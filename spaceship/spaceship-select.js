@@ -46,7 +46,7 @@ function sleep() {
 //Transform back to original alien
 function repairDNA(){
     //Save health and xp after battle ends
-    playerStats.costume = "none" ;
+    playerStats.species = "gremlin" ;
     playerStats.image = "../images/little-goblin.png" ;
     
 
