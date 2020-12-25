@@ -17,6 +17,7 @@
 
           <script src="../script/new-battle-script.js" defer></script>
           <script src="arena-select.js" defer></script>
+          <script src="main-heal.js" defer></script>
 
         </head>
     
@@ -60,8 +61,20 @@
               <img id="page-image" alt = "Trainer" src="../images/little-mushroom.png">
             </div>
 
+            <div id="cost-table-div">
+              <table id="cost-table">
+                <tr>
+                  <th>Heal</th>
+                </tr>
+                <tr>
+                  <th><a onClick="healMax();" href=?><img class = "cost" alt = "Mushroom Coin" src="../images/leaf-coin.png"></a></th>
+                </tr>
+                </table>
+              </div>
+
               <div id="battle-div">
                 <img id="enemy-image" alt = "Enemy" src="../images/wimpy-wombat.png"><br>
+
                 <div id="control-div">
                     <select id="enemies" name="enemies" onChange="selectImage();"></select>
                     <button id="startBattle" class="button" onclick="startBattle()">Fight</button><br>

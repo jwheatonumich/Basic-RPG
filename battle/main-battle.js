@@ -28,6 +28,14 @@ var playerBearclawCoin = 0;
 var battleText = ``;
 var attackMultiplier = 1;
 var defenseMultiplier = 1;
+var enemyAttackMultiplier = 1;
+var enemyDefenseMultiplier = 1;
+
+var enemyStun = 0;
+var playerStun = 0;
+
+var playerArmor = 0;
+var enemyArmor = 0;
 
 //Load data from either local storage or create if no local storage exists
 function dataLoad(){
@@ -108,7 +116,7 @@ function setAbilities(){
 
     //Set the onclick for each ability to the correct attack function based on the player's species
     document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack1"])
-    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack2"])
+    document.getElementById("attack2").setAttribute("onClick", speciesData[playerSpecies]["attack2"])
     document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies]["attack3"])
     document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies]["attack4"])
     
@@ -146,25 +154,55 @@ function battleCleanup(){
 
 //Script that is run when clicking the attack button
 function attack(ability) {
+
+    //Troubleshooting
+    console.log(ability)
+
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
         
-        //Determine multiplier if using a multiplier ability
+        //Pre damage ability effects
         switch (ability) {
             case "None": attackMultiplier = 1; defenseMultiplier = 1; break;
             case "Charge": attackMultiplier = 1.2; defenseMultiplier = 0.8; break;
             case "Block": attackMultiplier = 0.8; defenseMultiplier = 1.2; break;
             case "QuickAttack": attackMultiplier = 2; defenseMultiplier = 0; break;
-            case "Powerup": playerAttack = playerAttack * 1.2;attackMultiplier = 0; break;
+            case "Powerup": playerAttack = playerAttack * 1.2; break;
+            case "Shield": playerArmor += 5; break;
         }
 
         //Calculate player and enemy attack
-        var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense),1);
-        var enemyDamage = Math.max(Math.floor(Math.random()*2*enemyAttack - playerDefense*defenseMultiplier),1);
+        var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
+        var enemyDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
 
-        //Update health based on damage
-        playerHealth -= enemyDamage;
-        enemyHealth -= playerDamage;
+        //Abilities that set damage to zero
+        if(enemyStun == 1){
+            enemyDamage = 0;
+        }
+        if(
+            playerStun == 1||
+            ability == "Powerup"||
+            ability == "Shield"
+        )
+        {
+            playerDamage = 0;
+        }
+
+        //Abilities that only last one turn
+        enemyStun = 0;
+        playerStun = 0;
+
+        //After damage ability effects
+        switch(ability){
+            case "Powerup": playerDamage = 0; break; //Don't do any damage if powering up
+            case "Stun": enemyStun = 1;playerDamage = 0; break; //Is enemy stunned next round, don't do damage this round
+        }
+
+        //Update health and armor based on damage
+        playerArmor = Math.max(playerArmor - enemyDamage,0); //Damage goes to armor first
+        enemyArmor = Math.max(enemyArmor - playerDamage,0);
+        playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remainind damage goes to health
+        enemyHealth -= Math.max((playerDamage - enemyArmor),0);
 
         //Store the text that will display this turn
         battleText = `You deal ` + playerDamage + ` damage to the enemy.<br>
@@ -190,7 +228,6 @@ function attack(ability) {
             var elem = document.createElement("img");
             elem.src = '../images/acorn-coin.png';
             elem.setAttribute("class", "item");
-            console.log(elem)
 
             //Append the images
             document.getElementById("battle-text-div").appendChild(elem);

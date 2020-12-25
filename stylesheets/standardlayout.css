@@ -76,3 +76,8 @@ body{
 .link-image{
     max-width:112px;
 }
+
+#cost-table{
+    margin: auto;
+    width:200px;
+}
