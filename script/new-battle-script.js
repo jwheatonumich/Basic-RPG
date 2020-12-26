@@ -14,7 +14,7 @@ function popDropdown() {
     for(element in enemies)
         {
         var opt = document.createElement("option");
-        opt.value= index;
+        opt.value= enemies[element];
         opt.innerHTML = enemies[element];
 
         //Append to the dropdown
@@ -53,7 +53,7 @@ function selectImage(){
 //Start the battle
 function startBattle(){
     var enemySelect = document.getElementById("enemies");
-    var chosenEnemy = parseInt(enemySelect.value) + parseInt(enemyStart);
+    var chosenEnemy = enemySelect.value;
     localStorage.setItem('chosenEnemy', chosenEnemy);
     window.location.href = "../battle/battle.html";
     lastPage(page);

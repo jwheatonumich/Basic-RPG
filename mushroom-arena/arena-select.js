@@ -12,10 +12,10 @@ var enemies = ["Little Mushroom","Tall Mushroom"];
 var enemyStart = 2
 
 //Array of enemy images
-var pictureList = [
-    "../images/little-mushroom.png",
-    "../images/tall-mushroom.png"
-];
+var pictureList = {
+    "Little Mushroom":"../images/little-mushroom.png",
+    "Tall Mushroom":"../images/tall-mushroom.png"
+};
 
 //Load each player stat into a variable
 function playerSetup() {

@@ -5,9 +5,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":1, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false
+        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":false
     },
 
     "charge":
@@ -15,9 +15,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":1.2, "opponentAttackMultiplier":1, "selfDefenseMultiplier":0.8, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false
+        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":false
     },
 
     "berserk":
@@ -25,9 +25,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":2, "opponentAttackMultiplier":1, "selfDefenseMultiplier":0, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false
+        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":false
     },
 
     "block":
@@ -35,9 +35,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":0, "opponentAttackMultiplier":1, "selfDefenseMultiplier":2.0, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false
+        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":true
     },
 
     "quickAttack":
@@ -45,9 +45,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":1, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":true
+        "armor":0, "stun":0, "poison":0, "priority":true,"skipAttack":false
     },
 
     "powerUp":
@@ -55,9 +55,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":0, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1.2, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":1.2, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":true
+        "armor":0, "stun":0, "poison":0, "priority":true,"skipAttack":true
     },
 
     "shield":
@@ -65,9 +65,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":0, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":5, "stun":0, "poison":0, "priority":false
+        "armor":5, "stun":0, "poison":0, "priority":false,"skipAttack":true
     },
 
     "stun":
@@ -75,9 +75,9 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":.5, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":.5, "poison":0, "priority":false
+        "armor":0, "stun":.5, "poison":0, "priority":false,"skipAttack":false
     },
 
     "poison":
@@ -85,8 +85,8 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":0, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":3, "priority":false
+        "armor":0, "stun":0, "poison":3, "priority":false,"skipAttack":true
     }
 }

@@ -12,10 +12,10 @@ var enemies = ["A Squirrel","Two Squirrels"];
 var enemyStart = 0;
 
 //Array of enemy images
-var pictureList = [
-    "../images/squirrel-avatar-mini.png",
-    "../images/two-squirrels-mini.png" 
-];
+var pictureList = {
+    "A Squirrel":"../images/squirrel-avatar-mini.png",
+    "Two Squirrels":"../images/two-squirrels-mini.png" 
+};
 
 //Function to calculate max health from endurance
 function healthCalc(){

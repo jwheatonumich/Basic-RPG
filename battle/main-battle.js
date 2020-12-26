@@ -1,8 +1,8 @@
 //Global Variables
-var level = localStorage.getItem('chosenEnemy'); //Get the enemy choice based on local storage
+var chosenEnemy = localStorage.getItem('chosenEnemy'); //Get the enemy choice based on local storage
 var enemyImageSelect = localStorage.getItem('enemyImageSelect');
 var playerStats = {};
-var stats = [];
+var enemyStats = [];
 
 var enemyName = "";
 var enemyHealth = 0;
@@ -40,6 +40,17 @@ var enemyStun = 0;
 var playerArmor = 0;
 var enemyArmor = 0;
 
+var playerAbility1 = "";
+var playerAbility2 = "";
+var playerAbility3 = "";
+var playerAbility4 = "";
+
+var enemyAbility1 = "";
+var enemyAbility2 = "";
+var enemyAbility3 = "";
+var enemyAbility4 = "";
+
+
 //Load data from either local storage or create if no local storage exists
 function dataLoad(){
 
@@ -47,13 +58,6 @@ function dataLoad(){
     var retrievedObject = localStorage.getItem('storedPlayerStats');
     playerStats = JSON.parse(retrievedObject)
 
-    stats = [
-        {"name":"A Squirrel", "enemyID":"0001", "health":20, "maxhealth":20, "attack":10, "defense":5, "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0 },
-        {"name":"Two Squirrels", "enemyID":"0003", "health":40, "maxhealth":40, "attack":20, "defense":5, "acorncoin":3,"mushroomcoin":0, "bearclawcoin":0 } ,
-        {"name":"Little Mushroom", "enemyID":"0002", "health":80, "maxhealth":80, "attack":30, "defense":15, "acorncoin":0, "mushroomcoin":1, "bearclawcoin":0 } ,
-        {"name":"Tall Mushroom", "enemyID":"0003", "health":120, "maxhealth":120, "attack":40, "defense":15, "acorncoin":0, "mushroomcoin":3, "bearclawcoin":0 } ,
-        {"name":"Blackbear", "enemyID":"0004", "health":160, "maxhealth":160, "attack":40, "defense":40, "acorncoin":0, "mushroomcoin":0, "bearclawcoin":1 }
-    ]
 }
 
 //Player Setup
@@ -70,18 +74,19 @@ function playerSetup() {
     playerMushroomCoin = playerStats.mushroomcoin;
     playerBearclawCoin = playerStats.bearclawcoin;
     playerLeafCoin = playerStats.leafcoin;
+
 }
 
 //Enemy Setup
 function enemySetup() {
-    enemyName = stats[level].name;
-    enemyHealth = stats[level].health;
-    enemyMaxHealth = stats[level].maxhealth;
-    enemyAttack = stats[level].attack;
-    enemyDefense = stats[level].defense;
-    enemyAcornCoin = stats[level].acorncoin;
-    enemyMushroomCoin = stats[level].mushroomcoin;
-    enemyBearclawCoin = stats[level].bearclawcoin;
+    enemyName = enemyStats[chosenEnemy].name;
+    enemyHealth = enemyStats[chosenEnemy].health;
+    enemyMaxHealth = enemyStats[chosenEnemy].maxhealth;
+    enemyAttack = enemyStats[chosenEnemy].attack;
+    enemyDefense = enemyStats[chosenEnemy].defense;
+    enemyAcornCoin = enemyStats[chosenEnemy].acorncoin;
+    enemyMushroomCoin = enemyStats[chosenEnemy].mushroomcoin;
+    enemyBearclawCoin = enemyStats[chosenEnemy].bearclawcoin;
 
     enemyPowerlevel = 5*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
 }
@@ -126,6 +131,18 @@ function setAbilities(){
     document.getElementById("attack2").setAttribute("onClick", speciesData[playerSpecies]["attack2"])
     document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies]["attack3"])
     document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies]["attack4"])
+
+    //Load player ability names
+    playerAbility1 = abilityData[speciesData[playerSpecies]["attack1Name"]];
+    playerAbility2 = abilityData[speciesData[playerSpecies]["attack2Name"]];
+    playerAbility3 = abilityData[speciesData[playerSpecies]["attack3Name"]];
+    playerAbility4 = abilityData[speciesData[playerSpecies]["attack4Name"]];
+
+    //Load enemy ability names
+    enemyAbility1 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack1Name"]];
+    enemyAbility2 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack2Name"]];
+    enemyAbility3 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack3Name"]];
+    enemyAbility4 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack4Name"]];
     
 }
 
@@ -168,33 +185,54 @@ function battleCleanup(){
 function attack(playerAbility) {
 
     //Troubleshooting
-    console.log(playerAbility)
+    console.log("player ability:",playerAbility);
+
+    //Set multipliers for this turn
+    attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"];
+    defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"];
+    opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"];
+    opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"];
+
+    //Set stats for future turns (if they were modified)
+    if (abilityData[playerAbility]["selfAttack"] !== null) {
+        playerAttack *= abilityData[playerAbility]["selfAttack"]
+    };
+    if (abilityData[playerAbility]["selfDefense"] !== null) {
+        playerAttack *= abilityData[playerAbility]["selfDefense"]
+    };
+    if (abilityData[playerAbility]["opponentAttack"] !== null) {
+        enemyAttack *= abilityData[playerAbility]["opponentAttack"]
+    };
+    if (abilityData[playerAbility]["opponentDefense"] !== null) {
+        enemyAttack *= abilityData[playerAbility]["opponentDefense"]
+    };
+
+    //Set armor
+    playerArmor += abilityData[playerAbility]["armor"];
+
+    /*
+    "stun"
+    "poison"
+    "priority"
+    */
 
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
-        
-        //Pre damage ability effects
-        switch (playerAbility) {
-            case "None": attackMultiplier = 1; defenseMultiplier = 1; break;
-            case "Charge": attackMultiplier = 1.2; defenseMultiplier = 0.8; break;
-            case "Block": attackMultiplier = 0.8; defenseMultiplier = 1.2; break;
-            case "QuickAttack": attackMultiplier = 2; defenseMultiplier = 0; break;
-            case "Powerup": playerAttack = playerAttack * 1.2; break;
-            case "Shield": playerArmor += 5; break;
-        }
 
         //Calculate player and enemy attack
         var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
         var enemyDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
 
-        //Abilities that set damage to zero
+        
+        //Abilities that set enemy damage to zero
         if(enemyStun == 1){
             enemyDamage = 0;
+            enemyStatus = "Stunned"
         }
         if(
             //List of things that set player attack to zero
             playerStun == 1|| //Player is stunned
-            ["Powerup","Shield"].includes(playerAbility) //Ability player used is included in this list
+            abilityData[playerAbility]["skipAttack"] == true //Ability player used is included in this list
         )
         {
             playerDamage = 0;
@@ -204,17 +242,15 @@ function attack(playerAbility) {
         enemyStun = 0;
         playerStun = 0;
 
-        //After damage ability effects
-        switch(playerAbility){
-            case "Powerup": playerDamage = 0; break; //Don't do any damage if powering up
-            case "Stun": enemyStun = 1;playerDamage = 0;enemyStatus="Stunned"; break; //Is enemy stunned next round, don't do damage this round
-        }
-
         //Update health and armor based on damage
         playerArmor = Math.max(playerArmor - enemyDamage,0); //Damage goes to armor first
         enemyArmor = Math.max(enemyArmor - playerDamage,0);
         playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remainind damage goes to health
         enemyHealth -= Math.max((playerDamage - enemyArmor),0);
+
+        //Determine if enemy is stunned next turn
+        enemyStun = Math.floor(Math.random()*(1/(1-abilityData[playerAbility]["stun"])))
+        console.log(enemyStun)
 
         //Store the text that will display this turn
         battleText = `You deal ` + playerDamage + ` damage to the enemy.<br>
@@ -224,6 +260,7 @@ function attack(playerAbility) {
 
         //Update text on site based on new health
         setStats();
+
     }
 
     //Update the battle text for the current turn
