@@ -176,8 +176,8 @@ function battleCleanup(){
 
     //Reset variables at the end of battle
     playerArmor = 0;
-    enemyStatus = ""
-    playerStatus = ""
+    enemyStatus = "";
+    playerStatus = "";
 
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
@@ -197,16 +197,16 @@ function attack(playerAbility) {
 
     //Set stats for future turns (if they were modified)
     if (abilityData[playerAbility]["selfAttack"] !== null) {
-        playerAttack *= abilityData[playerAbility]["selfAttack"]
+        playerAttack *= abilityData[playerAbility]["selfAttack"];
     };
     if (abilityData[playerAbility]["selfDefense"] !== null) {
-        playerAttack *= abilityData[playerAbility]["selfDefense"]
+        playerAttack *= abilityData[playerAbility]["selfDefense"];
     };
     if (abilityData[playerAbility]["opponentAttack"] !== null) {
-        enemyAttack *= abilityData[playerAbility]["opponentAttack"]
+        enemyAttack *= abilityData[playerAbility]["opponentAttack"];
     };
     if (abilityData[playerAbility]["opponentDefense"] !== null) {
-        enemyAttack *= abilityData[playerAbility]["opponentDefense"]
+        enemyAttack *= abilityData[playerAbility]["opponentDefense"];
     };
 
     //Set armor
