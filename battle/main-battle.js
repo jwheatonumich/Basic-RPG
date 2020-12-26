@@ -33,9 +33,11 @@ var enemyDefenseMultiplier = 1;
 
 var playerStatus = ""
 var playerStun = 0;
+var playerPoison = 0;
 
 var enemyStatus = ""
 var enemyStun = 0;
+var enemyPoison = 0;
 
 var playerArmor = 0;
 var enemyArmor = 0;
@@ -210,51 +212,58 @@ function attack(playerAbility) {
     //Set armor
     playerArmor += abilityData[playerAbility]["armor"];
 
-    /*
-    "stun"
-    "poison"
-    "priority"
-    */
-
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
 
         //Calculate player and enemy attack
-        var playerDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
-        var enemyDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
+        var playerAttackDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
+        var enemyAttackDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
 
-        
-        //Abilities that set enemy damage to zero
-        if(enemyStun == 1){
-            enemyDamage = 0;
-            enemyStatus = "Stunned"
-        }
+        //Check if player should deal zero damage this round
         if(
-            //List of things that set player attack to zero
-            playerStun == 1|| //Player is stunned
-            abilityData[playerAbility]["skipAttack"] == true //Ability player used is included in this list
-        )
-        {
-            playerDamage = 0;
-        }
+            playerStun == 1|| //Was player stunned last round
+            abilityData[playerAbility]["skipAttack"] == true //Did the player use an ability that skips their attack
+        ){
+            playerAttackDamage = 0;
+        };
+
+        //Did enemy get poisoned this turn
+        enemyPoison += abilityData[playerAbility]["poison"]
+
+        //Calculate total damage dealt by player and enemy
+        var playerDamage = playerAttackDamage + enemyPoison;
+        var enemyDamage = enemyAttackDamage + playerPoison;
+
+        //Check if enemy should deal zero damage this round
+        if(enemyStun == 1){ //Was enemy stunned last round
+            enemyDamage = 0;
+        };
 
         //Abilities that only last one turn
         enemyStun = 0;
         playerStun = 0;
 
+        //Clear the status line
+        enemyStatus = "";
+
         //Update health and armor based on damage
         playerArmor = Math.max(playerArmor - enemyDamage,0); //Damage goes to armor first
         enemyArmor = Math.max(enemyArmor - playerDamage,0);
-        playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remainind damage goes to health
+        playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remaining damage goes to health
         enemyHealth -= Math.max((playerDamage - enemyArmor),0);
 
         //Determine if enemy is stunned next turn
         enemyStun = Math.floor(Math.random()*(1/(1-abilityData[playerAbility]["stun"])))
+        if(enemyStun == 1){
+            enemyStatus = "Stunned"
+        };
         console.log(enemyStun)
 
         //Store the text that will display this turn
-        battleText = `You deal ` + playerDamage + ` damage to the enemy.<br>
-        The enemy deals ` + enemyDamage +` damage to you.`;
+        battleText = `You deal ` + playerAttackDamage + ` damage to the enemy.<br>` +
+        `The enemy deals ` + enemyAttackDamage +` damage to you.`
+
+        if(playerPoison > 0){`You take `+playerPoison+` poison damage`}
         
         battleStatus();
 
