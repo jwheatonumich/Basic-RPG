@@ -52,6 +52,8 @@ var enemyAbility2 = "";
 var enemyAbility3 = "";
 var enemyAbility4 = "";
 
+var battleTurn = 1
+
 
 //Load data from either local storage or create if no local storage exists
 function dataLoad(){
@@ -186,9 +188,6 @@ function battleCleanup(){
 //Script that is run when clicking the attack button
 function attack(playerAbility) {
 
-    //Troubleshooting
-    console.log("player ability:",playerAbility);
-
     //Set multipliers for this turn
     attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"];
     defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"];
@@ -215,6 +214,9 @@ function attack(playerAbility) {
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
 
+        //Troubleshooting
+        console.log("Turn:",battleTurn);
+        
         //Calculate player and enemy attack
         var playerAttackDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
         var enemyAttackDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
@@ -257,8 +259,7 @@ function attack(playerAbility) {
         if(enemyStun == 1){
             enemyStatus = "Stunned"
         };
-        console.log(enemyStun)
-
+        
         //Store the text that will display this turn
         battleText = `You attack the enemy for `;
         battleText = battleText.concat(playerAttackDamage);
@@ -269,6 +270,9 @@ function attack(playerAbility) {
         battleText = battleText.concat(` damage.<br>`);
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         
+        //Change turn
+        battleTurn += 1;
+
         battleStatus();
 
         //Update text on site based on new health
