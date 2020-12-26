@@ -31,8 +31,11 @@ var defenseMultiplier = 1;
 var enemyAttackMultiplier = 1;
 var enemyDefenseMultiplier = 1;
 
-var enemyStun = 0;
+var playerStatus = ""
 var playerStun = 0;
+
+var enemyStatus = ""
+var enemyStun = 0;
 
 var playerArmor = 0;
 var enemyArmor = 0;
@@ -88,9 +91,13 @@ function setStats() {
     
     document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("player-health").innerHTML = playerHealth + '/' +  playerMaxHealth;
+    document.getElementById("player-armor").innerHTML = playerArmor;
+    document.getElementById("player-status").innerHTML = playerStatus;
 
     document.getElementById("enemy-name").innerHTML = enemyName;
     document.getElementById("enemy-health").innerHTML = enemyHealth + '/' + enemyMaxHealth;
+    document.getElementById("enemy-armor").innerHTML = enemyArmor;
+    document.getElementById("enemy-status").innerHTML = enemyStatus;
 
     document.getElementById("enemy-image").src = enemyImageSelect; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
 
@@ -148,21 +155,26 @@ function battleCleanup(){
     playerStats.mushroomcoin = playerMushroomCoin; 
     playerStats.bearclawcoin = playerBearclawCoin; 
 
+    //Reset variables at the end of battle
+    playerArmor = 0;
+    enemyStatus = ""
+    playerStatus = ""
+
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 }
 
 //Script that is run when clicking the attack button
-function attack(ability) {
+function attack(playerAbility) {
 
     //Troubleshooting
-    console.log(ability)
+    console.log(playerAbility)
 
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
         
         //Pre damage ability effects
-        switch (ability) {
+        switch (playerAbility) {
             case "None": attackMultiplier = 1; defenseMultiplier = 1; break;
             case "Charge": attackMultiplier = 1.2; defenseMultiplier = 0.8; break;
             case "Block": attackMultiplier = 0.8; defenseMultiplier = 1.2; break;
@@ -180,9 +192,9 @@ function attack(ability) {
             enemyDamage = 0;
         }
         if(
-            playerStun == 1||
-            ability == "Powerup"||
-            ability == "Shield"
+            //List of things that set player attack to zero
+            playerStun == 1|| //Player is stunned
+            ["Powerup","Shield"].includes(playerAbility) //Ability player used is included in this list
         )
         {
             playerDamage = 0;
@@ -193,9 +205,9 @@ function attack(ability) {
         playerStun = 0;
 
         //After damage ability effects
-        switch(ability){
+        switch(playerAbility){
             case "Powerup": playerDamage = 0; break; //Don't do any damage if powering up
-            case "Stun": enemyStun = 1;playerDamage = 0; break; //Is enemy stunned next round, don't do damage this round
+            case "Stun": enemyStun = 1;playerDamage = 0;enemyStatus="Stunned"; break; //Is enemy stunned next round, don't do damage this round
         }
 
         //Update health and armor based on damage
@@ -208,7 +220,6 @@ function attack(ability) {
         battleText = `You deal ` + playerDamage + ` damage to the enemy.<br>
         The enemy deals ` + enemyDamage +` damage to you.`;
         
-
         battleStatus();
 
         //Update text on site based on new health
