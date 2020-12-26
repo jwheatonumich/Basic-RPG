@@ -151,12 +151,12 @@ function setAbilities(){
 //Function to check if the battle is over
 function battleStatus(){
     if (playerHealth <= 0){
-        battleText = `Game Over<br><br>`;
+        battleText = battleText.concat(`Your health is zero. You pass out.<br>`);
         battleCleanup();
     }
 
     if (enemyHealth <= 0){
-        battleText = `Enemy Defeated<br><br>`;
+        battleText = battleText.concat(`Enemy defeated!<br>`);
         playerAcornCoin += enemyAcornCoin;
         playerMushroomCoin += enemyMushroomCoin;
         playerBearclawCoin += enemyBearclawCoin;
@@ -260,10 +260,14 @@ function attack(playerAbility) {
         console.log(enemyStun)
 
         //Store the text that will display this turn
-        battleText = `You deal ` + playerAttackDamage + ` damage to the enemy.<br>` +
-        `The enemy deals ` + enemyAttackDamage +` damage to you.`
-
-        if(playerPoison > 0){`You take `+playerPoison+` poison damage`}
+        battleText = `You attack the enemy for `;
+        battleText = battleText.concat(playerAttackDamage);
+        battleText = battleText.concat(` damage.<br>`);
+        if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
+        battleText = battleText.concat(`The enemy attacks you or `);
+        battleText = battleText.concat(enemyAttackDamage);
+        battleText = battleText.concat(` damage.<br>`);
+        if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         
         battleStatus();
 
