@@ -20,6 +20,16 @@ abilityData =
         "armor":0, "stun":0, "poison":0, "priority":false
     },
 
+    "berserk":
+    {
+        //Current turn damage modifiers
+        "selfAttackMultiplier":2, "opponentAttackMultiplier":1, "selfDefenseMultiplier":0, "opponentDefenseMultiplier":1,
+        //Multi-turn damage modifiers
+        "selfAttack":1, "opponentAttack":1, "selfDefense":1, "opponentDefense":1,
+        //Other efects
+        "armor":0, "stun":0, "poison":0, "priority":false
+    },
+
     "block":
     {
         //Current turn damage modifiers
