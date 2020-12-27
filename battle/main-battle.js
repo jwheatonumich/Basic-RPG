@@ -203,7 +203,17 @@ function attack(playerAbility) {
             var enemyAbility = enemyAbility4;break;
     };
 
-    console.log(enemyAbilityNumber);
+    //Check if player is stunned
+    if(playerStun == 1){
+        playerAbility = "stunned" //If yes, swich the ability used to the stunned ability
+    }
+
+    //Check if enemy is stunned
+    if(enemyStun == 1){
+        enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
+    }
+
+    //Troubleshooting
     console.log(enemyAbility);
 
     //Set multipliers for this turn
@@ -256,7 +266,7 @@ function attack(playerAbility) {
 
         //Check if player should deal zero damage this round
         if(
-            playerStun == 1|| //Was player stunned last round
+            playerStun == 1 ||
             abilityData[playerAbility]["skipAttack"] == true //Did the player use an ability that skips their attack
         ){
             playerAttackDamage = 0;
@@ -267,7 +277,7 @@ function attack(playerAbility) {
             enemyStun == 1|| //Was player stunned last round
             enemyAbility["skipAttack"] == true //Did the player use an ability that skips their attack
         ){ //Was enemy stunned last round
-            enemyDamage = 0;
+            enemyAttackDamage = 0;
         };
 
         //Did enemy get poisoned this turn
@@ -307,13 +317,17 @@ function attack(playerAbility) {
         };
 
         //Store the text that will display this turn
-        battleText = `You attack the enemy for `;
+        battleText = `You use `
+        battleText = battleText.concat(abilityData[playerAbility]["name"]);
+        battleText = battleText.concat(`. The enemy takes `);
         battleText = battleText.concat(playerAttackDamage);
         battleText = battleText.concat(` damage.<br>`);
-        if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
-        battleText = battleText.concat(`The enemy attacks you or `);
+        battleText = battleText.concat(`The enemy uses `);
+        battleText = battleText.concat(enemyAbility["name"]);
+        battleText = battleText.concat(`. You take `);
         battleText = battleText.concat(enemyAttackDamage);
         battleText = battleText.concat(` damage.<br>`);
+        if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         
         //Change turn
