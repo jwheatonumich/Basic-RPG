@@ -28,7 +28,6 @@ body{
     grid-gap:20px;
     padding:0;
     grid-template-areas:
-        "attackSelect attackButton"
         "restartButton restartButton"
         "backButton backButton"
 }
