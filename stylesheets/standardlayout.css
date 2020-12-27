@@ -5,9 +5,15 @@
 body{
     width:100%;
     max-width:400px;
+    border:0;
+    padding:0;
+    margin:0;
 }
 
 #page-div {
+    border:0;
+    padding:0;
+
     display:grid;
 
     grid-template-areas:
@@ -19,7 +25,7 @@ body{
 
 #character-div{
     grid-area:character;
-    border: solid black;
+    border: solid black 1px;
 
     text-align:center;
 }
@@ -27,7 +33,7 @@ body{
 #game-div{
     grid-area: game;
 
-    border: solid black;
+    border: solid black 1px;
 
     text-align:center;
 }
