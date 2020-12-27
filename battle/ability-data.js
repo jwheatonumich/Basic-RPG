@@ -8,7 +8,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
     },
 
     "charge":
@@ -19,7 +19,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
     },
 
     "berserk":
@@ -30,7 +30,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
     },
 
     "block":
@@ -41,7 +41,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":true
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":true
     },
 
     "quickAttack":
@@ -52,7 +52,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":true,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":true,"skipAttack":false
     },
 
     "powerUp":
@@ -63,7 +63,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":1.2, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":true,"skipAttack":true
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":true,"skipAttack":true
     },
 
     "shield":
@@ -74,7 +74,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":5, "stun":0, "poison":0, "priority":false,"skipAttack":true
+        "armor":5, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":true
     },
 
     "stun":
@@ -85,7 +85,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":.5, "poison":0, "priority":false,"skipAttack":false
+        "armor":0, "stun":.5, "poison":0, "leech":0, "priority":false,"skipAttack":false
     },
 
     "poison":
@@ -96,7 +96,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":3, "priority":false,"skipAttack":true
+        "armor":0, "stun":0, "poison":3, "leech":0, "priority":false,"skipAttack":true
     },
 
     "absorb":
@@ -107,7 +107,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":10, "stun":0, "poison":0, "priority":false,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0.5, "priority":false,"skipAttack":false
     },
 
     "stunned": //Gets used when player or enemy is stunned
@@ -118,6 +118,6 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "priority":false,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
     }
 }

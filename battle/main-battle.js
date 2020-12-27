@@ -253,19 +253,24 @@ function attack(playerAbility) {
         playerAttack *= enemyAbility["opponentDefense"];
     };
 
-    //Set armor
-    playerArmor += abilityData[playerAbility]["armor"];
-    enemyArmor += enemyAbility["armor"];
-
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
 
-        //Troubleshooting
-        console.log("Turn:",battleTurn);
+        //Set armor
+        playerArmor += abilityData[playerAbility]["armor"];
+        enemyArmor += enemyAbility["armor"];
         
         //Calculate player and enemy attack
         var playerAttackDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
         var enemyAttackDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
+
+        //Add armor for leech
+        playerArmor += abilityData[playerAbility]["leech"]*playerAttackDamage;
+        enemyArmor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
+
+        //Troubleshooting
+        console.log("Player Attack: ",playerAttackDamage);
+        console.log("Player Leech: ",abilityData[playerAbility]["leech"]*playerAttackDamage);
 
         //Check if player should deal zero damage this round
         if(
