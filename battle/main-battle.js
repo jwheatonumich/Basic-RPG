@@ -178,6 +178,9 @@ function battleCleanup(){
 
     //Reset variables at the end of battle
     playerArmor = 0;
+    enemyArmor = 0;
+    playerPoison = 0;
+    enemyPoison = 0;
     enemyStatus = "";
     playerStatus = "";
     battleTurn = 1;
