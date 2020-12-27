@@ -5,6 +5,9 @@ var playerStats = JSON.parse(retrievedObject)
 //Relative link back to this page
 var page = "../cave/cave.html"
 
+//List of possible enemy IDs
+var enemyListEasy = [4]
+
 //Load each player stat into a variable
 function playerSetup() {
     playerName = playerStats.name;
@@ -46,7 +49,7 @@ function updateImage(){
 }
 
 //Add random numbers of coins to the player's inventory
-function enterCave() {
+function enterCave(enemyList) {
 
     //Check if the user has entered the cave today
     if (playerStats["caveday"] < 1){
@@ -73,8 +76,7 @@ function enterCave() {
 
     }else{
         //Start the battle
-        localStorage.setItem('chosenEnemy', 'Blackbear');
-        localStorage.setItem('enemyImageSelect', "../images/blackbear.png");
+        localStorage.setItem('enemyList',enemyList);
         window.location.href = "../battle/battle.html";
         lastPage(page);
     }

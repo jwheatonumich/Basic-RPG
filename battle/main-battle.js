@@ -1,6 +1,7 @@
 //Global Variables
-var chosenEnemy = localStorage.getItem('chosenEnemy'); //Get the enemy choice based on local storage
-var enemyImageSelect = localStorage.getItem('enemyImageSelect');
+var enemyListText = localStorage.getItem('enemyList');//Load possible enemy IDs
+var enemyList = enemyListText.split(",").map(x=>+x);//Convert string to an array of numbers
+
 var playerStats = {};
 var enemyStats = [];
 
@@ -55,7 +56,7 @@ var enemyAbility4 = "";
 var battleTurn = 1
 
 
-//Load data from either local storage or create if no local storage exists
+//Load player data from local storage
 function dataLoad(){
 
     //Retrieve player stats from local storage and convert the string into a JSON
@@ -64,7 +65,25 @@ function dataLoad(){
 
 }
 
-//Player Setup
+//Select enemy from list of possible enemies
+function selectEnemy(){
+
+    //Select a random enemy ID from the enemyList array
+    enemyID = enemyList[Math.floor(Math.random()*enemyList.length)];
+
+    //Find and store the enemy that matches the ID
+    for (i in enemyStats){
+        if (enemyStats[i]["enemyID"] == enemyID){
+            chosenEnemy = enemyStats[i];
+        };
+    };
+
+    //Troubleshooting
+    console.log(enemyID);
+    console.log(chosenEnemy);
+};
+
+//Store relevant player stats in variables
 function playerSetup() {
     playerName = playerStats.name;
     playerSpecies = playerStats.species;
@@ -81,16 +100,16 @@ function playerSetup() {
 
 }
 
-//Enemy Setup
+//Store relevant enemy stats in variables
 function enemySetup() {
-    enemyName = enemyStats[chosenEnemy].name;
-    enemyHealth = enemyStats[chosenEnemy].health;
-    enemyMaxHealth = enemyStats[chosenEnemy].maxhealth;
-    enemyAttack = enemyStats[chosenEnemy].attack;
-    enemyDefense = enemyStats[chosenEnemy].defense;
-    enemyAcornCoin = enemyStats[chosenEnemy].acorncoin;
-    enemyMushroomCoin = enemyStats[chosenEnemy].mushroomcoin;
-    enemyBearclawCoin = enemyStats[chosenEnemy].bearclawcoin;
+    enemyName = chosenEnemy["stats"]["name"];
+    enemyHealth = chosenEnemy["stats"]["health"];
+    enemyMaxHealth = chosenEnemy["stats"]["maxhealth"];
+    enemyAttack = chosenEnemy["stats"]["attack"];
+    enemyDefense = chosenEnemy["stats"]["defense"];
+    enemyAcornCoin = chosenEnemy["stats"]["acorncoin"];
+    enemyMushroomCoin = chosenEnemy["stats"]["mushroomcoin"];
+    enemyBearclawCoin = chosenEnemy["stats"]["bearclawcoin"];
 
     enemyPowerlevel = 5*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
 }
@@ -108,7 +127,7 @@ function setStats() {
     document.getElementById("enemy-armor").innerHTML = enemyArmor;
     document.getElementById("enemy-status").innerHTML = enemyStatus;
 
-    document.getElementById("enemy-image").src = enemyImageSelect; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+    document.getElementById("enemy-image").src = chosenEnemy["enemyImage"]; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
 
     //Set the coin balances equal to the loaded variables
     document.getElementById("acorn-coin").innerHTML = playerAcornCoin;
@@ -123,6 +142,7 @@ function setStats() {
     document.getElementById("powerlevel").value = enemyPowerlevel
 }
 
+//Load player and enemy abilities based on their species
 function setAbilities(){
     //Set the attack button images based on the species
     document.getElementById("attack-button-1").src = speciesData[playerSpecies]["attackbutton1"];
@@ -143,10 +163,10 @@ function setAbilities(){
     playerAbility4 = abilityData[speciesData[playerSpecies]["attack4Name"]];
 
     //Load enemy ability names
-    enemyAbility1 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack1Name"]];
-    enemyAbility2 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack2Name"]];
-    enemyAbility3 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack3Name"]];
-    enemyAbility4 = abilityData[speciesData[enemyStats[chosenEnemy]["species"]]["attack4Name"]];
+    enemyAbility1 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack1Name"]];
+    enemyAbility2 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack2Name"]];
+    enemyAbility3 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack3Name"]];
+    enemyAbility4 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack4Name"]];
     
 }
 
@@ -167,7 +187,7 @@ function battleStatus(){
     }
 }
 
-//At the end of the battle, save variables back to JSON and save JSON to local storage
+//End of battle steps - save stats to local storage, reset temp statuses
 function battleCleanup(){
     //Save health and xp after battle ends
     if (playerHealth < 0) {playerHealth = 0};
@@ -175,6 +195,9 @@ function battleCleanup(){
     playerStats.acorncoin = playerAcornCoin; 
     playerStats.mushroomcoin = playerMushroomCoin; 
     playerStats.bearclawcoin = playerBearclawCoin; 
+
+    //Store the updated data object in local storage, after turning the JSON to a string
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 
     //Reset variables at the end of battle
     playerArmor = 0;
@@ -185,8 +208,6 @@ function battleCleanup(){
     playerStatus = "";
     battleTurn = 1;
 
-    //Store the updated data object in local storage, after turning the JSON to a string
-    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 }
 
 //Script that is run when clicking the attack button
@@ -219,7 +240,7 @@ function attack(playerAbility) {
     //Troubleshooting
     console.log(enemyAbility);
 
-    //Set multipliers for this turn
+    //Set attack and defense multipliers for this turn
     attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
     defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"];
     opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"];
@@ -256,7 +277,7 @@ function attack(playerAbility) {
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
 
-        //Set armor
+        //Set armor before damage is dealt
         playerArmor += abilityData[playerAbility]["armor"];
         enemyArmor += enemyAbility["armor"];
         
@@ -264,7 +285,7 @@ function attack(playerAbility) {
         var playerAttackDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
         var enemyAttackDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
 
-        //Add armor for leech
+        //Add armor for leech attcks
         playerArmor += abilityData[playerAbility]["leech"]*playerAttackDamage;
         enemyArmor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
 

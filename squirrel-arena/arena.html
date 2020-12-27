@@ -17,6 +17,9 @@
           <script src="../script/new-battle-script.js" defer></script>
           <script src="arena-select.js" defer></script>
           <script src="main-heal.js" defer></script>
+
+          <!--Enemy specific data-->
+        <script src="../script/enemy-data.js"></script>
         </head>
     
     <body>
@@ -70,10 +73,8 @@
               </div>
 
               <div id="battle-div">
-                <img id="enemy-image" alt = "Enemy" src="../images/wimpy-wombat.png"><br>
                 <div id="control-div">
-                    <select id="enemies" name="enemies" onChange="selectImage();"></select>
-                    <button id="startBattle" class="button" onclick="startBattle()">Fight</button>
+                    <button id="startBattle" class="button" onclick="startBattle(enemyListEasy)">Fight</button>
                 </div>
 
                 <div id="control-div">

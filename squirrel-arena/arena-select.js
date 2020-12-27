@@ -2,20 +2,11 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject);
 
+//List of possible enemy IDs
+var enemyListEasy = [0,1]
+
 //Relative link back to this page
-var page = "../squirrel-arena/arena.html";
-
-//Array of enemy names
-var enemies = ["A Squirrel","Two Squirrels"];
-
-//Where in the enemy list squirrels start
-var enemyStart = 0;
-
-//Array of enemy images
-var pictureList = {
-    "A Squirrel":"../images/squirrel-avatar-mini.png",
-    "Two Squirrels":"../images/two-squirrels-mini.png" 
-};
+var page = "../squirrel-arena/arena.html"
 
 //Function to calculate max health from endurance
 function healthCalc(){
@@ -57,6 +48,3 @@ function setStats() {
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
-
-window.onload = popDropdown();//Populate dropdown on page load
-window.onload = selectImage();//Set the image to the default choice on page load

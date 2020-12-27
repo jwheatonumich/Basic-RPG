@@ -51,10 +51,10 @@ function selectImage(){
 };
 
 //Start the battle
-function startBattle(enemyList){
-
-    localStorage.setItem('enemyList',enemyList)
-
-    window.location.href = "../battle/battle.html"
+function startBattle(){
+    var enemySelect = document.getElementById("enemies");
+    var chosenEnemy = enemySelect.value;
+    localStorage.setItem('chosenEnemy', chosenEnemy);
+    window.location.href = "../battle/battle.html";
     lastPage(page);
 }

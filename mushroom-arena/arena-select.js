@@ -5,17 +5,8 @@ var playerStats = JSON.parse(retrievedObject)
 //Relative link back to this page
 var page = "../mushroom-arena/arena.html"
 
-//Array of enemy names
-var enemies = ["Little Mushroom","Tall Mushroom"];
-
-//Where in the enemy list mushrooms start
-var enemyStart = 2
-
-//Array of enemy images
-var pictureList = {
-    "Little Mushroom":"../images/little-mushroom.png",
-    "Tall Mushroom":"../images/tall-mushroom.png"
-};
+//List of possible enemy IDs
+var enemyListEasy = [2,3]
 
 //Load each player stat into a variable
 function playerSetup() {
@@ -52,7 +43,3 @@ function setStats() {
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
-
-//Populate dropdown on page load
-window.onload = popDropdown();
-window.onload = selectImage();//Set the image to the default choice on page load
