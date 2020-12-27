@@ -180,6 +180,7 @@ function battleCleanup(){
     playerArmor = 0;
     enemyStatus = "";
     playerStatus = "";
+    battleTurn = 1;
 
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
@@ -188,13 +189,30 @@ function battleCleanup(){
 //Script that is run when clicking the attack button
 function attack(playerAbility) {
 
-    //Set multipliers for this turn
-    attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"];
-    defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"];
-    opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"];
-    opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"];
+    //Randomly choose enemy's ability
+    var enemyAbilityNumber = Math.floor(Math.random()*4+1);
 
-    //Set stats for future turns (if they were modified)
+    switch(enemyAbilityNumber){
+        case 1:
+            var enemyAbility = enemyAbility1;break;
+        case 2:
+            var enemyAbility = enemyAbility2;break;
+        case 3:
+            var enemyAbility = enemyAbility3;break;
+        case 4:
+            var enemyAbility = enemyAbility4;break;
+    };
+
+    console.log(enemyAbilityNumber);
+    console.log(enemyAbility);
+
+    //Set multipliers for this turn
+    attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
+    defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"];
+    opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"];
+    opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"];
+
+    //Set player stats for future turns (if they were modified)
     if (abilityData[playerAbility]["selfAttack"] !== null) {
         playerAttack *= abilityData[playerAbility]["selfAttack"];
     };
@@ -208,8 +226,23 @@ function attack(playerAbility) {
         enemyAttack *= abilityData[playerAbility]["opponentDefense"];
     };
 
+    //Set enemy stats for future turns (if they were modified)
+    if (enemyAbility["selfAttack"] !== null) {
+        enemyAttack *= enemyAbility["selfAttack"];
+    };
+    if (enemyAbility["selfDefense"] !== null) {
+        enemyAttack *= enemyAbility["selfDefense"];
+    };
+    if (enemyAbility["opponentAttack"] !== null) {
+        playerAttack *= enemyAbility["opponentAttack"];
+    };
+    if (enemyAbility["opponentDefense"] !== null) {
+        playerAttack *= enemyAbility["opponentDefense"];
+    };
+
     //Set armor
     playerArmor += abilityData[playerAbility]["armor"];
+    enemyArmor += enemyAbility["armor"];
 
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
@@ -229,17 +262,23 @@ function attack(playerAbility) {
             playerAttackDamage = 0;
         };
 
+        //Check if enemy should deal zero damage this round
+        if(
+            enemyStun == 1|| //Was player stunned last round
+            enemyAbility["skipAttack"] == true //Did the player use an ability that skips their attack
+        ){ //Was enemy stunned last round
+            enemyDamage = 0;
+        };
+
         //Did enemy get poisoned this turn
         enemyPoison += abilityData[playerAbility]["poison"]
+        playerPoison += enemyAbility["poison"]
 
         //Calculate total damage dealt by player and enemy
         var playerDamage = playerAttackDamage + enemyPoison;
         var enemyDamage = enemyAttackDamage + playerPoison;
 
-        //Check if enemy should deal zero damage this round
-        if(enemyStun == 1){ //Was enemy stunned last round
-            enemyDamage = 0;
-        };
+
 
         //Abilities that only last one turn
         enemyStun = 0;
@@ -247,6 +286,7 @@ function attack(playerAbility) {
 
         //Clear the status line
         enemyStatus = "";
+        playerStatus = "";
 
         //Update health and armor based on damage
         playerArmor = Math.max(playerArmor - enemyDamage,0); //Damage goes to armor first
@@ -259,7 +299,13 @@ function attack(playerAbility) {
         if(enemyStun == 1){
             enemyStatus = "Stunned"
         };
-        
+
+        //Determine if player is stunned next turn
+        playerStun = Math.floor(Math.random()*(1/(1-enemyAbility["stun"])))
+        if(playerStun == 1){
+            playerStatus = "Stunned"
+        };
+
         //Store the text that will display this turn
         battleText = `You attack the enemy for `;
         battleText = battleText.concat(playerAttackDamage);
