@@ -7,8 +7,8 @@ var page = "../mushroom-shrine/shrine.html"
 
 function healMax(){
     //Save health and xp after battle ends
-    if (playerStats.mushroomcoin > 25 && playerStats.costume != "mushroom"){
-        playerStats.mushroomcoin-=25;
+    if (playerStats.mushroomcoin >= 20 && playerStats.costume != "mushroom"){
+        playerStats.mushroomcoin-=20;
         playerStats.species = "mushroom" ;
         playerStats.image = "../images/little-mushroom-scanner.png" ;
     }

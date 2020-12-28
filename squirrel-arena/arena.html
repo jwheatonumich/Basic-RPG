@@ -19,7 +19,10 @@
           <script src="main-heal.js" defer></script>
 
           <!--Enemy specific data-->
-        <script src="../script/enemy-data.js"></script>
+          <script src="../script/enemy-data.js"></script>
+
+          <!--Standard page code-->
+          <script src="../script/standard-script.js" defer></script>
         </head>
     
     <body>
@@ -54,6 +57,7 @@
             <p id="player-name">Name</p>
             <img id="character-image" alt = "Character" src="../images/little-goblin.png">
             <p id="character-stats">Stats</p>
+            <a class="button-link" onclick="sleep()">Sleep</a>
           </div>
 
           <div id="game-div">
@@ -74,13 +78,10 @@
 
               <div id="battle-div">
                 <div id="control-div">
-                    <button id="startBattle" class="button" onclick="startBattle(enemyListEasy)">Fight</button>
-                </div>
-
-                <div id="control-div">
-
-                  <button id="back" class="button" onclick="location.href='../tree/tree.html';">Back</button>
-
+                  <br><br>
+                    <button id="startBattle" class="button" onclick="startBattle(enemyListEasy)">Beginner Arena</button><br><br>
+                    <button id="startBattle" class="button" onclick="startBattle(enemyListHard)">Master Arena</button><br><br>
+                    <button id="back" class="button" onclick="location.href='../tree/tree.html';">Back</button>
                 </div>
             </div>
 

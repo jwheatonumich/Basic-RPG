@@ -3,7 +3,8 @@ var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject);
 
 //List of possible enemy IDs
-var enemyListEasy = [0,1]
+var enemyListEasy = [0,1,2]
+var enemyListHard = [3]
 
 //Relative link back to this page
 var page = "../squirrel-arena/arena.html"

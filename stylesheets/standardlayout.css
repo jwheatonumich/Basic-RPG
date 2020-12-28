@@ -87,3 +87,10 @@ body{
     margin: auto;
     width:200px;
 }
+
+.button-link{
+    border: black solid 1px;
+    padding:20;
+    margin:5;
+    display:block;
+}

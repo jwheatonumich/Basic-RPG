@@ -145,10 +145,10 @@ function setStats() {
 //Load player and enemy abilities based on their species
 function setAbilities(){
     //Set the attack button images based on the species
-    document.getElementById("attack-button-1").src = speciesData[playerSpecies]["attackbutton1"];
-    document.getElementById("attack-button-2").src = speciesData[playerSpecies]["attackbutton2"];
-    document.getElementById("attack-button-3").src = speciesData[playerSpecies]["attackbutton3"];
-    document.getElementById("attack-button-4").src = speciesData[playerSpecies]["attackbutton4"];
+    document.getElementById("attack1").innerHTML = speciesData[playerSpecies]["attack1DisplayName"];
+    document.getElementById("attack2").innerHTML = speciesData[playerSpecies]["attack2DisplayName"];
+    document.getElementById("attack3").innerHTML = speciesData[playerSpecies]["attack3DisplayName"];
+    document.getElementById("attack4").innerHTML = speciesData[playerSpecies]["attack4DisplayName"];
 
     //Set the onclick for each ability to the correct attack function based on the player's species
     document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack1"])
@@ -286,12 +286,8 @@ function attack(playerAbility) {
         var enemyAttackDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
 
         //Add armor for leech attcks
-        playerArmor += abilityData[playerAbility]["leech"]*playerAttackDamage;
+        playerArmor += Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage);
         enemyArmor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
-
-        //Troubleshooting
-        console.log("Player Attack: ",playerAttackDamage);
-        console.log("Player Leech: ",abilityData[playerAbility]["leech"]*playerAttackDamage);
 
         //Check if player should deal zero damage this round
         if(

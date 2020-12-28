@@ -34,20 +34,6 @@ function setStats() {
     document.getElementById("character-image").src = playerStats.image;
 }
 
-//Add random numbers of coins to the player's inventory
-function sleep() {
-    
-    playerStats["day"] +=1;
-    playerStats["caveday"] = 0; //Let the player steal another bear coin
-    if(playerStats.health < playerStats.maxhealth/2){ //If health is less than 50%
-        playerStats.health = Math.floor(playerStats.maxhealth/2); //Heal to 50% of max health
-    }
-    document.getElementById("textbox").innerHTML = 'Day '+ playerStats["day"] + '<br><br>You wake up. You don\'t feel very refreshed.<br><br> Where is the coffee?'
-    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-    playerSetup(); //Pull updated stats from local storage
-    setStats(); //Update stats on page
-}
-
 //Transform back to original alien
 function repairDNA(){
     //Save health and xp after battle ends
@@ -62,6 +48,50 @@ function repairDNA(){
     setStats();
 }
 
+//Add random numbers of coins to the player's inventory
+function dailyLeafCoins() {
+
+    //Calculate how many of each coin to add
+    var treeLeafCoin =3
+
+    //Add to player's stats
+    playerStats["leafcoin"] +=treeLeafCoin;
+
+    //Loop to create leaf icons
+    var i = 1;
+    while (i <= treeLeafCoin){
+
+        //Create the images
+        var elem = document.createElement("img");
+        elem.src = '../images/leaf-coin.png';
+        elem.setAttribute("class", "item");
+
+        //Append the images
+        document.getElementById("textbox").appendChild(elem);
+        i++;
+    }
+
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+    playerSetup();
+    setStats();
+}
+
+//If player came to this page by sleeping, print the sleep text
+function sleepText(){
+    var sleep = localStorage.getItem('sleep');
+    if(sleep =="true"){
+        document.getElementById("textbox").innerHTML = 'Day '+ playerStats["day"] + 
+        '<br><br>You find 3 leaf coins have dropped to the ground while you slept.<br><br>'
+        sleep = "false"
+        localStorage.setItem('sleep',sleep);
+
+        dailyLeafCoins();
+    }
+}
+
+
+
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
+window.onload = sleepText();

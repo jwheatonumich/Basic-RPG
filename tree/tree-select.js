@@ -40,7 +40,7 @@ function shakeTree() {
     var treeAcornCoin = 0
     var treeMushroomCoin = 0
     var treeBearclawCoin =  0
-    var treeLeafCoin = Math.floor(Math.random()*3 + 2)
+    var treeLeafCoin = 1
 
     //Add to player's stats
     playerStats["acorncoin"] +=treeAcornCoin;
@@ -50,48 +50,6 @@ function shakeTree() {
 
     //Text explaining they got items
     document.getElementById("textbox").innerHTML = 'You shake the tree and coins fall to the ground!<br>'
-
-    //Loop to create acorn icons
-    var i = 1;
-    while (i <= treeAcornCoin){
-
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/acorn-coin.png';
-        elem.setAttribute("class", "item");
-
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
-        i++;
-    }
-
-    //Loop to create mushroom icons
-    var i = 1;
-    while (i <= treeMushroomCoin){
-
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/mushroom-coin.png';
-        elem.setAttribute("class", "item");
-
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
-        i++;
-    }
-
-    //Loop to create bearclaw icons
-    var i = 1;
-    while (i <= treeBearclawCoin){
-
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/bearclaw-coin.png';
-        elem.setAttribute("class", "item");
-
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
-        i++;
-    }
 
     //Loop to create leaf icons
     var i = 1;

@@ -80,3 +80,12 @@ body{
 .item{
     max-width: 40px;
 }
+
+.attack-link{
+    border: black solid 1px;
+    line-height:75px;
+    width:75px;
+    margin:5;
+    display:inline-block;
+    text-align: center;
+}
