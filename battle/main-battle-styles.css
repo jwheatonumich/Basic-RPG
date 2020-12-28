@@ -4,7 +4,7 @@
 
 body{
     width:100vw;
-    max-width:400px;
+    max-width:360px;
 }
 
 #game-div{
@@ -82,10 +82,21 @@ body{
 }
 
 .attack-link{
+    /*Makes ability links squared with centered text*/
     border: black solid 1px;
-    line-height:75px;
     width:75px;
-    margin:5;
-    display:inline-block;
     text-align: center;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height:75px;
+}
+
+#abilities{
+    /*Aligns ability links*/
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    justify-content:space-between;
 }
