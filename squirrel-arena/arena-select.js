@@ -3,15 +3,15 @@ var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject);
 
 //List of possible enemy IDs
-var enemyListEasy = [0,1,2]
-var enemyListHard = [3]
+var enemyListEasy = [0,1,2];
+var enemyListHard = [3,4,5];
 
 //Relative link back to this page
-var page = "../squirrel-arena/arena.html"
+var page = "../squirrel-arena/arena.html";
 
 //Function to calculate max health from endurance
 function healthCalc(){
-    playerStats["maxhealth"] = 4 * playerStats["endurance"]
+    playerStats["maxhealth"] = 4 * playerStats["endurance"];
 };
 
 //Load each player stat into a variable
@@ -26,7 +26,7 @@ function playerSetup() {
     mushroomCoin = playerStats.mushroomcoin;
     bearclawCoin = playerStats.bearclawcoin;
     leafCoin = playerStats.leafcoin;
-}
+};
 
 //Function that sets text on the website equal to various stat variables
 function setStats() {
@@ -44,7 +44,7 @@ function setStats() {
 
     //Set the player image to their costume
     document.getElementById("character-image").src = playerStats.image;
-}
+};
 
 //Populate player stats on page load
 window.onload = playerSetup();

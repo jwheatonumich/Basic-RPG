@@ -13,8 +13,12 @@ body{
     grid-gap: 20px;
 }
 
-#player-div, #enemy-div{
-    padding: 5px 20px 5px 20px;
+#enemy-div{
+    padding: 5px 20px 5px 5px;
+}
+
+#player-div{
+    padding: 5px 5px 5px 20px;
 }
 
 .game-text {
