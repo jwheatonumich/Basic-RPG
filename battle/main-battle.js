@@ -283,19 +283,25 @@ function attack(playerAbility) {
         
         //Calculate player and enemy attack
         var playerAttackDamage = Math.max(Math.floor(
+            //Avg damage of 1, central outcomes more likely
             1.25 * Math.random()*playerAttack*attackMultiplier 
             + 0.5 * Math.random()*playerAttack*attackMultiplier 
             + 0.25 * Math.random()*playerAttack*attackMultiplier 
 
-            - enemyDefense*enemyDefenseMultiplier
+            //Avg block of 0.5, central outcomes more likely
+            - .75 * enemyDefense*enemyDefenseMultiplier
+            -.25 * enemyDefense*enemyDefenseMultiplier
             ),1);
 
         var enemyAttackDamage = Math.max(Math.floor(
-            1.25 * Math.random()*2*enemyAttack*enemyAttackMultiplier 
-            + 0.5 * Math.random()*2*enemyAttack*enemyAttackMultiplier 
-            + 0.25 * Math.random()*2*enemyAttack*enemyAttackMultiplier 
+            //Avg damage of 1, central outcomes more likely
+            1.25 * Math.random()*enemyAttack*enemyAttackMultiplier 
+            + 0.5 * Math.random()*enemyAttack*enemyAttackMultiplier 
+            + 0.25 * Math.random()*enemyAttack*enemyAttackMultiplier 
 
-            - playerDefense*defenseMultiplier
+            //Avg block of 0.5, central outcomes more likely
+            - .75 * playerDefense*defenseMultiplier
+            - .25 * playerDefense*defenseMultiplier
             ),1);
 
         //Troubleshooting
