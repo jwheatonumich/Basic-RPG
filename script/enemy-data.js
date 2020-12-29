@@ -84,18 +84,63 @@ enemyStats = [
     {
         "name":"Red Mushroom","enemyID":9,"enemyImage":"../images/tall-mushroom.png",
         "stats":{
-            "name":"Tall Mushroom", "enemyID":9, "species":"mushroom",
+            "name":"Red Mushroom", "enemyID":9, "species":"mushroom",
+            "health":100, "maxhealth":100, "attack":38, "defense":15, 
+            "acorncoin":0, "mushroomcoin":3, "bearclawcoin":0 
+        },
+    },
+
+    {
+        "name":"Green Mushroom","enemyID":10,"enemyImage":"../images/tall-mushroom-green.png",
+        "stats":{
+            "name":"Green Mushroom", "enemyID":10, "species":"mushroom",
             "health":120, "maxhealth":120, "attack":40, "defense":15, 
             "acorncoin":0, "mushroomcoin":3, "bearclawcoin":0 
         },
     },
 
     {
-        "name":"Blackbear","enemyID":10,"enemyImage":"../images/blackbear.png",
+        "name":"Yellow Mushroom","enemyID":11,"enemyImage":"../images/tall-mushroom-yellow.png",
         "stats":{
-            "name":"Blackbear", "enemyID":8, "species":"bear",
-            "health":160, "maxhealth":160, "attack":40, "defense":40, 
+            "name":"Yellow Mushroom", "enemyID":11, "species":"mushroom",
+            "health":130, "maxhealth":130, "attack":42, "defense":15, 
+            "acorncoin":0, "mushroomcoin":3, "bearclawcoin":0 
+        },
+    },
+
+    {
+        "name":"Brown Cub","enemyID":12,"enemyImage":"../images/small-bear.png",
+        "stats":{
+            "name":"Brown Cub", "enemyID":12, "species":"bear",
+            "health":140, "maxhealth":140, "attack":40, "defense":30, 
             "acorncoin":0, "mushroomcoin":0, "bearclawcoin":1 
             }
-        }
+    },
+   
+    {
+        "name":"Black Cub","enemyID":13,"enemyImage":"../images/small-bear-black.png",
+        "stats":{
+            "name":"Black Cub", "enemyID":13, "species":"bear",
+            "health":160, "maxhealth":160, "attack":41, "defense":35, 
+            "acorncoin":0, "mushroomcoin":0, "bearclawcoin":1 
+            }
+    },
+
+    {
+        "name":"Polar Cub","enemyID":14,"enemyImage":"../images/small-bear-white.png",
+        "stats":{
+            "name":"Polar Cub", "enemyID":14, "species":"bear",
+            "health":180, "maxhealth":180, "attack":42, "defense":40, 
+            "acorncoin":0, "mushroomcoin":0, "bearclawcoin":1 
+            }
+    },
+
+    {
+        "name":"Momma Bear","enemyID":15,"enemyImage":"../images/blackbear.png",
+        "stats":{
+            "name":"Momma Bear", "enemyID":15, "species":"bear",
+            "health":200, "maxhealth":200, "attack":45, "defense":45, 
+            "acorncoin":0, "mushroomcoin":0, "bearclawcoin":3 
+            }
+    }
 ]

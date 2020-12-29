@@ -7,7 +7,7 @@ var page = "../mushroom-arena/arena.html"
 
 //List of possible enemy IDs
 var enemyListEasy = [6,7,8]
-var enemyListHard = [9]
+var enemyListHard = [9,10,11]
 
 //Load each player stat into a variable
 function playerSetup() {
