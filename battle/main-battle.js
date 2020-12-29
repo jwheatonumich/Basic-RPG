@@ -282,8 +282,21 @@ function attack(playerAbility) {
         enemyArmor += enemyAbility["armor"];
         
         //Calculate player and enemy attack
-        var playerAttackDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
-        var enemyAttackDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
+        var playerAttackDamage = Math.max(Math.floor(
+            1.25 * Math.random()*playerAttack*attackMultiplier 
+            + 0.5 * Math.random()*playerAttack*attackMultiplier 
+            + 0.25 * Math.random()*playerAttack*attackMultiplier 
+
+            - enemyDefense*enemyDefenseMultiplier
+            ),1);
+
+        var enemyAttackDamage = Math.max(Math.floor(
+            1.25 * Math.random()*2*enemyAttack*enemyAttackMultiplier 
+            + 0.5 * Math.random()*2*enemyAttack*enemyAttackMultiplier 
+            + 0.25 * Math.random()*2*enemyAttack*enemyAttackMultiplier 
+
+            - playerDefense*defenseMultiplier
+            ),1);
 
         //Troubleshooting
         console.log("Player attack damage: ",playerAttackDamage);
