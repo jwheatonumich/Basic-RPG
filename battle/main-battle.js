@@ -227,6 +227,9 @@ function attack(playerAbility) {
             var enemyAbility = enemyAbility4;break;
     };
 
+    //Troubleshooting
+    console.log("Enemy ability ",enemyAbility["name"]);
+
     //Check if player is stunned
     if(playerStun == 1){
         playerAbility = "stunned" //If yes, swich the ability used to the stunned ability
@@ -236,9 +239,6 @@ function attack(playerAbility) {
     if(enemyStun == 1){
         enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
     }
-
-    //Troubleshooting
-    console.log(enemyAbility);
 
     //Set attack and defense multipliers for this turn
     attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
@@ -284,6 +284,10 @@ function attack(playerAbility) {
         //Calculate player and enemy attack
         var playerAttackDamage = Math.max(Math.floor(Math.random()*2*playerAttack*attackMultiplier - enemyDefense*enemyDefenseMultiplier),1);
         var enemyAttackDamage = Math.max(Math.floor(Math.random()*2*enemyAttack*enemyAttackMultiplier - playerDefense*defenseMultiplier),1);
+
+        //Troubleshooting
+        console.log("Player attack damage: ",playerAttackDamage);
+        console.log("Enemy attack damage: ",enemyAttackDamage);
 
         //Add armor for leech attcks
         playerArmor += Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage);
@@ -333,13 +337,24 @@ function attack(playerAbility) {
         enemyStun = Math.floor(Math.random()*(1/(1-abilityData[playerAbility]["stun"])))
         if(enemyStun == 1){
             enemyStatus = "Stunned"
+
+            //Troubleshooting
+            console.log("Enemy is stunned next round")
         };
+
+
 
         //Determine if player is stunned next turn
         playerStun = Math.floor(Math.random()*(1/(1-enemyAbility["stun"])))
         if(playerStun == 1){
             playerStatus = "Stunned"
+            s
+            //Troubleshooting
+            console.log("Player is stunned next round")
         };
+
+
+
 
         //Store the text that will display this turn
         battleText = `You use `
