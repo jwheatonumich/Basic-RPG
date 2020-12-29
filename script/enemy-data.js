@@ -12,7 +12,7 @@ enemyStats = [
         "name":"Red Squirrel","enemyID":1,"enemyImage":"../images/squirrel-red.png",
         "stats":{
                 "name":"Red Squirrel", "enemyID":1, "species":"squirrel",
-                "health":16, "maxhealth":17, "attack":11, "defense":7, 
+                "health":17, "maxhealth":17, "attack":11, "defense":7, 
                 "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
             },
     },
@@ -31,7 +31,7 @@ enemyStats = [
         "name":"Two Brown Squirrels","enemyID":3,"enemyImage":"../images/two-squirrels.png",
         "stats":{
             "name":"Two Brown Squirrels", "enemyID":3, "species":"squirrel",
-            "health":40, "maxhealth":30, "attack":20, "defense":5, 
+            "health":30, "maxhealth":30, "attack":20, "defense":5, 
             "acorncoin":3,"mushroomcoin":0, "bearclawcoin":0 
         },
     },
@@ -40,7 +40,7 @@ enemyStats = [
         "name":"Two Red Squirrels","enemyID":4,"enemyImage":"../images/two-squirrels-red.png",
         "stats":{
             "name":"Two Red Squirrels", "enemyID":4, "species":"squirrel",
-            "health":40, "maxhealth":34, "attack":22, "defense":5, 
+            "health":34, "maxhealth":34, "attack":22, "defense":5, 
             "acorncoin":3,"mushroomcoin":0, "bearclawcoin":0 
         },
     },

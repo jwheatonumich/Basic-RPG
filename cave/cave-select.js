@@ -6,7 +6,7 @@ var playerStats = JSON.parse(retrievedObject)
 var page = "../cave/cave.html"
 
 //List of possible enemy IDs
-var enemyListEasy = [6]
+var enemyListEasy = [7]
 
 //Load each player stat into a variable
 function playerSetup() {
