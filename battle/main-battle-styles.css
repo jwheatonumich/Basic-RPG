@@ -104,3 +104,7 @@ body{
     flex-direction: row;
     justify-content:space-between;
 }
+
+.meter{
+    max-width:30px;
+}

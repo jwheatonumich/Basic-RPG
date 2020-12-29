@@ -111,7 +111,8 @@ function enemySetup() {
     enemyMushroomCoin = chosenEnemy["stats"]["mushroomcoin"];
     enemyBearclawCoin = chosenEnemy["stats"]["bearclawcoin"];
 
-    enemyPowerlevel = 5*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
+
+    enemyPowerlevel = 20*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -140,6 +141,9 @@ function setStats() {
 
     //Set the enemy powerlevel
     document.getElementById("powerlevel").value = enemyPowerlevel
+    document.getElementById("powerlevel2").value = enemyPowerlevel - 10
+    document.getElementById("powerlevel3").value = enemyPowerlevel - 20
+    document.getElementById("powerlevel4").value = enemyPowerlevel - 30
 }
 
 //Load player and enemy abilities based on their species
@@ -367,7 +371,7 @@ function attack(playerAbility) {
         playerStun = Math.floor(Math.random()*(1/(1-enemyAbility["stun"])))
         if(playerStun == 1){
             playerStatus = "Stunned"
-            s
+            
             //Troubleshooting
             console.log("Player is stunned next round")
         };
@@ -388,6 +392,8 @@ function attack(playerAbility) {
         battleText = battleText.concat(` damage.<br>`);
         if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
+        if(playerStun==1){battleText = battleText.concat(`You have been stunned!<br>`)};
+        if(enemyStun==1){battleText = battleText.concat(`The enemy has been stunned!<br>`)};
         
         //Change turn
         battleTurn += 1;

@@ -2,12 +2,6 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
-//Relative link back to this page
-var page = "../cave/cave.html"
-
-//List of possible enemy IDs
-var enemyListEasy = [10]
-
 //Load each player stat into a variable
 function playerSetup() {
     playerName = playerStats.name;
@@ -40,53 +34,64 @@ function setStats() {
     document.getElementById("character-image").src = playerStats.image;
 }
 
-//Update image
-function updateImage(){
-    if (playerStats["caveday"] >= 1){
-        //Change the image after user tries to steal a coin
-        document.getElementById("page-image").src = "../images/bear-cave-eyes.png"
-    }
+//Transform back to original alien
+function repairDNA(){
+    //Save health and xp after battle ends
+    playerStats.species = "gremlin" ;
+    playerStats.image = "../images/little-goblin.png" ;
+    
+
+    //Store the updated data object in local storage, after turning the JSON to a string
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+    playerSetup();
+    setStats();
 }
 
 //Add random numbers of coins to the player's inventory
-function enterCave(enemyList) {
+function dailyLeafCoins() {
 
-    //Check if the user has entered the cave today
-    if (playerStats["caveday"] < 1){
+    //Calculate how many of each coin to add
+    var treeLeafCoin =3
 
-        //Make sure the player can't try to steal a coin again today
-        playerStats["caveday"]=1;
+    //Add to player's stats
+    playerStats["leafcoin"] +=treeLeafCoin;
 
-        //Give the player a bearclaw coin
-        playerStats["bearclawcoin"] +=1;
-
-        //Text explaining they got items
-        document.getElementById("textbox").innerHTML = 'As you enter the cave you see a shining object on the ground. As you pick it up, you hear growling and run!<br>'
+    //Loop to create leaf icons
+    var i = 1;
+    while (i <= treeLeafCoin){
 
         //Create the images
         var elem = document.createElement("img");
-        elem.src = '../images/bearclaw-coin.png';
+        elem.src = '../images/leaf-coin.png';
         elem.setAttribute("class", "item");
 
         //Append the images
         document.getElementById("textbox").appendChild(elem);
-
-        //Change the image after user tries to steal a coin
-        document.getElementById("page-image").src = "../images/bear-cave-eyes.png"
-
-    }else{
-        //Start the battle
-        localStorage.setItem('enemyList',enemyList);
-        window.location.href = "../battle/battle.html";
-        lastPage(page);
+        i++;
     }
 
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
     playerSetup();
     setStats();
-};
+}
+
+//If player came to this page by sleeping, print the sleep text
+function sleepText(){
+    var sleep = localStorage.getItem('sleep');
+    if(sleep =="true"){
+        document.getElementById("textbox").innerHTML = 'Day '+ playerStats["day"] + 
+        '<br><br>You find 3 leaf coins have dropped to the ground while you slept.<br><br>'
+        sleep = "false"
+        localStorage.setItem('sleep',sleep);
+
+        dailyLeafCoins();
+    }
+}
+
+
 
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
-window.onload = updateImage()
+window.onload = sleepText();

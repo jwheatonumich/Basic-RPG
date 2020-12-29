@@ -55,25 +55,43 @@ enemyStats = [
     },
 
     {
-        "name":"Little Mushroom","enemyID":6,"enemyImage":"../images/little-mushroom.png",
+        "name":"Red Toadstool","enemyID":6,"enemyImage":"../images/little-mushroom.png",
         "stats":{
-            "name":"Little Mushroom", "enemyID":6, "species":"mushroom",
-            "health":80, "maxhealth":80, "attack":30, "defense":15, 
+            "name":"Red Toadstool", "enemyID":6, "species":"mushroom",
+            "health":60, "maxhealth":60, "attack":30, "defense":15, 
             "acorncoin":0, "mushroomcoin":1, "bearclawcoin":0 
         },
     },
 
     {
-        "name":"Tall Mushroom","enemyID":7,"enemyImage":"../images/tall-mushroom.png",
+        "name":"Green Toadstool","enemyID":7,"enemyImage":"../images/little-mushroom-green.png",
         "stats":{
-            "name":"Tall Mushroom", "enemyID":7, "species":"mushroom",
+            "name":"Green Toadstool", "enemyID":7, "species":"mushroom",
+            "health":70, "maxhealth":70, "attack":32, "defense":16, 
+            "acorncoin":0, "mushroomcoin":1, "bearclawcoin":0 
+        },
+    },
+
+    {
+        "name":"Yellow Toadstool","enemyID":8,"enemyImage":"../images/little-mushroom-yellow.png",
+        "stats":{
+            "name":"Yellow Toadstool", "enemyID":8, "species":"mushroom",
+            "health":80, "maxhealth":80, "attack":34, "defense":17, 
+            "acorncoin":0, "mushroomcoin":1, "bearclawcoin":0 
+        },
+    },
+
+    {
+        "name":"Red Mushroom","enemyID":9,"enemyImage":"../images/tall-mushroom.png",
+        "stats":{
+            "name":"Tall Mushroom", "enemyID":9, "species":"mushroom",
             "health":120, "maxhealth":120, "attack":40, "defense":15, 
             "acorncoin":0, "mushroomcoin":3, "bearclawcoin":0 
         },
     },
 
     {
-        "name":"Blackbear","enemyID":8,"enemyImage":"../images/blackbear.png",
+        "name":"Blackbear","enemyID":10,"enemyImage":"../images/blackbear.png",
         "stats":{
             "name":"Blackbear", "enemyID":8, "species":"bear",
             "health":160, "maxhealth":160, "attack":40, "defense":40, 
