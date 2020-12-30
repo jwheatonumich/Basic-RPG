@@ -7,7 +7,9 @@ function dataLoad(){
     playerStats = {"name":"Fred", "species":"gremlin", "image":"../images/little-goblin.png",
     "health":40, "maxhealth":40, "attack":10, "defense":10, "endurance":10, 
     "day":1, "caveday":0,"treeday":0,
-    "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":0}
+    "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0, "leafcoin":0,
+    "ship-acorncoin":0,"ship-mushroomcoin":0,"ship-bearclawcoin":0,
+    "squirrel-unlock":false,"mushroom-unlock":false,"bear-unlock":false}
     playerStats["name"] = document.getElementById("name").value
 };
 

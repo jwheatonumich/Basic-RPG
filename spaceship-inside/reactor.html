@@ -17,6 +17,7 @@
           <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
 
           <script src="spaceship-select.js" defer></script>
+          <script src="reactor-script.js" defer></script>
 
           <!--Standard page code-->
           <script src="../script/standard-script.js" defer></script>
@@ -60,14 +61,17 @@
           <div id="game-div">
 
             <div id="cave-div">
-              <img id="page-image" alt = "cave" src="../images/trophy-shelf.png">
+              <img class="reactor" alt = "red reactor" src="../images/reactor.png">
+              <img class="reactor" alt = "silver reactor" src="../images/reactor.png">
+              <img class="reactor" alt = "gold reactor" src="../images/reactor.png">
               
               <div id="textbox"></div><br>
 
               <div id="control">
-                <button id="medbay" class="button" onclick="location.href='./medbay.html';">Medical Bay</button><br><br>
-                <button id="reactor" class="button" onclick="location.href='./reactor.html';">Reactor</button><br><br>
-                <button id="back" class="button" onclick="location.href='../spaceship/spaceship.html';">Back</button>
+                <a onclick="redcoin()"><img class="coin-slot" alt="Red Coin Slot" src="../images/coin-slot-red.png"></a>
+                <a onclick="silvercoin()"><img class="coin-slot" alt="Silver Coin Slot" src="../images/coin-slot-silver.png"></a>
+                <a onclick="goldcoin()"><img class="coin-slot" alt="Gold Coin Slot" src="../images/coin-slot-gold.png"></a><br>
+                <button id="back" class="button" onclick="location.href='./spaceship.html';">Back</button>
               </div>
 
             </div>
