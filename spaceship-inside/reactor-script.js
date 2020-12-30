@@ -9,9 +9,8 @@ function redcoin() {
         playerSetup();
         setStats();
 
-        //Update battery image
-        var percentFilled = (.05+(playerStats["ship-acorncoin"])/12)*100;
-        document.getElementById("red-reactor").style.backgroundImage = "linear-gradient(to top, rgba(0,0,0,0) "+percentFilled+"%, white 0%)";
+        //Update reacor image to new level
+        reactorLevels()
     } 
 }
 
@@ -24,9 +23,8 @@ function silvercoin() {
         playerSetup();
         setStats();
 
-        //Update battery image
-        var percentFilled = (.05+(playerStats["ship-mushroomcoin"])/12)*100;
-        document.getElementById("silver-reactor").style.backgroundImage = "linear-gradient(to top, rgba(0,0,0,0) "+percentFilled+"%, white 0%)";
+        //Update reacor image to new level
+        reactorLevels()
     } 
 }
 
@@ -39,8 +37,21 @@ function goldcoin() {
         playerSetup();
         setStats();
 
-        //Update battery image
-        var percentFilled = (.05+(playerStats["ship-bearclawcoin"])/12)*100;
-        document.getElementById("gold-reactor").style.backgroundImage = "linear-gradient(to top, rgba(0,0,0,0) "+percentFilled+"%, white 0%)";
+        //Update reacor image to new level
+        reactorLevels()
     } 
 }
+
+//Update battery power levels
+function reactorLevels(){
+            var percentFilled = (.05+(playerStats["ship-acorncoin"])/12)*100;
+            document.getElementById("red-reactor").style.backgroundImage = "linear-gradient(to top, rgba(0,0,0,0) "+percentFilled+"%, white 0%)";
+
+            percentFilled = (.05+(playerStats["ship-mushroomcoin"])/12)*100;
+            document.getElementById("silver-reactor").style.backgroundImage = "linear-gradient(to top, rgba(0,0,0,0) "+percentFilled+"%, white 0%)";
+
+            percentFilled = (.05+(playerStats["ship-bearclawcoin"])/12)*100;
+            document.getElementById("gold-reactor").style.backgroundImage = "linear-gradient(to top, rgba(0,0,0,0) "+percentFilled+"%, white 0%)";
+}
+
+window.onload = reactorLevels();
