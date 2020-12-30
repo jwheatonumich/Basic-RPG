@@ -48,50 +48,6 @@ function repairDNA(){
     setStats();
 }
 
-//Add random numbers of coins to the player's inventory
-function dailyLeafCoins() {
-
-    //Calculate how many of each coin to add
-    var treeLeafCoin =3
-
-    //Add to player's stats
-    playerStats["leafcoin"] +=treeLeafCoin;
-
-    //Loop to create leaf icons
-    var i = 1;
-    while (i <= treeLeafCoin){
-
-        //Create the images
-        var elem = document.createElement("img");
-        elem.src = '../images/leaf-coin.png';
-        elem.setAttribute("class", "item");
-
-        //Append the images
-        document.getElementById("textbox").appendChild(elem);
-        i++;
-    }
-
-    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-    playerSetup();
-    setStats();
-}
-
-//If player came to this page by sleeping, print the sleep text
-function sleepText(){
-    var sleep = localStorage.getItem('sleep');
-    if(sleep =="true"){
-        document.getElementById("textbox").innerHTML = 'Day '+ playerStats["day"] + 
-        '<br><br>You find 3 leaf coins have dropped to the ground while you slept.<br><br>'
-        sleep = "false"
-        localStorage.setItem('sleep',sleep);
-
-        dailyLeafCoins();
-    }
-}
-
-
-
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
-window.onload = sleepText();

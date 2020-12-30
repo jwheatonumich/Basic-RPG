@@ -2,6 +2,20 @@
     max-width:75px;
 }
 
-.reactor{
-    max-width:75px
+#red-reactor{
+    max-width:75px;
+    background-color: red;
+    background-image: linear-gradient(to top, rgba(0,0,0,0) 0%, white 0%);
+}
+
+#silver-reactor{
+    max-width:75px;
+    background-color: silver;
+    background-image: linear-gradient(to top, rgba(0,0,0,0) 0%, white 0%);
+}
+
+#gold-reactor{
+    max-width:75px;
+    background-color: gold;
+    background-image: linear-gradient(to top, rgba(0,0,0,0) 0%, white 0%);
 }

@@ -78,11 +78,31 @@ function dailyLeafCoins() {
 
 //If player came to this page by sleeping, print the sleep text
 function sleepText(){
+
+    //Local storage that tracks if the player just slept
     var sleep = localStorage.getItem('sleep');
+
+    //Check if the player slept
     if(sleep =="true"){
-        document.getElementById("textbox").innerHTML = 'Day '+ playerStats["day"] + 
-        '<br><br>You find 3 leaf coins have dropped to the ground while you slept.<br><br>'
-        sleep = "false"
+
+        console.log("test")
+        
+        //Print standard new day texg
+        var sleepText = 'Day '+ playerStats["day"] + 
+        '<br><br>You find 3 leaf coins have dropped to the ground while you slept.<br><br>';
+
+        //If player charged red reactor, state that they are healed
+        if(playerStats["ship-acorncoin"] >= 10){
+            sleepText = sleepText.concat('You drink a cup of coffee and feel refreshed. Your health increases to 100%!<br><br>');
+        };
+
+        //If player charged silver reactor, state that they are healed
+        if(playerStats["ship-mushroomcoin"] >= 10){
+            sleepText = sleepText.concat('You workout in the gravity chamber. Your stats increase by 1!<br><br>');
+        };
+
+        document.getElementById("textbox").innerHTML = sleepText;
+        sleep = "false";
         localStorage.setItem('sleep',sleep);
 
         dailyLeafCoins();
