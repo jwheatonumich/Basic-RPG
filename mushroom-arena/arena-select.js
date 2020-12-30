@@ -6,8 +6,8 @@ var playerStats = JSON.parse(retrievedObject)
 var page = "../mushroom-arena/arena.html"
 
 //List of possible enemy IDs
-var enemyListEasy = [6,7,8]
-var enemyListHard = [9,10,11]
+var enemyListEasy = [6,6,6,7,7,8]
+var enemyListHard = [9,9,9,10,10,11]
 
 //Load each player stat into a variable
 function playerSetup() {

@@ -53,6 +53,8 @@ var enemyAbility2 = "";
 var enemyAbility3 = "";
 var enemyAbility4 = "";
 
+var enemyAbility = "";
+
 var battleTurn = 1
 
 
@@ -111,6 +113,11 @@ function enemySetup() {
     enemyMushroomCoin = chosenEnemy["stats"]["mushroomcoin"];
     enemyBearclawCoin = chosenEnemy["stats"]["bearclawcoin"];
 
+    //Load ability probabilities
+    enemyAbility1Prob = chosenEnemy["stats"]["ability1prob"];
+    enemyAbility2Prob = chosenEnemy["stats"]["ability2prob"] + enemyAbility1Prob;
+    enemyAbility3Prob = chosenEnemy["stats"]["ability3prob"] + enemyAbility2Prob;
+    enemyAbility4Prob = chosenEnemy["stats"]["ability4prob"] + enemyAbility3Prob;
 
     enemyPowerlevel = 20*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
 }
@@ -218,17 +225,17 @@ function battleCleanup(){
 function attack(playerAbility) {
 
     //Randomly choose enemy's ability
-    var enemyAbilityNumber = Math.floor(Math.random()*4+1);
+    var enemyAbilityNumber = Math.random();
 
-    switch(enemyAbilityNumber){
-        case 1:
-            var enemyAbility = enemyAbility1;break;
-        case 2:
-            var enemyAbility = enemyAbility2;break;
-        case 3:
-            var enemyAbility = enemyAbility3;break;
-        case 4:
-            var enemyAbility = enemyAbility4;break;
+    //Determine which ability the enemy uses
+    if(enemyAbilityNumber < enemyAbility1Prob){
+        enemyAbility = enemyAbility1
+    }else if (enemyAbilityNumber < enemyAbility2Prob){
+        enemyAbility = enemyAbility2
+    } else if(enemyAbilityNumber < enemyAbility3Prob){
+        enemyAbility = enemyAbility3
+    } else{
+        enemyAbility = enemyAbility4
     };
 
     //Troubleshooting
