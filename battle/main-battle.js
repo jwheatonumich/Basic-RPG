@@ -498,7 +498,7 @@ function attack(playerAbility) {
 
 //Clear the battle text
 function resetText(){
-    document.getElementById("battle-text-div").innerHTML = "Click the 'Attack' button to begin.";
+    document.getElementById("battle-text-div").innerHTML = "Click an attack to begin.";
 }
 
 //Setup back button
