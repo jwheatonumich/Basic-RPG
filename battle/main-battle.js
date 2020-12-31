@@ -423,13 +423,16 @@ function attack(playerAbility) {
         document.getElementById("enemy-health").innerHTML = "";
         document.getElementById("enemy-armor").innerHTML = "";
         document.getElementById("enemy-status").innerHTML = "";
-    
         document.getElementById("enemy-image").src = "../images/blank.png";
 
+        //Prevent player from attacking
         document.getElementById("attack1").onclick = "";
         document.getElementById("attack2").onclick = "";
         document.getElementById("attack3").onclick = "";
         document.getElementById("attack4").onclick = "";
+
+        //End win streak
+        winStreak = 0;
 
         if(playerLeafCoin > 0){
             //Heal player for a leaf coin
@@ -442,11 +445,14 @@ function attack(playerAbility) {
             
         }else{
             battleText = "Your health has been reduced to zero. You have no leaf coins to heal!"
+
+            //Add code to reset player stats including coins and day, and redirect to ship
+
         }
 
     };
 
-
+    //Win streaks
     if (enemyHealth <= 0){
 
         //Increase win streak
