@@ -205,6 +205,34 @@ function battleStatus(){
     }
 }
 
+function chooseEnemyAbility(){
+    //Randomly choose enemy's ability
+    var enemyAbilityNumber = Math.random();
+
+    //Determine which ability the enemy uses
+    if(enemyAbilityNumber < enemyAbility1Prob){
+        enemyAbility = enemyAbility1
+    }else if (enemyAbilityNumber < enemyAbility2Prob){
+        enemyAbility = enemyAbility2
+    } else if(enemyAbilityNumber < enemyAbility3Prob){
+        enemyAbility = enemyAbility3
+    } else{
+        enemyAbility = enemyAbility4
+    };
+};
+
+function stunCheck(){
+    //Check if player is stunned
+    if(playerStun == 1){
+        playerAbility = "stunned" //If yes, swich the ability used to the stunned ability
+    }
+
+    //Check if enemy is stunned
+    if(enemyStun == 1){
+        enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
+    }
+};
+
 //End of battle steps - save stats to local storage, reset temp statuses
 function battleCleanup(){
     //Save health and xp after battle ends
@@ -229,35 +257,82 @@ function battleCleanup(){
 
 }
 
+//Clear the battle text
+function resetText(){
+    document.getElementById("battle-text-div").innerHTML = "Click an attack to begin.";
+}
+
+//Setup back button
+function backButton(buttonClick){
+    document.getElementById("back-button").setAttribute('onClick', "location.href=\"" + buttonClick + "\";"); //Set the code it runs
+}
+
+//Function that prevents player from using the attack links
+function stopPlayerAttack(){
+
+    //Abilities use the empty function while player is dead
+    document.getElementById("attack1").setAttribute('onClick',"empty();");
+    document.getElementById("attack2").setAttribute('onClick',"empty();");
+    document.getElementById("attack3").setAttribute('onClick',"empty();");
+    document.getElementById("attack4").setAttribute('onClick',"empty();");
+}
+
+//What happens when player dies without a way to heal
+function gameOver(){
+
+    //Reset player stats
+    playerStats.acorncoin = 0;
+    playerStats.attack = 10;
+    playerStats.bearunlock = false;
+    playerStats.bearclawcoin = 0;
+    playerStats.caveday = 0;
+    playerStats.day = 1;
+    playerStats.defense = 10;
+    playerStats.endurance = 10;
+    playerStats.health = 40;
+    playerStats.image = "../images/little-goblin.png";
+    playerStats.leafcoin = 0;
+    playerStats.maxhealth = 40;
+    playerStats.mushroomcoin = 0;
+    playerStats.mushroomunlock = false;
+    playerStats.species = "gremlin"
+    playerStats.squirrelunlock = false;
+    playerStats.treeday = 0
+
+    //Store the updated data object in local storage, after turning the JSON to a string
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+    //Can't load a new enemy
+    document.getElementById("restart-button").setAttribute('onClick',"empty();");
+
+    //Back button redirects to spaceship
+    document.getElementById("back-button").setAttribute('onClick',"location.href='../spaceship/spaceship.html';");
+
+    //Store a value in local storage indicating player just died
+    localStorage.setItem('playerDead', true);
+}
+
+//Define an empty function
+function empty(){console.log('empty')};
+
+//Prevent double tapping, to prevent accidental zooms
+function noDoubleTap(){
+    var time_stamp = 0; // Or Date.now()
+    window.addEventListener("touchstart", function(event_) {
+        if (event_.timeStamp - time_stamp < 300) { // A tap that occurs less than 300 ms from the last tap will trigger a double tap. This delay may be different between browsers.
+            event_.preventDefault();
+            return false;
+        }
+        time_stamp = event_.timeStamp;
+    });
+}
+
 //Script that is run when clicking the attack button
 function attack(playerAbility) {
 
-    //Randomly choose enemy's ability
-    var enemyAbilityNumber = Math.random();
+    chooseEnemyAbility();
 
-    //Determine which ability the enemy uses
-    if(enemyAbilityNumber < enemyAbility1Prob){
-        enemyAbility = enemyAbility1
-    }else if (enemyAbilityNumber < enemyAbility2Prob){
-        enemyAbility = enemyAbility2
-    } else if(enemyAbilityNumber < enemyAbility3Prob){
-        enemyAbility = enemyAbility3
-    } else{
-        enemyAbility = enemyAbility4
-    };
-
-    //Troubleshooting
-    console.log("Enemy ability ",enemyAbility["name"]);
-
-    //Check if player is stunned
-    if(playerStun == 1){
-        playerAbility = "stunned" //If yes, swich the ability used to the stunned ability
-    }
-
-    //Check if enemy is stunned
-    if(enemyStun == 1){
-        enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
-    }
+    stunCheck();
 
     //Set attack and defense multipliers for this turn
     attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
@@ -444,7 +519,7 @@ function attack(playerAbility) {
             
         }else{
             battleText = "Your health has been reduced to zero. You have no leaf coins to heal!"
-
+            gameOver();
             //Add code to reset player stats including coins and day, and redirect to ship
 
         }
@@ -515,36 +590,4 @@ function attack(playerAbility) {
 
 }
 
-//Clear the battle text
-function resetText(){
-    document.getElementById("battle-text-div").innerHTML = "Click an attack to begin.";
-}
 
-//Setup back button
-function backButton(buttonClick){
-    document.getElementById("back-button").setAttribute('onClick', "location.href=\"" + buttonClick + "\";"); //Set the code it runs
-}
-
-function stopPlayerAttack(){
-
-    //Abilities use the empty function while player is dead
-    document.getElementById("attack1").setAttribute('onClick',"empty();");
-    document.getElementById("attack2").setAttribute('onClick',"empty();");
-    document.getElementById("attack3").setAttribute('onClick',"empty();");
-    document.getElementById("attack4").setAttribute('onClick',"empty();");
-}
-
-//Define an empty function
-function empty(){console.log('empty')};
-
-//Prevent double tapping, to prevent accidental zooms
-function noDoubleTap(){
-    var time_stamp = 0; // Or Date.now()
-    window.addEventListener("touchstart", function(event_) {
-        if (event_.timeStamp - time_stamp < 300) { // A tap that occurs less than 300 ms from the last tap will trigger a double tap. This delay may be different between browsers.
-            event_.preventDefault();
-            return false;
-        }
-        time_stamp = event_.timeStamp;
-    });
-}
