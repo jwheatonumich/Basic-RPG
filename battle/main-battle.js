@@ -57,6 +57,8 @@ var enemyAbility = "";
 
 var battleTurn = 1
 
+var winStreak = 0;
+
 
 //Load player data from local storage
 function dataLoad(){
@@ -444,12 +446,27 @@ function attack(playerAbility) {
 
     };
 
+
+    if (enemyHealth <= 0){
+
+        //Increase win streak
+        winStreak += 1;
+        battleText = battleText.concat("Your win streak is "+winStreak+".<br>")
+    }
+
     //Update the battle text for the current turn
     //Needs to go before coins are appended, otherwise it will erase them
     document.getElementById("battle-text-div").innerHTML = battleText;
 
     //Add loot icons if the enemy is dead
     if (enemyHealth <= 0){
+
+        //Stop player from attacking while enemy is dead
+        document.getElementById("attack1").onclick = "";
+        document.getElementById("attack2").onclick = "";
+        document.getElementById("attack3").onclick = "";
+        document.getElementById("attack4").onclick = "";
+
         //Loop to create acorn icons
         var i = 1;
         while (i <= enemyAcornCoin){
