@@ -3,7 +3,6 @@
 //Set the various fields on the webpage as it loads
 window.onload = dataLoad();
 window.onload = selectEnemy();
-window.onload = playerSetup();
 window.onload = enemySetup();
 window.onload = setStats();
 window.onload =  setEnemyStats();
