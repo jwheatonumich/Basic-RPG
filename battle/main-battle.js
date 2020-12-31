@@ -441,7 +441,9 @@ function attack(playerAbility) {
             document.getElementById("player-health").innerHTML = playerHealth + '/' +  playerMaxHealth;
         
             battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
-            battleCleanup();
+            
+            battleCleanup(); //Update stats variables including coins
+            setStats(); //Update stats on screen including coins
             
         }else{
             battleText = "Your health has been reduced to zero. You have no leaf coins to heal!"
