@@ -426,10 +426,7 @@ function attack(playerAbility) {
         document.getElementById("enemy-image").src = "../images/blank.png";
 
         //Prevent player from attacking
-        document.getElementById("attack1").setAttribute('onClick',"");
-        document.getElementById("attack2").setAttribute('onClick',"");
-        document.getElementById("attack3").setAttribute('onClick',"");
-        document.getElementById("attack4").setAttribute('onClick',"");
+        stopPlayerAttack();
 
         //End win streak
         winStreak = 0;
@@ -470,10 +467,7 @@ function attack(playerAbility) {
     if (enemyHealth <= 0 && playerHealth > 0){
 
         //Stop player from attacking while enemy is dead
-        document.getElementById("attack1").setAttribute('onClick',"");
-        document.getElementById("attack2").setAttribute('onClick',"");
-        document.getElementById("attack3").setAttribute('onClick',"");
-        document.getElementById("attack4").setAttribute('onClick',"");
+        stopPlayerAttack();
 
         //Loop to create acorn icons
         var i = 1;
@@ -530,5 +524,17 @@ function resetText(){
 function backButton(buttonClick){
     document.getElementById("back-button").setAttribute('onClick', "location.href=\"" + buttonClick + "\";"); //Set the code it runs
 }
+
+function stopPlayerAttack(){
+
+    //Abilities use the empty function while player is dead
+    document.getElementById("attack1").setAttribute('onClick',"empty();");
+    document.getElementById("attack2").setAttribute('onClick',"empty();");
+    document.getElementById("attack3").setAttribute('onClick',"empty();");
+    document.getElementById("attack4").setAttribute('onClick',"empty();");
+}
+
+//Define an empty function
+function empty(){console.log('empty')};
 
 
