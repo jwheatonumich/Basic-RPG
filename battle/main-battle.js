@@ -467,7 +467,7 @@ function attack(playerAbility) {
     document.getElementById("battle-text-div").innerHTML = battleText;
 
     //Add loot icons if the enemy is dead
-    if (enemyHealth <= 0){
+    if (enemyHealth <= 0 && playerHealth > 0){
 
         //Stop player from attacking while enemy is dead
         document.getElementById("attack1").onclick = "";
