@@ -77,11 +77,6 @@ function selectEnemy(){
     console.log(chosenEnemy);
 };
 
-//Store relevant player stats in variables
-function playerSetup() {
-
-}
-
 //Store relevant enemy stats in variables
 function enemySetup() {
     enemyName = chosenEnemy["stats"]["name"];
