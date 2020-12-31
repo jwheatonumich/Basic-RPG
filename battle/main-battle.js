@@ -130,13 +130,6 @@ function setStats() {
     document.getElementById("player-armor").innerHTML = playerArmor;
     document.getElementById("player-status").innerHTML = playerStatus;
 
-    document.getElementById("enemy-name").innerHTML = enemyName;
-    document.getElementById("enemy-health").innerHTML = enemyHealth + '/' + enemyMaxHealth;
-    document.getElementById("enemy-armor").innerHTML = enemyArmor;
-    document.getElementById("enemy-status").innerHTML = enemyStatus;
-
-    document.getElementById("enemy-image").src = chosenEnemy["enemyImage"]; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
-
     //Set the coin balances equal to the loaded variables
     document.getElementById("acorn-coin").innerHTML = playerAcornCoin;
     document.getElementById("mushroom-coin").innerHTML = playerMushroomCoin;
@@ -146,16 +139,28 @@ function setStats() {
     //Set the player image to their costume
     document.getElementById("character-image").src = playerStats.image;
 
+}
+
+function setEnemyStats(){
+
+    
+    document.getElementById("enemy-name").innerHTML = enemyName;
+    document.getElementById("enemy-health").innerHTML = enemyHealth + '/' + enemyMaxHealth;
+    document.getElementById("enemy-armor").innerHTML = enemyArmor;
+    document.getElementById("enemy-status").innerHTML = enemyStatus;
+
+    document.getElementById("enemy-image").src = chosenEnemy["enemyImage"]; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+
     //Set the enemy powerlevel
     document.getElementById("powerlevel").value = enemyPowerlevel
     document.getElementById("powerlevel2").value = enemyPowerlevel - 10
     document.getElementById("powerlevel3").value = enemyPowerlevel - 20
     document.getElementById("powerlevel4").value = enemyPowerlevel - 30
-}
+};
 
 //Load player and enemy abilities based on their species
 function setAbilities(){
-    //Set the attack button images based on the species
+    //Set the attack button text based on the species
     document.getElementById("attack1").innerHTML = speciesData[playerSpecies]["attack1DisplayName"];
     document.getElementById("attack2").innerHTML = speciesData[playerSpecies]["attack2DisplayName"];
     document.getElementById("attack3").innerHTML = speciesData[playerSpecies]["attack3DisplayName"];
@@ -206,6 +211,7 @@ function battleCleanup(){
     playerStats.acorncoin = playerAcornCoin; 
     playerStats.mushroomcoin = playerMushroomCoin; 
     playerStats.bearclawcoin = playerBearclawCoin; 
+    playerStats.leafcoin = playerLeafCoin; 
 
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
@@ -372,8 +378,6 @@ function attack(playerAbility) {
             console.log("Enemy is stunned next round")
         };
 
-
-
         //Determine if player is stunned next turn
         playerStun = Math.floor(Math.random()*(1/(1-enemyAbility["stun"])))
         if(playerStun == 1){
@@ -382,9 +386,6 @@ function attack(playerAbility) {
             //Troubleshooting
             console.log("Player is stunned next round")
         };
-
-
-
 
         //Store the text that will display this turn
         battleText = `You use `
@@ -409,10 +410,42 @@ function attack(playerAbility) {
 
         //Update text on site based on new health
         setStats();
+        setEnemyStats();
 
     }
 
+    if (playerHealth <= 0){
+
+        //Clear enemy info
+        document.getElementById("enemy-name").innerHTML = "None";
+        document.getElementById("enemy-health").innerHTML = "";
+        document.getElementById("enemy-armor").innerHTML = "";
+        document.getElementById("enemy-status").innerHTML = "";
+    
+        document.getElementById("enemy-image").src = "../images/blank.png";
+
+        document.getElementById("attack1").onclick = "";
+        document.getElementById("attack2").onclick = "";
+        document.getElementById("attack3").onclick = "";
+        document.getElementById("attack4").onclick = "";
+
+        if(playerLeafCoin > 0){
+            //Heal player for a leaf coin
+            playerLeafCoin -= 1;
+            playerHealth = playerMaxHealth;
+            document.getElementById("player-health").innerHTML = playerHealth + '/' +  playerMaxHealth;
+        
+            battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
+            battleCleanup();
+            
+        }else{
+            battleText = "Your health has been reduced to zero. You have no leaf coins to heal!"
+        }
+
+    };
+
     //Update the battle text for the current turn
+    //Needs to go before coins are appended, otherwise it will erase them
     document.getElementById("battle-text-div").innerHTML = battleText;
 
     //Add loot icons if the enemy is dead
@@ -460,6 +493,7 @@ function attack(playerAbility) {
         }
 
     }
+
 }
 
 //Clear the battle text

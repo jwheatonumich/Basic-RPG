@@ -1,5 +1,15 @@
 enemyStats = [
     {
+        "name":"None","enemyID":-1,"enemyImage":"../images/blank.png",
+        "stats":{
+                "name":"None", "enemyID":-1, "species":"None",
+                "health":0, "maxhealth":0, "attack":0, "defense":0, 
+                "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":0,
+                "acorncoin":0, "mushroomcoin":0, "bearclawcoin":0,
+            },
+    },
+
+    {
         "name":"Brown Squirrel","enemyID":0,"enemyImage":"../images/squirrel.png",
         "stats":{
                 "name":"Brown Squirrel", "enemyID":0, "species":"squirrel",
