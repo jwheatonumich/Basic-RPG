@@ -67,6 +67,15 @@ function dataLoad(){
     var retrievedObject = localStorage.getItem('storedPlayerStats');
     playerStats = JSON.parse(retrievedObject)
 
+    var time_stamp = 0; // Or Date.now()
+    window.addEventListener("touchstart", function(event_) {
+        if (event_.timeStamp - time_stamp < 300) { // A tap that occurs less than 300 ms from the last tap will trigger a double tap. This delay may be different between browsers.
+            event_.preventDefault();
+            return false;
+        }
+        time_stamp = event_.timeStamp;
+    });
+
 }
 
 //Select enemy from list of possible enemies
