@@ -3,9 +3,9 @@ speciesData
     {
         "gremlin":
         {
-            "attack1Name":"attack","attack2Name":"shield","attack3Name":"stun","attack4Name":"powerUp",
-            "attack1DisplayName":"Attack","attack2DisplayName":"Shield","attack3DisplayName":"Stun","attack4DisplayName":"Power Up",
-            "attack1":"attack('attack')","attack2":"attack('shield')","attack3":"attack('stun')","attack4":"attack('powerUp')",
+            "attack1Name":"attack","attack2Name":"shield","attack3Name":"stun","attack4Name":"powerDown",
+            "attack1DisplayName":"Attack","attack2DisplayName":"Shield","attack3DisplayName":"Stun","attack4DisplayName":"Power Down",
+            "attack1":"attack('attack')","attack2":"attack('shield')","attack3":"attack('stun')","attack4":"attack('powerDown')",
             "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/shield-button.png","attackbutton3":"../images/stun-button.png","attackbutton4":"../images/powerup-button.png"
         },
 

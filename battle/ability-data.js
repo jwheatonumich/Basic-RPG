@@ -74,7 +74,18 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":1.2, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "leech":0, "priority":true,"skipAttack":true
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":true
+    },
+
+    "powerDown":
+    {
+        "name":"Power-down",
+        //Current turn damage modifiers
+        "selfAttackMultiplier":0, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
+        //Multi-turn damage modifiers
+        "selfAttack":null, "opponentAttack":0.75, "selfDefense":null, "opponentDefense":null,
+        //Other efects
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":true
     },
 
     "shield":

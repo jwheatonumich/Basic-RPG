@@ -371,34 +371,6 @@ function attack(playerAbility) {
     opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"];
     opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"];
 
-    //Set player stats for future turns (if they were modified)
-    if (abilityData[playerAbility]["selfAttack"] !== null) {
-        playerAttack *= abilityData[playerAbility]["selfAttack"];
-    };
-    if (abilityData[playerAbility]["selfDefense"] !== null) {
-        playerAttack *= abilityData[playerAbility]["selfDefense"];
-    };
-    if (abilityData[playerAbility]["opponentAttack"] !== null) {
-        enemyAttack *= abilityData[playerAbility]["opponentAttack"];
-    };
-    if (abilityData[playerAbility]["opponentDefense"] !== null) {
-        enemyAttack *= abilityData[playerAbility]["opponentDefense"];
-    };
-
-    //Set enemy stats for future turns (if they were modified)
-    if (enemyAbility["selfAttack"] !== null) {
-        enemyAttack *= enemyAbility["selfAttack"];
-    };
-    if (enemyAbility["selfDefense"] !== null) {
-        enemyAttack *= enemyAbility["selfDefense"];
-    };
-    if (enemyAbility["opponentAttack"] !== null) {
-        playerAttack *= enemyAbility["opponentAttack"];
-    };
-    if (enemyAbility["opponentDefense"] !== null) {
-        playerAttack *= enemyAbility["opponentDefense"];
-    };
-
     //Determine if player's or enemy's attacks have priority
     playerPriority = abilityData[playerAbility]["priority"];
     enemyPriority = enemyAbility["priority"]
@@ -541,9 +513,35 @@ function attack(playerAbility) {
             console.log("Player is stunned next round")
         };
 
+        //Set player stats for future turns (if they were modified)
+        if (abilityData[playerAbility]["selfAttack"] !== null) {
+            playerAttack *= abilityData[playerAbility]["selfAttack"];
+        };
+        if (abilityData[playerAbility]["selfDefense"] !== null) {
+            playerAttack *= abilityData[playerAbility]["selfDefense"];
+        };
+        if (abilityData[playerAbility]["opponentAttack"] !== null) {
+            enemyAttack *= abilityData[playerAbility]["opponentAttack"];
+        };
+        if (abilityData[playerAbility]["opponentDefense"] !== null) {
+            enemyAttack *= abilityData[playerAbility]["opponentDefense"];
+        };
+
+        //Set enemy stats for future turns (if they were modified)
+        if (enemyAbility["selfAttack"] !== null) {
+            enemyAttack *= enemyAbility["selfAttack"];
+        };
+        if (enemyAbility["selfDefense"] !== null) {
+            enemyAttack *= enemyAbility["selfDefense"];
+        };
+        if (enemyAbility["opponentAttack"] !== null) {
+            playerAttack *= enemyAbility["opponentAttack"];
+        };
+        if (enemyAbility["opponentDefense"] !== null) {
+            playerAttack *= enemyAbility["opponentDefense"];
+        };
+
         //Store the text that will display this turn
-
-
         if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         if(playerStun==1){battleText = battleText.concat(`You have been stunned!<br>`)};
