@@ -107,20 +107,20 @@ function playerSetup() {
 
 //Store relevant enemy stats in variables
 function enemySetup() {
-    enemyName = chosenEnemy["stats"]["name"];
-    enemyHealth = chosenEnemy["stats"]["health"];
-    enemyMaxHealth = chosenEnemy["stats"]["maxhealth"];
-    enemyAttack = chosenEnemy["stats"]["attack"];
-    enemyDefense = chosenEnemy["stats"]["defense"];
-    enemyAcornCoin = chosenEnemy["stats"]["acorncoin"];
-    enemyMushroomCoin = chosenEnemy["stats"]["mushroomcoin"];
-    enemyBearclawCoin = chosenEnemy["stats"]["bearclawcoin"];
+    enemyName = chosenEnemy.stats.name;
+    enemyHealth = chosenEnemy.stats.health;
+    enemyMaxHealth = chosenEnemy.stats.maxhealth;
+    enemyAttack = chosenEnemy.stats.attack;
+    enemyDefense = chosenEnemy.stats.defense;
+    enemyAcornCoin = chosenEnemy.stats.acorncoin;
+    enemyMushroomCoin = chosenEnemy.stats.mushroomcoin;
+    enemyBearclawCoin = chosenEnemy.stats.bearclawcoin;
 
     //Load ability probabilities
-    enemyAbility1Prob = chosenEnemy["stats"]["ability1prob"];
-    enemyAbility2Prob = chosenEnemy["stats"]["ability2prob"] + enemyAbility1Prob;
-    enemyAbility3Prob = chosenEnemy["stats"]["ability3prob"] + enemyAbility2Prob;
-    enemyAbility4Prob = chosenEnemy["stats"]["ability4prob"] + enemyAbility3Prob;
+    enemyAbility1Prob = chosenEnemy.stats.ability1prob;
+    enemyAbility2Prob = chosenEnemy.stats.ability2prob + enemyAbility1Prob;
+    enemyAbility3Prob = chosenEnemy.stats.ability3prob + enemyAbility2Prob;
+    enemyAbility4Prob = chosenEnemy.stats.ability4prob + enemyAbility3Prob;
 
     enemyPowerlevel = 20*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
 }
@@ -164,28 +164,28 @@ function setEnemyStats(){
 //Load player and enemy abilities based on their species
 function setAbilities(){
     //Set the attack button text based on the species
-    document.getElementById("attack1").innerHTML = speciesData[playerSpecies]["attack1DisplayName"];
-    document.getElementById("attack2").innerHTML = speciesData[playerSpecies]["attack2DisplayName"];
-    document.getElementById("attack3").innerHTML = speciesData[playerSpecies]["attack3DisplayName"];
-    document.getElementById("attack4").innerHTML = speciesData[playerSpecies]["attack4DisplayName"];
+    document.getElementById("attack1").innerHTML = speciesData[playerSpecies].attack1DisplayName;
+    document.getElementById("attack2").innerHTML = speciesData[playerSpecies].attack2DisplayName;
+    document.getElementById("attack3").innerHTML = speciesData[playerSpecies].attack3DisplayName;
+    document.getElementById("attack4").innerHTML = speciesData[playerSpecies].attack4DisplayName;
 
     //Set the onclick for each ability to the correct attack function based on the player's species
-    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies]["attack1"])
-    document.getElementById("attack2").setAttribute("onClick", speciesData[playerSpecies]["attack2"])
-    document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies]["attack3"])
-    document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies]["attack4"])
+    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies].attack1)
+    document.getElementById("attack2").setAttribute("onClick", speciesData[playerSpecies].attack2)
+    document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies].attack3)
+    document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies].attack4)
 
     //Load player ability names
-    playerAbility1 = abilityData[speciesData[playerSpecies]["attack1Name"]];
-    playerAbility2 = abilityData[speciesData[playerSpecies]["attack2Name"]];
-    playerAbility3 = abilityData[speciesData[playerSpecies]["attack3Name"]];
-    playerAbility4 = abilityData[speciesData[playerSpecies]["attack4Name"]];
+    playerAbility1 = abilityData[speciesData[playerSpecies].attack1Name];
+    playerAbility2 = abilityData[speciesData[playerSpecies].attack2Name];
+    playerAbility3 = abilityData[speciesData[playerSpecies].attack3Name];
+    playerAbility4 = abilityData[speciesData[playerSpecies].attack4Name];
 
     //Load enemy ability names
-    enemyAbility1 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack1Name"]];
-    enemyAbility2 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack2Name"]];
-    enemyAbility3 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack3Name"]];
-    enemyAbility4 = abilityData[speciesData[chosenEnemy["stats"]["species"]]["attack4Name"]];
+    enemyAbility1 = abilityData[speciesData[chosenEnemy.stats.species]["attack1Name"]];
+    enemyAbility2 = abilityData[speciesData[chosenEnemy.stats.species]["attack2Name"]];
+    enemyAbility3 = abilityData[speciesData[chosenEnemy.stats.species]["attack3Name"]];
+    enemyAbility4 = abilityData[speciesData[chosenEnemy.stats.species]["attack4Name"]];
     
 }
 
