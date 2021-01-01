@@ -216,8 +216,7 @@ function battleCleanup(){
     playerStats.bearclawcoin = playerBearclawCoin; 
     playerStats.leafcoin = playerLeafCoin; 
 
-    //Store the updated data object in local storage, after turning the JSON to a string
-    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+    storePlayerStats();
 
     //Reset variables at the end of battle
     playerArmor = 0;
@@ -228,17 +227,23 @@ function battleCleanup(){
     playerStatus = "";
     battleTurn = 1;
 
-}
+};
+
+//Store player stats in local storage
+function storePlayerStats(){
+    //Store the updated data object in local storage, after turning the JSON to a string
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+};
 
 //Clear the battle text
 function resetText(){
     document.getElementById("battle-text-div").innerHTML = "Click an attack to begin.";
-}
+};
 
 //Setup back button
 function backButton(buttonClick){
-    document.getElementById("back-button").setAttribute('onClick', "location.href=\"" + buttonClick + "\";"); //Set the code it runs
-}
+    //document.getElementById("back-button").setAttribute('onClick', "location.href=\"" + buttonClick + "\";"); //Set the code it runs
+};
 
 //Function that prevents player from using the attack links
 function stopPlayerAttack(){
@@ -268,9 +273,9 @@ function gameOver(){
     playerStats.maxhealth = 40;
     playerStats.mushroomcoin = 0;
     playerStats.mushroomunlock = false;
-    playerStats.species = "gremlin"
+    playerStats.species = "gremlin";
     playerStats.squirrelunlock = false;
-    playerStats.treeday = 0
+    playerStats.treeday = 0;
 
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
@@ -288,8 +293,36 @@ function gameOver(){
 //Define an empty function
 function empty(){console.log('empty')};
 
+
+
 //Script that is run when clicking the attack button
 function attack(playerAbility) {
+
+    if(playerAbility == "flee"){
+        //If enemy is dead, leave the battle
+        if (enemyHealth <= 0){
+            window.location.href = localStorage.getItem("lastPage");
+        
+        //If player is dead, game over
+        }else if(playerHealth <= 0){
+            gameOver();
+
+        //If player and enemy are both alive, player has chance to flee
+        }else
+        {
+            var fleeChance = Math.random();
+
+            //If flee successful, leave battle
+            if (fleeChance > 0.5){
+                storePlayerStats()
+                window.location.href = localStorage.getItem("lastPage");
+
+            //If flee not successful, player stunned for a round of battle
+            }else{
+                playerStun = 1;
+            };
+        };
+    };
 
     //Randomly choose enemy's ability
     var enemyAbilityNumber = Math.random();
