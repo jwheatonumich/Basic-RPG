@@ -206,34 +206,6 @@ function battleStatus(){
     }
 }
 
-function chooseEnemyAbility(){
-    //Randomly choose enemy's ability
-    var enemyAbilityNumber = Math.random();
-
-    //Determine which ability the enemy uses
-    if(enemyAbilityNumber < enemyAbility1Prob){
-        enemyAbility = enemyAbility1
-    }else if (enemyAbilityNumber < enemyAbility2Prob){
-        enemyAbility = enemyAbility2
-    } else if(enemyAbilityNumber < enemyAbility3Prob){
-        enemyAbility = enemyAbility3
-    } else{
-        enemyAbility = enemyAbility4
-    };
-};
-
-function stunCheck(){
-    //Check if player is stunned
-    if(playerStun == 1){
-        playerAbility = "stunned" //If yes, swich the ability used to the stunned ability
-    }
-
-    //Check if enemy is stunned
-    if(enemyStun == 1){
-        enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
-    }
-};
-
 //End of battle steps - save stats to local storage, reset temp statuses
 function battleCleanup(){
     //Save health and xp after battle ends
@@ -331,43 +303,63 @@ function noDoubleTap(){
 //Script that is run when clicking the attack button
 function attack(playerAbility) {
 
-    chooseEnemyAbility();
+    //Randomly choose enemy's ability
+    var enemyAbilityNumber = Math.random();
 
-    stunCheck();
-
-    //Set attack and defense multipliers for this turn
-    attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
-    defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"];
-    opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"];
-    opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"];
-
-    //Set player stats for future turns (if they were modified)
-    if (abilityData[playerAbility]["selfAttack"] !== null) {
-        playerAttack *= abilityData[playerAbility]["selfAttack"];
-    };
-    if (abilityData[playerAbility]["selfDefense"] !== null) {
-        playerAttack *= abilityData[playerAbility]["selfDefense"];
-    };
-    if (abilityData[playerAbility]["opponentAttack"] !== null) {
-        enemyAttack *= abilityData[playerAbility]["opponentAttack"];
-    };
-    if (abilityData[playerAbility]["opponentDefense"] !== null) {
-        enemyAttack *= abilityData[playerAbility]["opponentDefense"];
+    //Determine which ability the enemy uses
+    if(enemyAbilityNumber < enemyAbility1Prob){
+        enemyAbility = enemyAbility1
+    }else if (enemyAbilityNumber < enemyAbility2Prob){
+        enemyAbility = enemyAbility2
+    } else if(enemyAbilityNumber < enemyAbility3Prob){
+        enemyAbility = enemyAbility3
+    } else{
+        enemyAbility = enemyAbility4
     };
 
-    //Set enemy stats for future turns (if they were modified)
-    if (enemyAbility["selfAttack"] !== null) {
-        enemyAttack *= enemyAbility["selfAttack"];
-    };
-    if (enemyAbility["selfDefense"] !== null) {
-        enemyAttack *= enemyAbility["selfDefense"];
-    };
-    if (enemyAbility["opponentAttack"] !== null) {
-        playerAttack *= enemyAbility["opponentAttack"];
-    };
-    if (enemyAbility["opponentDefense"] !== null) {
-        playerAttack *= enemyAbility["opponentDefense"];
-    };
+    //Check if player is stunned
+    if(playerStun == 1){
+        playerAbility = "stunned" //If yes, swich the ability used to the stunned ability
+    }
+
+    //Check if enemy is stunned
+    if(enemyStun == 1){
+        enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
+    }
+
+        //Set attack and defense multipliers for this turn
+        attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
+        defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"];
+        opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"];
+        opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"];
+    
+        //Set player stats for future turns (if they were modified)
+        if (abilityData[playerAbility]["selfAttack"] !== null) {
+            playerAttack *= abilityData[playerAbility]["selfAttack"];
+        };
+        if (abilityData[playerAbility]["selfDefense"] !== null) {
+            playerAttack *= abilityData[playerAbility]["selfDefense"];
+        };
+        if (abilityData[playerAbility]["opponentAttack"] !== null) {
+            enemyAttack *= abilityData[playerAbility]["opponentAttack"];
+        };
+        if (abilityData[playerAbility]["opponentDefense"] !== null) {
+            enemyAttack *= abilityData[playerAbility]["opponentDefense"];
+        };
+    
+        //Set enemy stats for future turns (if they were modified)
+        if (enemyAbility["selfAttack"] !== null) {
+            enemyAttack *= enemyAbility["selfAttack"];
+        };
+        if (enemyAbility["selfDefense"] !== null) {
+            enemyAttack *= enemyAbility["selfDefense"];
+        };
+        if (enemyAbility["opponentAttack"] !== null) {
+            playerAttack *= enemyAbility["opponentAttack"];
+        };
+        if (enemyAbility["opponentDefense"] !== null) {
+            playerAttack *= enemyAbility["opponentDefense"];
+        };
 
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
