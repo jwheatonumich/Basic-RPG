@@ -250,17 +250,6 @@ function stopPlayerAttack(){
     document.getElementById("attack4").setAttribute('onClick',"empty();");
 }
 
-//Calculate the win streak and append it to the battle text
-function calcWinStreak(){
-    //Win streaks
-    if (enemyHealth <= 0){
-
-        //Increase win streak
-        winStreak += 1;
-        battleText = battleText.concat("Your win streak is "+winStreak+".<br>")
-    }
-}
-
 //What happens when player dies without a way to heal
 function gameOver(){
 
@@ -543,7 +532,12 @@ function attack(playerAbility) {
     } else{
 
         //Calculate the win streak and append it to the battle text
-        calcWinStreak();
+        if (enemyHealth <= 0){
+
+            //Increase win streak
+            winStreak += 1;
+            battleText = battleText.concat("Your win streak is "+winStreak+".<br>")
+        }
 
         //Update the battle text for the current turn
         document.getElementById("battle-text-div").innerHTML = battleText;
