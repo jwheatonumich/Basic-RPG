@@ -525,11 +525,11 @@ function attack(playerAbility) {
         };
         if (abilityData[playerAbility]["opponentAttack"] !== null) {
             enemyAttack *= abilityData[playerAbility]["opponentAttack"];
-            battleText = battleText.concat(`You have decreased your opponent's attack.`)
+            battleText = battleText.concat(`You have decreased your opponent's attack.`);
         };
         if (abilityData[playerAbility]["opponentDefense"] !== null) {
             enemyAttack *= abilityData[playerAbility]["opponentDefense"];
-            battleText = battleText.concat(`You have decreased your opponent's defense.`)
+            battleText = battleText.concat(`You have decreased your opponent's defense.`);
         };
 
         //Set enemy stats for future turns (if they were modified)
