@@ -291,6 +291,7 @@ function empty(){console.log('empty')};
 
 //Prevent double tapping, to prevent accidental zooms
 function noDoubleTap(){
+    /*
     var time_stamp = 0; // Or Date.now()
     window.addEventListener("touchstart", function(event_) {
         if (event_.timeStamp - time_stamp < 300) { // A tap that occurs less than 300 ms from the last tap will trigger a double tap. This delay may be different between browsers.
@@ -299,6 +300,7 @@ function noDoubleTap(){
         }
         time_stamp = event_.timeStamp;
     });
+    */
 }
 
 //Script that is run when clicking the attack button
