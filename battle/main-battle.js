@@ -250,6 +250,17 @@ function stopPlayerAttack(){
     document.getElementById("attack4").setAttribute('onClick',"empty();");
 }
 
+//Calculate the win streak and append it to the battle text
+function calcWinStreak(){
+    //Win streaks
+    if (enemyHealth <= 0){
+
+        //Increase win streak
+        winStreak += 1;
+        battleText = battleText.concat("Your win streak is "+winStreak+".<br>")
+    }
+}
+
 //What happens when player dies without a way to heal
 function gameOver(){
 
@@ -287,6 +298,7 @@ function gameOver(){
 
 //Define an empty function
 function empty(){console.log('empty')};
+
 
 //Prevent double tapping, to prevent accidental zooms
 function noDoubleTap(){
@@ -484,6 +496,7 @@ function attack(playerAbility) {
 
     }
 
+    //How to end the turn if player died
     if (playerHealth <= 0){
 
         //Clear enemy info
@@ -499,6 +512,7 @@ function attack(playerAbility) {
         //End win streak
         winStreak = 0;
 
+        //Check if player has a leaf coin to heal
         if(playerLeafCoin > 0){
             //Heal player for a leaf coin
             playerLeafCoin -= 1;
@@ -507,78 +521,82 @@ function attack(playerAbility) {
         
             battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
             
+            //Update the battle text for the current turn
+            document.getElementById("battle-text-div").innerHTML = battleText;
+
             battleCleanup(); //Update stats variables including coins
             setStats(); //Update stats on screen including coins
-            
+
+        //If no leaf coin, game is over
         }else{
             battleText = "Your health has been reduced to zero. You have no leaf coins to heal!"
+            
+            //Update the battle text for the current turn
+            document.getElementById("battle-text-div").innerHTML = battleText;
+
             gameOver();
             //Add code to reset player stats including coins and day, and redirect to ship
 
         }
 
-    };
+    //How to end turn if the player lived
+    } else{
 
-    //Win streaks
-    if (enemyHealth <= 0){
+        //Calculate the win streak and append it to the battle text
+        calcWinStreak();
 
-        //Increase win streak
-        winStreak += 1;
-        battleText = battleText.concat("Your win streak is "+winStreak+".<br>")
-    }
+        //Update the battle text for the current turn
+        document.getElementById("battle-text-div").innerHTML = battleText;
 
-    //Update the battle text for the current turn
-    //Needs to go before coins are appended, otherwise it will erase them
-    document.getElementById("battle-text-div").innerHTML = battleText;
+        //Add loot icons if the enemy is dead
+        if (enemyHealth <= 0 && playerHealth > 0){
 
-    //Add loot icons if the enemy is dead
-    if (enemyHealth <= 0 && playerHealth > 0){
+            //Stop player from attacking while enemy is dead
+            stopPlayerAttack();
 
-        //Stop player from attacking while enemy is dead
-        stopPlayerAttack();
+            //Loop to create acorn icons
+            var i = 1;
+            while (i <= enemyAcornCoin){
 
-        //Loop to create acorn icons
-        var i = 1;
-        while (i <= enemyAcornCoin){
+                //Create the images
+                var elem = document.createElement("img");
+                elem.src = '../images/acorn-coin.png';
+                elem.setAttribute("class", "item");
 
-            //Create the images
-            var elem = document.createElement("img");
-            elem.src = '../images/acorn-coin.png';
-            elem.setAttribute("class", "item");
+                //Append the images
+                document.getElementById("battle-text-div").appendChild(elem);
+                i++;
+            }
+            
+            //Loop to create mushroom icons
+            var i = 1;
+            while (i <= enemyMushroomCoin){
 
-            //Append the images
-            document.getElementById("battle-text-div").appendChild(elem);
-            i++;
+                //Create the images
+                var elem = document.createElement("img");
+                elem.src = '../images/mushroom-coin.png';
+                elem.setAttribute("class", "item");
+
+                //Append the images
+                document.getElementById("battle-text-div").appendChild(elem);
+                i++;
+            }
+
+            //Loop to create bearclaw icons
+            var i = 1;
+            while (i <= enemyBearclawCoin){
+
+                //Create the images
+                var elem = document.createElement("img");
+                elem.src = '../images/bearclaw-coin.png';
+                elem.setAttribute("class", "item");
+
+                //Append the images
+                document.getElementById("battle-text-div").appendChild(elem);
+                i++;
+            }
+
         }
-        
-        //Loop to create mushroom icons
-        var i = 1;
-        while (i <= enemyMushroomCoin){
-
-            //Create the images
-            var elem = document.createElement("img");
-            elem.src = '../images/mushroom-coin.png';
-            elem.setAttribute("class", "item");
-
-            //Append the images
-            document.getElementById("battle-text-div").appendChild(elem);
-            i++;
-        }
-
-        //Loop to create bearclaw icons
-        var i = 1;
-        while (i <= enemyBearclawCoin){
-
-            //Create the images
-            var elem = document.createElement("img");
-            elem.src = '../images/bearclaw-coin.png';
-            elem.setAttribute("class", "item");
-
-            //Append the images
-            document.getElementById("battle-text-div").appendChild(elem);
-            i++;
-        }
-
     }
 
 }
