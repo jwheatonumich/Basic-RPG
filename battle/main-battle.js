@@ -514,31 +514,40 @@ function attack(playerAbility) {
         };
 
         //Set player stats for future turns (if they were modified)
+        //Add battle text describing the stat change
         if (abilityData[playerAbility]["selfAttack"] !== null) {
             playerAttack *= abilityData[playerAbility]["selfAttack"];
+            battleText = battleText.concat(`You have increased your attack.`);
         };
         if (abilityData[playerAbility]["selfDefense"] !== null) {
             playerAttack *= abilityData[playerAbility]["selfDefense"];
+            battleText = battleText.concat(`You have increased your defense.`);
         };
         if (abilityData[playerAbility]["opponentAttack"] !== null) {
             enemyAttack *= abilityData[playerAbility]["opponentAttack"];
+            battleText = battleText.concat(`You have decreased your opponent's attack.`)
         };
         if (abilityData[playerAbility]["opponentDefense"] !== null) {
             enemyAttack *= abilityData[playerAbility]["opponentDefense"];
+            battleText = battleText.concat(`You have decreased your opponent's defense.`)
         };
 
         //Set enemy stats for future turns (if they were modified)
         if (enemyAbility["selfAttack"] !== null) {
             enemyAttack *= enemyAbility["selfAttack"];
+            battleText = battleText.concat(`Your opponent increased their attack.`);
         };
         if (enemyAbility["selfDefense"] !== null) {
             enemyAttack *= enemyAbility["selfDefense"];
+            battleText = battleText.concat(`Your opponent increased their defense`);
         };
         if (enemyAbility["opponentAttack"] !== null) {
             playerAttack *= enemyAbility["opponentAttack"];
+            battleText = battleText.concat(`Your opponent decreased your attack`);
         };
         if (enemyAbility["opponentDefense"] !== null) {
             playerAttack *= enemyAbility["opponentDefense"];
+            battleText = battleText.concat(`Your opponent decreased your defense`);
         };
 
         //Store the text that will display this turn
@@ -546,6 +555,7 @@ function attack(playerAbility) {
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         if(playerStun==1){battleText = battleText.concat(`You have been stunned!<br>`)};
         if(enemyStun==1){battleText = battleText.concat(`The enemy has been stunned!<br>`)};
+
         
         //Change turn
         battleTurn += 1;
