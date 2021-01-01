@@ -36,13 +36,18 @@ var enemyDefenseMultiplier = 1;
 var playerStatus = ""
 var playerStun = 0;
 var playerPoison = 0;
+var playerPriority = false;
 
 var enemyStatus = ""
 var enemyStun = 0;
 var enemyPoison = 0;
+var enemyPriority = false;
 
 var playerArmor = 0;
 var enemyArmor = 0;
+
+var playerDamage = 0;
+var enemyDamage = 0;
 
 var playerAbility1 = "";
 var playerAbility2 = "";
@@ -227,6 +232,7 @@ function battleCleanup(){
     playerStatus = "";
     battleTurn = 1;
 
+
 };
 
 //Store player stats in local storage
@@ -293,11 +299,22 @@ function gameOver(){
 //Define an empty function
 function empty(){console.log('empty')};
 
+function playerDealDamage(){
+    enemyArmor = Math.max(enemyArmor - playerDamage,0);//Damage goes to armor first
+    enemyHealth -= Math.max((playerDamage - enemyArmor),0);//Remaining damage goes to health
+};
 
+//Update player armor and health based on enemy damage
+function enemyDealDamage(){
+    playerArmor = Math.max(playerArmor - enemyDamage,0); //Damage goes to armor first
+    playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remaining damage goes to health
+};
 
 //Script that is run when clicking the attack button
 function attack(playerAbility) {
 
+    //Check if the player is trying to run away
+    //Only called through the Back button
     if(playerAbility == "flee"){
         //If enemy is dead, leave the battle
         if (enemyHealth <= 0){
@@ -348,39 +365,43 @@ function attack(playerAbility) {
         enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
     }
 
-        //Set attack and defense multipliers for this turn
-        attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
-        defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"];
-        opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"];
-        opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"];
-    
-        //Set player stats for future turns (if they were modified)
-        if (abilityData[playerAbility]["selfAttack"] !== null) {
-            playerAttack *= abilityData[playerAbility]["selfAttack"];
-        };
-        if (abilityData[playerAbility]["selfDefense"] !== null) {
-            playerAttack *= abilityData[playerAbility]["selfDefense"];
-        };
-        if (abilityData[playerAbility]["opponentAttack"] !== null) {
-            enemyAttack *= abilityData[playerAbility]["opponentAttack"];
-        };
-        if (abilityData[playerAbility]["opponentDefense"] !== null) {
-            enemyAttack *= abilityData[playerAbility]["opponentDefense"];
-        };
-    
-        //Set enemy stats for future turns (if they were modified)
-        if (enemyAbility["selfAttack"] !== null) {
-            enemyAttack *= enemyAbility["selfAttack"];
-        };
-        if (enemyAbility["selfDefense"] !== null) {
-            enemyAttack *= enemyAbility["selfDefense"];
-        };
-        if (enemyAbility["opponentAttack"] !== null) {
-            playerAttack *= enemyAbility["opponentAttack"];
-        };
-        if (enemyAbility["opponentDefense"] !== null) {
-            playerAttack *= enemyAbility["opponentDefense"];
-        };
+    //Set attack and defense multipliers for this turn
+    attackMultiplier = abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"];
+    defenseMultiplier = abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"];
+    opponentAttackMultiplier = abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"];
+    opponentDefenseMultiplier = abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"];
+
+    //Set player stats for future turns (if they were modified)
+    if (abilityData[playerAbility]["selfAttack"] !== null) {
+        playerAttack *= abilityData[playerAbility]["selfAttack"];
+    };
+    if (abilityData[playerAbility]["selfDefense"] !== null) {
+        playerAttack *= abilityData[playerAbility]["selfDefense"];
+    };
+    if (abilityData[playerAbility]["opponentAttack"] !== null) {
+        enemyAttack *= abilityData[playerAbility]["opponentAttack"];
+    };
+    if (abilityData[playerAbility]["opponentDefense"] !== null) {
+        enemyAttack *= abilityData[playerAbility]["opponentDefense"];
+    };
+
+    //Set enemy stats for future turns (if they were modified)
+    if (enemyAbility["selfAttack"] !== null) {
+        enemyAttack *= enemyAbility["selfAttack"];
+    };
+    if (enemyAbility["selfDefense"] !== null) {
+        enemyAttack *= enemyAbility["selfDefense"];
+    };
+    if (enemyAbility["opponentAttack"] !== null) {
+        playerAttack *= enemyAbility["opponentAttack"];
+    };
+    if (enemyAbility["opponentDefense"] !== null) {
+        playerAttack *= enemyAbility["opponentDefense"];
+    };
+
+    //Determine if player's or enemy's attacks have priority
+    playerPriority = abilityData[playerAbility]["priority"];
+    enemyPriority = enemyAbility["priority"]
 
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
@@ -441,10 +462,8 @@ function attack(playerAbility) {
         playerPoison += enemyAbility["poison"]
 
         //Calculate total damage dealt by player and enemy
-        var playerDamage = playerAttackDamage + enemyPoison;
-        var enemyDamage = enemyAttackDamage + playerPoison;
-
-
+        playerDamage = playerAttackDamage + enemyPoison;
+        enemyDamage = enemyAttackDamage + playerPoison;
 
         //Abilities that only last one turn
         enemyStun = 0;
@@ -454,11 +473,55 @@ function attack(playerAbility) {
         enemyStatus = "";
         playerStatus = "";
 
-        //Update health and armor based on damage
-        playerArmor = Math.max(playerArmor - enemyDamage,0); //Damage goes to armor first
-        enemyArmor = Math.max(enemyArmor - playerDamage,0);
-        playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remaining damage goes to health
-        enemyHealth -= Math.max((playerDamage - enemyArmor),0);
+        //Clear the battle text
+        battleText = "";
+
+        //Player deals damage if they used a priority attack
+        if(playerPriority){
+            playerDealDamage();
+
+            battleText = battleText.concat(`You strike fast with `)
+            battleText = battleText.concat(abilityData[playerAbility]["name"]);
+            battleText = battleText.concat(`. The enemy takes `);
+            battleText = battleText.concat(playerAttackDamage);
+            battleText = battleText.concat(` damage.<br>`);
+        };
+
+        //Enemy deals damage if they used a priority attack
+        if(enemyPriority){
+            enemyDealDamage();
+
+            battleText = battleText.concat(`The enemy strike fast with `);
+            battleText = battleText.concat(enemyAbility["name"]);
+            battleText = battleText.concat(`. You take `);
+            battleText = battleText.concat(enemyAttackDamage);
+            battleText = battleText.concat(` damage.<br>`);
+        };
+
+        //Player deals damage if they didn't use a priority attack
+        //And if they didn't die from a priority attack
+        if(!playerPriority && (playerHealth > 0)){
+            playerDealDamage();
+
+            battleText = battleText.concat(`You use `)
+            battleText = battleText.concat(abilityData[playerAbility]["name"]);
+            battleText = battleText.concat(`. The enemy takes `);
+            battleText = battleText.concat(playerAttackDamage);
+            battleText = battleText.concat(` damage.<br>`);
+        };
+
+        //Enemy deals damage if they didn't use a priority attack
+        //And if they didn't die from a priority attack
+        if(!enemyPriority && (enemyHealth > 0)){
+            enemyDealDamage();
+
+            battleText = battleText.concat(`The enemy uses `);
+            battleText = battleText.concat(enemyAbility["name"]);
+            battleText = battleText.concat(`. You take `);
+            battleText = battleText.concat(enemyAttackDamage);
+            battleText = battleText.concat(` damage.<br>`);
+        };
+
 
         //Determine if enemy is stunned next turn
         enemyStun = Math.floor(Math.random()*(1/(1-abilityData[playerAbility]["stun"])))
@@ -479,16 +542,8 @@ function attack(playerAbility) {
         };
 
         //Store the text that will display this turn
-        battleText = `You use `
-        battleText = battleText.concat(abilityData[playerAbility]["name"]);
-        battleText = battleText.concat(`. The enemy takes `);
-        battleText = battleText.concat(playerAttackDamage);
-        battleText = battleText.concat(` damage.<br>`);
-        battleText = battleText.concat(`The enemy uses `);
-        battleText = battleText.concat(enemyAbility["name"]);
-        battleText = battleText.concat(`. You take `);
-        battleText = battleText.concat(enemyAttackDamage);
-        battleText = battleText.concat(` damage.<br>`);
+
+
         if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         if(playerStun==1){battleText = battleText.concat(`You have been stunned!<br>`)};
