@@ -1,7 +1,7 @@
 #console-div{
     background-color: black;
     height: 300px;
-
+    border: rgb(156, 156, 156) solid 5px;
     color: rgb(0, 255, 0);
     font: Inconsolata, monospace;
     text-shadow: 0 0 5px #C8C8C8;

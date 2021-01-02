@@ -8,6 +8,7 @@ function transform(){
         playerStats.acorncoin -= 50;
         playerStats.species = "squirrel" ;
         playerStats.image = "../images/squirrel-avatar.png" ;
+        playerStats.squirrelunlock = true;
     }
     
 

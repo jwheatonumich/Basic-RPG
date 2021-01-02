@@ -11,6 +11,7 @@ function healMax(){
         playerStats.bearclawcoin-=10;
         playerStats.species = "bear" ;
         playerStats.image = "../images/small-bear-avatar.png" ;
+        playerStats.bearunlock = true;
     }
     
 

@@ -14,6 +14,9 @@ function playerSetup() {
     mushroomCoin = playerStats.mushroomcoin;
     bearclawCoin = playerStats.bearclawcoin;
     leafCoin = playerStats.leafcoin;
+    squirrelUnlock = playerStats.squirrelunlock;
+    mushroomUnlock = playerStats.mushroomunlock;
+    bearUnlock = playerStats.bearunlock;
 }
 
 //Function that sets text on the website equal to various stat variables

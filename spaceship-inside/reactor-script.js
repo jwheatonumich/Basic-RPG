@@ -12,7 +12,14 @@ function redcoin() {
         //Update reacor image to new level
         reactorLevels()
 
-    } 
+        //Text explaining you deposited a coin
+        document.getElementById("textbox").innerHTML = "You have deposited a red isotope in the red reactor.";
+
+    }else if(playerStats["acorncoin"] < 1){//Error message if you don't have any acorn coins
+        document.getElementById("textbox").innerHTML = "You don't have any red isotopes.";
+    }else{//Error message if the reactor is full
+        document.getElementById("textbox").innerHTML = "The reactor is already full.";
+    }
     //Update the control text based on new reactor level
     updateControl();
 }
@@ -28,8 +35,15 @@ function silvercoin() {
 
         //Update reacor image to new level
         reactorLevels()
+
+        //Text explaining you deposited a coin
+        document.getElementById("textbox").innerHTML = "You have deposited a silver isotope in the silver reactor.";
         
-    } 
+    }else if(playerStats["mushroomcoin"] < 1){ //Error message if you don't have any mushroom coins
+        document.getElementById("textbox").innerHTML = "You don't have any silver isotopes.";
+    }else{//Error message if the reactor is full
+        document.getElementById("textbox").innerHTML = "The reactor is already full.";
+    }
     //Update the control text based on new reactor level
     updateControl();
 }
@@ -46,7 +60,14 @@ function goldcoin() {
         //Update reacor image to new level
         reactorLevels()
 
-    } 
+        //Text explaining you deposited a coin
+        document.getElementById("textbox").innerHTML = "You have deposited a gold isotope in the gold reactor.";
+
+    }else if(playerStats["bearclawcoin"] < 1){ //Error message if you don't have any bearclaw coins
+        document.getElementById("textbox").innerHTML = "You don't have any gold isotopes.";
+    }else{//Error message if the reactor is full
+        document.getElementById("textbox").innerHTML = "The reactor is already full.";
+    }
     //Update the control text based on new reactor level
     updateControl();
 }

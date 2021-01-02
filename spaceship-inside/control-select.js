@@ -25,20 +25,24 @@ function narrative(script){
 //Also resets the screen text
 function backButton(){
     button = document.getElementById("back");
-    if(playerStats["ship-bearclawcoin"]>=10){
-        button.setAttribute('onClick', "location.href='../spaceship-inside/spaceship.html';controlStore('Crash4');");
-    } else if(playerStats["ship-mushroomcoin"]>=10){
-        button.setAttribute('onClick', "location.href='../spaceship-inside/spaceship.html';controlStore('Crash3');");
-    } else if(playerStats["ship-acorn"]>=10){
-        button.setAttribute('onClick', "location.href='../spaceship-inside/spaceship.html';controlStore('Crash2');");
-    } else {
-        button.setAttribute('onClick', "location.href='../spaceship-inside/spaceship.html';controlStore('Crash1');");
-    }
-    
 }
+
+//Update control text in local storage based on new reactor level
+function updateControl(){
+    if(playerStats["ship-bearclawcoin"]>=10){
+        controlStore('Crash4');
+    } else if(playerStats["ship-mushroomcoin"]>=10){
+        controlStore('Crash3');
+    } else if(playerStats["ship-acorncoin"]>=10){
+        controlStore('Crash2');
+    }
+};
 
 //Setup the script to load into the console on page load
 window.onload = narrative(narrativeScript);
 
+//Setup the script to load into the console on page load
+window.onload = updateControl();
+
 //Setup the back button script on page load
-window.onload = backButton;
+window.onload = backButton();

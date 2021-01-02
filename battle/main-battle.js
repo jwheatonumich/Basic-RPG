@@ -604,6 +604,13 @@ function attack(playerAbility) {
             battleCleanup(); //Update stats variables including coins
             setStats(); //Update stats on screen including coins
 
+            //Set enemy health to 0 so you can flee
+            enemyHealth = 0;
+            //Also set loot to 0 so player doesn't get reward from fleeing
+            enemyAcornCoin = 0;
+            enemyMushroomCoin = 0;
+            enemyBearclawCoin = 0;
+
         //If no leaf coin, game is over
         }else{
             battleText = "Your health has been reduced to zero. You have no leaf coins to heal!"
