@@ -63,11 +63,25 @@ function setTransformSpecies(species, image, imageID){
     transformSpecies = species;
     transformSpeciesImage = image;
 
+    //List of species images
+    var gremlinImage = document.getElementById("gremlin-image")
+    var squirrelImage = document.getElementById("squirrel-image")
+    var mushroomImage = document.getElementById("mushroom-image")
+    var bearImage = document.getElementById("bear-image")
+
     //Clear selection border around all species
-    document.getElementById("gremlin-image").setAttribute("class", "transform-image");
-    document.getElementById("squirrel-image").setAttribute("class", "transform-image");
-    document.getElementById("mushroom-image").setAttribute("class", "transform-image");
-    document.getElementById("bear-image").setAttribute("class", "transform-image");
+    if (gremlinImage){ //Validate the image exists before trying to set it's class
+        gremlinImage.setAttribute("class", "transform-image");
+    }
+    if (squirrelImage){
+        squirrelImage.setAttribute("class", "transform-image");
+    }
+    if (mushroomImage){
+        mushroomImage.setAttribute("class", "transform-image");
+    }
+    if (bearImage){
+        bearImage.setAttribute("class", "transform-image");
+    }
 
     //Add selection border around selected species
     document.getElementById(imageID).setAttribute("class", "transform-image-selected");
