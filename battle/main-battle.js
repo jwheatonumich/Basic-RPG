@@ -13,6 +13,7 @@ var enemyDefense = 0;
 var enemyAcornCoin = 0;
 var enemyMushroomCoin = 0;
 var enemyBearclawCoin = 0;
+var enemyAbilityPoison
 
 var enemyPowerlevel = 0;
 
@@ -26,6 +27,7 @@ var playerAcornCoin = 0
 var playerMushroomCoin = 0;
 var playerBearclawCoin = 0;
 var playerLeafCoin = 0;
+var playerAbilityPoison
 
 var battleText = ``;
 var attackMultiplier = 1;
@@ -442,6 +444,11 @@ function attack(playerAbility) {
             enemyAttackDamage = 0;
         };
 
+
+        //Did player or enemy use abilities that poison?
+        playerAbilityPoison = abilityData[playerAbility]["poison"];
+        enemyAbilityPoison = enemyAbility["poison"];
+
         //Did enemy get poisoned this turn
         enemyPoison += abilityData[playerAbility]["poison"];
         playerPoison += enemyAbility["poison"];
@@ -572,6 +579,8 @@ function attack(playerAbility) {
         };
 
         //Store the text that will display this turn
+        if(playerAbilityPoison!=0){battleText = battleText.concat(`You poison the enemy!<br>`)};
+        if(enemyAbilityPoison!=0){battleText = battleText.concat(`The enemy poisons you!<br>`)};
         if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         if(playerStun==1){battleText = battleText.concat(`You have been stunned!<br>`)};
