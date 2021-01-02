@@ -334,7 +334,7 @@ function attack(playerAbility) {
 
             //If flee successful, leave battle
             if (fleeChance > 0.5){
-                storePlayerStats();
+               battleCleanup();
                 window.location.href = localStorage.getItem("lastPage");
 
             //If flee not successful, player stunned for a round of battle
