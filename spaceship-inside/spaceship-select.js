@@ -59,7 +59,7 @@ function unlockedSpecies(){
     document.getElementById("unlocked-species-div").appendChild(elem);
 
     //If squirrel transform is unlocked, populate bear image
-    if (playerStats.squirrelunlock = true){
+    if (playerStats.squirrelunlock == true){
         var elem = document.createElement("img");
         elem.src = "../images/squirrel-avatar.png";
         elem.setAttribute("class", "item");
@@ -67,7 +67,7 @@ function unlockedSpecies(){
     }   
 
     //If mushroom transform is unlocked, populate bear image
-    if (playerStats.mushroomunlock = true){
+    if (playerStats.mushroomunlock == true){
         var elem = document.createElement("img");
         elem.src = "../images/little-mushroom-scanner.png";
         elem.setAttribute("class", "item");
@@ -75,7 +75,7 @@ function unlockedSpecies(){
     }   
 
     //If bear transform is unlocked, populate bear image
-    if (playerStats.bearunlock = true){
+    if (playerStats.bearunlock == true){
         var elem = document.createElement("img");
         elem.src = '../images/small-bear-avatar.png';
         elem.setAttribute("class", "item");
