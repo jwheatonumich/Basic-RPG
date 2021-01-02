@@ -49,6 +49,9 @@ var enemyArmor = 0;
 var playerDamage = 0;
 var enemyDamage = 0;
 
+var playerAttackDamage;
+var enemyAttackDamage;
+
 var playerAbility1 = "";
 var playerAbility2 = "";
 var playerAbility3 = "";
@@ -231,8 +234,6 @@ function battleCleanup(){
     enemyStatus = "";
     playerStatus = "";
     battleTurn = 1;
-
-
 };
 
 //Store player stats in local storage
@@ -313,6 +314,15 @@ function enemyDealDamage(){
     playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remaining damage goes to health
 };
 
+function deadNoDamage(){
+    if (playerHealth <= 0){
+        playerAttackDamage = 0
+    }
+    if (enemyHealth <= 0){
+        enemyAttackDamage = 0
+    }
+}
+
 //Script that is run when clicking the attack button
 function attack(playerAbility) {
 
@@ -386,7 +396,7 @@ function attack(playerAbility) {
         enemyArmor += enemyAbility["armor"];
         
         //Calculate player and enemy attack
-        var playerAttackDamage = Math.max(Math.floor(
+        playerAttackDamage = Math.max(Math.floor(
             //Avg damage of 1, central outcomes more likely
             1.25 * Math.random()*playerAttack*attackMultiplier 
             + 0.5 * Math.random()*playerAttack*attackMultiplier 
@@ -397,7 +407,7 @@ function attack(playerAbility) {
             -.25 * enemyDefense*enemyDefenseMultiplier
             ),1);
 
-        var enemyAttackDamage = Math.max(Math.floor(
+        enemyAttackDamage = Math.max(Math.floor(
             //Avg damage of 1, central outcomes more likely
             1.25 * Math.random()*enemyAttack*enemyAttackMultiplier 
             + 0.5 * Math.random()*enemyAttack*enemyAttackMultiplier 
@@ -451,6 +461,9 @@ function attack(playerAbility) {
         //Clear the battle text
         battleText = "";
 
+        //If either player is dead at this point, set their damage this turn to zero
+        deadNoDamage();
+
         //Player deals damage if they used a priority attack
         if(playerPriority){
             playerDealDamage();
@@ -473,9 +486,12 @@ function attack(playerAbility) {
             battleText = battleText.concat(` damage.<br>`);
         };
 
+        //If either player is dead at this point, set their damage this turn to zero
+        deadNoDamage();
+
         //Player deals damage if they didn't use a priority attack
         //And if they didn't die from a priority attack
-        if(!playerPriority && (playerHealth > 0)){
+        if(!playerPriority && (playerAttackDamage != 0)){
             playerDealDamage();
 
             battleText = battleText.concat(`You use `);
@@ -487,7 +503,7 @@ function attack(playerAbility) {
 
         //Enemy deals damage if they didn't use a priority attack
         //And if they didn't die from a priority attack
-        if(!enemyPriority && (enemyHealth > 0)){
+        if(!enemyPriority && (enemyAttackDamage !=0)){
             enemyDealDamage();
 
             battleText = battleText.concat(`The enemy uses `);
