@@ -62,12 +62,13 @@ function setTransformSpecies(species, image, imageID){
     transformSpecies = species;
     transformSpeciesImage = image;
 
-    //
+    //Clear selection border around all species
     document.getElementById("gremlin-image").setAttribute("class", "transform-image");
     document.getElementById("squirrel-image").setAttribute("class", "transform-image");
     document.getElementById("mushroom-image").setAttribute("class", "transform-image");
     document.getElementById("bear-image").setAttribute("class", "transform-image");
 
+    //Add selection border around selected species
     document.getElementById(imageID).setAttribute("class", "transform-image-selected");
 }
 
