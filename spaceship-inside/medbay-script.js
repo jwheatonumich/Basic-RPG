@@ -2,6 +2,7 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
+//Initial species selection
 var transformSpecies = "gremlin"
 var transformSpeciesImage = "../images/little-goblin.png"
 
@@ -72,8 +73,9 @@ function setTransformSpecies(species, image, imageID){
     document.getElementById(imageID).setAttribute("class", "transform-image-selected");
 }
 
+//Populate image links for each unlocked species
 function unlockedSpecies(){
-    //Populate gremlin image
+    //Populate gremlin image link
     var link = document.createElement('a');
     link.setAttribute("onClick", 'setTransformSpecies("gremlin","../images/little-goblin.png","gremlin-image");')
 
@@ -86,7 +88,7 @@ function unlockedSpecies(){
 
     document.getElementById("unlocked-species-div").appendChild(link);
 
-    //If squirrel transform is unlocked, populate bear image
+    //If squirrel transform is unlocked, populate image link
     if (playerStats.squirrelunlock == true){
 
         var link = document.createElement('a');
@@ -102,7 +104,7 @@ function unlockedSpecies(){
         document.getElementById("unlocked-species-div").appendChild(link);
     }   
 
-    //If mushroom transform is unlocked, populate bear image
+    //If mushroom transform is unlocked, populate image link
     if (playerStats.mushroomunlock == true){
 
         var link = document.createElement('a');
@@ -118,7 +120,7 @@ function unlockedSpecies(){
         document.getElementById("unlocked-species-div").appendChild(link);
     }   
 
-    //If bear transform is unlocked, populate bear image
+    //If bear transform is unlocked, populate image link
     if (playerStats.bearunlock == true){
 
         var link = document.createElement('a');
