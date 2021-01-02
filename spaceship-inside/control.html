@@ -12,6 +12,7 @@
           <meta http-equiv="Expires" content="0">
 
           <!--Load CSS-->
+          <link rel="stylesheet" href= "control-styles.css">
           <link rel="stylesheet" href= "../stylesheets/navbar.css">
           <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
 
@@ -19,6 +20,10 @@
           <script src="../script/standard-script.js" defer></script>
 
           <script src="spaceship-select.js" defer></script>
+
+          <script src="control-select.js" defer></script>
+          <script src="control-JSON.js"></script>
+          <script src="../script/control-script.js" defer></script>
         </head>
     
     <body>
@@ -58,16 +63,14 @@
 
           <div id="game-div">
 
-            <div id="cave-div">
-              <img id="page-image" alt = "cave" src="../images/trophy-shelf.png">
+            <div>
+              <div id="console-div">Hello world!</div>
               
               <div id="textbox"></div><br>
 
               <div id="control">
-                <a onclick="repairDNA()"><img class="map-image-link" alt="Repair DNA" src="../images/dna-button.png"></a><br>
-                <button id="back" class="button" onclick="location.href='./spaceship.html';">Back</button>
+                <button id="back" class="button" onclick="location.href='../spaceship-inside/spaceship.html';">Back</button>
               </div>
-
             </div>
           </div>
 

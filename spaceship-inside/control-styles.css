@@ -1,0 +1,14 @@
+#console-div{
+    background-color: black;
+    background-image: radial-gradient(
+      rgba(0, 150, 0, 0.75), black 120%
+    );
+    height: 300px;
+
+    color: white;
+    font: Inconsolata, monospace;
+    text-shadow: 0 0 5px #C8C8C8;
+    text-align:left;
+    padding:5px;
+    margin:5px;
+}

@@ -16,6 +16,9 @@ function dataLoad(){
 //Function to store player stats variable to local storage
 function dataStore(){
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+    //Store the script for the console
+    controlStore("Crash1");
 };
 
 //Function that sets text on the website equal to various stat variables

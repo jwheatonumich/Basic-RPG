@@ -11,10 +11,10 @@ var enemyMaxHealth = 0;
 var enemyAttack = 0;
 var enemyDefense = 0;
 var enemyAcornCoin = 0;
-var enemyMushroomCoin = 0
-var enemyBearclawCoin = 0
+var enemyMushroomCoin = 0;
+var enemyBearclawCoin = 0;
 
-var enemyPowerlevel = 0
+var enemyPowerlevel = 0;
 
 var playerName = "";
 var playerSpecies = "";
@@ -33,12 +33,12 @@ var defenseMultiplier = 1;
 var enemyAttackMultiplier = 1;
 var enemyDefenseMultiplier = 1;
 
-var playerStatus = ""
+var playerStatus = "";
 var playerStun = 0;
 var playerPoison = 0;
 var playerPriority = false;
 
-var enemyStatus = ""
+var enemyStatus = "";
 var enemyStun = 0;
 var enemyPoison = 0;
 var enemyPriority = false;
@@ -61,7 +61,7 @@ var enemyAbility4 = "";
 
 var enemyAbility = "";
 
-var battleTurn = 1
+var battleTurn = 1;
 
 var winStreak = 0;
 
@@ -71,7 +71,7 @@ function dataLoad(){
 
     //Retrieve player stats from local storage and convert the string into a JSON
     var retrievedObject = localStorage.getItem('storedPlayerStats');
-    playerStats = JSON.parse(retrievedObject)
+    playerStats = JSON.parse(retrievedObject);
 
 }
 
@@ -160,10 +160,10 @@ function setEnemyStats(){
     document.getElementById("enemy-image").src = chosenEnemy["enemyImage"]; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
 
     //Set the enemy powerlevel
-    document.getElementById("powerlevel").value = enemyPowerlevel
-    document.getElementById("powerlevel2").value = enemyPowerlevel - 10
-    document.getElementById("powerlevel3").value = enemyPowerlevel - 20
-    document.getElementById("powerlevel4").value = enemyPowerlevel - 30
+    document.getElementById("powerlevel").value = enemyPowerlevel;
+    document.getElementById("powerlevel2").value = enemyPowerlevel - 10;
+    document.getElementById("powerlevel3").value = enemyPowerlevel - 20;
+    document.getElementById("powerlevel4").value = enemyPowerlevel - 30;
 };
 
 //Load player and enemy abilities based on their species
@@ -175,10 +175,10 @@ function setAbilities(){
     document.getElementById("attack4").innerHTML = speciesData[playerSpecies].attack4DisplayName;
 
     //Set the onclick for each ability to the correct attack function based on the player's species
-    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies].attack1)
-    document.getElementById("attack2").setAttribute("onClick", speciesData[playerSpecies].attack2)
-    document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies].attack3)
-    document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies].attack4)
+    document.getElementById("attack1").setAttribute("onClick", speciesData[playerSpecies].attack1);
+    document.getElementById("attack2").setAttribute("onClick", speciesData[playerSpecies].attack2);
+    document.getElementById("attack3").setAttribute("onClick", speciesData[playerSpecies].attack3);
+    document.getElementById("attack4").setAttribute("onClick", speciesData[playerSpecies].attack4);
 
     //Load player ability names
     playerAbility1 = abilityData[speciesData[playerSpecies].attack1Name];
@@ -290,10 +290,13 @@ function gameOver(){
     document.getElementById("restart-button").setAttribute('onClick',"empty();");
 
     //Back button redirects to spaceship
-    document.getElementById("back-button").setAttribute('onClick',"location.href='../spaceship/spaceship.html';");
+    document.getElementById("back-button").setAttribute('onClick',"location.href='../spaceship-inside/control.html';");
 
     //Store a value in local storage indicating player just died
-    localStorage.setItem('playerDead', true);
+    //localStorage.setItem('playerDead', true);
+
+    //Set the control screen text
+    localStorage.setItem('controlScriptName', 'Dead');
 }
 
 //Define an empty function
@@ -331,7 +334,7 @@ function attack(playerAbility) {
 
             //If flee successful, leave battle
             if (fleeChance > 0.5){
-                storePlayerStats()
+                storePlayerStats();
                 window.location.href = localStorage.getItem("lastPage");
 
             //If flee not successful, player stunned for a round of battle
@@ -346,23 +349,23 @@ function attack(playerAbility) {
 
     //Determine which ability the enemy uses
     if(enemyAbilityNumber < enemyAbility1Prob){
-        enemyAbility = enemyAbility1
+        enemyAbility = enemyAbility1;
     }else if (enemyAbilityNumber < enemyAbility2Prob){
-        enemyAbility = enemyAbility2
+        enemyAbility = enemyAbility2;
     } else if(enemyAbilityNumber < enemyAbility3Prob){
-        enemyAbility = enemyAbility3
+        enemyAbility = enemyAbility3;
     } else{
-        enemyAbility = enemyAbility4
+        enemyAbility = enemyAbility4;
     };
 
     //Check if player is stunned
     if(playerStun == 1){
-        playerAbility = "stunned" //If yes, swich the ability used to the stunned ability
+        playerAbility = "stunned"; //If yes, swich the ability used to the stunned ability
     }
 
     //Check if enemy is stunned
     if(enemyStun == 1){
-        enemyAbility = abilityData["stunned"] //If yes, swich the ability used to the stunned ability
+        enemyAbility = abilityData["stunned"]; //If yes, swich the ability used to the stunned ability
     }
 
     //Set attack and defense multipliers for this turn
@@ -373,7 +376,7 @@ function attack(playerAbility) {
 
     //Determine if player's or enemy's attacks have priority
     playerPriority = abilityData[playerAbility]["priority"];
-    enemyPriority = enemyAbility["priority"]
+    enemyPriority = enemyAbility["priority"];
 
     //Check if player or enemy is dead before running the battle function
     if(playerHealth>0 && enemyHealth>0){
@@ -430,8 +433,8 @@ function attack(playerAbility) {
         };
 
         //Did enemy get poisoned this turn
-        enemyPoison += abilityData[playerAbility]["poison"]
-        playerPoison += enemyAbility["poison"]
+        enemyPoison += abilityData[playerAbility]["poison"];
+        playerPoison += enemyAbility["poison"];
 
         //Calculate total damage dealt by player and enemy
         playerDamage = playerAttackDamage + enemyPoison;
@@ -475,7 +478,7 @@ function attack(playerAbility) {
         if(!playerPriority && (playerHealth > 0)){
             playerDealDamage();
 
-            battleText = battleText.concat(`You use `)
+            battleText = battleText.concat(`You use `);
             battleText = battleText.concat(abilityData[playerAbility]["name"]);
             battleText = battleText.concat(`. The enemy takes `);
             battleText = battleText.concat(playerAttackDamage);
@@ -496,21 +499,23 @@ function attack(playerAbility) {
 
 
         //Determine if enemy is stunned next turn
-        enemyStun = Math.floor(Math.random()*(1/(1-abilityData[playerAbility]["stun"])))
+        enemyStun = Math.floor(Math.random()*(1/(1-abilityData[playerAbility]["stun"])));
+
         if(enemyStun == 1){
-            enemyStatus = "Stunned"
+            enemyStatus = "Stunned";
 
             //Troubleshooting
-            console.log("Enemy is stunned next round")
+            console.log("Enemy is stunned next round");
         };
 
         //Determine if player is stunned next turn
-        playerStun = Math.floor(Math.random()*(1/(1-enemyAbility["stun"])))
+        playerStun = Math.floor(Math.random()*(1/(1-enemyAbility["stun"])));
+
         if(playerStun == 1){
-            playerStatus = "Stunned"
+            playerStatus = "Stunned";
             
             //Troubleshooting
-            console.log("Player is stunned next round")
+            console.log("Player is stunned next round");
         };
 
         //Set player stats for future turns (if they were modified)
