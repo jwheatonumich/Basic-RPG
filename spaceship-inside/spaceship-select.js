@@ -2,6 +2,9 @@
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
 
+var transformSpecies = "gremlin"
+var transformSpeciesImage = "../images/little-goblin.png"
+
 //Load each player stat into a variable
 function playerSetup() {
     playerName = playerStats.name;
@@ -37,49 +40,97 @@ function setStats() {
     document.getElementById("character-image").src = playerStats.image;
 }
 
-//Transform back to original alien
+//Transform to selected species
 function repairDNA(){
-    //Save health and xp after battle ends
-    playerStats.species = "gremlin" ;
-    playerStats.image = "../images/little-goblin.png" ;
     
+    //Set player species and associated image
+    playerStats.species = transformSpecies ;
+    playerStats.image = transformSpeciesImage ;
 
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 
+    //Update the variables on playerStats
     playerSetup();
+
+    //Update the image on the page
     setStats();
+}
+
+//Function to set species and image to match selected image
+function setTransformSpecies(species, image, imageID){
+    transformSpecies = species;
+    transformSpeciesImage = image;
+
+    //
+    document.getElementById("gremlin-image").setAttribute("class", "transform-image");
+    document.getElementById("squirrel-image").setAttribute("class", "transform-image");
+    document.getElementById("mushroom-image").setAttribute("class", "transform-image");
+    document.getElementById("bear-image").setAttribute("class", "transform-image");
+
+    document.getElementById(imageID).setAttribute("class", "transform-image-selected");
 }
 
 function unlockedSpecies(){
     //Populate gremlin image
+    var link = document.createElement('a');
+    link.setAttribute("onClick", 'setTransformSpecies("gremlin","../images/little-goblin.png","gremlin-image");')
+
     var elem = document.createElement("img");
     elem.src = "../images/little-goblin.png";
-    elem.setAttribute("class", "item");
-    document.getElementById("unlocked-species-div").appendChild(elem);
+    elem.setAttribute("class", "transform-image-selected");
+    elem.setAttribute("id", "gremlin-image");
+
+    link.appendChild(elem);
+
+    document.getElementById("unlocked-species-div").appendChild(link);
 
     //If squirrel transform is unlocked, populate bear image
     if (playerStats.squirrelunlock == true){
+
+        var link = document.createElement('a');
+        link.setAttribute("onClick", 'setTransformSpecies("squirrel", "../images/squirrel-avatar.png","squirrel-image");')
+
         var elem = document.createElement("img");
         elem.src = "../images/squirrel-avatar.png";
-        elem.setAttribute("class", "item");
-        document.getElementById("unlocked-species-div").appendChild(elem);
+        elem.setAttribute("class", "transform-image");
+        elem.setAttribute("id", "squirrel-image");
+
+        link.appendChild(elem);
+
+        document.getElementById("unlocked-species-div").appendChild(link);
     }   
 
     //If mushroom transform is unlocked, populate bear image
     if (playerStats.mushroomunlock == true){
+
+        var link = document.createElement('a');
+        link.setAttribute("onClick", 'setTransformSpecies("mushroom", "../images/little-mushroom-scanner.png","mushroom-image");')
+
         var elem = document.createElement("img");
         elem.src = "../images/little-mushroom-scanner.png";
-        elem.setAttribute("class", "item");
-        document.getElementById("unlocked-species-div").appendChild(elem);
+        elem.setAttribute("class", "transform-image");
+        elem.setAttribute("id", "mushroom-image");
+
+        link.appendChild(elem);
+
+        document.getElementById("unlocked-species-div").appendChild(link);
     }   
 
     //If bear transform is unlocked, populate bear image
     if (playerStats.bearunlock == true){
+
+        var link = document.createElement('a');
+        link.setAttribute("onClick", 'setTransformSpecies("bear", "../images/small-bear-avatar.png","bear-image");')
+
         var elem = document.createElement("img");
         elem.src = '../images/small-bear-avatar.png';
-        elem.setAttribute("class", "item");
-        document.getElementById("unlocked-species-div").appendChild(elem);
+        elem.setAttribute("class", "transform-image");
+        elem.setAttribute("id", "bear-image");
+
+        link.appendChild(elem);
+
+        document.getElementById("unlocked-species-div").appendChild(link);
     }   
 }
 
