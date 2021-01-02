@@ -51,6 +51,39 @@ function repairDNA(){
     setStats();
 }
 
+function unlockedSpecies(){
+    //Populate gremlin image
+    var elem = document.createElement("img");
+    elem.src = "../images/little-goblin.png";
+    elem.setAttribute("class", "item");
+    document.getElementById("unlocked-species-div").appendChild(elem);
+
+    //If squirrel transform is unlocked, populate bear image
+    if (playerStats.squirrelunlock = true){
+        var elem = document.createElement("img");
+        elem.src = "../images/squirrel-avatar.png";
+        elem.setAttribute("class", "item");
+        document.getElementById("unlocked-species-div").appendChild(elem);
+    }   
+
+    //If mushroom transform is unlocked, populate bear image
+    if (playerStats.mushroomunlock = true){
+        var elem = document.createElement("img");
+        elem.src = "../images/little-mushroom-scanner.png";
+        elem.setAttribute("class", "item");
+        document.getElementById("unlocked-species-div").appendChild(elem);
+    }   
+
+    //If bear transform is unlocked, populate bear image
+    if (playerStats.bearunlock = true){
+        var elem = document.createElement("img");
+        elem.src = '../images/small-bear-avatar.png';
+        elem.setAttribute("class", "item");
+        document.getElementById("unlocked-species-div").appendChild(elem);
+    }   
+}
+
 //Populate player stats on page load
 window.onload = playerSetup();
 window.onload = setStats();
+window.onload = unlockedSpecies();
