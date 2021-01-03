@@ -5,6 +5,7 @@ var enemyList = enemyListText.split(",").map(x=>+x);//Convert string to an array
 var battleStatusData = {
     "inProgress":true,
     "battleTurn":1,
+    "winstreak":0,
     "enemyID":1,
     "playerHealth":39,
     "enemyHealth":29,
@@ -149,6 +150,7 @@ function playerSetup() {
         playerStatus = battleStatusData.playerStatus;
 
         battleTurn = battleStatusData.battleTurn;
+        winstreak = battleStatusData.winstreak;
     };
 
 }
