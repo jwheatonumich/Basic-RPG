@@ -35,6 +35,8 @@ function updateControl(){
         controlStore('Crash3');
     } else if(playerStats["ship-acorncoin"]>=10){
         controlStore('Crash2');
+    } else{
+        controlStore('Crash1');
     }
 };
 
