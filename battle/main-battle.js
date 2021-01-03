@@ -202,12 +202,10 @@ function setAbilities(){
 //Function to check if the battle is over
 function battleStatus(){
     if (playerHealth <= 0){
-        battleText = battleText.concat(`Your health is zero. You pass out.<br>`);
         battleCleanup();
     }
 
     if (enemyHealth <= 0){
-        battleText = battleText.concat(`Enemy defeated!<br>`);
         playerAcornCoin += enemyAcornCoin;
         playerMushroomCoin += enemyMushroomCoin;
         playerBearclawCoin += enemyBearclawCoin;
@@ -278,7 +276,7 @@ function gameOver(){
     playerStats.endurance = 10;
     playerStats.health = 40;
     playerStats.image = "../images/little-goblin.png";
-    playerStats.leafcoin = 0;
+    playerStats.leafcoin = 3;
     playerStats.maxhealth = 40;
     playerStats.mushroomcoin = 0;
     playerStats.mushroomunlock = false;
@@ -295,9 +293,6 @@ function gameOver(){
     //Back button redirects to spaceship
     document.getElementById("back-button").setAttribute('onClick',"location.href='../spaceship-inside/control.html';");
 
-    //Store a value in local storage indicating player just died
-    //localStorage.setItem('playerDead', true);
-
     //Set the control screen text
     localStorage.setItem('controlScriptName', 'Dead');
 }
@@ -305,17 +300,18 @@ function gameOver(){
 //Define an empty function
 function empty(){console.log('empty')};
 
-function playerDealDamage(){
-    enemyArmor = Math.max(enemyArmor - playerDamage,0);//Damage goes to armor first
-    enemyHealth -= Math.max((playerDamage - enemyArmor),0);//Remaining damage goes to health
+function playerDealDamage(damageType){
+    enemyArmor = Math.max(enemyArmor - damageType,0);//Damage goes to armor first
+    enemyHealth -= Math.max((damageType - enemyArmor),0);//Remaining damage goes to health
 };
 
 //Update player armor and health based on enemy damage
-function enemyDealDamage(){
-    playerArmor = Math.max(playerArmor - enemyDamage,0); //Damage goes to armor first
-    playerHealth -= Math.max((enemyDamage - playerArmor),0); //Remaining damage goes to health
+function enemyDealDamage(damageType){
+    playerArmor = Math.max(playerArmor - damageType,0); //Damage goes to armor first
+    playerHealth -= Math.max((damageType - playerArmor),0); //Remaining damage goes to health
 };
 
+//Sets player/enemy damage to zero if they are dead
 function deadNoDamage(){
     if (playerHealth <= 0){
         playerAttackDamage = 0
@@ -329,7 +325,7 @@ function deadNoDamage(){
 function attack(playerAbility) {
 
     //Check if the player is trying to run away
-    //Only called through the Back button
+    //Called through the Back button
     if(playerAbility == "flee"){
         //If enemy is dead, leave the battle
         if (enemyHealth <= 0){
@@ -390,14 +386,14 @@ function attack(playerAbility) {
     playerPriority = abilityData[playerAbility]["priority"];
     enemyPriority = enemyAbility["priority"];
 
-    //Check if player or enemy is dead before running the battle function
+    //Check if player or enemy is dead before proceeding
     if(playerHealth>0 && enemyHealth>0){
 
         //Set armor before damage is dealt
         playerArmor += abilityData[playerAbility]["armor"];
         enemyArmor += enemyAbility["armor"];
         
-        //Calculate player and enemy attack
+        //Calculate player attack
         playerAttackDamage = Math.max(Math.floor(
             //Avg damage of 1, central outcomes more likely
             1.25 * Math.random()*playerAttack*attackMultiplier 
@@ -407,8 +403,9 @@ function attack(playerAbility) {
             //Avg block of 0.5, central outcomes more likely
             - .75 * enemyDefense*enemyDefenseMultiplier
             -.25 * enemyDefense*enemyDefenseMultiplier
-            ),1);
+            ),1);//Minimum of one damage
 
+        //Calculate enemy attack
         enemyAttackDamage = Math.max(Math.floor(
             //Avg damage of 1, central outcomes more likely
             1.25 * Math.random()*enemyAttack*enemyAttackMultiplier 
@@ -418,7 +415,7 @@ function attack(playerAbility) {
             //Avg block of 0.5, central outcomes more likely
             - .75 * playerDefense*defenseMultiplier
             - .25 * playerDefense*defenseMultiplier
-            ),1);
+            ),1);//Minimum of one damage
 
         //Troubleshooting
         console.log("Player attack damage: ",playerAttackDamage);
@@ -449,31 +446,20 @@ function attack(playerAbility) {
         playerAbilityPoison = abilityData[playerAbility]["poison"];
         enemyAbilityPoison = enemyAbility["poison"];
 
-        //Did enemy get poisoned this turn
-        enemyPoison += abilityData[playerAbility]["poison"];
-        playerPoison += enemyAbility["poison"];
-
-        //Calculate total damage dealt by player and enemy
-        playerDamage = playerAttackDamage + enemyPoison;
-        enemyDamage = enemyAttackDamage + playerPoison;
-
         //Abilities that only last one turn
         enemyStun = 0;
         playerStun = 0;
 
-        //Clear the status line
+        //Clear player and enemy status
         enemyStatus = "";
         playerStatus = "";
 
         //Clear the battle text
         battleText = "";
 
-        //If either player is dead at this point, set their damage this turn to zero
-        deadNoDamage();
-
         //Player deals damage if they used a priority attack
         if(playerPriority){
-            playerDealDamage();
+            playerDealDamage(playerAttackDamage);
 
             battleText = battleText.concat(`You strike fast with `)
             battleText = battleText.concat(abilityData[playerAbility]["name"]);
@@ -484,7 +470,7 @@ function attack(playerAbility) {
 
         //Enemy deals damage if they used a priority attack
         if(enemyPriority){
-            enemyDealDamage();
+            enemyDealDamage(enemyAttackDamage);
 
             battleText = battleText.concat(`The enemy strike fast with `);
             battleText = battleText.concat(enemyAbility["name"]);
@@ -493,13 +479,24 @@ function attack(playerAbility) {
             battleText = battleText.concat(` damage.<br>`);
         };
 
-        //If either player is dead at this point, set their damage this turn to zero
+        //If either player is dead at this point, set their damage to zero for the remainder of the turn
         deadNoDamage();
+
+        //If player didn't die from priority attack, stack any poison damage they deal
+        if(playerHealth >= 0){
+            //Add this turn's poison amount to existing poison on player and enemy
+            enemyPoison += abilityData[playerAbility]["poison"];
+        }
+
+        //If enemy didn't die from priority attack, stack any poison damage they deal
+        if(enemyHealth >= 0){
+            playerPoison += enemyAbility["poison"];
+        }
 
         //Player deals damage if they didn't use a priority attack
         //And if they didn't die from a priority attack
         if(!playerPriority && (playerAttackDamage != 0)){
-            playerDealDamage();
+            playerDealDamage(playerAttackDamage);
 
             battleText = battleText.concat(`You use `);
             battleText = battleText.concat(abilityData[playerAbility]["name"]);
@@ -511,13 +508,21 @@ function attack(playerAbility) {
         //Enemy deals damage if they didn't use a priority attack
         //And if they didn't die from a priority attack
         if(!enemyPriority && (enemyAttackDamage !=0)){
-            enemyDealDamage();
+            enemyDealDamage(enemyAttackDamage);
 
             battleText = battleText.concat(`The enemy uses `);
             battleText = battleText.concat(enemyAbility["name"]);
             battleText = battleText.concat(`. You take `);
             battleText = battleText.concat(enemyAttackDamage);
             battleText = battleText.concat(` damage.<br>`);
+        };
+
+        //Deal poison damage
+        if(playerPoison>0){
+            enemyDealDamage(playerPoison);//Player takes poison damage
+        };
+        if(enemyPoison>0){
+            playerDealDamage(enemyPoison);//Enemy takes poison damage
         };
 
 
@@ -578,7 +583,7 @@ function attack(playerAbility) {
             battleText = battleText.concat(`Your opponent decreased your defense`);
         };
 
-        //Store the text that will display this turn
+        //Add battle text for poison and stun
         if(playerAbilityPoison!=0){battleText = battleText.concat(`You poison the enemy!<br>`)};
         if(enemyAbilityPoison!=0){battleText = battleText.concat(`The enemy poisons you!<br>`)};
         if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
@@ -586,10 +591,10 @@ function attack(playerAbility) {
         if(playerStun==1){battleText = battleText.concat(`You have been stunned!<br>`)};
         if(enemyStun==1){battleText = battleText.concat(`The enemy has been stunned!<br>`)};
 
-        
-        //Change turn
+        //Increment turn count
         battleTurn += 1;
 
+        //Check if player or enemy is dead. Deal with battle text and loot.
         battleStatus();
 
         //Update text on site based on new health
@@ -644,7 +649,6 @@ function attack(playerAbility) {
             document.getElementById("battle-text-div").innerHTML = battleText;
 
             gameOver();
-            //Add code to reset player stats including coins and day, and redirect to ship
 
         }
 
