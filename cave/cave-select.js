@@ -1,12 +1,15 @@
 //Load player stats in localstorage
 var retrievedObject = localStorage.getItem('storedPlayerStats');
-var playerStats = JSON.parse(retrievedObject)
+var playerStats = JSON.parse(retrievedObject);
 
 //Relative link back to this page
-var page = "../cave/cave.html"
+var page = "../cave/cave.html";
 
 //List of possible enemy IDs
-var enemyListEasy = [12,12,12,13,13,14,15]
+var enemyListEasy = [12,12,12,13,13,14,15];
+
+//Type of reward given for winstreaks in this arena
+var winstreakReward = "bearclawcoin";
 
 //Load each player stat into a variable
 function playerSetup() {
@@ -77,6 +80,7 @@ function enterCave(enemyList) {
     }else{
         //Start the battle
         localStorage.setItem('enemyList',enemyList);
+        localStorage.setItem('winstreakReward',winstreakReward)
         window.location.href = "../battle/battle.html";
         lastPage(page);
     }

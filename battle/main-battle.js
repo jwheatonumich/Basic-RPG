@@ -2,6 +2,9 @@
 var enemyListText = localStorage.getItem('enemyList');//Load possible enemy IDs
 var enemyList = enemyListText.split(",").map(x=>+x);//Convert string to an array of numbers
 
+var winstreakList = [0,0,1,0,2,0,0,0,0,10];//Rewards player gets for beating sequential enemies
+var winstreakReward = localStorage.getItem('winstreakReward');//Type of rewards for winstreaks
+
 var playerStats = {};
 var enemyStats = [];
 
@@ -68,7 +71,7 @@ var enemyAbility = "";
 
 var battleTurn = 1;
 
-var winStreak = 0;
+var winstreak = 0;
 
 
 //Load player data from local storage
@@ -617,7 +620,7 @@ function attack(playerAbility) {
         stopPlayerAttack();
 
         //End win streak
-        winStreak = 0;
+        winstreak = 0;
 
         //Check if player has a leaf coin to heal
         if(playerLeafCoin > 0){
@@ -659,8 +662,8 @@ function attack(playerAbility) {
         if (enemyHealth <= 0){
 
             //Increase win streak
-            winStreak += 1;
-            battleText = battleText.concat("Your win streak is "+winStreak+".<br>")
+            winstreak += 1;
+            battleText = battleText.concat("Your win streak is "+winstreak+".<br>")
         }
 
         //Update the battle text for the current turn
@@ -671,6 +674,19 @@ function attack(playerAbility) {
 
             //Stop player from attacking while enemy is dead
             stopPlayerAttack();
+
+            //Determine if player gets a winstreak reward
+            if (winstreakReward == "acorncoin"){//If arena rewards acorn coins
+                enemyAcornCoin += winstreakList[winstreak-1];//Add acorncoins according to the winstreak list
+            };
+
+            if (winstreakReward == "mushroomcoin"){
+                enemyMushroomCoin += winstreakList[winstreak-1];
+            };
+
+            if (winstreakReward == "bearclawcoin"){
+                enemyBearclawCoin += winstreakList[winstreak-1];
+            };
 
             //Loop to create acorn icons
             var i = 1;

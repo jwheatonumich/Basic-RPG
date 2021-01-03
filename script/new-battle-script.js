@@ -54,6 +54,7 @@ function selectImage(){
 function startBattle(enemyList){
 
     localStorage.setItem('enemyList',enemyList)
+    localStorage.setItem('winstreakReward',winstreakReward)
 
     window.location.href = "../battle/battle.html"
     lastPage(page);
