@@ -355,6 +355,7 @@ function saveProgress(){
         //Save battle status in array
         battleStatusData.inProgress = true;
         battleStatusData.battleTurn = battleTurn;
+        battleStatusData.winstreak = winstreak;
         battleStatusData.enemyID = enemyID;
         battleStatusData.playerHealth = playerHealth;
         battleStatusData.enemyHealth = enemyHealth;
@@ -769,15 +770,15 @@ function attack(playerAbility) {
             stopPlayerAttack();
 
             //Determine if player gets a winstreak reward
-            if (winstreakReward == "acorncoin"){//If arena rewards acorn coins
+            if (winstreakReward == "acorncoin" && winstreakList[winstreak-1]){//If arena rewards acorn coins
                 enemyAcornCoin += winstreakList[winstreak-1];//Add acorncoins according to the winstreak list
             };
 
-            if (winstreakReward == "mushroomcoin"){
+            if (winstreakReward == "mushroomcoin" && winstreakList[winstreak-1]){
                 enemyMushroomCoin += winstreakList[winstreak-1];
             };
 
-            if (winstreakReward == "bearclawcoin"){
+            if (winstreakReward == "bearclawcoin" && winstreakList[winstreak-1]){
                 enemyBearclawCoin += winstreakList[winstreak-1];
             };
 
