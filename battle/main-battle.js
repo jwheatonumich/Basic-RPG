@@ -351,7 +351,6 @@ function gameOver(){
 //Function to handle saving battle status if battle isn't over
 function saveProgress(){
 
-
     if(playerHealth > 0 && enemyHealth > 0){//If battle is in progress
         //Save battle status in array
         battleStatusData.inProgress = true;
@@ -407,7 +406,14 @@ function attack(playerAbility) {
     if(playerAbility == "flee"){
         //If enemy is dead, leave the battle
         if (enemyHealth <= 0){
+
+            //Don't save the battle progress when you exit
+            battleStatusData.inProgress = false;
+            localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+
+            //Exit to the prior page
             window.location.href = localStorage.getItem("lastPage");
+            return; //Stop the function
         
         //If player is dead, game over
         }else if(playerHealth <= 0){
@@ -420,8 +426,17 @@ function attack(playerAbility) {
 
             //If flee successful, leave battle
             if (fleeChance > 0.5){
-               battleCleanup();
+
+                //Save changes to player stats
+                battleCleanup();
+
+                //Don't save the battle progress when you exit
+                battleStatusData.inProgress = false;
+                localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+
+                //Exit to the prior page
                 window.location.href = localStorage.getItem("lastPage");
+                return;//Stop the function
 
             //If flee not successful, player stunned for a round of battle
             }else{
