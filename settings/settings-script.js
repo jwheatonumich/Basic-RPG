@@ -1,6 +1,7 @@
 //Load player data into a variable from local storage
 var retrievedObject = localStorage.getItem('storedPlayerStats');
 var playerStats = JSON.parse(retrievedObject)
+var battleStatusData = ""
 
 //Function to set player stats variable to new game stats
 function dataLoad(){
@@ -11,11 +12,17 @@ function dataLoad(){
     "ship-acorncoin":0,"ship-mushroomcoin":0,"ship-bearclawcoin":0,
     "squirrelunlock":false,"mushroomunlock":false,"bearunlock":false}
     playerStats["name"] = document.getElementById("name").value
+
+    battleStatusData = {
+        "inProgress":false
+    };
 };
 
 //Function to store player stats variable to local storage
 function dataStore(){
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
 
     //Store the script for the console
     controlStore("Crash1");
