@@ -8,4 +8,7 @@
     text-align:left;
     padding:5px;
     margin:5px;
+
+    /*Text will scroll if it overflows div height*/
+    overflow-y:auto
 }
