@@ -17,6 +17,7 @@ function playerSetup() {
     mushroomCoin = playerStats.mushroomcoin;
     bearclawCoin = playerStats.bearclawcoin;
     leafCoin = playerStats.leafcoin;
+    day = playerStats.day;
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -24,6 +25,7 @@ function setStats() {
     
     document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("character-stats").innerHTML = 
+        'Day: ' + day + '<br />' +
         'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
         'Attack: ' + playerAttack + '<br />' +
         'Defense: ' + playerDefense + '<br />' +
