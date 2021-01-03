@@ -2,6 +2,20 @@
 var enemyListText = localStorage.getItem('enemyList');//Load possible enemy IDs
 var enemyList = enemyListText.split(",").map(x=>+x);//Convert string to an array of numbers
 
+var battleStatusData = {
+    "inProgress":true,
+    "battleTurn":1,
+    "enemyID":1,
+    "playerHealth":39,
+    "enemyHealth":29,
+    "playerPoison":0,
+    "enemyPoison":0,
+    "playerStun":0,
+    "enemyStun":0,
+    "playerStatus":"",
+    "enemyStatus":""
+};
+
 var winstreakList = [0,0,1,0,2,0,0,0,0,10];//Rewards player gets for beating sequential enemies
 var winstreakReward = localStorage.getItem('winstreakReward');//Type of rewards for winstreaks
 
@@ -74,6 +88,12 @@ var battleTurn = 1;
 var winstreak = 0;
 
 
+//Load the battle status from local storage and save as a variable
+function battleStatusLoad(){
+    var retrievedObject = localStorage.getItem('battleStatusData');
+    battleStatusData = JSON.parse(retrievedObject);
+};
+
 //Load player data from local storage
 function dataLoad(){
 
@@ -81,13 +101,18 @@ function dataLoad(){
     var retrievedObject = localStorage.getItem('storedPlayerStats');
     playerStats = JSON.parse(retrievedObject);
 
-}
+};
 
 //Select enemy from list of possible enemies
 function selectEnemy(){
 
     //Select a random enemy ID from the enemyList array
     enemyID = enemyList[Math.floor(Math.random()*enemyList.length)];
+
+    //If battle is in progress, use saved date
+    if (battleStatusData.inProgress){
+        enemyID = battleStatusData.enemyID;
+    };
 
     //Find and store the enemy that matches the ID
     for (i in enemyStats){
@@ -116,6 +141,16 @@ function playerSetup() {
     playerBearclawCoin = playerStats.bearclawcoin;
     playerLeafCoin = playerStats.leafcoin;
 
+    //If battle is in progress, use saved date
+    if (battleStatusData.inProgress){
+        playerHealth = battleStatusData.playerHealth;
+        playerPoison = battleStatusData.playerPoison;
+        playerStun = battleStatusData.playerStun;
+        playerStatus = battleStatusData.playerStatus;
+
+        battleTurn = battleStatusData.battleTurn;
+    };
+
 }
 
 //Store relevant enemy stats in variables
@@ -129,6 +164,14 @@ function enemySetup() {
     enemyMushroomCoin = chosenEnemy.stats.mushroomcoin;
     enemyBearclawCoin = chosenEnemy.stats.bearclawcoin;
 
+    //If battle is in progress, use saved date
+    if (battleStatusData.inProgress){
+        enemyHealth = battleStatusData.enemyHealth;
+        enemyPoison = battleStatusData.enemyPoison;
+        enemyStun = battleStatusData.enemyStun;
+        enemyStatus = battleStatusData.enemyStatus;
+    };
+
     //Load ability probabilities
     enemyAbility1Prob = chosenEnemy.stats.ability1prob;
     enemyAbility2Prob = chosenEnemy.stats.ability2prob + enemyAbility1Prob;
@@ -136,6 +179,9 @@ function enemySetup() {
     enemyAbility4Prob = chosenEnemy.stats.ability4prob + enemyAbility3Prob;
 
     enemyPowerlevel = 20*(enemyMaxHealth/4 + enemyAttack + enemyDefense)/(playerMaxHealth/4 + playerAttack + playerDefense);
+
+    //Save the battle status in local storage
+    saveProgress();
 }
 
 //Function that sets text on the website equal to various stat variables
@@ -300,9 +346,36 @@ function gameOver(){
     localStorage.setItem('controlScriptName', 'Dead');
 }
 
+//Function to handle saving battle status if battle isn't over
+function saveProgress(){
+
+
+    if(playerHealth > 0 && enemyHealth > 0){//If battle is in progress
+        //Save battle status in array
+        battleStatusData.inProgress = true;
+        battleStatusData.battleTurn = battleTurn;
+        battleStatusData.enemyID = enemyID;
+        battleStatusData.playerHealth = playerHealth;
+        battleStatusData.enemyHealth = enemyHealth;
+        battleStatusData.playerPoison = playerPoison;
+        battleStatusData.enemyPoison = enemyPoison;
+        battleStatusData.playerStun = playerStun;
+        battleStatusData.enemyStun = enemyStun;
+        battleStatusData.playerStatus = playerStatus;
+        battleStatusData.enemyStatus = enemyStatus;
+
+    }else{ //If battle is not in progress
+        battleStatusData.inProgress = false;//Set battle status to false
+    };
+
+    //Save battle status array in local storage
+    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+};
+
 //Define an empty function
 function empty(){console.log('empty')};
 
+//Update enemy armor and health based on enemy damage
 function playerDealDamage(damageType){
     enemyArmor = Math.max(enemyArmor - damageType,0);//Damage goes to armor first
     enemyHealth -= Math.max((damageType - enemyArmor),0);//Remaining damage goes to health
@@ -603,6 +676,9 @@ function attack(playerAbility) {
         //Update text on site based on new health
         setStats();
         setEnemyStats();
+
+        //Save the battle status in local storage
+        saveProgress();
 
     }
 

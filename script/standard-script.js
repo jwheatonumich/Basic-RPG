@@ -24,3 +24,19 @@ function sleep() {
     setStats(); //Update stats on page
     window.location.href = "../spaceship/spaceship.html"
 }
+
+//Function to check if a battle is active
+function activeBattleCheck(){
+
+    //Load data from local storage
+    var retrievedObject = localStorage.getItem('battleStatusData');
+
+    //Parse the JSON data into an object
+    battleStatusData = JSON.parse(retrievedObject);
+
+    if (battleStatusData.inProgress){//Check if a battle is in progress
+        window.location.href = "../battle/battle.html"//If in progress, go to battle
+    }
+}
+
+window.onload = activeBattleCheck();//Check for active battle on page load
