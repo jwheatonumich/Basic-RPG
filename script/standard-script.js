@@ -56,6 +56,81 @@ function sleep() {
         playerStats.health = Math.floor(playerStats.maxhealth); //Heal to 100% of max health
     }
 
+    //Random events
+    var eventCheck;
+
+    //Squirrel Challenge
+    eventCheck = Math.random()
+    console.log(eventCheck);
+    if (eventCheck < 0.05){
+        localStorage.setItem('squirrelChallenge',true);
+    }else{
+        localStorage.setItem('squirrelChallenge',false);
+    }
+
+    //Mushroom Challenge
+    eventCheck = Math.random()
+    if (eventCheck < 0.05){
+        localStorage.setItem('mushroomChallenge',true);
+    }else{
+        localStorage.setItem('mushroomChallenge',false);
+    }
+    
+    //Riku Battle
+    eventCheck = Math.random()
+    if (eventCheck < 0.05){
+        localStorage.setItem('rikuBattle',true);
+    }else{
+        localStorage.setItem('rikuBattle',false);
+    }
+
+    //Great Tree Leaf
+    eventCheck = Math.random()
+    if (eventCheck < 0.25){
+        localStorage.setItem('freeLeaf',true);
+    }else{
+        localStorage.setItem('freeLeaf',false);
+    }
+
+    //Spore Day, Free Training
+    eventCheck = Math.random()
+    if (eventCheck < 0.25){
+        localStorage.setItem('sporeDay',true);
+    }else{
+        localStorage.setItem('sporeDay',false);
+    }
+    
+    //Sleeping Bear
+    eventCheck = Math.random()
+    if (eventCheck < 0.25){
+        localStorage.setItem('sleepingBear',true);
+    }else{
+        localStorage.setItem('sleepingBear',false);
+    }
+
+    //Enraged Squirrels
+    eventCheck = Math.random()
+    if (eventCheck < 0.1){
+        localStorage.setItem('enragedSquirrels',true);
+    }else{
+        localStorage.setItem('enragedSquirrels',false);
+    }
+
+    //Enraged Mushrooms
+    eventCheck = Math.random()
+    if (eventCheck < 0.1){
+        localStorage.setItem('enragedMushrooms',true);
+    }else{
+        localStorage.setItem('enragedMushrooms',false);
+    }
+
+    //Enraged Bears
+    eventCheck = Math.random()
+    if (eventCheck < 0.1){
+        localStorage.setItem('enragedBears',true);
+    }else{
+        localStorage.setItem('enragedBears',false);
+    }
 
     localStorage.setItem('sleep','true');
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
