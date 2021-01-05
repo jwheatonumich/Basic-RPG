@@ -1,15 +1,9 @@
 //Add random numbers of coins to the player's inventory
 function shakeTree() {
     //Calculate how many of each coin to add
-    var treeAcornCoin = 0;
-    var treeMushroomCoin = 0;
-    var treeBearclawCoin =  0;
     var treeLeafCoin = 1;
 
     //Add to player's stats
-    playerStats["acorncoin"] +=treeAcornCoin;
-    playerStats["mushroomcoin"] +=treeMushroomCoin;
-    playerStats["bearclawcoin"] +=treeBearclawCoin;
     playerStats["leafcoin"] +=treeLeafCoin;
 
     //Text explaining they got items
@@ -36,11 +30,32 @@ function shakeTree() {
 
 //Function that gets run when the tree is shaken. Can only be used once each day.
 function onceDaily(){
-    if(playerStats["day"] > playerStats["treeday"]){
-        playerStats["treeday"] = playerStats["day"];
+    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
+    if(dailyEvents.freeLeaf == true){
+        dailyEvents.freeLeaf = false;//Prevent player from taking again
+        localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));//Save in local storage
+
         shakeTree();
     }else{
         document.getElementById("textbox").innerHTML = 'You shake the tree but nothing falls out. Try again tomorrow.<br>';
     }
+    //Update the page image
+    updateImage();
 
 };
+
+//Update image
+function updateImage(){
+    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
+
+    if (dailyEvents.freeLeaf == true){//Check if player gets a free leaf
+        //If the player gets a free leaf, use the leaf image
+        document.getElementById("page-image").src = "../images/bountiful-tree-leaves.png"
+    }else{
+        //Otherwise use the normal image
+        document.getElementById("page-image").src = "../images/bountiful-tree.png"
+    }
+}
+
+//Update tree image on page load
+window.onload = updateImage()

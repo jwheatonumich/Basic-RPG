@@ -9,8 +9,10 @@ var winstreakReward = "bearclawcoin";
 
 //Update image
 function updateImage(){
-    if (playerStats["caveday"] >= 1){
-        //Change the image after user tries to steal a coin
+    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
+
+    if (dailyEvents.sleepingBear == false){//Check if bear is asleep
+        //If the bear is awake, show the image with his eyes
         document.getElementById("page-image").src = "../images/bear-cave-eyes.png"
     }
 }
@@ -18,11 +20,14 @@ function updateImage(){
 //Add random numbers of coins to the player's inventory
 function enterCave(enemyList) {
 
+    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
+
     //Check if the user has entered the cave today
-    if (playerStats["caveday"] < 1){
+    if (dailyEvents.sleepingBear == true){
 
         //Make sure the player can't try to steal a coin again today
-        playerStats["caveday"]=1;
+        dailyEvents.sleepingBear = false
+        localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));
 
         //Give the player a bearclaw coin
         playerStats["bearclawcoin"] +=1;

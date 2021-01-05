@@ -57,80 +57,85 @@ function sleep() {
     }
 
     //Random events
-    var eventCheck;
+    var eventCheck;//Used to calculate whether events happen
+
+    var dailyEvents = {} //Empty object to hold events
 
     //Squirrel Challenge
     eventCheck = Math.random()
     console.log(eventCheck);
     if (eventCheck < 0.05){
-        localStorage.setItem('squirrelChallenge',true);
+        dailyEvents.squirrelChallenge=true;
     }else{
-        localStorage.setItem('squirrelChallenge',false);
+        dailyEvents.squirrelChallenge=false;
     }
 
     //Mushroom Challenge
     eventCheck = Math.random()
     if (eventCheck < 0.05){
-        localStorage.setItem('mushroomChallenge',true);
+        dailyEvents.mushroomChallenge=true;
     }else{
-        localStorage.setItem('mushroomChallenge',false);
+        dailyEvents.mushroomChallenge-false;
     }
     
     //Riku Battle
     eventCheck = Math.random()
     if (eventCheck < 0.05){
-        localStorage.setItem('rikuBattle',true);
+        dailyEvents.rikuBattle=true;
     }else{
-        localStorage.setItem('rikuBattle',false);
+        dailyEvents.rikuBattle=false;
     }
 
     //Great Tree Leaf
     eventCheck = Math.random()
     if (eventCheck < 0.25){
-        localStorage.setItem('freeLeaf',true);
+        dailyEvents.freeLeaf=true;
     }else{
-        localStorage.setItem('freeLeaf',false);
+        dailyEvents.freeLeaf=false;
     }
 
     //Spore Day, Free Training
     eventCheck = Math.random()
     if (eventCheck < 0.25){
-        localStorage.setItem('sporeDay',true);
+        dailyEvents.sporeDay=true;
     }else{
-        localStorage.setItem('sporeDay',false);
+        dailyEvents.sporeDay=false;
     }
     
     //Sleeping Bear
     eventCheck = Math.random()
     if (eventCheck < 0.25){
-        localStorage.setItem('sleepingBear',true);
+        dailyEvents.sleepingBear=true;
     }else{
-        localStorage.setItem('sleepingBear',false);
+        dailyEvents.sleepingBear=false;
     }
 
     //Enraged Squirrels
     eventCheck = Math.random()
     if (eventCheck < 0.1){
-        localStorage.setItem('enragedSquirrels',true);
+        dailyEvents.enragedSquirrels=true;
     }else{
-        localStorage.setItem('enragedSquirrels',false);
+        dailyEvents.enragedSquirrels=false;
     }
 
     //Enraged Mushrooms
     eventCheck = Math.random()
     if (eventCheck < 0.1){
-        localStorage.setItem('enragedMushrooms',true);
+        dailyEvents.enragedMushrooms=true;
     }else{
-        localStorage.setItem('enragedMushrooms',false);
+        dailyEvents.enragedMushrooms=false;
     }
 
     //Enraged Bears
     eventCheck = Math.random()
     if (eventCheck < 0.1){
-        localStorage.setItem('enragedBears',true);
+        dailyEvents.enragedBears=true;
     }else{
-        localStorage.setItem('enragedBears',false);
+        dailyEvents.enragedBears=false;
     }
+
+    //Store all daily event outcomes
+    localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));
 
     localStorage.setItem('sleep','true');
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
