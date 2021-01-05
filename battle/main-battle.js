@@ -316,6 +316,9 @@ function stopPlayerAttack(){
 //What happens when player dies without a way to heal
 function gameOver(){
 
+    //Generate a new set of daily events and save to local storage
+    //dailyEventGenerator();
+
     //Reset player stats
     playerStats.acorncoin = 0;
     playerStats.attack = 10;
@@ -346,6 +349,8 @@ function gameOver(){
 
     //Set the control screen text
     localStorage.setItem('controlScriptName', 'Dead');
+    
+    return; //Stop the function
 }
 
 //Function to handle saving battle status if battle isn't over
