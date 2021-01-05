@@ -694,7 +694,7 @@ function attack(playerAbility) {
         battleTurn += 1;
 
         //Check if player or enemy is dead. Deal with battle text and loot.
-        battleStatus();
+        //battleStatus();
 
         //Update text on site based on new health
         setStats();
@@ -780,12 +780,20 @@ function attack(playerAbility) {
             };
 
             if (winstreakReward == "mushroomcoin" && winstreakList[winstreak-1]){
-                enemyMushroomCoin += winstreakList[winstreak-1];
             };
 
             if (winstreakReward == "bearclawcoin" && winstreakList[winstreak-1]){
-                enemyBearclawCoin += winstreakList[winstreak-1];
             };
+
+            //Update player coins
+            battleStatus()
+
+            //Update text on site based on new health
+            setStats();
+            setEnemyStats();
+
+            //Save the battle status in local storage
+            saveProgress();
 
             //Loop to create acorn icons
             var i = 1;
