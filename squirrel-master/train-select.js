@@ -1,3 +1,7 @@
+//Variables for Riku battle
+var enemyListSquirrel = [18];
+var winstreakReward = "bearclawcoin";
+
 //Relative link back to this page
 var page = "../squirrel-master/train.html";
 
@@ -25,3 +29,17 @@ function acornTraining(stat){
 function healthCalc(){
     playerStats["maxhealth"] = 4 * playerStats["endurance"]
 };
+
+//Update  image
+function updateImage(){
+    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
+
+    if (dailyEvents.squirrelChallenge == true){//Check if squirrel master wants to fight
+        //If squirrel master wants to fight, change his image, and clicking him starts fight
+        document.getElementById("page-image").src = "../images/squirrel-trainer-fight.png"
+        document.getElementById("squirrel-link").setAttribute('onClick',"startBattle(enemyListSquirrel)");
+    }
+}
+
+//Update cave image on page load
+window.onload = updateImage()

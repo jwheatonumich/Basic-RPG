@@ -171,12 +171,32 @@ enemyStats = [
     },
 
     {
-        "name":"Riku","enemyID":16,"enemyImage":"../images/bearsuit-avatar.png",
+        "name":"Riku","enemyID":16,"enemyImage":"../images/bearsuit-avatar-fight.png",
         "stats":{
             "name":"Riku", "enemyID":16, "species":"bear",
             "health":300, "maxhealth":300, "attack":100, "defense":50, 
             "ability1prob":0,"ability2prob":1,"ability3prob":0,"ability4prob":0,
             "acorncoin":0, "mushroomcoin":0, "bearclawcoin":10 
+            }
+    },
+
+    {
+        "name":"Monsieur Champinon","enemyID":17,"enemyImage":"../images/mushroom-man-fight.png",
+        "stats":{
+            "name":"Monsieur Champinon", "enemyID":17, "species":"mushroom",
+            "health":400, "maxhealth":400, "attack":200, "defense":40, 
+            "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
+            "acorncoin":0, "mushroomcoin":10, "bearclawcoin":0 
+            }
+    },
+
+    {
+        "name":"Squirrel Master","enemyID":18,"enemyImage":"../images/squirrel-trainer-fight.png",
+        "stats":{
+            "name":"Squirrel Master", "enemyID":18, "species":"mushroom",
+            "health":100, "maxhealth":100, "attack":300, "defense":25, 
+            "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
+            "acorncoin":10, "mushroomcoin":0, "bearclawcoin":0 
             }
     }
 ]

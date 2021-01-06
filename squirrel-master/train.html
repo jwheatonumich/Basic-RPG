@@ -14,9 +14,14 @@
           <link rel="stylesheet" href= "../stylesheets/navbar.css">
           <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
 
+          <!--Script to start a battle-->
+          <script src="../script/new-battle-script.js" defer></script>
+
           <script src="train-select.js" defer></script>
           <script src="transform-script.js" defer></script>
 
+          <!--Script to create a narrative page-->
+          <script src="../script/narrative-script.js" defer></script>
 
           <!--Standard page code-->
           <script src="../script/daily-events-script.js"></script>
@@ -61,7 +66,7 @@
           <div id="game-div">
           <h1>Squirrel Ninja Academy</h1>
             <div id="trainer-div">
-              <img id="page-image" alt = "Trainer" src="../images/squirrel-trainer.png">
+              <a id="squirrel-link" onClick="narrativeStore('Riku1');"><img id="page-image" alt = "Trainer" src="../images/squirrel-trainer.png"></a>
             </div>
 
             <div id="cost-table-div">

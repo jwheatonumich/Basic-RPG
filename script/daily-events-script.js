@@ -18,7 +18,7 @@ function dailyEventGenerator(){
     if (eventCheck < 0.05){
         dailyEvents.mushroomChallenge=true;
     }else{
-        dailyEvents.mushroomChallenge-false;
+        dailyEvents.mushroomChallenge=false;
     }
     
     //Riku Battle

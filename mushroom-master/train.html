@@ -15,8 +15,14 @@
           <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
           <link rel="stylesheet" href= "page-styles.css">
 
+          <!--Script to start a battle-->
+          <script src="../script/new-battle-script.js" defer></script>
+          
           <script src="train-select.js" defer></script>
           <script src="transform-script.js" defer></script>
+
+          <!--Script to create a narrative page-->
+          <script src="../script/narrative-script.js" defer></script>
 
           <script src="../script/daily-events-script.js"></script>
           <script src="../script/standard-script.js" defer></script>
@@ -62,7 +68,7 @@
           <div id="game-div">
             <h1>Monsieur Champiñón</h1>
             <div id="trainer-div">
-              <img id="page-image" alt = "Trainer" src="../images/mushroom-man.png">
+              <a id="mushroom-link" onClick="narrativeStore('Riku1');"><img id="page-image" alt = "Trainer" src="../images/mushroom-man.png"></a>
             </div>
 
   
