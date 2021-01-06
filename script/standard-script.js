@@ -39,6 +39,8 @@ function setStats() {
 //Add random numbers of coins to the player's inventory
 function sleep() {
     
+    playerStats.day +=1
+
     //Raise stats if silver reactor is charged
     if(playerStats["ship-mushroomcoin"] >= 10){ //If health is less than 100%
         playerStats.attack +=1;

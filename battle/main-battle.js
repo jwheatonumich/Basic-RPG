@@ -322,7 +322,6 @@ function gameOver(){
     //Reset player stats
     playerStats.acorncoin = 0;
     playerStats.attack = 10;
-    playerStats.bearunlock = false;
     playerStats.bearclawcoin = 0;
     playerStats.caveday = 0;
     playerStats.day = 1;
@@ -333,9 +332,7 @@ function gameOver(){
     playerStats.leafcoin = 3;
     playerStats.maxhealth = 40;
     playerStats.mushroomcoin = 0;
-    playerStats.mushroomunlock = false;
     playerStats.species = "gremlin";
-    playerStats.squirrelunlock = false;
     playerStats.treeday = 0;
 
     //Store the updated data object in local storage, after turning the JSON to a string
