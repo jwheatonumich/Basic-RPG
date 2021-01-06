@@ -168,5 +168,15 @@ enemyStats = [
             "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
             "acorncoin":0, "mushroomcoin":0, "bearclawcoin":3 
             }
+    },
+
+    {
+        "name":"Riku","enemyID":16,"enemyImage":"../images/bearsuit-avatar.png",
+        "stats":{
+            "name":"Riku", "enemyID":16, "species":"bear",
+            "health":300, "maxhealth":300, "attack":100, "defense":50, 
+            "ability1prob":0,"ability2prob":1,"ability3prob":0,"ability4prob":0,
+            "acorncoin":0, "mushroomcoin":0, "bearclawcoin":10 
+            }
     }
 ]

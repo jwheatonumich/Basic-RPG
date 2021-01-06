@@ -17,6 +17,16 @@ function updateImage(){
     }
 }
 
+//Update image
+function updateImage(){
+    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
+
+    if (dailyEvents.rikuBattle == true){//Check if bear is asleep
+        //If the bear is awake, show the image with his eyes
+        document.getElementById("riku").src = "../images/bearsuit-avatar-fight.png"
+    }
+}
+
 //Add random numbers of coins to the player's inventory
 function enterCave(enemyList) {
 

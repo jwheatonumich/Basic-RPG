@@ -1,5 +1,9 @@
 var maxStats = 50
 
+//Variables for Riku battle
+var enemyListRiku = [16];
+var winstreakReward = "bearclawcoin";
+
 //Relative link back to this page
 var page = "../riku-training/train.html"
 
@@ -43,3 +47,17 @@ function bearclawTraining(stat){
 function healthCalc(){
     playerStats["maxhealth"] = 4 * playerStats["endurance"]
 };
+
+//Update Riku's image
+function updateImage(){
+    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
+
+    if (dailyEvents.rikuBattle == true){//Check if riku wants to fight
+        //If riku wants to fight, change his image, and clicking him starts fight
+        document.getElementById("page-image").src = "../images/bearsuit-avatar-fight.png"
+        document.getElementById("riku-link").setAttribute('onClick',"startBattle(enemyListRiku)");
+    }
+}
+
+//Update cave image on page load
+window.onload = updateImage()
