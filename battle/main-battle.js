@@ -761,7 +761,26 @@ function attack(playerAbility) {
 
             //Increase win streak
             winstreak += 1;
-            battleText = battleText.concat("Your win streak is "+winstreak+".<br>")
+            battleText = battleText.concat("Your win streak is "+winstreak+".<br>");
+
+            //Determine what the reward type is for the winstreak
+            var rewardName;
+            switch (winstreakReward){
+                case 'acorncoin':
+                    rewardName = 'acorn coin(s)';
+                    break;
+                case 'mushroomcoin':
+                    rewardName = 'mushroom coin(s)';
+                    break;
+                case 'bearclawcoin':
+                    rewardName = 'bearclaw coin(s)';
+                    break;
+            }
+
+            //Add battletext describing the winstreak prize
+            if (winstreakList[winstreak-1] > 0){//Only if they win at least one coin as a winstreak prize
+                battleText = battleText.concat(`You win `+winstreakList[winstreak-1]+' extra '+rewardName+` as a win streak bonus!<br>`);
+            };
         }
 
         //Update the battle text for the current turn
@@ -779,9 +798,11 @@ function attack(playerAbility) {
             };
 
             if (winstreakReward == "mushroomcoin" && winstreakList[winstreak-1]){
+                enemyMushroomCoin += winstreakList[winstreak-1];//Add acorncoins according to the winstreak list
             };
 
             if (winstreakReward == "bearclawcoin" && winstreakList[winstreak-1]){
+                enemyBearclawCoin += winstreakList[winstreak-1];//Add acorncoins according to the winstreak list
             };
 
             //Update player coins
