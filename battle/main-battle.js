@@ -582,11 +582,15 @@ function attack(playerAbility) {
         if(playerHealth >= 0){
             //Add this turn's poison amount to existing poison on player and enemy
             enemyPoison += abilityData[playerAbility]["poison"];
+            //Add a poison comment to battle text
+            if(playerAbilityPoison!=0){battleText = battleText.concat(`You poison the enemy!<br>`)};
         }
 
         //If enemy didn't die from priority attack, stack any poison damage they deal
         if(enemyHealth >= 0){
             playerPoison += enemyAbility["poison"];
+            //Add a poison comment to battle text
+            if(enemyAbilityPoison!=0){battleText = battleText.concat(`The enemy poisons you!<br>`)};
         }
 
         //Player deals damage if they didn't use a priority attack
@@ -680,8 +684,6 @@ function attack(playerAbility) {
         };
 
         //Add battle text for poison and stun
-        if(playerAbilityPoison!=0){battleText = battleText.concat(`You poison the enemy!<br>`)};
-        if(enemyAbilityPoison!=0){battleText = battleText.concat(`The enemy poisons you!<br>`)};
         if(playerPoison>0){battleText = battleText.concat(`Poison deals you `+playerPoison+` damage<br>`)};
         if(enemyPoison>0){battleText = battleText.concat(`Poison deals the enemy `+enemyPoison+` damage<br>`)};
         if(playerStun==1){battleText = battleText.concat(`You have been stunned!<br>`)};
