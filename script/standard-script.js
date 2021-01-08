@@ -1,6 +1,10 @@
+var playerStats;
+
 //Load player stats in localstorage
-var retrievedObject = localStorage.getItem('storedPlayerStats');
-var playerStats = JSON.parse(retrievedObject)
+function loadPlayerStats(){
+    var retrievedObject = localStorage.getItem('storedPlayerStats');
+    playerStats = JSON.parse(retrievedObject)
+};
 
 //Load each player stat into a variable
 function playerSetup() {
@@ -40,7 +44,20 @@ function setStats() {
 //Add random numbers of coins to the player's inventory
 function sleep() {
     
+    //Increment the day by 1
     playerStats.day +=1
+
+    //Determine if today has a scripted battle
+    switch (playerStats.day){
+        case 4:
+            playerStats.scriptedBattle = [19];break;
+        case 8:
+            playerStats.scriptedBattle = [19];break;
+        case 12:
+            playerStats.scriptedBattle = [19];break;
+        default:
+            playerStats.scriptedBattle = false;break;
+    }
 
     //Raise stats if silver reactor is charged
     if(playerStats["ship-mushroomcoin"] >= 10){ //If health is less than 100%
@@ -73,11 +90,41 @@ function activeBattleCheck(){
     }
 }
 
+//Function to check if today is a scripted battle
+function scriptedBattleCheck(){
+
+    if(playerStats.scriptedBattle){
+        enemyID = playerStats.scriptedBattle
+        playerStats.scriptedBattle = false;
+        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+        startBattle(enemyID)
+    }
+
+}
+
+//Function to start a scripted fight
 function narrativeStore(name){
     localStorage.setItem('scriptName', name);
     window.location.href = '../narrative/narrative.html'
 };
 
+//Function to set the link on the 'Back' button
+function lastPage(page){
+    localStorage.setItem('lastPage', page);
+}
+
+//Start the battle
+function startBattle(enemyList){
+
+    localStorage.setItem('enemyList',enemyList)
+    //localStorage.setItem('winstreakReward',winstreakReward)
+
+    window.location.href = "../battle/battle.html"
+    lastPage(page);
+}
+
+window.onload = loadPlayerStats();
 window.onload = activeBattleCheck();//Check for active battle on page load
 window.onload = playerSetup();
 window.onload = setStats();
+window.onload = scriptedBattleCheck();
