@@ -19,21 +19,22 @@ function playerSetup() {
 
 //Function that sets text on the website equal to various stat variables
 function setStats() {
-    
-    document.getElementById("player-name").innerHTML = playerName;
-    document.getElementById("character-stats").innerHTML = 
-        'Day: ' + day + '<br />' +
-        'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
-        'Attack: ' + playerAttack + '<br />' +
-        'Defense: ' + playerDefense + '<br />' +
-        'Endurance: ' + playerEndurance + '<br />';
-    document.getElementById("acorn-coin").innerHTML = acornCoin;
-    document.getElementById("mushroom-coin").innerHTML = mushroomCoin;
-    document.getElementById("bearclaw-coin").innerHTML = bearclawCoin;
-    document.getElementById("leaf-coin").innerHTML = leafCoin;
+        if(document.getElementById("player-name")){//Only run if on a page with player name
+        document.getElementById("player-name").innerHTML = playerName;
+        document.getElementById("character-stats").innerHTML = 
+            'Day: ' + day + '<br />' +
+            'Health: ' + playerHealth + '/' +  playerMaxHealth + '<br />' +
+            'Attack: ' + playerAttack + '<br />' +
+            'Defense: ' + playerDefense + '<br />' +
+            'Endurance: ' + playerEndurance + '<br />';
+        document.getElementById("acorn-coin").innerHTML = acornCoin;
+        document.getElementById("mushroom-coin").innerHTML = mushroomCoin;
+        document.getElementById("bearclaw-coin").innerHTML = bearclawCoin;
+        document.getElementById("leaf-coin").innerHTML = leafCoin;
 
-    //Set the player image to their costume
-    document.getElementById("character-image").src = playerStats.image;
+        //Set the player image to their costume
+        document.getElementById("character-image").src = playerStats.image;
+    }
 }
 
 //Add random numbers of coins to the player's inventory
@@ -71,6 +72,11 @@ function activeBattleCheck(){
         window.location.href = "../battle/battle.html"//If in progress, go to battle
     }
 }
+
+function narrativeStore(name){
+    localStorage.setItem('scriptName', name);
+    window.location.href = '../narrative/narrative.html'
+};
 
 window.onload = activeBattleCheck();//Check for active battle on page load
 window.onload = playerSetup();
