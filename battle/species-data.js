@@ -32,4 +32,12 @@ speciesData
             "attack1":"attack('attack')","attack2":"attack('stun')","attack3":"attack('charge')","attack4":"attack('berserk')",
             "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/stun-button.png","attackbutton3":"../images/charge-button.png","attackbutton4":"../images/berserk-button.png"
         },
+
+        "sheepdog":
+        {
+            "attack1Name":"rollout","attack2Name":"powerUp","attack3Name":"berserk","attack4Name":"quickAttack",
+            "attack1DisplayName":"Roll Out","attack2DisplayName":"Power-up","attack3DisplayName":"Berserk","attack4DisplayName":"Quick Attack",
+            "attack1":"attack('rollout')","attack2":"attack('powerUp')","attack3":"attack('berserk')","attack4":"attack('quickAttack')",
+            "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/stun-button.png","attackbutton3":"../images/charge-button.png","attackbutton4":"../images/berserk-button.png"
+        },
     }

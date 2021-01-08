@@ -198,5 +198,16 @@ enemyStats = [
             "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
             "acorncoin":10, "mushroomcoin":0, "bearclawcoin":0 
             }
-    }
+    },
+
+    {
+        "name":"Robed Stranger","enemyID":19,"enemyImage":"../images/robed-boss-1.png",
+        "stats":{
+            "name":"Robed Stranger", "enemyID":19, "species":"mushroom",
+            "health":100, "maxhealth":100, "attack":10, "defense":10, 
+            "ability1prob":0.8,"ability2prob":0.1,"ability3prob":0.1,"ability4prob":0,
+            "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
+            }
+    },
+        
 ]

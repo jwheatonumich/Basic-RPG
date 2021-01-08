@@ -72,7 +72,7 @@ abilityData =
         //Current turn damage modifiers
         "selfAttackMultiplier":0, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
-        "selfAttack":1.2, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
+        "selfAttack":1.5, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
         "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":true
     },
@@ -139,6 +139,17 @@ abilityData =
         "selfAttackMultiplier":0, "opponentAttackMultiplier":0, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
+        //Other efects
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
+    },
+
+    "rollout":
+    {
+        "name":"Roll Out",
+        //Current turn damage modifiers
+        "selfAttackMultiplier":1, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
+        //Multi-turn damage modifiers
+        "selfAttack":1.25, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
         "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
     }
