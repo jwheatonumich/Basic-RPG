@@ -209,5 +209,16 @@ enemyStats = [
             "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
             }
     },
+
+    {//Only used for starter battle
+        "name":"Brown Squirrel","enemyID":20,"enemyImage":"../images/squirrel.png",
+        "stats":{
+                "name":"Brown Squirrel", "enemyID":20, "species":"squirrel",
+                "health":15, "maxhealth":15, "attack":1,
+                 "defense":5, 
+                "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
+                "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
+            },
+    },
         
 ]
