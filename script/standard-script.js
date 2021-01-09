@@ -1,4 +1,5 @@
 var playerStats;
+var winstreakReward;
 
 //Load player stats in localstorage
 function loadPlayerStats(){
@@ -97,7 +98,7 @@ function scriptedBattleCheck(){
         enemyID = playerStats.scriptedBattle
         playerStats.scriptedBattle = false;
         localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-        startBattle(enemyID)
+        startBattle(enemyID, false, true)
     }
 
 }
