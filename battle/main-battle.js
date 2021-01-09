@@ -90,6 +90,25 @@ var battleTurn = 1;
 
 var winstreak = 0;
 
+//Blink leafcoins when low
+function leafcoinAlert(){
+
+    window.addEventListener(
+        "load", function(){
+            if(playerStats.leafcoin == 0){
+                var f = document.getElementById('leaf-coin');
+                setInterval(
+                    function(){
+                        //If color = red, set white, otherwise set red
+                        f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+                    }
+                , 1000);
+            }
+        }
+    , false);
+
+}
+
 //Load battle settings
 function battleSettingsLoad(){
     var retrievedObject = localStorage.getItem('battleSettings');
