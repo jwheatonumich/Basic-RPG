@@ -17,6 +17,8 @@ var battleStatusData = {
     "enemyStatus":""
 };
 
+var battleSettings;
+
 var winstreakList = [0,0,1,0,2,0,0,0,0,10];//Rewards player gets for beating sequential enemies
 var winstreakReward = localStorage.getItem('winstreakReward');//Type of rewards for winstreaks
 
@@ -88,11 +90,38 @@ var battleTurn = 1;
 
 var winstreak = 0;
 
+//Load battle settings
+function battleSettingsLoad(){
+    var retrievedObject = localStorage.getItem('battleSettings');
+    battleSettings = JSON.parse(retrievedObject);
+
+    //Load settings into global variables
+    escapeSetting = battleSettings.escape;
+    singleBattleSetting = battleSettings.singleBattle;
+}
 
 //Load the battle status from local storage and save as a variable
 function battleStatusLoad(){
     var retrievedObject = localStorage.getItem('battleStatusData');
     battleStatusData = JSON.parse(retrievedObject);
+};
+
+//Reset the battle
+function battleReset(){
+    if(enemyHealth > 0){
+        battleText = "The current enemy is still alive!";
+
+        //Update the battle text
+        document.getElementById("battle-text-div").innerHTML = battleText; 
+    }
+    else if(!singleBattleSetting){
+        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();
+    }else {
+        battleText = "There are no more enemies to fight!";
+
+        //Update the battle text
+        document.getElementById("battle-text-div").innerHTML = battleText;
+    };
 };
 
 //Load player data from local storage
@@ -422,7 +451,18 @@ function attack(playerAbility) {
         }else if(playerHealth <= 0){
             gameOver();
 
-        //If player and enemy are both alive, player has chance to flee
+        //If battle is set to no escaping, don't escape
+        }else if(escapeSetting == false){
+
+            battleText = "You cannot flee this battle!";
+
+            //Update the battle text for the current turn
+            document.getElementById("battle-text-div").innerHTML = battleText;
+
+            //Don't proceed with the turn
+            return;
+
+        //If player and enemy are both alive, and battle allows escape, player has chance to flee
         }else
         {
             var fleeChance = Math.random();

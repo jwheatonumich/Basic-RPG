@@ -114,10 +114,17 @@ function lastPage(page){
 }
 
 //Start the battle
-function startBattle(enemyList){
+function startBattle(enemyList, escape = true, singleBattle = false){
+
+    battleSettings ={
+        "escape":escape,
+        "singleBattle":singleBattle
+    }
+
+    localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
 
     localStorage.setItem('enemyList',enemyList)
-    //localStorage.setItem('winstreakReward',winstreakReward)
+    localStorage.setItem('winstreakReward',winstreakReward)
 
     window.location.href = "../battle/battle.html"
     lastPage(page);

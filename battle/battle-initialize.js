@@ -1,4 +1,5 @@
 //Set the various fields on the webpage as it loads
+window.onload = battleSettingsLoad();
 window.onload = battleStatusLoad();
 window.onload = dataLoad();
 window.onload = selectEnemy();
