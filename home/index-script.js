@@ -13,8 +13,6 @@ function updateImage(){
         document.getElementById("tree").src = "../images/bountiful-tree.png"
     }
 
-    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
-
     if (dailyEvents.sporeDay == true){//Check if mushroom has spores
         //If the player gets a free leaf, use the leaf image
         document.getElementById("mushroom").src = "../images/mushroom-village-spores.png"
@@ -22,8 +20,6 @@ function updateImage(){
         //Otherwise use the normal image
         document.getElementById("mushroom").src = "../images/mushroom-village.png"
     }
-
-    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
 
     if (dailyEvents.sleepingBear == false){//Check if bear is asleep
         //If the bear is awake, show the image with his eyes

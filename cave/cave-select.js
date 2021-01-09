@@ -14,12 +14,9 @@ function updateImage(){
     if (dailyEvents.sleepingBear == false){//Check if bear is asleep
         //If the bear is awake, show the image with his eyes
         document.getElementById("page-image").src = "../images/bear-cave-eyes.png"
+    }else{
+        document.getElementById("cave").src = "../images/bear-cave.png"
     }
-}
-
-//Update image
-function updateImage(){
-    var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents'));//Load daily event data
 
     if (dailyEvents.rikuBattle == true){//Check if bear is asleep
         //If the bear is awake, show the image with his eyes
