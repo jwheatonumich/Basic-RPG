@@ -18,11 +18,21 @@ var narrativeButtonClick = ""
             narrativeImage = narrativeJSON[i].image;
             narrativeButtonName = narrativeJSON[i].buttonName;
             narrativeButtonClick = narrativeJSON[i].buttonClick;
+            narrativeHeal = narrativeJSON[i].heal;
         }
     }
 
 //Create the page from the variables we loaded
-function narrative(script, image, buttonName, buttonClick){
+function narrative(script, image, buttonName, buttonClick,heal=false){
+
+    var buttonClickFunction = "";
+
+    //If the narrative includes a heal, add heal to the function the button will execute
+    if(heal){
+        buttonClickFunction = "heal();";
+    };
+
+    buttonClickFunction = buttonClickFunction.concat(buttonClick);
 
     //Setup the image
     var elem = document.createElement("img");
@@ -45,10 +55,17 @@ function narrative(script, image, buttonName, buttonClick){
     button.type = "button" //Make it a button
     button.setAttribute('class', 'button'); //Add the class for button formatting
     button.setAttribute('value',buttonName); //Set the text in the button
-    button.setAttribute('onClick', "location.href=" + buttonClick + ";"); //Set the code it runs
+    button.setAttribute('onClick', buttonClickFunction); //Set the code it runs
 
     //Add the button to page
     document.getElementById("game-div").appendChild(button);
 }
 
-window.onload = narrative(narrativeScript,narrativeImage,narrativeButtonName,narrativeButtonClick);
+//Used if a narrative includes a heal
+function heal(){
+    playerStats.health = playerStats.maxhealth ;
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+}
+
+window.onload = narrative(narrativeScript,narrativeImage,narrativeButtonName,narrativeButtonClick,narrativeHeal);

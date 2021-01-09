@@ -51,11 +51,11 @@ function sleep() {
     //Determine if today has a scripted battle
     switch (playerStats.day){
         case 4:
-            playerStats.scriptedBattle = [19];break;
+            playerStats.scriptedBattle = "Boss1";break;
         case 8:
-            playerStats.scriptedBattle = [19];break;
+            playerStats.scriptedBattle = "Boss2";break;
         case 12:
-            playerStats.scriptedBattle = [19];break;
+            playerStats.scriptedBattle = "Boss3";break;
         default:
             playerStats.scriptedBattle = false;break;
     }
@@ -100,10 +100,11 @@ function activeBattleCheck(){
 function scriptedBattleCheck(){
 
     if(playerStats.scriptedBattle){
-        enemyID = playerStats.scriptedBattle
+        scriptedBattle = playerStats.scriptedBattle
         playerStats.scriptedBattle = false;
         localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-        startBattle(enemyID, false, true)
+        narrativeStore(scriptedBattle);
+        //startBattle(enemyID, false, true)
     }
 
 }
