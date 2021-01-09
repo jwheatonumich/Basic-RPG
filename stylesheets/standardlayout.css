@@ -71,6 +71,7 @@ body{
     width:120px;
     padding: 10px 0px 10px 0px;
     margin: 3px 0px 3px 0px;
+    font-size:.75em;
 }
 
 /*Dropdown for selecting an enemy*/
