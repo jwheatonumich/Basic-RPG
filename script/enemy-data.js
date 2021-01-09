@@ -210,12 +210,31 @@ enemyStats = [
             }
     },
 
+    {
+        "name":"Robed Stranger","enemyID":20,"enemyImage":"../images/robed-boss-1.png",
+        "stats":{
+            "name":"Robed Stranger", "enemyID":19, "species":"sheepdog",
+            "health":100, "maxhealth":100, "attack":40, "defense":40, 
+            "ability1prob":0.8,"ability2prob":0.1,"ability3prob":0.1,"ability4prob":0,
+            "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
+            }
+    },
+    
+    {
+        "name":"Robed Stranger","enemyID":21,"enemyImage":"../images/robed-boss-1.png",
+        "stats":{
+            "name":"Robed Stranger", "enemyID":19, "species":"sheepdog",
+            "health":100, "maxhealth":100, "attack":60, "defense":60, 
+            "ability1prob":0.8,"ability2prob":0.1,"ability3prob":0.1,"ability4prob":0,
+            "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
+            }
+    },
+
     {//Only used for starter battle
         "name":"Brown Squirrel","enemyID":20,"enemyImage":"../images/squirrel.png",
         "stats":{
                 "name":"Brown Squirrel", "enemyID":20, "species":"squirrel",
-                "health":15, "maxhealth":15, "attack":1,
-                 "defense":5, 
+                "health":15, "maxhealth":15, "attack":1,"defense":5, 
                 "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
                 "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
             },

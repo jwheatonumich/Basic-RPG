@@ -131,8 +131,25 @@ function startBattle(enemyList, escape = true, singleBattle = false){
     lastPage(page);
 }
 
+//Blink leafcoins when low
+function leafcoinAlert(){
+
+    window.addEventListener("load", function() 
+        {
+            if(playerStats.leafcoin == 0){
+                var f = document.getElementById('leaf-coin');
+                setInterval(function() {
+                    f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+        }
+    , 1000);
+}
+    }, false);
+
+}
+
 window.onload = loadPlayerStats();
 window.onload = activeBattleCheck();//Check for active battle on page load
 window.onload = playerSetup();
 window.onload = setStats();
 window.onload = scriptedBattleCheck();
+window.onload = leafcoinAlert();
