@@ -134,16 +134,19 @@ function startBattle(enemyList, escape = true, singleBattle = false){
 //Blink leafcoins when low
 function leafcoinAlert(){
 
-    window.addEventListener("load", function() 
-        {
+    window.addEventListener(
+        "load", function(){
             if(playerStats.leafcoin == 0){
                 var f = document.getElementById('leaf-coin');
-                setInterval(function() {
-                    f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+                setInterval(
+                    function(){
+                        //If color = red, set white, otherwise set red
+                        f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+                    }
+                , 1000);
+            }
         }
-    , 1000);
-}
-    }, false);
+    , false);
 
 }
 
