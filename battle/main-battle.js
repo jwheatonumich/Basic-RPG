@@ -114,7 +114,7 @@ function battleReset(){
         //Update the battle text
         document.getElementById("battle-text-div").innerHTML = battleText; 
     }
-    else if(!singleBattleSetting && playerHealth > 0){
+    else if(!singleBattleSetting){
         battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();
     }else {
         battleText = "There are no more enemies to fight!";
