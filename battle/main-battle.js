@@ -94,21 +94,22 @@ var battleResult;
 
 //Blink leafcoins when low
 function leafcoinAlert(){
-
     window.addEventListener(
         "load", function(){
-            if(playerStats.leafcoin == 0){
                 var f = document.getElementById('leaf-coin');
                 setInterval(
                     function(){
                         //If color = red, set white, otherwise set red
-                        f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+                        if(playerStats.leafcoin == 0){
+                            f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+                        }else{
+                            f.style.color = 'white'
+                        }
                     }
                 , 1000);
             }
-        }
-    , false);
 
+    , false);
 }
 
 //Load battle settings
@@ -137,7 +138,7 @@ function battleReset(){
 
     }else if((battleResult == "lose") || (!singleBattleSetting)){//Can update if player is dead or repeatable battle
         console.log(battleResult)
-        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();
+        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();leafcoinAlert();
     
     }else {//Can't repeat if not a repeatable battle
 

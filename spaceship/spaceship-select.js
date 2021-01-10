@@ -70,7 +70,7 @@ function sleepText(){
         };
 
         document.getElementById("textbox").innerHTML = sleepText;
-        sleep = "false";
+        sleep = false;
         dailyEvents.sleep = sleep
         localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));
 

@@ -4,7 +4,7 @@ var winstreakReward;
 //Load player stats in localstorage
 function loadPlayerStats(){
     var retrievedObject = localStorage.getItem('storedPlayerStats');
-    playerStats = JSON.parse(retrievedObject)
+    playerStats = JSON.parse(retrievedObject);
 };
 
 //Load each player stat into a variable
@@ -165,21 +165,22 @@ function startBattle(enemyList, escape = true, singleBattle = false, mandatory =
 
 //Blink leafcoins when low
 function leafcoinAlert(){
-
     window.addEventListener(
         "load", function(){
-            if(playerStats.leafcoin == 0){
                 var f = document.getElementById('leaf-coin');
                 setInterval(
                     function(){
                         //If color = red, set white, otherwise set red
-                        f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+                        if(playerStats.leafcoin == 0){
+                            f.style.color = (f.style.color == 'red' ? 'white' : 'red');
+                        }else{
+                            f.style.color = 'white'
+                        }
                     }
                 , 1000);
             }
-        }
-    , false);
 
+    , false);
 }
 
 window.onload = loadPlayerStats();
