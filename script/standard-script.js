@@ -45,36 +45,44 @@ function setStats() {
 //Add random numbers of coins to the player's inventory
 function sleep() {
     
-    //Increment the day by 1
-    playerStats.day +=1
+    //Load data from local storage
+    var retrievedObject = localStorage.getItem('battleSettings');
 
-    //Determine if today has a scripted battle
-    switch (playerStats.day){
-        case 4:
-            playerStats.scriptedBattle = "Boss1";break;
-        case 8:
-            playerStats.scriptedBattle = "Boss2";break;
-        case 12:
-            playerStats.scriptedBattle = "Boss3";break;
-        default:
-            playerStats.scriptedBattle = false;break;
-    }
+    //Parse the JSON data into an object
+    battleSettings = JSON.parse(retrievedObject);
 
-    //Raise stats if silver reactor is charged
-    if(playerStats["ship-mushroomcoin"] >= 10){ //If health is less than 100%
-        playerStats.attack +=1;
-        playerStats.defense +=1;
-        playerStats.endurance +=1
-        playerStats["maxhealth"] = 4 * playerStats["endurance"]
-    }
+    if (!battleSettings.mandatory){
 
-    //Heal if red reactor is charged
-    if(playerStats.health < playerStats.maxhealth && playerStats["ship-acorncoin"] >= 10){ //If health is less than 100%
-        playerStats.health = Math.floor(playerStats.maxhealth); //Heal to 100% of max health
-    }
+        //Increment the day by 1
+        playerStats.day +=1
 
-    dailyEventGenerator();
+        //Determine if today has a scripted battle
+        switch (playerStats.day){
+            case 4:
+                playerStats.scriptedBattle = "Boss1";break;
+            case 8:
+                playerStats.scriptedBattle = "Boss2";break;
+            case 12:
+                playerStats.scriptedBattle = "Boss3";break;
+            default:
+                playerStats.scriptedBattle = false;break;
+        }
 
+        //Raise stats if silver reactor is charged
+        if(playerStats["ship-mushroomcoin"] >= 10){ //If health is less than 100%
+            playerStats.attack +=1;
+            playerStats.defense +=1;
+            playerStats.endurance +=1
+            playerStats["maxhealth"] = 4 * playerStats["endurance"]
+        }
+
+        //Heal if red reactor is charged
+        if(playerStats.health < playerStats.maxhealth && playerStats["ship-acorncoin"] >= 10){ //If health is less than 100%
+            playerStats.health = Math.floor(playerStats.maxhealth); //Heal to 100% of max health
+        }
+
+        dailyEventGenerator();
+    };
 }
 
 //Function to check if a battle is active
