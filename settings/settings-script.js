@@ -21,7 +21,11 @@ function dataLoad(){
         "escape":true,
         "singleBattle":false,
         "mandatory":false
-    }
+    };
+
+    dailyEvents ={
+        sleep:true
+    };
 };
 
 //Function to store player stats variable to local storage
@@ -31,6 +35,8 @@ function dataStore(){
     localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
 
     localStorage.setItem('battleSettings',  JSON.stringify(battleSettings));
+
+    localStorage.setItem('dailyEvents',  JSON.stringify(dailyEvents));
 
     //Store the script for the console
     controlStore("Crash1");

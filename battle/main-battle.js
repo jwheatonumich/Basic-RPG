@@ -390,6 +390,14 @@ function gameOver(){
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 
+    //Set daily events for first day
+    dailyEvents ={
+        sleep:false
+    };
+
+    //Store daily events in local storage
+    localStorage.setItem('dailyEvents',  JSON.stringify(dailyEvents));
+
     //Can't load a new enemy
     document.getElementById("restart-button").setAttribute('onClick',"empty();");
 

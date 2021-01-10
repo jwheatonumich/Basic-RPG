@@ -44,10 +44,14 @@ function dailyLeafCoins() {
 function sleepText(){
 
     //Local storage that tracks if the player just slept
-    var sleep = localStorage.getItem('sleep');
+    var retrievedObject = localStorage.getItem('dailyEvents');
+    var dailyEvents = JSON.parse(retrievedObject)
+    console.log(dailyEvents.sleep)
+
+    var sleep = dailyEvents.sleep;
 
     //Check if the player slept
-    if(sleep =="true"){
+    if(sleep ==true){
 
         console.log("test")
         
@@ -67,7 +71,8 @@ function sleepText(){
 
         document.getElementById("textbox").innerHTML = sleepText;
         sleep = "false";
-        localStorage.setItem('sleep',sleep);
+        dailyEvents.sleep = sleep
+        localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));
 
         dailyLeafCoins();
     }

@@ -4,6 +4,8 @@ function dailyEventGenerator(){
 
     var dailyEvents = {} //Empty object to hold events
 
+    dailyEvents.sleep=true;
+
     //Squirrel Challenge
     eventCheck = Math.random()
     console.log(eventCheck);
@@ -80,7 +82,7 @@ function dailyEventGenerator(){
     //Store all daily event outcomes
     localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));
 
-    localStorage.setItem('sleep','true');
+    //localStorage.setItem('sleep','true');
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
     playerSetup(); //Pull updated stats from local storage
     setStats(); //Update stats on page

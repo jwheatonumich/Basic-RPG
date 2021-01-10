@@ -15,7 +15,7 @@ function updateImage(){
         //If the bear is awake, show the image with his eyes
         document.getElementById("page-image").src = "../images/bear-cave-eyes.png"
     }else{
-        document.getElementById("cave").src = "../images/bear-cave.png"
+        document.getElementById("page-image").src = "../images/bear-cave.png"
     }
 
     if (dailyEvents.rikuBattle == true){//Check if bear is asleep
