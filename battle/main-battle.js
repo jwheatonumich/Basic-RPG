@@ -414,22 +414,25 @@ function gameOver(){
 //Function to handle saving battle status if battle isn't over
 function saveProgress(){
 
+    battleStatusData.battleTurn = battleTurn;
+    battleStatusData.winstreak = winstreak;
+    battleStatusData.enemyID = enemyID;
+    battleStatusData.playerHealth = playerHealth;
+    battleStatusData.enemyHealth = enemyHealth;
+    battleStatusData.playerPoison = playerPoison;
+    battleStatusData.enemyPoison = enemyPoison;
+    battleStatusData.playerStun = playerStun;
+    battleStatusData.enemyStun = enemyStun;
+    battleStatusData.playerStatus = playerStatus;
+    battleStatusData.enemyStatus = enemyStatus;
+
     if(playerHealth > 0 && enemyHealth > 0){//If battle is in progress
         //Save battle status in array
         battleStatusData.inProgress = true;
-        battleStatusData.battleTurn = battleTurn;
-        battleStatusData.winstreak = winstreak;
-        battleStatusData.enemyID = enemyID;
-        battleStatusData.playerHealth = playerHealth;
-        battleStatusData.enemyHealth = enemyHealth;
-        battleStatusData.playerPoison = playerPoison;
-        battleStatusData.enemyPoison = enemyPoison;
-        battleStatusData.playerStun = playerStun;
-        battleStatusData.enemyStun = enemyStun;
-        battleStatusData.playerStatus = playerStatus;
-        battleStatusData.enemyStatus = enemyStatus;
 
-    }else{ //If battle is not in progress
+
+    }else if(battleSettings.escape){ //If battle is not in progress
+        console.log(battleSettings.escape);
         battleStatusData.inProgress = false;//Set battle status to false
     };
 
@@ -481,6 +484,12 @@ function attack(playerAbility) {
             battleStatusData.inProgress = false;
             localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
 
+            //Load settings into global variables
+            battleSettings.escape = true;
+            battleSettings.singleBattle = false;
+            battleSettings.mandatory = false;
+            localStorage.setItem('battleSettings',  JSON.stringify(battleSettings));
+
             //Exit to the prior page
             window.location.href = localStorage.getItem("lastPage");
             return; //Stop the function
@@ -514,6 +523,12 @@ function attack(playerAbility) {
                 //Don't save the battle progress when you exit
                 battleStatusData.inProgress = false;
                 localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+            
+                //Load settings into global variables
+                battleSettings.escape = true;
+                battleSettings.singleBattle = false;
+                battleSettings.mandatory = false;
+                localStorage.setItem('battleSettings',  JSON.stringify(battleSettings));
 
                 //Exit to the prior page
                 window.location.href = localStorage.getItem("lastPage");
@@ -801,6 +816,12 @@ function attack(playerAbility) {
         //End win streak
         winstreak = 0;
 
+        //Heal enemy
+        enemyHealth = enemyMaxHealth;
+
+        //Save updated stats
+        saveProgress();
+
         //Check if player has a leaf coin to heal
         if(playerLeafCoin > 0){
             //Heal player for a leaf coin
@@ -815,6 +836,7 @@ function attack(playerAbility) {
 
             battleCleanup(); //Update stats variables including coins
             setStats(); //Update stats on screen including coins
+            saveProgress();//Save stats including heal
 
             //Set enemy health to 0 so you can flee
             enemyHealth = 0;

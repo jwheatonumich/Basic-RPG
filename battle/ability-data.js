@@ -152,5 +152,5 @@ abilityData =
         "selfAttack":1.25, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
         "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
-    }
+    },
 }
