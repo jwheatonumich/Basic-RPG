@@ -96,6 +96,31 @@ function activeBattleCheck(){
     }
 }
 
+//Function to check if a mandatory narrative is active
+function activeNarrativeCheck(){
+
+    //Load data from local storage
+    var retrievedObject = localStorage.getItem('battleSettings');
+
+    //Parse the JSON data into an object
+    battleSettings = JSON.parse(retrievedObject);
+
+    //Check that we are on a normal game screen, not the settings screen
+    if(document.body.contains(document.getElementById("game-div"))){
+
+        //Check if we are already on the narrative screen
+        if(!(window.location.href.indexOf("narrative") > -1)){
+
+            if (battleSettings.mandatory){//Check if a mandatory narrative is active
+                window.location.href = "../narrative/narrative.html"//If in progress, go to battle
+            }
+
+        }
+
+    }
+
+}
+
 //Function to check if today is a scripted battle
 function scriptedBattleCheck(){
 
@@ -121,11 +146,12 @@ function lastPage(page){
 }
 
 //Start the battle
-function startBattle(enemyList, escape = true, singleBattle = false){
+function startBattle(enemyList, escape = true, singleBattle = false, mandatory = false){
 
     battleSettings ={
         "escape":escape,
-        "singleBattle":singleBattle
+        "singleBattle":singleBattle,
+        "mandatory":false //Was used to prevent player from leaving narrative page
     }
 
     localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
@@ -162,3 +188,4 @@ window.onload = playerSetup();
 window.onload = setStats();
 window.onload = scriptedBattleCheck();
 window.onload = leafcoinAlert();
+window.onload = activeNarrativeCheck();

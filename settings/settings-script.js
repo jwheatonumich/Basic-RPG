@@ -16,6 +16,12 @@ function dataLoad(){
     battleStatusData = {
         "inProgress":false
     };
+
+    battleSettings ={
+        "escape":true,
+        "singleBattle":false,
+        "mandatory":false
+    }
 };
 
 //Function to store player stats variable to local storage
@@ -23,6 +29,8 @@ function dataStore(){
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 
     localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+
+    localStorage.setItem('battleSettings',  JSON.stringify(battleSettings));
 
     //Store the script for the console
     controlStore("Crash1");

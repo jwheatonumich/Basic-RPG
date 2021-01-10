@@ -90,6 +90,8 @@ var battleTurn = 1;
 
 var winstreak = 0;
 
+var battleResult;
+
 //Blink leafcoins when low
 function leafcoinAlert(){
 
@@ -117,6 +119,7 @@ function battleSettingsLoad(){
     //Load settings into global variables
     escapeSetting = battleSettings.escape;
     singleBattleSetting = battleSettings.singleBattle;
+    mandatory = battleSettings.mandatory;
 }
 
 //Load the battle status from local storage and save as a variable
@@ -127,19 +130,20 @@ function battleStatusLoad(){
 
 //Reset the battle
 function battleReset(){
-    if(enemyHealth > 0){
+    if(enemyHealth > 0 && playerHealth > 0){//Can't reset if player and enemy are both alive
+
         battleText = "The current enemy is still alive!";
-
-        //Update the battle text
         document.getElementById("battle-text-div").innerHTML = battleText; 
-    }
-    else if(!singleBattleSetting){
-        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();
-    }else {
-        battleText = "There are no more enemies to fight!";
 
-        //Update the battle text
+    }else if((battleResult == "lose") || (!singleBattleSetting)){//Can update if player is dead or repeatable battle
+        console.log(battleResult)
+        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();
+    
+    }else {//Can't repeat if not a repeatable battle
+
+        battleText = "There are no more enemies to fight!";
         document.getElementById("battle-text-div").innerHTML = battleText;
+
     };
 };
 
@@ -455,8 +459,14 @@ function attack(playerAbility) {
     //Check if the player is trying to run away
     //Called through the Back button
     if(playerAbility == "flee"){
-        //If enemy is dead, leave the battle
-        if (enemyHealth <= 0){
+
+        //If player is dead, game over
+        if(playerHealth <= 0){
+            gameOver();
+        }
+
+        //If the player won the battle
+        else if (battleResult == "win"){
 
             //Don't save the battle progress when you exit
             battleStatusData.inProgress = false;
@@ -465,13 +475,11 @@ function attack(playerAbility) {
             //Exit to the prior page
             window.location.href = localStorage.getItem("lastPage");
             return; //Stop the function
-        
-        //If player is dead, game over
-        }else if(playerHealth <= 0){
-            gameOver();
+    
+        }
 
         //If battle is set to no escaping, don't escape
-        }else if(escapeSetting == false){
+        else if(escapeSetting == false){
 
             battleText = "You cannot flee this battle!";
 
@@ -481,8 +489,10 @@ function attack(playerAbility) {
             //Don't proceed with the turn
             return;
 
+        }
+
         //If player and enemy are both alive, and battle allows escape, player has chance to flee
-        }else
+        else
         {
             var fleeChance = Math.random();
 
@@ -766,6 +776,9 @@ function attack(playerAbility) {
     //How to end the turn if player died
     if (playerHealth <= 0){
 
+        //Flag the battle as lost so you can repeat boss battle
+        battleResult = "lose";
+
         //Clear enemy info
         document.getElementById("enemy-name").innerHTML = "None";
         document.getElementById("enemy-health").innerHTML = "";
@@ -818,6 +831,9 @@ function attack(playerAbility) {
         //Calculate the win streak and append it to the battle text
         if (enemyHealth <= 0){
 
+            //Flag the battle as won, can't be repeated if boss battle
+            battleResult = "win"
+
             //Increase win streak
             winstreak += 1;
             battleText = battleText.concat("Your win streak is "+winstreak+".<br>");
@@ -840,6 +856,7 @@ function attack(playerAbility) {
             if (winstreakList[winstreak-1] > 0){//Only if they win at least one coin as a winstreak prize
                 battleText = battleText.concat(`You win `+winstreakList[winstreak-1]+' extra '+rewardName+` as a win streak bonus!<br>`);
             };
+
         }
 
         //Update the battle text for the current turn

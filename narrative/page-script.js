@@ -19,11 +19,12 @@ var narrativeButtonClick = ""
             narrativeButtonName = narrativeJSON[i].buttonName;
             narrativeButtonClick = narrativeJSON[i].buttonClick;
             narrativeHeal = narrativeJSON[i].heal;
+            mandatory = narrativeJSON[i].mandatory;
         }
     }
 
 //Create the page from the variables we loaded
-function narrative(script, image, buttonName, buttonClick,heal=false){
+function narrative(script, image, buttonName, buttonClick,heal=false,mandatory=false){
 
     var buttonClickFunction = "";
 
@@ -32,6 +33,7 @@ function narrative(script, image, buttonName, buttonClick,heal=false){
         buttonClickFunction = "heal();";
     };
 
+    //Append the function this narrative performs to be added to the button
     buttonClickFunction = buttonClickFunction.concat(buttonClick);
 
     //Setup the image
@@ -59,6 +61,15 @@ function narrative(script, image, buttonName, buttonClick,heal=false){
 
     //Add the button to page
     document.getElementById("game-div").appendChild(button);
+
+    //If this is a mandatory battle
+    if(mandatory){
+        //Load battle settings data
+        battleSettings = JSON.parse(localStorage.getItem('battleSettings'));
+        //Set battlesettings to mandatory
+        battleSettings.mandatory = true
+        localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
+    }
 }
 
 //Used if a narrative includes a heal
@@ -68,4 +79,4 @@ function heal(){
 
 }
 
-window.onload = narrative(narrativeScript,narrativeImage,narrativeButtonName,narrativeButtonClick,narrativeHeal);
+window.onload = narrative(narrativeScript,narrativeImage,narrativeButtonName,narrativeButtonClick,narrativeHeal,mandatory);
