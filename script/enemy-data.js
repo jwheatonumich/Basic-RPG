@@ -204,7 +204,7 @@ enemyStats = [
         "name":"Robed Stranger","enemyID":19,"enemyImage":"../images/robed-boss-1.png",
         "stats":{
             "name":"Robed Stranger", "enemyID":19, "species":"sheepdog",
-            "health":100, "maxhealth":100, "attack":20, "defense":10, 
+            "health":100, "maxhealth":100, "attack":25, "defense":12, 
             "ability1prob":0.8,"ability2prob":0.1,"ability3prob":0.1,"ability4prob":0,
             "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
             }
