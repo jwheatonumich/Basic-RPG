@@ -112,6 +112,7 @@ function leafcoinAlert(){
     , false);
 }
 
+
 //Load battle settings
 function battleSettingsLoad(){
     console.log("Load battle settings");
@@ -131,32 +132,6 @@ function battleStatusLoad(){
 
     var retrievedObject = localStorage.getItem('battleStatusData');
     battleStatusData = JSON.parse(retrievedObject);
-};
-
-//Reset battle result
-function resetBattleResult(){
-    battleResult = "active"
-}
-
-//Reset the battle
-function battleReset(){
-    console.log("Try to reset battle");
-
-    if(enemyHealth > 0 && playerHealth > 0){//Can't reset if player and enemy are both alive
-
-        battleText = "The current enemy is still alive!";
-        document.getElementById("battle-text-div").innerHTML = battleText; 
-
-    }else if((battleResult == "lose") || (!singleBattleSetting)){//Can update if player is dead or repeatable battle
-        console.log(battleResult)
-        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();leafcoinAlert();resetBattleResult();
-    
-    }else {//Can't repeat if not a repeatable battle
-
-        battleText = "There are no more enemies to fight!";
-        document.getElementById("battle-text-div").innerHTML = battleText;
-
-    };
 };
 
 //Load player data from local storage
@@ -385,6 +360,32 @@ function storePlayerStats(){
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 };
 
+//Reset battle result
+function resetBattleResult(){
+    battleResult = "active"
+}
+
+//Reset the battle
+function battleReset(){
+    console.log("Try to reset battle");
+
+    if(enemyHealth > 0 && playerHealth > 0){//Can't reset if player and enemy are both alive
+
+        battleText = "The current enemy is still alive!";
+        document.getElementById("battle-text-div").innerHTML = battleText; 
+
+    }else if((battleResult == "lose") || (!singleBattleSetting)){//Can update if player is dead or repeatable battle
+        console.log(battleResult)
+        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();leafcoinAlert();resetBattleResult();
+    
+    }else {//Can't repeat if not a repeatable battle
+
+        battleText = "There are no more enemies to fight!";
+        document.getElementById("battle-text-div").innerHTML = battleText;
+
+    };
+};
+
 //Clear the battle text
 function resetText(){
 
@@ -480,11 +481,10 @@ function saveProgress(){
 };
 
 function setBattleStatus(){
-    console.log(battleResult);
 
     if(battleResult == "active"){//If battle is in progress
 
-        console.log("Player and enemy are alive, set battle progress to true");
+        console.log("Battle is active, set battle progress to true");
 
         //Save battle status in array
         battleStatusData.inProgress = true;
@@ -492,7 +492,7 @@ function setBattleStatus(){
 
     }else {
 
-        console.log("Player or enemy is dead and escape is true, set battle progress to false");
+        console.log("Battle is not active, set battle progress to false");
 
         battleStatusData.inProgress = false;//Set battle status to false
     };

@@ -13,13 +13,9 @@ function repairDNA(){
 }
 
 //Add random numbers of coins to the player's inventory
-function dailyLeafCoins() {
+function leafCoinText() {
 
-    //Calculate how many of each coin to add
-    var treeLeafCoin =3
-
-    //Add to player's stats
-    playerStats["leafcoin"] +=treeLeafCoin;
+    dailyLeafCoins()
 
     //Loop to create leaf icons
     var i = 1;
@@ -35,9 +31,6 @@ function dailyLeafCoins() {
         i++;
     }
 
-    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
-    playerSetup();
-    setStats();
 }
 
 //If player came to this page by sleeping, print the sleep text
@@ -74,7 +67,7 @@ function sleepText(){
         dailyEvents.sleep = sleep
         localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));
 
-        dailyLeafCoins();
+        leafCoinText();
     }
 }
 

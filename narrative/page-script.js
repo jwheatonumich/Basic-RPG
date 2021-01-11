@@ -20,6 +20,7 @@ var narrativeButtonClick = ""
             narrativeButtonClick = narrativeJSON[i].buttonClick;
             narrativeHeal = narrativeJSON[i].heal;
             mandatory = narrativeJSON[i].mandatory;
+            loadScript = narrativeJSON[i].loadScript;
         }
     }
 
@@ -79,4 +80,25 @@ function heal(){
 
 }
 
+//Used to execute a script on window load
+function onLoadScript(script){
+    switch(script){
+        case "dailyLeafCoins"://Player gets their daily leaf coins
+
+            //Local storage that tracks if the player just slept
+            var retrievedObject = localStorage.getItem('dailyEvents');
+            var dailyEvents = JSON.parse(retrievedObject)
+            var sleep = dailyEvents.sleep;
+
+            //Check if the player slept
+            if(sleep ==true){
+                dailyLeafCoins();
+                sleep = false;
+                dailyEvents.sleep = sleep
+                localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));
+            };
+    };
+};
+
 window.onload = narrative(narrativeScript,narrativeImage,narrativeButtonName,narrativeButtonClick,narrativeHeal,mandatory);
+window.onload = onLoadScript(loadScript)

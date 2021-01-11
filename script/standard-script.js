@@ -171,6 +171,19 @@ function startBattle(enemyList, escape = true, singleBattle = false, mandatory =
     lastPage(page);
 }
 
+//Player gets three daily leaf coins
+function dailyLeafCoins(){
+    //Calculate how many of each coin to add
+    treeLeafCoin =3
+
+    //Add to player's stats
+    playerStats["leafcoin"] +=treeLeafCoin;
+
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+    playerSetup();
+    setStats();
+}
+
 //Blink leafcoins when low
 function leafcoinAlert(){
     window.addEventListener(

@@ -206,7 +206,7 @@ enemyStats = [
             "name":"Robed Stranger", "enemyID":19, "species":"sheepdog",
             "health":100, "maxhealth":100, "attack":25, "defense":12, 
             "ability1prob":0.8,"ability2prob":0.1,"ability3prob":0.1,"ability4prob":0,
-            "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
+            "acorncoin":10, "mushroomcoin":0, "bearclawcoin":0 
             }
     },
 
@@ -214,9 +214,9 @@ enemyStats = [
         "name":"Robed Stranger","enemyID":20,"enemyImage":"../images/robed-boss-1.png",
         "stats":{
             "name":"Robed Stranger", "enemyID":19, "species":"sheepdog",
-            "health":100, "maxhealth":100, "attack":40, "defense":40, 
+            "health":150, "maxhealth":150, "attack":40, "defense":40, 
             "ability1prob":0.8,"ability2prob":0.1,"ability3prob":0.1,"ability4prob":0,
-            "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
+            "acorncoin":0, "mushroomcoin":10, "bearclawcoin":0 
             }
     },
     
@@ -224,9 +224,9 @@ enemyStats = [
         "name":"Robed Stranger","enemyID":21,"enemyImage":"../images/robed-boss-1.png",
         "stats":{
             "name":"Robed Stranger", "enemyID":19, "species":"sheepdog",
-            "health":100, "maxhealth":100, "attack":60, "defense":60, 
+            "health":200, "maxhealth":200, "attack":60, "defense":60, 
             "ability1prob":0.8,"ability2prob":0.1,"ability3prob":0.1,"ability4prob":0,
-            "acorncoin":0, "mushroomcoin":4, "bearclawcoin":0 
+            "acorncoin":0, "mushroomcoin":0, "bearclawcoin":10 
             }
     },
 
