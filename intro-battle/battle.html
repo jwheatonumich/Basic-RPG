@@ -2,7 +2,7 @@
 
     <head>
         <!--Control how browsers load and zoom on the page-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
         <!--Prevent page caching-->
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -13,14 +13,23 @@
         <link rel="stylesheet" href= "main-battle-styles.css">
         <link rel="stylesheet" href= "../stylesheets/navbar.css">
 
+        <!--Standard page code-->
+        <script src="../script/daily-events-script.js"></script>
+
         <!--Main game loop-->
         <script src="main-battle.js"></script>
 
         <!--Game setup-->
         <script src="battle-initialize.js" defer></script>
 
-        <!--Game setup-->
+        <!--Species specific data-->
         <script src="species-data.js"></script>
+
+        <!--Ability specific data-->
+        <script src="ability-data.js"></script>
+
+        <!--Enemy specific data-->
+        <script src="../script/enemy-data.js"></script>
 
     </head>
 
@@ -57,7 +66,10 @@
                         <img id="character-image" alt = "Character" src="../images/little-goblin.png">
                         <div id="player-name">Player</div>
                         <div class="game-text">Health:</div>
-                        <div class="game-text" id="player-health">XYZ</div>
+                        <div class="game-text" id="player-health">XYZ</div><br>
+                        <div class="game-text">Armor:</div>
+                        <div class="game-text" id="player-armor">XYZ</div><br>
+                        <div class="game-text" id="player-status"></div>
                     </div>
                 </div>
                 <div id="enemy-div">
@@ -66,25 +78,37 @@
                         <div id="enemy-name">Enemy</div>
                         <div>
                             <div class="game-text">Health:</div>
-                            <div class="game-text" id="enemy-health">XYZ</div>
+                            <div class="game-text" id="enemy-health">XYZ</div><br>
+                            <div class="game-text">Armor:</div>
+                            <div class="game-text" id="enemy-armor">XYZ</div><br>
+                            <div class="game-text" id="enemy-status"></div>
                         </div>
                         <br>
-                        <label for="powerlevel">Power Level:</label> <meter id="powerlevel" value="5" min="0" max="10">5 out of 10</meter>
+                        <div>
+                            <label for="powerlevel">Power Level:</label><br>
+                            <meter class="meter" id="powerlevel" value="5" min="0" max="10">5 out of 10</meter>
+                            <meter class="meter" id="powerlevel2" value="0" min="0" max="10">5 out of 10</meter>
+                            <meter class="meter" id="powerlevel3" value="0" min="0" max="10">5 out of 10</meter>
+                            <meter class="meter" id="powerlevel4" value="0" min="0" max="10">5 out of 10</meter>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div id="battle-text-div">Click the "Attack" button to begin.<br><br></div>
+            <div id="battle-text-div">Click an attack to begin.<br><br></div>
 
             <div id="abilities">
-                <a id="attack1" onclick="attack('None')"><img class="attack-button" id="attack-button-1" src=../images/attack-button.png></a>
-                <a id="attack2" onclick="attack('Charge')"><img class="attack-button" id="attack-button-2" src=../images/charge-button.png></a>
-                <a id="attack3" onclick="attack('Block')"><img class="attack-button" id="attack-button-3" src=../images/block-button.png></a>
-                <a id="attack4" onclick="attack('Powerup')"><img class="attack-button" id="attack-button-4" src=../images/powerup-button.png></a>
+                <a id="attack1" class="attack-link" onclick="attack('None')"></a>
+                <a id="attack2" class="attack-link" onclick="attack('Charge')"></a>
+                <a id="attack3" class="attack-link" onclick="attack('Block')"></a>
+                <a id="attack4" class="attack-link" onclick="attack('Powerup')"></a>
             </div>
 
+            <br><br>
+
             <div id="control-div">
-                <button id="back-button" >Back</button>
+                <button id="restart-button" onclick=" battleReset();">Restart</button>
+                <button id="back-button" onclick="attack('flee')">Back</button>
             </div>
         
 

@@ -154,12 +154,13 @@ function lastPage(page){
 }
 
 //Start the battle
-function startBattle(enemyList, escape = true, singleBattle = false, mandatory = false){
+function startBattle(enemyList, escape = true, singleBattle = false, mandatory = false, postBattleNarrative = false){
 
     battleSettings ={
         "escape":escape,
         "singleBattle":singleBattle,
-        "mandatory":false //Was used to prevent player from leaving narrative page
+        "mandatory":mandatory, //Was used to prevent player from leaving narrative page
+        "postBattleNarrative":postBattleNarrative
     }
 
     localStorage.setItem('battleSettings', JSON.stringify(battleSettings));

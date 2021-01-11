@@ -396,7 +396,7 @@ function resetText(){
 
 //Setup back button
 function backButton(buttonClick){
-    //document.getElementById("back-button").setAttribute('onClick', "location.href=\"" + buttonClick + "\";"); //Set the code it runs
+    document.getElementById("back-button").setAttribute('onClick', buttonClick); //Set the code it runs
 };
 
 //Function that prevents player from using the attack links
@@ -567,6 +567,7 @@ function attack(playerAbility) {
 
             //Exit to the prior page
             window.location.href = localStorage.getItem("lastPage");
+
             return; //Stop the function
     
         }
@@ -974,6 +975,13 @@ function attack(playerAbility) {
             if (winstreakList[winstreak-1] > 0){//Only if they win at least one coin as a winstreak prize
                 battleText = battleText.concat(`You win `+winstreakList[winstreak-1]+' extra '+rewardName+` as a win streak bonus!<br>`);
             };
+
+            //Redirect the player to the post battle narrative, if it exists
+            if(battleSettings.postBattleNarrative){
+                playerStats.scriptedBattle = battleSettings.postBattleNarrative;
+                localStorage.setItem('lastPage',  "../narrative/narrative.html");
+            };
+            
 
         }
 
