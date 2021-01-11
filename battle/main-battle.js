@@ -416,9 +416,6 @@ function gameOver(){
 
     console.log("Game is over, reset local storage data");
 
-    //Generate a new set of daily events and save to local storage
-    //dailyEventGenerator();
-
     //Reset player stats
     playerStats.acorncoin = 0;
     playerStats.attack = 10;
@@ -445,6 +442,12 @@ function gameOver(){
 
     //Store daily events in local storage
     localStorage.setItem('dailyEvents',  JSON.stringify(dailyEvents));
+
+    //Set battle status to false to prevent from being redirected into battle
+    battleStatusData.inProgress = false;
+
+    //Store daily events in local storage
+    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
 
     //Can't load a new enemy
     document.getElementById("restart-button").setAttribute('onClick',"empty();");
@@ -819,37 +822,37 @@ function attack(playerAbility) {
         //Add battle text describing the stat change
         if (abilityData[playerAbility]["selfAttack"] !== null) {
             playerAttack *= abilityData[playerAbility]["selfAttack"];
-            battleText = battleText.concat(`You have increased your attack.`);
+            battleText = battleText.concat(`You have increased your attack.<br>`);
         };
         if (abilityData[playerAbility]["selfDefense"] !== null) {
             playerAttack *= abilityData[playerAbility]["selfDefense"];
-            battleText = battleText.concat(`You have increased your defense.`);
+            battleText = battleText.concat(`You have increased your defense.<br>`);
         };
         if (abilityData[playerAbility]["opponentAttack"] !== null) {
             enemyAttack *= abilityData[playerAbility]["opponentAttack"];
-            battleText = battleText.concat(`You have decreased your opponent's attack.`);
+            battleText = battleText.concat(`You have decreased your opponent's attack.<br>`);
         };
         if (abilityData[playerAbility]["opponentDefense"] !== null) {
             enemyAttack *= abilityData[playerAbility]["opponentDefense"];
-            battleText = battleText.concat(`You have decreased your opponent's defense.`);
+            battleText = battleText.concat(`You have decreased your opponent's defense.<br>`);
         };
 
         //Set enemy stats for future turns (if they were modified)
         if (enemyAbility["selfAttack"] !== null) {
             enemyAttack *= enemyAbility["selfAttack"];
-            battleText = battleText.concat(`Your opponent increased their attack.`);
+            battleText = battleText.concat(`Your opponent increased their attack.<br>`);
         };
         if (enemyAbility["selfDefense"] !== null) {
             enemyAttack *= enemyAbility["selfDefense"];
-            battleText = battleText.concat(`Your opponent increased their defense`);
+            battleText = battleText.concat(`Your opponent increased their defense<br>`);
         };
         if (enemyAbility["opponentAttack"] !== null) {
             playerAttack *= enemyAbility["opponentAttack"];
-            battleText = battleText.concat(`Your opponent decreased your attack`);
+            battleText = battleText.concat(`Your opponent decreased your attack<br>`);
         };
         if (enemyAbility["opponentDefense"] !== null) {
             playerAttack *= enemyAbility["opponentDefense"];
-            battleText = battleText.concat(`Your opponent decreased your defense`);
+            battleText = battleText.concat(`Your opponent decreased your defense<br>`);
         };
 
         //Add battle text for poison and stun
