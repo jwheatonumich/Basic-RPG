@@ -90,7 +90,7 @@ var battleTurn = 1;
 
 var winstreak = 0;
 
-var battleResult;
+var battleResult = "active";
 
 //Blink leafcoins when low
 function leafcoinAlert(){
@@ -114,6 +114,8 @@ function leafcoinAlert(){
 
 //Load battle settings
 function battleSettingsLoad(){
+    console.log("Load battle settings");
+
     var retrievedObject = localStorage.getItem('battleSettings');
     battleSettings = JSON.parse(retrievedObject);
 
@@ -125,12 +127,21 @@ function battleSettingsLoad(){
 
 //Load the battle status from local storage and save as a variable
 function battleStatusLoad(){
+    console.log("Load battle status");
+
     var retrievedObject = localStorage.getItem('battleStatusData');
     battleStatusData = JSON.parse(retrievedObject);
 };
 
+//Reset battle result
+function resetBattleResult(){
+    battleResult = "active"
+}
+
 //Reset the battle
 function battleReset(){
+    console.log("Try to reset battle");
+
     if(enemyHealth > 0 && playerHealth > 0){//Can't reset if player and enemy are both alive
 
         battleText = "The current enemy is still alive!";
@@ -138,7 +149,7 @@ function battleReset(){
 
     }else if((battleResult == "lose") || (!singleBattleSetting)){//Can update if player is dead or repeatable battle
         console.log(battleResult)
-        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();leafcoinAlert();
+        battleCleanup();dataLoad();selectEnemy();playerSetup();enemySetup();setStats();setEnemyStats();resetText();setAbilities();leafcoinAlert();resetBattleResult();
     
     }else {//Can't repeat if not a repeatable battle
 
@@ -151,6 +162,8 @@ function battleReset(){
 //Load player data from local storage
 function dataLoad(){
 
+    console.log("Load player stats");
+
     //Retrieve player stats from local storage and convert the string into a JSON
     var retrievedObject = localStorage.getItem('storedPlayerStats');
     playerStats = JSON.parse(retrievedObject);
@@ -159,6 +172,8 @@ function dataLoad(){
 
 //Select enemy from list of possible enemies
 function selectEnemy(){
+
+    console.log("Select which enemy to fight");
 
     //Select a random enemy ID from the enemyList array
     enemyID = enemyList[Math.floor(Math.random()*enemyList.length)];
@@ -175,13 +190,13 @@ function selectEnemy(){
         };
     };
 
-    //Troubleshooting
-    console.log(enemyID);
-    console.log(chosenEnemy);
 };
 
 //Store relevant player stats in variables
 function playerSetup() {
+
+    console.log("Load player stats in local storage to variables");
+
     playerName = playerStats.name;
     playerSpecies = playerStats.species;
 
@@ -197,6 +212,9 @@ function playerSetup() {
 
     //If battle is in progress, use saved date
     if (battleStatusData.inProgress){
+
+        console.log("Battle is in progress so use player stats from battle status");
+
         playerHealth = battleStatusData.playerHealth;
         playerPoison = battleStatusData.playerPoison;
         playerStun = battleStatusData.playerStun;
@@ -210,6 +228,9 @@ function playerSetup() {
 
 //Store relevant enemy stats in variables
 function enemySetup() {
+
+    console.log("Load enemy stats from local storage into variables");
+
     enemyName = chosenEnemy.stats.name;
     enemyHealth = chosenEnemy.stats.health;
     enemyMaxHealth = chosenEnemy.stats.maxhealth;
@@ -221,6 +242,9 @@ function enemySetup() {
 
     //If battle is in progress, use saved date
     if (battleStatusData.inProgress){
+
+        console.log("Battle is in progress so use enemy stats from battle status");
+
         enemyHealth = battleStatusData.enemyHealth;
         enemyPoison = battleStatusData.enemyPoison;
         enemyStun = battleStatusData.enemyStun;
@@ -242,6 +266,8 @@ function enemySetup() {
 //Function that sets text on the website equal to various stat variables
 function setStats() {
     
+    console.log("Update player text on page");
+
     document.getElementById("player-name").innerHTML = playerName;
     document.getElementById("player-health").innerHTML = playerHealth + '/' +  playerMaxHealth;
     document.getElementById("player-armor").innerHTML = playerArmor;
@@ -260,7 +286,8 @@ function setStats() {
 
 function setEnemyStats(){
 
-    
+    console.log("Update enemy text on page");
+
     document.getElementById("enemy-name").innerHTML = enemyName;
     document.getElementById("enemy-health").innerHTML = enemyHealth + '/' + enemyMaxHealth;
     document.getElementById("enemy-armor").innerHTML = enemyArmor;
@@ -278,6 +305,9 @@ function setEnemyStats(){
 //Load player and enemy abilities based on their species
 function setAbilities(){
     //Set the attack button text based on the species
+
+    console.log("Set player and enemy abilities");
+
     document.getElementById("attack1").innerHTML = speciesData[playerSpecies].attack1DisplayName;
     document.getElementById("attack2").innerHTML = speciesData[playerSpecies].attack2DisplayName;
     document.getElementById("attack3").innerHTML = speciesData[playerSpecies].attack3DisplayName;
@@ -305,6 +335,9 @@ function setAbilities(){
 
 //Function to check if the battle is over
 function battleStatus(){
+
+    console.log("Check if player or enemy are dead");
+
     if (playerHealth <= 0){
         battleCleanup();
     }
@@ -320,6 +353,9 @@ function battleStatus(){
 
 //End of battle steps - save stats to local storage, reset temp statuses
 function battleCleanup(){
+
+    console.log("Save updated stats after battle and reset battle variables");
+
     //Save health and xp after battle ends
     if (playerHealth < 0) {playerHealth = 0};
     playerStats.health = playerHealth ;
@@ -342,12 +378,18 @@ function battleCleanup(){
 
 //Store player stats in local storage
 function storePlayerStats(){
+
+    console.log("Save player stats to local storage");
+
     //Store the updated data object in local storage, after turning the JSON to a string
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
 };
 
 //Clear the battle text
 function resetText(){
+
+    console.log("Reset battle text");
+
     document.getElementById("battle-text-div").innerHTML = "Click an attack to begin.";
 };
 
@@ -359,6 +401,8 @@ function backButton(buttonClick){
 //Function that prevents player from using the attack links
 function stopPlayerAttack(){
 
+    console.log("Prevent player from using attack buttons");
+
     //Abilities use the empty function while player is dead
     document.getElementById("attack1").setAttribute('onClick',"empty();");
     document.getElementById("attack2").setAttribute('onClick',"empty();");
@@ -368,6 +412,8 @@ function stopPlayerAttack(){
 
 //What happens when player dies without a way to heal
 function gameOver(){
+
+    console.log("Game is over, reset local storage data");
 
     //Generate a new set of daily events and save to local storage
     //dailyEventGenerator();
@@ -414,6 +460,8 @@ function gameOver(){
 //Function to handle saving battle status if battle isn't over
 function saveProgress(){
 
+    console.log("Save battle status data to local storage");
+
     battleStatusData.battleTurn = battleTurn;
     battleStatusData.winstreak = winstreak;
     battleStatusData.enemyID = enemyID;
@@ -426,37 +474,59 @@ function saveProgress(){
     battleStatusData.playerStatus = playerStatus;
     battleStatusData.enemyStatus = enemyStatus;
 
-    if(playerHealth > 0 && enemyHealth > 0){//If battle is in progress
+    //Save battle status array in local storage
+    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+
+};
+
+function setBattleStatus(){
+    console.log(battleResult);
+
+    if(battleResult == "active"){//If battle is in progress
+
+        console.log("Player and enemy are alive, set battle progress to true");
+
         //Save battle status in array
         battleStatusData.inProgress = true;
 
 
-    }else if(battleSettings.escape){ //If battle is not in progress
-        console.log(battleSettings.escape);
+    }else {
+
+        console.log("Player or enemy is dead and escape is true, set battle progress to false");
+
         battleStatusData.inProgress = false;//Set battle status to false
     };
 
     //Save battle status array in local storage
     localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
-};
+}
 
 //Define an empty function
 function empty(){console.log('empty')};
 
 //Update enemy armor and health based on enemy damage
 function playerDealDamage(damageType){
+
+    console.log("Player deals damage");
+
     enemyArmor = Math.max(enemyArmor - damageType,0);//Damage goes to armor first
     enemyHealth -= Math.max((damageType - enemyArmor),0);//Remaining damage goes to health
 };
 
 //Update player armor and health based on enemy damage
 function enemyDealDamage(damageType){
+
+    console.log("Enemy deals damage");
+
     playerArmor = Math.max(playerArmor - damageType,0); //Damage goes to armor first
     playerHealth -= Math.max((damageType - playerArmor),0); //Remaining damage goes to health
 };
 
 //Sets player/enemy damage to zero if they are dead
 function deadNoDamage(){
+
+    console.log("Set player or enemy damage to zero if they are dead");
+
     if (playerHealth <= 0){
         playerAttackDamage = 0
     }
@@ -471,7 +541,8 @@ function attack(playerAbility) {
     //Check if the player is trying to run away
     //Called through the Back button
     if(playerAbility == "flee"){
-
+    console.log("Player tries to flee");
+    
         //If player is dead, game over
         if(playerHealth <= 0){
             gameOver();
@@ -480,6 +551,7 @@ function attack(playerAbility) {
         //If the player won the battle
         else if (battleResult == "win"){
 
+            console.log("Player won the battle so they can run");
             //Don't save the battle progress when you exit
             battleStatusData.inProgress = false;
             localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
@@ -498,6 +570,7 @@ function attack(playerAbility) {
 
         //If battle is set to no escaping, don't escape
         else if(escapeSetting == false){
+            console.log("Player can't escape due to battle settings");
 
             battleText = "You cannot flee this battle!";
 
@@ -517,6 +590,7 @@ function attack(playerAbility) {
             //If flee successful, leave battle
             if (fleeChance > 0.5){
 
+                console.log("Player succesfully escapes");
                 //Save changes to player stats
                 battleCleanup();
 
@@ -536,6 +610,7 @@ function attack(playerAbility) {
 
             //If flee not successful, player stunned for a round of battle
             }else{
+                console.log("Player fails to escape");
                 playerStun = 1;
             };
         };
@@ -543,6 +618,8 @@ function attack(playerAbility) {
 
     //Randomly choose enemy's ability
     var enemyAbilityNumber = Math.random();
+
+    console.log("Determine which attack enemy uses");
 
     //Determine which ability the enemy uses
     if(enemyAbilityNumber < enemyAbility1Prob){
@@ -581,6 +658,8 @@ function attack(playerAbility) {
         //Set armor before damage is dealt
         playerArmor += abilityData[playerAbility]["armor"];
         enemyArmor += enemyAbility["armor"];
+
+        console.log("Player and enemy damage are calculated");
         
         //Calculate player attack
         playerAttackDamage = Math.max(Math.floor(
@@ -606,10 +685,6 @@ function attack(playerAbility) {
             - .25 * playerDefense*defenseMultiplier
             ),1);//Minimum of one damage
 
-        //Troubleshooting
-        console.log("Player attack damage: ",playerAttackDamage);
-        console.log("Enemy attack damage: ",enemyAttackDamage);
-
         //Add armor for leech attcks
         playerArmor += Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage);
         enemyArmor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
@@ -619,6 +694,7 @@ function attack(playerAbility) {
             playerStun == 1 ||
             abilityData[playerAbility]["skipAttack"] == true //Did the player use an ability that skips their attack
         ){
+            console.log("Player is stunned this turn");
             playerAttackDamage = 0;
         };
 
@@ -627,9 +703,9 @@ function attack(playerAbility) {
             enemyStun == 1|| //Was player stunned last round
             enemyAbility["skipAttack"] == true //Did the player use an ability that skips their attack
         ){ //Was enemy stunned last round
+            console.log("Enemy is stunned this turn");
             enemyAttackDamage = 0;
         };
-
 
         //Did player or enemy use abilities that poison?
         playerAbilityPoison = abilityData[playerAbility]["poison"];
@@ -790,6 +866,7 @@ function attack(playerAbility) {
 
         //Update text on site based on new health
         setStats();
+
         setEnemyStats();
 
         //Save the battle status in local storage
@@ -799,7 +876,8 @@ function attack(playerAbility) {
 
     //How to end the turn if player died
     if (playerHealth <= 0){
-
+        
+        console.log("Player is dead");
         //Flag the battle as lost so you can repeat boss battle
         battleResult = "lose";
 
@@ -824,6 +902,8 @@ function attack(playerAbility) {
 
         //Check if player has a leaf coin to heal
         if(playerLeafCoin > 0){
+
+            console.log("Player heals using a leaf coin");
             //Heal player for a leaf coin
             playerLeafCoin -= 1;
             playerHealth = playerMaxHealth;
@@ -847,6 +927,8 @@ function attack(playerAbility) {
 
         //If no leaf coin, game is over
         }else{
+            console.log("Player died with no leaf coins");
+
             battleText = "Your health has been reduced to zero. You have no leaf coins to heal!"
             
             //Update the battle text for the current turn
@@ -861,6 +943,8 @@ function attack(playerAbility) {
 
         //Calculate the win streak and append it to the battle text
         if (enemyHealth <= 0){
+
+            console.log("Enemy is dead");
 
             //Flag the battle as won, can't be repeated if boss battle
             battleResult = "win"
@@ -892,6 +976,9 @@ function attack(playerAbility) {
 
         //Update the battle text for the current turn
         document.getElementById("battle-text-div").innerHTML = battleText;
+
+        //Set the battle status
+        setBattleStatus();
 
         //Add loot icons if the enemy is dead
         if (enemyHealth <= 0 && playerHealth > 0){
