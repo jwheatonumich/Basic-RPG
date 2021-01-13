@@ -119,6 +119,7 @@ function battleSettingsLoad(){
 
     var retrievedObject = localStorage.getItem('battleSettings');
     battleSettings = JSON.parse(retrievedObject);
+    console.log(battleSettings);
 
     //Load settings into global variables
     escapeSetting = battleSettings.escape;
@@ -449,6 +450,13 @@ function gameOver(){
     //Store daily events in local storage
     localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
 
+    //Load settings into global variables
+    battleSettings.escape = true;
+    battleSettings.singleBattle = false;
+    battleSettings.mandatory = false;
+
+    localStorage.setItem('battleSettings',  JSON.stringify(battleSettings));
+
     //Can't load a new enemy
     document.getElementById("restart-button").setAttribute('onClick',"empty();");
 
@@ -549,6 +557,7 @@ function attack(playerAbility) {
         //If player is dead, game over
         if(playerHealth <= 0){
             gameOver();
+            return;
         }
 
         //If the player won the battle
