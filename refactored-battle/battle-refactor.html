@@ -1,0 +1,121 @@
+<html>
+
+    <head>
+        <!--Control how browsers load and zoom on the page-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+        <!--Prevent page caching-->
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        
+        <!--Load CSS-->
+        <link rel="stylesheet" href= "main-battle-styles.css">
+        <link rel="stylesheet" href= "../stylesheets/navbar.css">
+
+        <!--Species specific data-->
+        <script src="species-data.js"></script>
+
+        <!--Ability specific data-->
+        <script src="ability-data.js"></script>
+
+        <!--Enemy specific data-->
+        <script src="../script/enemy-data.js"></script>
+
+        <script src="initialize-data.js"></script>
+        <script src="page-setup.js" defer></script>
+        <script src="main-battle-refactor.js"></script>
+
+        <!--Unit tests-->
+        <!--
+            <script src="initialize-test.js" defer></script>
+        -->
+
+        <!--
+            <script src="main-battle-test.js" defer></script>
+        -->
+
+    </head>
+
+    <body>
+        <div id="page-div">
+            <div class="navbar">
+                <a href="../home/index.html">Home</a>
+                <a href="../settings/settings.html">Settings</a>
+
+                <div id="currency-bar">
+                    <table id="currency-table">
+            
+                      <tr>
+                        <th><img class = "currency" alt = "Acorn Coins" src="../images/acorn-coin.png"></th>
+                        <th id="acorn-coin" class="currency-number">100</th>
+        
+                        <th><img class = "currency" alt = "Mushroom Coins" src="../images/mushroom-coin.png"></th>
+                        <th id="mushroom-coin" class="currency-number">5</th>
+        
+                        <th><img class = "currency" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></th>
+                        <th id="bearclaw-coin" class="currency-number">1</th>
+        
+                        <th><img class = "currency" alt = "Leaf Coins" src="../images/leaf-coin.png"></th>
+                        <th id="leaf-coin" class="currency-number">1</th>
+                      </tr>
+            
+                      </table>
+                  </div>
+            </div>
+            
+            <div id="game-div">
+                <div id="player-div">
+                    <div>
+                        <img id="character-image" alt = "Character" src="../images/little-goblin.png">
+                        <div id="player-name">Player</div>
+                        <div class="game-text">Health:</div>
+                        <div class="game-text" id="player-health">XYZ</div><br>
+                        <div class="game-text">Armor:</div>
+                        <div class="game-text" id="player-armor">XYZ</div><br>
+                        <div class="game-text" id="player-status"></div>
+                    </div>
+                </div>
+                <div id="enemy-div">
+                    <div>
+                        <img id="enemy-image" alt = "Enemy" src="../images/wimpy-wombat.png"><br>
+                        <div id="enemy-name">Enemy</div>
+                        <div>
+                            <div class="game-text">Health:</div>
+                            <div class="game-text" id="enemy-health">XYZ</div><br>
+                            <div class="game-text">Armor:</div>
+                            <div class="game-text" id="enemy-armor">XYZ</div><br>
+                            <div class="game-text" id="enemy-status"></div>
+                        </div>
+                        <br>
+                        <div>
+                            <label for="powerlevel">Power Level:</label><br>
+                            <meter class="meter" id="powerlevel" value="5" min="0" max="10">5 out of 10</meter>
+                            <meter class="meter" id="powerlevel2" value="0" min="0" max="10">5 out of 10</meter>
+                            <meter class="meter" id="powerlevel3" value="0" min="0" max="10">5 out of 10</meter>
+                            <meter class="meter" id="powerlevel4" value="0" min="0" max="10">5 out of 10</meter>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="battle-text-div">Click an attack to begin.<br><br></div>
+
+            <div id="abilities">
+                <a id="attack1" class="attack-link" onclick="attack('None')"></a>
+                <a id="attack2" class="attack-link" onclick="attack('Charge')"></a>
+                <a id="attack3" class="attack-link" onclick="attack('Block')"></a>
+                <a id="attack4" class="attack-link" onclick="attack('Powerup')"></a>
+            </div>
+
+            <br><br>
+
+            <div id="control-div">
+                <button id="restart-button" onclick=" battleReset();">Restart</button>
+                <button id="back-button" onclick="attack('flee')">Back</button>
+            </div>
+        
+
+        </div>
+    </body>
+</html>

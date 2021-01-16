@@ -1,0 +1,110 @@
+*{
+    touch-action: manipulation;
+}
+
+body{
+    width:100vw;
+    max-width:360px;
+}
+
+#game-div{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-gap: 20px;
+}
+
+#enemy-div{
+    padding: 5px 20px 5px 5px;
+}
+
+#player-div{
+    padding: 5px 5px 5px 20px;
+}
+
+.game-text {
+    display:contents;
+}
+
+#control-div{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows: 5vh 5vh 5vh;
+    grid-gap:20px;
+    padding:0;
+    grid-template-areas:
+        "restartButton restartButton"
+        "backButton backButton"
+}
+
+#battle-text-div{
+    padding: 5px 20px 5px 20px;
+    height:100px;
+    display:table; /*Expands the div area when text gets too big*/
+}
+
+#attack-button {
+    height: 5vh;
+    width: 190px;
+    grid-area:attackButton
+}
+
+#ability {
+    height: 5vh;
+    width: 190px;
+    grid-area:attackSelect;
+}
+
+#restart-button{
+    height: 5vh;
+    width:90vw;
+    max-width:400px;
+    grid-area:restartButton;
+}
+
+#back-button{
+    height: 5vh;
+    width:90vw;
+    max-width:400px;
+    grid-area:backButton;
+}
+
+#enemy-image{
+    max-height:10vh;
+}
+
+#character-image{
+    max-height:10vh;
+}
+
+.attack-button{
+    width:22vw;
+    max-width:90px;
+}
+
+.item{
+    max-width: 40px;
+}
+
+.attack-link{
+    /*Makes ability links squared with centered text*/
+    border: black solid 1px;
+    width:75px;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height:75px;
+}
+
+#abilities{
+    /*Aligns ability links*/
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+.meter{
+    max-width:30px;
+}
