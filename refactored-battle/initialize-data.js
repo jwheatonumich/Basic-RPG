@@ -60,6 +60,8 @@ function playerSetup(playerStats,battleStatus){
         playerBattleStats.winstreak = battleStatus.winstreak;
     };
 
+    playerBattleStats.armor = 0;
+
     return playerBattleStats
 };
 
@@ -78,6 +80,8 @@ function enemySetup(enemyStats,battleStatus,playerStats){
         enemyBattleStats.status = battleStatusData.enemyStatus;
 
     }
+
+    enemyBattleStats.armor = 0;
 
     //Calculate and store probabilities of using each ability
     enemyBattleStats.enemyAbility1Prob = enemyStats.ability1prob;

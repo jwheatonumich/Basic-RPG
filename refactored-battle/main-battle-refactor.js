@@ -19,19 +19,20 @@ function determineEnemyAbility(enemyBattleStats){
 
 }
 
-function determineEnemyStunned(enemyBattleStats){
+function determineEnemyStunned(enemyAbility, enemyBattleStats){
 
     if(enemyBattleStats.stun == 1){
-        let enemyAbility = abilityData["stunned"]; //If yes, swich the ability used to the stunned ability
-        return enemyAbility
+        enemyAbility = abilityData["stunned"]; //If yes, swich the ability used to the stunned ability
     }
-
+    return enemyAbility
 };
 
-function determinePlayerStunned(playerBattleStats){
+function determinePlayerStunned(playerAbility, playerBattleStats){
+
     if(playerBattleStats.stun == 1){
         playerAbility = "stunned"; //If yes, swich the ability used to the stunned ability
     }
+    return playerAbility
 }
 
 function storeDefaultStatus(){
@@ -166,13 +167,69 @@ function battleCleanup(){
 
 };
 
+function setPlayerMultipliers(playerAbility, enemyAbility, abilityData){
+    let attackMultiplier = parseInt(abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"]);
+    let defenseMultiplier = parseInt(abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"]);
+    let opponentAttackMultiplier = parseInt(abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"]);
+    let opponentDefenseMultiplier = parseInt(abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"]); 
+
+    return [attackMultiplier, defenseMultiplier, opponentAttackMultiplier, opponentDefenseMultiplier];
+};
+
+function calculatePlayerAttack(playerAttack,attackMultiplier, enemyDefense, opponentDefenseMultiplier){
+    playerAttackDamage = Math.max(Math.floor(
+        //Avg damage of 1, central outcomes more likely
+        1.25 * Math.random()*playerAttack*attackMultiplier 
+        + 0.5 * Math.random()*playerAttack*attackMultiplier 
+        + 0.25 * Math.random()*playerAttack*attackMultiplier 
+
+        //Avg block of 0.5, central outcomes more likely
+        - .75 * enemyDefense*opponentDefenseMultiplier
+        -.25 * enemyDefense*opponentDefenseMultiplier
+        ),1);//Minimum of one damage
+
+        return playerAttackDamage
+};
+
+function calculateEnemyAttack(enemyAttack,opponentAttackMultiplier, playerDefense, defenseMultiplier){
+    enemyAttackDamage = Math.max(Math.floor(
+        //Avg damage of 1, central outcomes more likely
+        1.25 * Math.random()*enemyAttack*opponentAttackMultiplier
+        + 0.5 * Math.random()*enemyAttack*opponentAttackMultiplier
+        + 0.25 * Math.random()*enemyAttack*opponentAttackMultiplier
+
+        //Avg block of 0.5, central outcomes more likely
+        - .75 * playerDefense*defenseMultiplier
+        - .25 * playerDefense*defenseMultiplier
+        ),1);//Minimum of one damage
+
+        return enemyAttackDamage;
+}
+
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
         flee(playerBattleStats.health>0,battleResult,battleSettings.escape)
     }
 
-    let enemyAbility = determineEnemyAbility(enemyStats); //Randomly assign enemy's ability this turn
-    enemyAbility = determineEnemyStunned(enemyBattleStats); //If enemy is stunned, overwrite enemy ability
-    playerAbility = determinePlayerStunned(playerBattleStats); //If player is stunned, overwrite player ability
+    let enemyAbility = determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
+    enemyAbility = determineEnemyStunned(enemyAbility, enemyBattleStats); //If enemy is stunned, overwrite enemy ability
+    playerAbility = determinePlayerStunned(playerAbility, playerBattleStats); //If player is stunned, overwrite player ability
+
+    //Set attack and defense multipliers for this turn based on player and enemy abilities
+    let [attackMultiplier, defenseMultiplier, opponentAttackMultiplier, opponentDefenseMultiplier] = setPlayerMultipliers(playerAbility, enemyAbility, abilityData);
+    
+    //determine if either player's attack had priority
+    let [playerPriority, enemyPriority] = [abilityData[playerAbility]["priority"],enemyAbility["priority"]]
+    
+    if(playerBattleStats.health > 0 && enemyBattleStats.health > 0){
+
+        playerBattleStats.armor += abilityData[playerAbility]["armor"];
+        enemyBattleStats.armor += enemyAbility["armor"];
+
+        playerAttackDamage = calculatePlayerAttack(playerBattleStats.attack,attackMultiplier, enemyBattleStats.defense, opponentDefenseMultiplier);
+        enemyAttackDamage = calculateEnemyAttack(enemyBattleStats.attack,opponentAttackMultiplier, playerBattleStats.defense, defenseMultiplier)
+
+    }
+
 }

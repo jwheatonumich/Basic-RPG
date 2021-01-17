@@ -1,12 +1,19 @@
+//Test setPlayerMultipliers()
+if(!(setPlayerMultipliers("attack",abilityData["attack"],abilityData)[0] === 1 &&
+setPlayerMultipliers("attack",abilityData["attack"],abilityData)[1] === 1 &&
+setPlayerMultipliers("attack",abilityData["attack"],abilityData)[2] === 1 &&
+setPlayerMultipliers("attack",abilityData["attack"],abilityData)[3] === 1)){
+    throw 'Multipliers setup incorrectly';
+}
 
-//Test flee when player dead
-console.assert(flee(false,"win",false) === "Player was dead, game over","Flee when player is dead failed")
+//Test calculatePlayerAttack()
+if(!(calculatePlayerAttack(1000,1,0,0) > 100 &&
+calculatePlayerAttack(0,0,1000,1) == 1)){
+    throw 'Player damage not calculated correctly'
+}
 
-//Test flee when player is alive and won battle
-//console.assert(flee(true,"win",false) === "Player won battle, succesfully left","Flee when player is alive and won failed")
-
-//Test flee when player is alive, did not win battle, and escape setting is false
-console.assert(flee(true,"inprogress",false) === "Battle in progress, no escape allowed","Flee when player is alive, won, and escape is false failed")
-
-//Test flee when player dead
-//console.assert(flee(true,"inprogress",true) === "Battle in progress, player succesfully escaped"||"Battle in progress, player tried and failed to escape","Flee failed")
+//Test calculateEnemyAttack()
+if(!(calculateEnemyAttack(1000,1,0,0) > 100 &&
+calculateEnemyAttack(0,0,1000,1) == 1)){
+    throw 'Enemy damage not calculated correctly'
+}
