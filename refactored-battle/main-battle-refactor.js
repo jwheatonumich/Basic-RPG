@@ -245,25 +245,17 @@ function resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData){
     return [playerBattleStats,enemyBattleStats,battleData]
 }
 
-function playerDealDamage(damageType, enemyBattleStats){
+function dealDamage(damage, stats){
 //Update enemy armor and health based on enemy damage
-    enemyBattleStats.armor = Math.max(enemyBattleStats.armor - damageType,0);//Damage goes to armor first
-    enemyBattleStats.health -= Math.max((damageType - enemyBattleStats.armor),0);//Remaining damage goes to health
+    stats.armor = Math.max(stats.armor - damage,0);//Damage goes to armor first
+    stats.health -= Math.max((damage - stats.armor),0);//Remaining damage goes to health
 
-    return enemyBattleStats;
-};
-
-function enemyDealDamage(damageType,playerBattleStats){
-//Update player armor and health based on enemy damage
-    playerBattleStats.armor = Math.max(playerBattleStats.armor - damageType,0); //Damage goes to armor first
-    playerBattleStats.health -= Math.max((damageType - playerBattleStats.armor),0); //Remaining damage goes to health
-
-    return playerBattleStats;
+    return stats;
 };
 
 function playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
 
-    enemyBattleStats = playerDealDamage(playerAttackDamage, enemyBattleStats);
+    enemyBattleStats = dealDamage(playerAttackDamage, enemyBattleStats);
 
     battleData.battleText = battleData.battleText.concat(`You strike fast with `);
     battleData.battleText = battleData.battleText.concat(abilityData[playerAbility]["name"]);
@@ -277,7 +269,7 @@ function playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemy
 
 function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
 
-    playerBattleStats = playerDealDamage(enemyAttackDamage, playerBattleStats);
+    playerBattleStats = dealDamage(enemyAttackDamage, playerBattleStats);
 
     battleData.battleText = battleData.battleText.concat(`The enemy strike fast with `);
     battleData.battleText = battleData.battleText.concat(enemyAbility["name"]);

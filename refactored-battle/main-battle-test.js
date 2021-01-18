@@ -41,22 +41,13 @@ resetSingleTurnEffects({},{},{})[2].battleText ==="")){
     throw 'resetSingleTurnEffects function not working correctly'
 }
 
-//Test playerDealDamage function
-if(!(playerDealDamage(5, {armor:0, health:10}).armor === 0 &&
-playerDealDamage(5, {armor:0, health:10}).health === 5 &&
-playerDealDamage(5, {armor:10, health:10}).armor == 5 &&
-playerDealDamage(0, {armor:0, health:10}).health == 10 &&
-playerDealDamage(0, {armor:10, health:10}).armor == 10)){
-    throw 'playerDealDamage function not working correctly'
-}
-
-//Test enemyDealDamage function
-if(!(enemyDealDamage(5, {armor:0, health:10}).armor === 0 &&
-enemyDealDamage(5, {armor:0, health:10}).health === 5 &&
-enemyDealDamage(5, {armor:10, health:10}).armor == 5 &&
-enemyDealDamage(0, {armor:0, health:10}).health == 10 &&
-enemyDealDamage(0, {armor:10, health:10}).armor == 10)){
-    throw 'enemyDealDamage function not working correctly'
+//Testp dealDamage function
+if(!(dealDamage(5, {armor:0, health:10}).armor === 0 &&
+dealDamage(5, {armor:0, health:10}).health === 5 &&
+dealDamage(5, {armor:10, health:10}).armor == 5 &&
+dealDamage(0, {armor:0, health:10}).health == 10 &&
+dealDamage(0, {armor:10, health:10}).armor == 10)){
+    throw 'dealDamage function not working correctly'
 }
 
 //Test playerPriorityAttack function
