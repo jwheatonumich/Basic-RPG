@@ -63,3 +63,15 @@ enemyPriorityAttack(5,{name:"Attack"},{armor:0, health:10},{battleText:""})[0].h
 enemyPriorityAttack(5,{name:"Attack"},{armor:0, health:10},{battleText:""})[1].battleText === "The enemy strike fast with Attack. You take 5 damage.<br>")){
     throw 'enemyPriorityAttack function not working correctly'
 }
+
+//Test deadNoDamage function
+if(!(deadNoDamage({health:10},{health:10},1,1)[0]===1 &&
+deadNoDamage({health:10},{health:10},1,1)[1]===1 &&
+deadNoDamage({health:0},{health:10},1,1)[0]===0 &&
+deadNoDamage({health:0},{health:10},1,1)[1]===1 &&
+deadNoDamage({health:10},{health:0},1,1)[0]===1 &&
+deadNoDamage({health:10},{health:0},1,1)[1]===0 &&
+deadNoDamage({health:0},{health:0},1,1)[0]===0 &&
+deadNoDamage({health:0},{health:0},1,1)[1]===0)){
+    throw 'deadNoDamage function not working correctly'  
+}

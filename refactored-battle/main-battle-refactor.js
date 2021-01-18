@@ -281,6 +281,16 @@ function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,ba
 
 }
 
+function deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage){
+    if (playerBattleStats.health <= 0){
+        playerAttackDamage = 0
+    }
+    if (enemyBattleStats.health <= 0){
+        enemyAttackDamage = 0
+    }
+    return [playerAttackDamage,enemyAttackDamage]
+}
+
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
@@ -318,12 +328,15 @@ function attack(playerAbility){
 
         //Player and enemy deal any priority attack damage
         if (playerPriority){
-            [enemyBattleStats,battleData] = playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData)
-        }
+            [enemyBattleStats,battleData] = playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
+        };
 
         if(enemyPriority){
-            [playerBattleStats,battleData] = enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData)
+            [playerBattleStats,battleData] = enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
         }
+
+        //Set player/enemy damage to zero if they are dead
+        [playerPriority, enemyPriority] = deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage);
     }
 
 }
