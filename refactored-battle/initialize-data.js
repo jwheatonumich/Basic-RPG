@@ -49,6 +49,11 @@ function playerSetup(playerStats,battleStatus){
     //Load base player stats
     playerBattleStats = playerStats;
 
+    playerBattleStats.armor = 0;
+    playerBattleStats.stun = 0;
+
+    playerBattleStats.status = "";
+
     //If battle is in-progress, override with in-progress stats
     if(battleStatus.inProgress){
         playerBattleStats.health = battleStatus.playerHealth;
@@ -60,8 +65,6 @@ function playerSetup(playerStats,battleStatus){
         playerBattleStats.winstreak = battleStatus.winstreak;
     };
 
-    playerBattleStats.armor = 0;
-
     return playerBattleStats
 };
 
@@ -70,6 +73,11 @@ function enemySetup(enemyStats,battleStatus,playerStats){
 
     //Load base enemy stats
     enemyBattleStats = enemyStats
+
+    enemyBattleStats.armor = 0;
+    enemyBattleStats.stun = 0;
+
+    enemyBattleStats.status = "";
 
     //If battle is in-progress, override with in-progress stats
     if(battleStatus.inProgress){
@@ -80,8 +88,6 @@ function enemySetup(enemyStats,battleStatus,playerStats){
         enemyBattleStats.status = battleStatusData.enemyStatus;
 
     }
-
-    enemyBattleStats.armor = 0;
 
     //Calculate and store probabilities of using each ability
     enemyBattleStats.enemyAbility1Prob = enemyStats.ability1prob;
@@ -104,7 +110,7 @@ function setEnemyAbilities(enemyStats){
     enemyStats.enemyAbility4 = abilityData[speciesData[enemyStats.species]["attack4Name"]];
 
     return enemyStats
-}
+};
 
 //Load player abilities into the object with other player stats
 function setPlayerAbilities(playerStats){
@@ -114,7 +120,14 @@ function setPlayerAbilities(playerStats){
     playerStats.playerAbility4 = abilityData[speciesData[playerStats.species].attack4Name];
 
     return playerStats
-}
+};
+
+function setBattleData(){
+    battleData = {}
+    battleData.battleText = ``;
+
+    return battleData;
+};
 
 //----------------------LOAD DATA AND SETUP BATTLE----------------------------
 
@@ -135,6 +148,8 @@ function initializeBattle(){
     let enemyBattleStats = enemySetup(chosenEnemy.stats,battleStatusData,playerBattleStats) //Populate enemy data for battle
 
     enemyBattleStats = setEnemyAbilities(enemyBattleStats); //Setup enemy abilities
+
+    let battleData = setBattleData();
 
 }
 

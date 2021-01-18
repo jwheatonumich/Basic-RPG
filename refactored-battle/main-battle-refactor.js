@@ -206,6 +206,89 @@ function calculateEnemyAttack(enemyAttack,opponentAttackMultiplier, playerDefens
         return enemyAttackDamage;
 }
 
+function playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage){
+//Determine if player should deal zero damage this turn
+    if(
+        playerBattleStats.stun == 1 ||
+        abilityData[playerAbility]["skipAttack"] == true
+    ){
+        playerAttackDamage = 0;
+    };
+
+    return playerAttackDamage;
+};
+
+function enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage){
+//Determine if the enemy should deal zero damage this turn
+    if(
+        enemyBattleStats.stun == 1 ||
+        enemyAbility["skipAttack"] == true
+    ){
+        enemyAttackDamage = 0;
+    };
+
+    return enemyAttackDamage;
+};
+
+function resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData){
+    //Abilities that only last one turn
+    enemyBattleStats.stun = 0;
+    playerBattleStats.stun = 0;
+
+    //Clear player and enemy status
+    enemyBattleStats.status = "";
+    playerBattleStats.status = "";
+
+    //Clear the battle text
+    battleData.battleText = "";
+
+    return [playerBattleStats,enemyBattleStats,battleData]
+}
+
+function playerDealDamage(damageType, enemyBattleStats){
+//Update enemy armor and health based on enemy damage
+    enemyBattleStats.armor = Math.max(enemyBattleStats.armor - damageType,0);//Damage goes to armor first
+    enemyBattleStats.health -= Math.max((damageType - enemyBattleStats.armor),0);//Remaining damage goes to health
+
+    return enemyBattleStats;
+};
+
+function enemyDealDamage(damageType,playerBattleStats){
+//Update player armor and health based on enemy damage
+    playerBattleStats.armor = Math.max(playerBattleStats.armor - damageType,0); //Damage goes to armor first
+    playerBattleStats.health -= Math.max((damageType - playerBattleStats.armor),0); //Remaining damage goes to health
+
+    return playerBattleStats;
+};
+
+function playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
+
+    enemyBattleStats = playerDealDamage(playerAttackDamage, enemyBattleStats);
+
+    battleData.battleText = battleData.battleText.concat(`You strike fast with `);
+    battleData.battleText = battleData.battleText.concat(abilityData[playerAbility]["name"]);
+    battleData.battleText = battleData.battleText.concat(`. The enemy takes `);
+    battleData.battleText = battleData.battleText.concat(playerAttackDamage);
+    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+
+    return [enemyBattleStats,battleData]
+
+}
+
+function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
+
+    playerBattleStats = playerDealDamage(enemyAttackDamage, playerBattleStats);
+
+    battleData.battleText = battleData.battleText.concat(`The enemy strike fast with `);
+    battleData.battleText = battleData.battleText.concat(enemyAbility["name"]);
+    battleData.battleText = battleData.battleText.concat(`. You take `);
+    battleData.battleText = battleData.battleText.concat(enemyAttackDamage);
+    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+
+    return [playerBattleStats,battleData]
+
+}
+
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
@@ -219,17 +302,36 @@ function attack(playerAbility){
     //Set attack and defense multipliers for this turn based on player and enemy abilities
     let [attackMultiplier, defenseMultiplier, opponentAttackMultiplier, opponentDefenseMultiplier] = setPlayerMultipliers(playerAbility, enemyAbility, abilityData);
     
-    //determine if either player's attack had priority
-    let [playerPriority, enemyPriority] = [abilityData[playerAbility]["priority"],enemyAbility["priority"]]
-    
-    if(playerBattleStats.health > 0 && enemyBattleStats.health > 0){
+    //Determine if either player's attack had priority
+    let [playerPriority, enemyPriority] = [abilityData[playerAbility]["priority"],enemyAbility["priority"]];
 
+
+    if(playerBattleStats.health > 0 && enemyBattleStats.health > 0){ //Execute only if neither player nor enemy is dead
+
+        //Set player/enemy armor, attack damage, and poison
         playerBattleStats.armor += abilityData[playerAbility]["armor"];
         enemyBattleStats.armor += enemyAbility["armor"];
 
         playerAttackDamage = calculatePlayerAttack(playerBattleStats.attack,attackMultiplier, enemyBattleStats.defense, opponentDefenseMultiplier);
         enemyAttackDamage = calculateEnemyAttack(enemyBattleStats.attack,opponentAttackMultiplier, playerBattleStats.defense, defenseMultiplier)
 
+        playerAttackDamage = playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
+        enemyAttackDamage = enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage);
+    
+        playerAbilityPoison = abilityData[playerAbility]["poison"];
+        enemyAbilityPoison = enemyAbility["poison"];
+
+        //Reset single turn effects including stun, player status, and battle text
+        [playerBattleStats,enemyBattleStats,battleData] = resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData)
+
+        //Player and enemy deal any priority attack damage
+        if (playerPriority){
+            [enemyBattleStats,battleData] = playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData)
+        }
+
+        if(enemyPriority){
+            [playerBattleStats,battleData] = enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData)
+        }
     }
 
 }
