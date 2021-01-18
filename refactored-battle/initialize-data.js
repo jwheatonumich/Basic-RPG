@@ -51,6 +51,7 @@ function playerSetup(playerStats,battleStatus){
 
     playerBattleStats.armor = 0;
     playerBattleStats.stun = 0;
+    playerBattleStats.poison = 0;
 
     playerBattleStats.status = "";
 
@@ -76,6 +77,7 @@ function enemySetup(enemyStats,battleStatus,playerStats){
 
     enemyBattleStats.armor = 0;
     enemyBattleStats.stun = 0;
+    enemyBattleStats.poison = 0;
 
     enemyBattleStats.status = "";
 

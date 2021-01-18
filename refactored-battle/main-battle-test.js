@@ -75,3 +75,29 @@ deadNoDamage({health:0},{health:0},1,1)[0]===0 &&
 deadNoDamage({health:0},{health:0},1,1)[1]===0)){
     throw 'deadNoDamage function not working correctly'  
 }
+
+//Test playerAttack function
+if(!(playerAttack(5,"attack",{"attack":{name:"Attack"}},{armor:0, health:10},{battleText:""})[0].armor === 0 &&
+playerAttack(5,"attack",{"attack":{name:"Attack"}},{armor:0, health:10},{battleText:""})[0].health === 5 &&
+playerAttack(5,"attack",{"attack":{name:"Attack"}},{armor:0, health:10},{battleText:""})[1].battleText === "You use Attack. The enemy takes 5 damage.<br>")){
+    throw 'playerAttack function not working correctly'
+}
+
+//Test enemyAttack function
+if(!(enemyAttack(5,{name:"Attack"},{armor:0, health:10},{battleText:""})[0].armor === 0 &&
+enemyAttack(5,{name:"Attack"},{armor:0, health:10},{battleText:""})[0].health === 5 &&
+enemyAttack(5,{name:"Attack"},{armor:0, health:10},{battleText:""})[1].battleText === "The enemy uses Attack. You take 5 damage.<br>")){
+    throw 'enemyAttack function not working correctly'
+}
+
+//Test calculatePlayerPoison function
+if(!(calculatePlayerPoison("poison",{"poison":{"poison":3}},{battleText:""},{"poison":0},3)[0].poison === 3 &&
+calculatePlayerPoison("poison",{"poison":{"poison":3}},{battleText:""},{"poison":0},3)[1].battleText === "You poison the enemy!<br>")){
+    throw 'calculatePlayerPoison function not working correctly'
+}
+
+//Test calculateEnemyPoison function
+if(!(calculateEnemyPoison({"poison":3},{battleText:""},{"poison":0},3)[0].poison === 3 &&
+calculateEnemyPoison({"poison":3},{battleText:""},{"poison":0},3)[1].battleText === "The enemy poisons you!<br>")){
+    throw 'calculateEnemyPoison function not working correctly'
+}

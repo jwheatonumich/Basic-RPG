@@ -281,6 +281,54 @@ function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,ba
 
 }
 
+function playerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
+
+    enemyBattleStats = dealDamage(playerAttackDamage, enemyBattleStats);
+
+    battleData.battleText = battleData.battleText.concat(`You use `);
+    battleData.battleText = battleData.battleText.concat(abilityData[playerAbility]["name"]);
+    battleData.battleText = battleData.battleText.concat(`. The enemy takes `);
+    battleData.battleText = battleData.battleText.concat(playerAttackDamage);
+    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+
+    return [enemyBattleStats,battleData]
+
+}
+
+function enemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
+
+    playerBattleStats = dealDamage(enemyAttackDamage, playerBattleStats);
+
+    battleData.battleText = battleData.battleText.concat(`The enemy uses `);
+    battleData.battleText = battleData.battleText.concat(enemyAbility["name"]);
+    battleData.battleText = battleData.battleText.concat(`. You take `);
+    battleData.battleText = battleData.battleText.concat(enemyAttackDamage);
+    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+
+    return [playerBattleStats,battleData]
+
+}
+
+function calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison){
+
+    enemyBattleStats.poison += abilityData[playerAbility]["poison"];
+
+    if(playerAbilityPoison!=0){battleData.battleText = battleData.battleText.concat(`You poison the enemy!<br>`)};
+
+    return [enemyBattleStats,battleData]
+
+}
+
+function calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison){
+
+    playerBattleStats.poison += enemyAbility["poison"];
+
+    if(enemyAbilityPoison!=0){battleData.battleText = battleData.battleText.concat(`The enemy poisons you!<br>`)};
+
+    return [playerBattleStats,battleData]
+
+}
+
 function deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage){
     if (playerBattleStats.health <= 0){
         playerAttackDamage = 0
@@ -336,7 +384,26 @@ function attack(playerAbility){
         }
 
         //Set player/enemy damage to zero if they are dead
-        [playerPriority, enemyPriority] = deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage);
+        [playerAttackDamage,enemyAttackDamage] = deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage);
+    
+        //Player and enemy calculate poison damage
+        if (playerBattleStats.health >= 0){
+            [enemyBattleStats,battleData] = calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison);
+        };
+
+        if(enemyBattleStats.health >= 0){
+            [playerBattleStats,battleData] = calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison);
+        }
+
+        //Player and enemy deal non-priority attack damage
+        if (!playerPriority && (playerAttackDamage != 0)){
+            [enemyBattleStats,battleData] = playerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
+        };
+
+        if(!enemyPriority && (enemyAttackDamage !=0)){
+            [playerBattleStats,battleData] = enemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
+        }
+
     }
 
 }
