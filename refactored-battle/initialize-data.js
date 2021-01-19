@@ -53,6 +53,9 @@ function playerSetup(playerStats,battleStatus){
     playerBattleStats.stun = 0;
     playerBattleStats.poison = 0;
 
+    playerBattleStats.attackMultiplier = 1;
+    playerBattleStats.defenseMultiplier = 1;
+
     playerBattleStats.status = "";
 
     //If battle is in-progress, override with in-progress stats
@@ -78,6 +81,9 @@ function enemySetup(enemyStats,battleStatus,playerStats){
     enemyBattleStats.armor = 0;
     enemyBattleStats.stun = 0;
     enemyBattleStats.poison = 0;
+
+    enemyBattleStats.attackMultiplier = 1;
+    enemyBattleStats.defenseMultiplier = 1;
 
     enemyBattleStats.status = "";
 

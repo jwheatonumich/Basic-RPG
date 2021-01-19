@@ -167,40 +167,40 @@ function battleCleanup(){
 
 };
 
-function setPlayerMultipliers(playerAbility, enemyAbility, abilityData){
-    let attackMultiplier = parseInt(abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"]);
-    let defenseMultiplier = parseInt(abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"]);
-    let opponentAttackMultiplier = parseInt(abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"]);
-    let opponentDefenseMultiplier = parseInt(abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"]); 
+function setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats){
+    playerBattleStats.attackMultiplier = parseInt(abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"]);
+    playerBattleStats.defenseMultiplier = parseInt(abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"]);
+    enemyBattleStats.attackMultiplier = parseInt(abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"]);
+    enemyBattleStats.defenseMultiplier = parseInt(abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"]); 
 
-    return [attackMultiplier, defenseMultiplier, opponentAttackMultiplier, opponentDefenseMultiplier];
+    return [playerBattleStats, enemyBattleStats];
 };
 
-function calculatePlayerAttack(playerAttack,attackMultiplier, enemyDefense, opponentDefenseMultiplier){
+function calculatePlayerAttack(playerBattleStats,enemyBattleStats){
     playerAttackDamage = Math.max(Math.floor(
         //Avg damage of 1, central outcomes more likely
-        1.25 * Math.random()*playerAttack*attackMultiplier 
-        + 0.5 * Math.random()*playerAttack*attackMultiplier 
-        + 0.25 * Math.random()*playerAttack*attackMultiplier 
+        1.25 * Math.random()*playerBattleStats.attack*playerBattleStats.attackMultiplier 
+        + 0.5 * Math.random()*playerBattleStats.attack*playerBattleStats.attackMultiplier
+        + 0.25 * Math.random()*playerBattleStats.attack*playerBattleStats.attackMultiplier
 
         //Avg block of 0.5, central outcomes more likely
-        - .75 * enemyDefense*opponentDefenseMultiplier
-        -.25 * enemyDefense*opponentDefenseMultiplier
+        - .75 * enemyBattleStats.defense*enemyBattleStats.defenseMultiplier
+        -.25 * enemyBattleStats.defense*enemyBattleStats.defenseMultiplier
         ),1);//Minimum of one damage
 
         return playerAttackDamage
 };
 
-function calculateEnemyAttack(enemyAttack,opponentAttackMultiplier, playerDefense, defenseMultiplier){
+function calculateEnemyAttack(playerBattleStats,enemyBattleStats){
     enemyAttackDamage = Math.max(Math.floor(
         //Avg damage of 1, central outcomes more likely
-        1.25 * Math.random()*enemyAttack*opponentAttackMultiplier
-        + 0.5 * Math.random()*enemyAttack*opponentAttackMultiplier
-        + 0.25 * Math.random()*enemyAttack*opponentAttackMultiplier
+        1.25 * Math.random()*enemyBattleStats.attack*enemyBattleStats.attackMultiplier
+        + 0.5 * Math.random()*enemyBattleStats.attack*enemyBattleStats.attackMultiplier
+        + 0.25 * Math.random()*enemyBattleStats.attack*enemyBattleStats.attackMultiplier
 
         //Avg block of 0.5, central outcomes more likely
-        - .75 * playerDefense*defenseMultiplier
-        - .25 * playerDefense*defenseMultiplier
+        - .75 * playerBattleStats.defense*playerBattleStats.defenseMultiplier
+        - .25 * playerBattleStats.defense*playerBattleStats.defenseMultiplier
         ),1);//Minimum of one damage
 
         return enemyAttackDamage;
@@ -281,7 +281,7 @@ function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,ba
 
 }
 
-function playerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
+function executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
 
     enemyBattleStats = dealDamage(playerAttackDamage, enemyBattleStats);
 
@@ -295,7 +295,7 @@ function playerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleSt
 
 }
 
-function enemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
+function executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
 
     playerBattleStats = dealDamage(enemyAttackDamage, playerBattleStats);
 
@@ -311,7 +311,7 @@ function enemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData
 
 function calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison){
 
-    enemyBattleStats.poison += abilityData[playerAbility]["poison"];
+    enemyBattleStats.poison += playerAbilityPoison;
 
     if(playerAbilityPoison!=0){battleData.battleText = battleData.battleText.concat(`You poison the enemy!<br>`)};
 
@@ -321,7 +321,7 @@ function calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleS
 
 function calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison){
 
-    playerBattleStats.poison += enemyAbility["poison"];
+    playerBattleStats.poison += enemyAbilityPoison;
 
     if(enemyAbilityPoison!=0){battleData.battleText = battleData.battleText.concat(`The enemy poisons you!<br>`)};
 
@@ -339,6 +339,81 @@ function deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, en
     return [playerAttackDamage,enemyAttackDamage]
 }
 
+function calculateEnemyStunned(abilityData, playerAbility, enemyBattleStats){
+    if(abilityData[playerAbility]["stun"] >= Math.random()){
+        enemyBattleStats.stun = 1
+    } else{
+        enemyBattleStats.stun = 0
+    }
+
+    if(enemyBattleStats.stun == 1){
+        enemyBattleStats.status = "Stunned";
+    };
+
+    return enemyBattleStats
+}
+
+function calculatePlayerStunned(enemyAbility, playerBattleStats){
+    if(enemyAbility["stun"] >= Math.random()){
+        playerBattleStats.stun = 1
+    } else{
+        playerBattleStats.stun = 0
+    }
+
+    if(playerBattleStats.stun == 1){
+        playerBattleStats.status = "Stunned";
+    };
+
+    return playerBattleStats
+}
+
+function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
+    if (abilityData[playerAbility]["selfAttack"] !== null) {
+        playerBattleStats.attackMultiplier *= abilityData[playerAbility]["selfAttack"];
+        battleData.battleText = battleData.battleText.concat(`You have increased your attack.<br>`);
+    };
+    if (abilityData[playerAbility]["selfDefense"] !== null) {
+        playerBattleStats.defenseMultiplier *= abilityData[playerAbility]["selfDefense"];
+        battleData.battleText = battleData.battleText.concat(`You have increased your defense.<br>`);
+    };
+    if (abilityData[playerAbility]["opponentAttack"] !== null) {
+        enemyBattleStats.attackMultiplier *= abilityData[playerAbility]["opponentAttack"];
+        battleData.battleText = battleData.battleText.concat(`You have decreased your opponent's attack.<br>`);
+    };
+    if (abilityData[playerAbility]["opponentDefense"] !== null) {
+        enemyBattleStats.defenseMultiplier *= abilityData[playerAbility]["opponentDefense"];
+        battleData.battleText = battleData.battleText.concat(`You have decreased your opponent's defense.<br>`);
+    };
+
+    if (enemyAbility["selfAttack"] !== null) {
+        enemyAttack *= enemyAbility["selfAttack"];
+        battleData.battleText = battleData.battleText.concat(`Your opponent increased their attack.<br>`);
+    };
+    if (enemyAbility["selfDefense"] !== null) {
+        enemyAttack *= enemyAbility["selfDefense"];
+        battleData.battleText = battleData.battleText.concat(`Your opponent increased their defense<br>`);
+    };
+    if (enemyAbility["opponentAttack"] !== null) {
+        playerAttack *= enemyAbility["opponentAttack"];
+        battleData.battleText = battleData.battleText.concat(`Your opponent decreased your attack<br>`);
+    };
+    if (enemyAbility["opponentDefense"] !== null) {
+        playerAttack *= enemyAbility["opponentDefense"];
+        battleData.battleText = battleData.battleText.concat(`Your opponent decreased your defense<br>`);
+    };
+
+    return battleData
+}
+
+function setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData){
+    if(playerBattleStats.poison>0){battleData.battleText = battleData.battleText.concat(`Poison deals you `+playerBattleStats.poison+` damage<br>`)};
+    if(enemyBattleStats.poison>0){battleData.battleText = battleData.battleText.concat(`Poison deals the enemy `+enemyBattleStats.poison+` damage<br>`)};
+    if(playerBattleStats.stun==1){battleData.battleText = battleData.battleText.concat(`You have been stunned!<br>`)};
+    if(enemyBattleStats.stun==1){battleData.battleText = battleData.battleText.concat(`The enemy has been stunned!<br>`)};
+
+    return battleData;
+}
+
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
@@ -350,7 +425,7 @@ function attack(playerAbility){
     playerAbility = determinePlayerStunned(playerAbility, playerBattleStats); //If player is stunned, overwrite player ability
 
     //Set attack and defense multipliers for this turn based on player and enemy abilities
-    let [attackMultiplier, defenseMultiplier, opponentAttackMultiplier, opponentDefenseMultiplier] = setPlayerMultipliers(playerAbility, enemyAbility, abilityData);
+    [playerBattleStats, enemyBattleStats] = setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
     
     //Determine if either player's attack had priority
     let [playerPriority, enemyPriority] = [abilityData[playerAbility]["priority"],enemyAbility["priority"]];
@@ -362,8 +437,8 @@ function attack(playerAbility){
         playerBattleStats.armor += abilityData[playerAbility]["armor"];
         enemyBattleStats.armor += enemyAbility["armor"];
 
-        playerAttackDamage = calculatePlayerAttack(playerBattleStats.attack,attackMultiplier, enemyBattleStats.defense, opponentDefenseMultiplier);
-        enemyAttackDamage = calculateEnemyAttack(enemyBattleStats.attack,opponentAttackMultiplier, playerBattleStats.defense, defenseMultiplier)
+        playerAttackDamage = calculatePlayerAttack(playerBattleStats,enemyBattleStats);
+        enemyAttackDamage = calculateEnemyAttack(playerBattleStats,enemyBattleStats);
 
         playerAttackDamage = playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
         enemyAttackDamage = enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage);
@@ -397,13 +472,29 @@ function attack(playerAbility){
 
         //Player and enemy deal non-priority attack damage
         if (!playerPriority && (playerAttackDamage != 0)){
-            [enemyBattleStats,battleData] = playerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
+            [enemyBattleStats,battleData] = executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
         };
 
         if(!enemyPriority && (enemyAttackDamage !=0)){
-            [playerBattleStats,battleData] = enemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
+            [playerBattleStats,battleData] = executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
         }
 
+        //Deal poison damage
+        if(enemyBattleStats.poison>0){
+            dealDamage(enemyBattleStats.poison, enemyBattleStats);//Player takes poison damage
+        };
+
+        if(playerBattleStats.poison>0){
+            dealDamage(playerBattleStats.poison, playerBattleStats);//Enemy takes poison damage
+        };
+
+        //Determine if player/enemy are stunned next turn
+        enemyBattleStats = calculateEnemyStunned(abilityData, playerAbility,enemyBattleStats)
+        playerBattleStats = calculatePlayerStunned(enemyAbility, playerBattleStats)
+
+        //Set battle text 
+        battleData = setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats);
+        battleData = setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData);
     }
 
 }
