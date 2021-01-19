@@ -54,6 +54,16 @@ function enterCave(enemyList) {
         document.getElementById("page-image").src = "../images/bear-cave-eyes.png"
 
     }else{
+
+        battleSettings ={
+            "escape":true,
+            "singleBattle":false,
+            "mandatory":false, //Was used to prevent player from leaving narrative page
+            "postBattleNarrative":false
+        }
+    
+        localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
+
         //Start the battle
         localStorage.setItem('enemyList',enemyList);
         localStorage.setItem('winstreakReward',winstreakReward)
