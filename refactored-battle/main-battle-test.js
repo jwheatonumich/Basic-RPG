@@ -132,3 +132,15 @@ if(!(setPoisonStunBattletext({poison:5,stun:1},{poison:5,stun:1}, {battleText:""
 setPoisonStunBattletext({poison:0,stun:0},{poison:0,stun:0}, {battleText:""}).battleText === "")){
     throw 'setPoisonStunBattletext function not working correctly'
 }
+
+if(!(saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyHealth === 2 &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyID === 1 &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyPoison === true &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyStatus === "Stunned" &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyStun === true &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).playerHealth === 2 &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).playerPoison === true &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).playerStatus === "Stunned" &&
+saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).playerStun === true)){
+    throw 'saveProgress function not working correctly'
+}

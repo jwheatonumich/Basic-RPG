@@ -415,6 +415,24 @@ function setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData)
     return battleData;
 }
 
+function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
+
+    battleStatusData.enemyID = chosenEnemy.enemyID;
+    battleStatusData.playerHealth = playerBattleStats.health;
+    battleStatusData.enemyHealth = enemyBattleStats.health;
+    battleStatusData.playerPoison = playerBattleStats.poison;
+    battleStatusData.enemyPoison = enemyBattleStats.poison;
+    battleStatusData.playerStun = playerBattleStats.stun;
+    battleStatusData.enemyStun = enemyBattleStats.stun;
+    battleStatusData.playerStatus = playerBattleStats.status;
+    battleStatusData.enemyStatus = enemyBattleStats.status;
+
+    //Save battle status array in local storage
+    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+
+    return battleStatusData;
+};
+
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
@@ -502,6 +520,14 @@ function attack(playerAbility){
         //Update stats on page
         setStats(playerBattleStats);
         setEnemyStats(enemyBattleStats);
+
+        //Save battle status array in local storage
+        saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+
+        //Ending the turn if the player died
+        if(playerBattleStats.health <= 0){
+            
+        }
     }
 
 }
