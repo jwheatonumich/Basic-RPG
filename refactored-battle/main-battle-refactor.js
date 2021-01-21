@@ -367,6 +367,7 @@ function calculatePlayerStunned(enemyAbility, playerBattleStats){
     return playerBattleStats
 }
 
+
 function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
     if (abilityData[playerAbility]["selfAttack"] !== null) {
         playerBattleStats.attackMultiplier *= abilityData[playerAbility]["selfAttack"];
@@ -495,6 +496,12 @@ function attack(playerAbility){
         //Set battle text 
         battleData = setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats);
         battleData = setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData);
+    
+        battleStatusData.battleTurn +=1;
+
+        //Update stats on page
+        setStats(playerBattleStats);
+        setEnemyStats(enemyBattleStats);
     }
 
 }
