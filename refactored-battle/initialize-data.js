@@ -146,6 +146,9 @@ function initializeBattle(){
     battleStatusData = loadJSON('battleStatusData');
     playerStats = loadJSON('storedPlayerStats');
     enemyList = loadList('enemyList')
+    winstreakReward = localStorage.getItem('winstreakReward')
+
+    winstreakList = [0,0,1,0,2,0,0,0,0,10];
 
     let chosenEnemy = selectEnemy(enemyList,battleStatusData) //Select enemy
 

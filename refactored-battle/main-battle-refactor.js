@@ -17,7 +17,7 @@ function determineEnemyAbility(enemyBattleStats){
 
     return enemyAbility;
 
-}
+};
 
 function determineEnemyStunned(enemyAbility, enemyBattleStats){
 
@@ -33,7 +33,7 @@ function determinePlayerStunned(playerAbility, playerBattleStats){
         playerAbility = "stunned"; //If yes, swich the ability used to the stunned ability
     }
     return playerAbility
-}
+};
 
 function storeDefaultStatus(){
     battleStatusData.inProgress = false;
@@ -73,7 +73,7 @@ function flee(playerAlive,battleStatusData,escapeSetting){
 
         if (fleeChance > 0.5){//If flee successful, leave battle
 
-            battleCleanup(); //Save changes to player stats
+            [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats); //Save changes to player stats
             storeDefaultStatus(); //Don't save the battle progress when you exit
             storeDefaultSettings();//Load default settings into global variables
             window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
@@ -88,7 +88,7 @@ function flee(playerAlive,battleStatusData,escapeSetting){
     };
 };
 
-function empty(){}//Empty function used when player cannot attack
+function empty(){};//Empty function used when player cannot attack
 
 function gameOver(){
 
@@ -145,7 +145,7 @@ function gameOver(){
 
 };
 
-function battleCleanup(){
+function battleCleanup(playerBattleStats, enemyBattleStats){
 
         //Save health and xp after battle ends
         if (playerBattleStats.health < 0) {playerBattleStats.health = 0};
@@ -165,6 +165,8 @@ function battleCleanup(){
         enemyBattleStats.status = "";
         playerBattleStats.status = "";
         playerBattleStats.battleTurn = 1;
+
+        return [playerBattleStats, enemyBattleStats];
 
 };
 
@@ -205,7 +207,7 @@ function calculateEnemyAttack(playerBattleStats,enemyBattleStats){
         ),1);//Minimum of one damage
 
         return enemyAttackDamage;
-}
+};
 
 function playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage){
 //Determine if player should deal zero damage this turn
@@ -244,7 +246,7 @@ function resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData){
     battleData.battleText = "";
 
     return [playerBattleStats,enemyBattleStats,battleData]
-}
+};
 
 function dealDamage(damage, stats){
 //Update enemy armor and health based on enemy damage
@@ -266,7 +268,7 @@ function playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemy
 
     return [enemyBattleStats,battleData]
 
-}
+};
 
 function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
 
@@ -280,7 +282,7 @@ function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,ba
 
     return [playerBattleStats,battleData]
 
-}
+};
 
 function executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
 
@@ -294,7 +296,7 @@ function executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyB
 
     return [enemyBattleStats,battleData]
 
-}
+};
 
 function executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
 
@@ -308,7 +310,7 @@ function executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,bat
 
     return [playerBattleStats,battleData]
 
-}
+};
 
 function calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison){
 
@@ -318,7 +320,7 @@ function calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleS
 
     return [enemyBattleStats,battleData]
 
-}
+};
 
 function calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison){
 
@@ -328,7 +330,7 @@ function calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbi
 
     return [playerBattleStats,battleData]
 
-}
+};
 
 function deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage){
     if (playerBattleStats.health <= 0){
@@ -338,7 +340,7 @@ function deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, en
         enemyAttackDamage = 0
     }
     return [playerAttackDamage,enemyAttackDamage]
-}
+};
 
 function calculateEnemyStunned(abilityData, playerAbility, enemyBattleStats){
     if(abilityData[playerAbility]["stun"] >= Math.random()){
@@ -352,7 +354,7 @@ function calculateEnemyStunned(abilityData, playerAbility, enemyBattleStats){
     };
 
     return enemyBattleStats
-}
+};
 
 function calculatePlayerStunned(enemyAbility, playerBattleStats){
     if(enemyAbility["stun"] >= Math.random()){
@@ -366,7 +368,7 @@ function calculatePlayerStunned(enemyAbility, playerBattleStats){
     };
 
     return playerBattleStats
-}
+};
 
 function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
     if (abilityData[playerAbility]["selfAttack"] !== null) {
@@ -404,7 +406,7 @@ function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, pl
     };
 
     return battleData
-}
+};
 
 function setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData){
     if(playerBattleStats.poison>0){battleData.battleText = battleData.battleText.concat(`Poison deals you `+playerBattleStats.poison+` damage<br>`)};
@@ -413,7 +415,7 @@ function setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData)
     if(enemyBattleStats.stun==1){battleData.battleText = battleData.battleText.concat(`The enemy has been stunned!<br>`)};
 
     return battleData;
-}
+};
 
 function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
 
@@ -449,7 +451,134 @@ function loseBattle(battleStatusData, enemyBattleStats){
     saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
     return [battleStatusData, enemyBattleStats];
-}
+};
+
+function rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats){
+    
+    let rewardName
+
+    switch (winstreakReward){
+        case 'acorncoin':
+            rewardName = 'acorn coin(s)';
+            break;
+        case 'mushroomcoin':
+            rewardName = 'mushroom coin(s)';
+            break;
+        case 'bearclawcoin':
+            rewardName = 'bearclaw coin(s)';
+            break;
+    }
+
+    //Add battletext describing the winstreak prize
+    if (winstreakList[battleStatusData.winstreak-1] > 0){//Only if they win at least one coin as a winstreak prize
+        battleData.battleText = battleData.battleText.concat(`You win `+winstreakList[battleStatusData.winstreak-1]+' extra '+rewardName+` as a win streak bonus!<br>`);
+    };
+
+    //Redirect the player to the post battle narrative, if it exists
+    if(battleSettingData.postBattleNarrative){
+        playerBattleStats.scriptedBattle = battleSettings.postBattleNarrative;
+        localStorage.setItem('lastPage',  "../narrative/narrative.html");
+    };
+
+    return [battleData, playerBattleStats];
+};
+
+function calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData){
+    if (winstreakReward == "acorncoin" && winstreakList[battleStatusData.winstreak-1]){//If arena rewards acorn coins
+        enemyBattleStats.acorncoin += winstreakList[battleStatusData.winstreak-1];//Add acorncoins according to the winstreak list
+    };
+
+    if (winstreakReward == "mushroomcoin" && winstreakList[battleStatusData.winstreak-1]){
+        enemyBattleStats.mushroomcoin += winstreakList[battleStatusData.winstreak-1];//Add acorncoins according to the winstreak list
+    };
+
+    if (winstreakReward == "bearclawcoin" && winstreakList[battleStatusData.winstreak-1]){
+        enemyBattleStats.bearclawcoin += winstreakList[battleStatusData.winstreak-1];//Add acorncoins according to the winstreak list
+    };
+
+    return enemyBattleStats
+};
+
+function setBattleStatus(battleStatusData){
+
+    if(battleStatusData.result == "active"){//If battle is in progress
+
+        //Save battle status in array
+        battleStatusData.inProgress = true;
+
+    }else {
+
+        battleStatusData.inProgress = false;//Set battle status to false
+    };
+
+    //Save battle status array in local storage
+    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+
+    return battleStatusData
+};
+
+function updatePlayerCoins(playerBattleStats,enemyBattleStats){
+    if (playerBattleStats.health <= 0){
+
+        [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats)
+
+    }
+
+    if (enemyBattleStats.health <= 0){
+
+        playerBattleStats.acorncoin += enemyBattleStats.acorncoin;
+        playerBattleStats.mushroomcoin += enemyBattleStats.mushroomcoin;
+        playerBattleStats.bearclawcoin += enemyBattleStats.bearclawcoin;
+
+        [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats)
+    }
+
+    return [playerBattleStats, enemyBattleStats];
+};
+
+function generateRewardImages(enemyBattleStats){
+            //Loop to create acorn icons
+            var i = 1;
+            while (i <= enemyBattleStats.acorncoin){
+
+                //Create the images
+                var elem = document.createElement("img");
+                elem.src = '../images/acorn-coin.png';
+                elem.setAttribute("class", "item");
+
+                //Append the images
+                document.getElementById("battle-text-div").appendChild(elem);
+                i++;
+            }
+            
+            //Loop to create mushroom icons
+            var i = 1;
+            while (i <= enemyBattleStats.mushroomcoin){
+
+                //Create the images
+                var elem = document.createElement("img");
+                elem.src = '../images/mushroom-coin.png';
+                elem.setAttribute("class", "item");
+
+                //Append the images
+                document.getElementById("battle-text-div").appendChild(elem);
+                i++;
+            }
+
+            //Loop to create bearclaw icons
+            var i = 1;
+            while (i <= enemyBattleStats.bearclawcoin){
+
+                //Create the images
+                var elem = document.createElement("img");
+                elem.src = '../images/bearclaw-coin.png';
+                elem.setAttribute("class", "item");
+
+                //Append the images
+                document.getElementById("battle-text-div").appendChild(elem);
+                i++;
+            }
+};
 
 function attack(playerAbility){
 
@@ -554,9 +683,9 @@ function attack(playerAbility){
                 playerBattleStats.health = playerBattleStats.maxhealth;
 
                 battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
-                setBattleText(battleData.battleText);
+                battleData = setBattleText(battleData.battleText);
 
-                battleCleanup();
+                [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats);
                 setStats(playerBattleStats);
                 saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
@@ -567,7 +696,7 @@ function attack(playerAbility){
 
             }else{ //Game over if player has no leaf cons
                 battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
-                setBattleText(battleData.battleText);
+                battleData = setBattleText(battleData.battleText);
     
                 gameOver();
             };
@@ -575,7 +704,40 @@ function attack(playerAbility){
         //Ending the turn if the player lived
         }else{ 
 
+            if(enemyBattleStats.health <= 0){
+
+                battleStatusData.result = "win"
+                battleStatusData.winstreak += 1
+                battleData.battleText = battleData.battleText.concat("Your win streak is "+battleStatusData.winstreak+".<br>")
+
+                rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
+                //[battleData, playerBattleStats] = rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats);
+
+            }
+
         }
-    }
+
+        document.getElementById("battle-text-div").innerHTML = battleData.battleText;
+
+        battleStatusData = setBattleStatus(battleStatusData);
+
+        if (enemyBattleStats.health <= 0 && playerBattleStats.health > 0){
+
+            stopPlayerAttack();
+
+            enemyBattleStats = calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
+
+            [playerBattleStats, enemyBattleStats] = updatePlayerCoins(playerBattleStats,enemyBattleStats);
+
+            setStats(playerBattleStats);
+            setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
+
+            saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+
+            generateRewardImages(enemyBattleStats);
+
+        };
+
+    };
 
 }
