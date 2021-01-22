@@ -38,14 +38,14 @@ function setStats(stats) {
 }
 
 //Function that sets text on the website equal to various enemy stat variables
-function setEnemyStats(stats){
+function setEnemyStats(stats, image){
 
     document.getElementById("enemy-name").innerHTML = stats.name;
     document.getElementById("enemy-health").innerHTML = stats.health + '/' + stats.maxhealth;
     document.getElementById("enemy-armor").innerHTML = stats.armor;
     document.getElementById("enemy-status").innerHTML = stats.status;
 
-    document.getElementById("enemy-image").src = chosenEnemy["enemyImage"]; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+    document.getElementById("enemy-image").src = image; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
 
     //Set the enemy powerlevel
     document.getElementById("powerlevel").value = stats.enemyPowerlevel;
@@ -53,6 +53,21 @@ function setEnemyStats(stats){
     document.getElementById("powerlevel3").value = stats.enemyPowerlevel - 20;
     document.getElementById("powerlevel4").value = stats.enemyPowerlevel - 30;
 };
+
+//Function to prevent player from using attack links
+function stopPlayerAttack(){
+
+     //Abilities use the empty function while player is dead
+     document.getElementById("attack1").setAttribute('onClick',"empty();");
+     document.getElementById("attack2").setAttribute('onClick',"empty();");
+     document.getElementById("attack3").setAttribute('onClick',"empty();");
+     document.getElementById("attack4").setAttribute('onClick',"empty();");  
+
+}
+
+function setBattleText(battletext){
+    document.getElementById("battle-text-div").innerHTML = battletext;
+}
 
 //Function that sets up player's attack buttons
 function setPlayerAbilityButtons(playerStats){
@@ -73,5 +88,5 @@ function setPlayerAbilityButtons(playerStats){
 
 window.onload = leafcoinAlert();
 window.onload = setStats(playerBattleStats);
-window.onload = setEnemyStats(chosenEnemy.stats);
+window.onload = setEnemyStats(chosenEnemy.stats,chosenEnemy["enemyImage"]);
 window.onload = setPlayerAbilityButtons(playerBattleStats);

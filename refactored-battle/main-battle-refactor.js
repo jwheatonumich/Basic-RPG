@@ -47,13 +47,13 @@ function storeDefaultSettings(){
     storeJSON(battleSettingData, 'battleSettings')
 };
 
-function flee(playerAlive,battleResult,escapeSetting){
+function flee(playerAlive,battleStatusData,escapeSetting){
     if(!playerAlive){
 
         gameOver();
         return "Player was dead, game over"; //Stop the function
 
-    } else if(battleResult == "win"){
+    } else if(battleStatusData.result == "win"){
 
         storeDefaultStatus() //Don't save battle progress when you exit
         storeDefaultSettings() //Load default settings into global variables
@@ -88,8 +88,9 @@ function flee(playerAlive,battleResult,escapeSetting){
     };
 };
 
+function empty(){}//Empty function used when player cannot attack
+
 function gameOver(){
-    console.log("Game Over")
 
     //Reset player stats
     playerStats.acorncoin = 0;
@@ -367,7 +368,6 @@ function calculatePlayerStunned(enemyAbility, playerBattleStats){
     return playerBattleStats
 }
 
-
 function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
     if (abilityData[playerAbility]["selfAttack"] !== null) {
         playerBattleStats.attackMultiplier *= abilityData[playerAbility]["selfAttack"];
@@ -433,10 +433,28 @@ function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
     return battleStatusData;
 };
 
+function loseBattle(battleStatusData, enemyBattleStats){
+
+    //Clear enemy stats and image on the page
+    setEnemyStats({name:"None",health:0,maxhealth:0,armor:0,status:"",enemyPowerlevel:0},"../images/blank.png");
+
+    //Attack buttons stop working
+    stopPlayerAttack();
+
+    battleStatusData.result = "lose";
+    battleStatusData.winstreak = 0;
+    enemyBattleStats.health = enemyBattleStats.maxhealth;
+
+    //Save player and enemy stats in local storage
+    saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+
+    return [battleStatusData, enemyBattleStats];
+}
+
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
-        flee(playerBattleStats.health>0,battleResult,battleSettings.escape)
+        flee(playerBattleStats.health>0,battleStatusData,battleSettingData.escape)
     }
 
     let enemyAbility = determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
@@ -519,14 +537,44 @@ function attack(playerAbility){
 
         //Update stats on page
         setStats(playerBattleStats);
-        setEnemyStats(enemyBattleStats);
+        setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
         //Save battle status array in local storage
         saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
         //Ending the turn if the player died
         if(playerBattleStats.health <= 0){
-            
+
+            [battleStatusData, enemyBattleStats] = loseBattle(battleStatusData, enemyBattleStats);
+
+            //Revive if player has a leaf coin
+            if(playerBattleStats.leafcoin > 0){
+
+                playerBattleStats.leafcoin -= 1;
+                playerBattleStats.health = playerBattleStats.maxhealth;
+
+                battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
+                setBattleText(battleData.battleText);
+
+                battleCleanup();
+                setStats(playerBattleStats);
+                saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+
+                enemyBattleStats.health = 0;
+                enemyBattleStats.acorncoin = 0;
+                enemyBattleStats.mushroomcoin = 0;
+                enemyBattleStats.bearclawcoin = 0;
+
+            }else{ //Game over if player has no leaf cons
+                battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
+                setBattleText(battleData.battleText);
+    
+                gameOver();
+            };
+
+        //Ending the turn if the player lived
+        }else{ 
+
         }
     }
 

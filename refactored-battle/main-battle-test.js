@@ -127,12 +127,13 @@ calculatePlayerStunned({"stun":1},{stun:0,status:""}).status === "Stunned")){
     throw 'calculatePlayerStunned function not working correctly'
 }
 
-//Test setPoisonStunBattletext
+//Test setPoisonStunBattletext function
 if(!(setPoisonStunBattletext({poison:5,stun:1},{poison:5,stun:1}, {battleText:""}).battleText === "Poison deals you 5 damage<br>Poison deals the enemy 5 damage<br>You have been stunned!<br>The enemy has been stunned!<br>" &&
 setPoisonStunBattletext({poison:0,stun:0},{poison:0,stun:0}, {battleText:""}).battleText === "")){
     throw 'setPoisonStunBattletext function not working correctly'
 }
 
+//Test saveProgress function
 if(!(saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyHealth === 2 &&
 saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyID === 1 &&
 saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).enemyPoison === true &&
@@ -143,4 +144,11 @@ saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{he
 saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).playerStatus === "Stunned" &&
 saveProgress({enemyID:1},{health:2,poison:true, stun:true, status:"Stunned"},{health:2,poison:true, stun:true, status:"Stunned"}).playerStun === true)){
     throw 'saveProgress function not working correctly'
+}
+
+//Test loseBattle function
+if(!(loseBattle({},{maxhealth:100})[0].result === "lose" &&
+loseBattle({},{maxhealth:100})[0].winstreak === 0 &&
+loseBattle({},{maxhealth:100})[1].health === 100)){
+    throw 'loseBattle function not working correctly'
 }
