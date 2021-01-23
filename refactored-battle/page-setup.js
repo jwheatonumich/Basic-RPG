@@ -46,13 +46,17 @@ function setEnemyStats(stats, image){
     document.getElementById("enemy-status").innerHTML = stats.status;
 
     document.getElementById("enemy-image").src = image; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+};
+
+function setEnemyPowerlevel(stats){
 
     //Set the enemy powerlevel
     document.getElementById("powerlevel").value = stats.enemyPowerlevel;
     document.getElementById("powerlevel2").value = stats.enemyPowerlevel - 10;
     document.getElementById("powerlevel3").value = stats.enemyPowerlevel - 20;
     document.getElementById("powerlevel4").value = stats.enemyPowerlevel - 30;
-};
+
+}
 
 //Function to prevent player from using attack links
 function stopPlayerAttack(){
@@ -86,7 +90,12 @@ function setPlayerAbilityButtons(playerStats){
 
 }
 
-window.onload = leafcoinAlert();
-window.onload = setStats(playerBattleStats);
-window.onload = setEnemyStats(chosenEnemy.stats,chosenEnemy["enemyImage"]);
-window.onload = setPlayerAbilityButtons(playerBattleStats);
+function pageSetup(){
+    leafcoinAlert();
+    setStats(playerBattleStats);
+    setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
+    setEnemyPowerlevel(chosenEnemy.stats);
+    setPlayerAbilityButtons(playerBattleStats);
+}
+
+window.onload = pageSetup();

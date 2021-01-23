@@ -471,7 +471,7 @@ function rewardBattleText(winstreakReward, winstreakList, battleSettingData, bat
 
     //Add battletext describing the winstreak prize
     if (winstreakList[battleStatusData.winstreak-1] > 0){//Only if they win at least one coin as a winstreak prize
-        battleData.battleText = battleData.battleText.concat(`You win `+winstreakList[battleStatusData.winstreak-1]+' extra '+rewardName+` as a win streak bonus!<br>`);
+        playerBattleStatsplayerBattleStatsplayerBattleStatsplayerBattleStats = battleData.battleText.concat(`You win `+winstreakList[battleStatusData.winstreak-1]+' extra '+rewardName+` as a win streak bonus!<br>`);
     };
 
     //Redirect the player to the post battle narrative, if it exists
@@ -580,6 +580,25 @@ function generateRewardImages(enemyBattleStats){
             }
 };
 
+function battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatusData, battleSettingData){
+
+    if(enemyBattleStats.health > 0 && playerBattleStats.health > 0){//Can't reset if player and enemy are both alive
+
+        battleData.battleText = "The current enemy is still alive!";
+        document.getElementById("battle-text-div").innerHTML = battleData.battleText; 
+
+    }else if((battleStatusData.result == "lose") || (!battleSettingData.singleBattle)){//Can update if player is dead or repeatable battle
+        restartBattle();
+        pageSetup();
+    
+    }else {//Can't repeat if not a repeatable battle
+
+        battleData.battleText = "There are no more enemies to fight!";
+        document.getElementById("battle-text-div").innerHTML = battleData.battleText;
+
+    };
+};
+
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
@@ -683,7 +702,7 @@ function attack(playerAbility){
                 playerBattleStats.health = playerBattleStats.maxhealth;
 
                 battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
-                battleData = setBattleText(battleData.battleText);
+                setBattleText(battleData.battleText);
 
                 [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats);
                 setStats(playerBattleStats);
@@ -696,7 +715,7 @@ function attack(playerAbility){
 
             }else{ //Game over if player has no leaf cons
                 battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
-                battleData = setBattleText(battleData.battleText);
+                setBattleText(battleData.battleText);
     
                 gameOver();
             };
@@ -711,13 +730,12 @@ function attack(playerAbility){
                 battleData.battleText = battleData.battleText.concat("Your win streak is "+battleStatusData.winstreak+".<br>")
 
                 rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
-                //[battleData, playerBattleStats] = rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats);
 
             }
 
         }
 
-        document.getElementById("battle-text-div").innerHTML = battleData.battleText;
+        setBattleText(battleData.battleText);
 
         battleStatusData = setBattleStatus(battleStatusData);
 
