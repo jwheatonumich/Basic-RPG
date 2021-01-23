@@ -165,6 +165,10 @@ function startBattle(enemyList, escape = true, singleBattle = false, mandatory =
 
     localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
 
+    battleStatusData ={}
+
+    localStorage.setItem('battleStatusData', JSON.stringify(battleStatusData));
+
     localStorage.setItem('enemyList',enemyList)
     localStorage.setItem('winstreakReward',winstreakReward)
 

@@ -142,7 +142,7 @@ function setPlayerAbilities(playerStats){
 
 function setBattleData(){
     battleData = {}
-    battleData.battleText = ``;
+    battleData.battleText = `Press an attack button to begin.`;
 
     return battleData;
 };
@@ -168,9 +168,7 @@ function initializeBattle(){
 
     winstreakList = [0,0,1,0,2,0,0,0,0,10];
 
-    battleStatusData = setBattleStatusData(battleStatusData);
-
-    let chosenEnemy = selectEnemy(enemyList,battleStatusData,enemyStats) //Select enemy
+    chosenEnemy = selectEnemy(enemyList,battleStatusData,enemyStats) //Select enemy
 
     let playerBattleStats = playerSetup(playerStats,battleStatusData); //Populate player data for battle
 
@@ -179,7 +177,6 @@ function initializeBattle(){
     enemyBattleStats = enemySetup(chosenEnemy.stats,battleStatusData,playerBattleStats) //Populate enemy data for battle
 
     enemyBattleStats = setEnemyAbilities(enemyBattleStats); //Setup enemy abilities
-
 
     let battleData = setBattleData();
 

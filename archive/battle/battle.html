@@ -13,6 +13,15 @@
         <link rel="stylesheet" href= "main-battle-styles.css">
         <link rel="stylesheet" href= "../stylesheets/navbar.css">
 
+        <!--Standard page code-->
+        <script src="../script/daily-events-script.js"></script>
+
+        <!--Main game loop-->
+        <script src="main-battle.js"></script>
+
+        <!--Game setup-->
+        <script src="battle-initialize.js" defer></script>
+
         <!--Species specific data-->
         <script src="species-data.js"></script>
 
@@ -21,10 +30,6 @@
 
         <!--Enemy specific data-->
         <script src="../script/enemy-data.js"></script>
-
-        <script src="initialize-data.js"></script>
-        <script src="page-setup.js" defer></script>
-        <script src="main-battle-refactor.js"></script>
 
     </head>
 
@@ -102,7 +107,7 @@
             <br><br>
 
             <div id="control-div">
-                <button id="restart-button" onclick=" battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatusData, battleSettingData);">Restart</button>
+                <button id="restart-button" onclick=" battleReset();">Restart</button>
                 <button id="back-button" onclick="attack('flee')">Back</button>
             </div>
         

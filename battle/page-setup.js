@@ -96,6 +96,7 @@ function pageSetup(){
     setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
     setEnemyPowerlevel(chosenEnemy.stats);
     setPlayerAbilityButtons(playerBattleStats);
+    setBattleText(battleData.battleText);
 }
 
 window.onload = pageSetup();
