@@ -64,6 +64,11 @@ function enterCave(enemyList) {
     
         localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
 
+        
+        battleStatusData ={}
+
+        localStorage.setItem('battleStatusData', JSON.stringify(battleStatusData));
+
         //Start the battle
         localStorage.setItem('enemyList',enemyList);
         localStorage.setItem('winstreakReward',winstreakReward)

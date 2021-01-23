@@ -37,8 +37,11 @@ function selectEnemy(list,battleStatus,enemyStats){
     for (i in enemyStats){
         if (enemyStats[i]["enemyID"] == enemyID){
             chosenEnemy = enemyStats[i];
+            battleStatus.enemyID = enemyStats[i].enemyID
         };
     };
+
+    storeJSON(battleStatusData, 'battleStatusData');
 
     return chosenEnemy
 }
@@ -73,7 +76,7 @@ function playerSetup(playerStats,battleStatus){
 };
 
 //Store enemy stats in an object
-function enemySetup(enemyStats,battleStatus,playerStats){
+function enemySetup(enemyStats,battleStatusData,playerStats){
 
     let tempStats = {};
 
@@ -98,7 +101,7 @@ function enemySetup(enemyStats,battleStatus,playerStats){
     tempStats.status = "";
 
     //If battle is in-progress, override with in-progress stats
-    if(battleStatus.inProgress){
+    if(battleStatusData.inProgress){
 
         tempStats.health = battleStatusData.enemyHealth;
         tempStats.poison = battleStatusData.enemyPoison;
@@ -151,9 +154,31 @@ function setBattleStatusData(battleStatusData){
 
     battleStatusData.inProgress = true;
     battleStatusData.result = "active";
+
+    storeJSON(battleStatusData, 'battleStatusData');
+
     return battleStatusData
 
 }
+
+function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
+
+    battleStatusData.enemyID = chosenEnemy.enemyID;
+    battleStatusData.playerHealth = playerBattleStats.health;
+    battleStatusData.enemyHealth = enemyBattleStats.health;
+    battleStatusData.playerPoison = playerBattleStats.poison;
+    battleStatusData.enemyPoison = enemyBattleStats.poison;
+    battleStatusData.playerStun = playerBattleStats.stun;
+    battleStatusData.enemyStun = enemyBattleStats.stun;
+    battleStatusData.playerStatus = playerBattleStats.status;
+    battleStatusData.enemyStatus = enemyBattleStats.status;
+
+    //Save battle status array in local storage
+    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
+
+    return battleStatusData;
+};
+
 
 //----------------------LOAD DATA AND SETUP BATTLE----------------------------
 
@@ -179,6 +204,10 @@ function initializeBattle(){
     enemyBattleStats = setEnemyAbilities(enemyBattleStats); //Setup enemy abilities
 
     let battleData = setBattleData();
+
+    battleStatusData = setBattleStatusData(battleStatusData);
+
+    battleStatusData = saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats)
 
 }
 

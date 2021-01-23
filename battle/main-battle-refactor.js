@@ -37,6 +37,7 @@ function determinePlayerStunned(playerAbility, playerBattleStats){
 
 function storeDefaultStatus(){
     battleStatusData.inProgress = false;
+    battleStatusData.result = "";
     storeJSON(battleStatusData, 'battleStatusData')
 };
 
@@ -51,6 +52,7 @@ function flee(playerAlive,battleStatusData,escapeSetting){
     if(!playerAlive){
 
         gameOver();
+        window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
         return "Player was dead, game over"; //Stop the function
 
     } else if(battleStatusData.result == "win"){
@@ -121,6 +123,8 @@ function gameOver(){
 
     //Set battle status to false to prevent from being redirected into battle
     battleStatusData.inProgress = false;
+    battleStatusData.result = "";
+
 
     //Store daily events in local storage
     localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
@@ -415,24 +419,6 @@ function setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData)
     if(enemyBattleStats.stun==1){battleData.battleText = battleData.battleText.concat(`The enemy has been stunned!<br>`)};
 
     return battleData;
-};
-
-function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
-
-    battleStatusData.enemyID = chosenEnemy.enemyID;
-    battleStatusData.playerHealth = playerBattleStats.health;
-    battleStatusData.enemyHealth = enemyBattleStats.health;
-    battleStatusData.playerPoison = playerBattleStats.poison;
-    battleStatusData.enemyPoison = enemyBattleStats.poison;
-    battleStatusData.playerStun = playerBattleStats.stun;
-    battleStatusData.enemyStun = enemyBattleStats.stun;
-    battleStatusData.playerStatus = playerBattleStats.status;
-    battleStatusData.enemyStatus = enemyBattleStats.status;
-
-    //Save battle status array in local storage
-    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
-
-    return battleStatusData;
 };
 
 function loseBattle(battleStatusData, enemyBattleStats){

@@ -8,7 +8,7 @@ let testBattleStatusData = {"inProgress":false,"battleTurn":2,"winstreak":0,"ene
 //----------------------UNIT TESTS----------------------------
 
 //Test selectEnemy() function
-if(!(selectEnemy([0],false,0).name === "Brown Squirrel")){throw "Correct enemy not chosen"};
+if(!(selectEnemy([0],{inProgress:false},enemyStats).name === "Brown Squirrel")){throw "Correct enemy not chosen"};
 
 if(!(["Brown Squirrel","Red Squirrel"].includes(selectEnemy([0,1],false,0).name))){throw "Correct enemy not chosen"};
 

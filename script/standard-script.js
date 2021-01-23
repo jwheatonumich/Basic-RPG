@@ -165,7 +165,10 @@ function startBattle(enemyList, escape = true, singleBattle = false, mandatory =
 
     localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
 
-    battleStatusData ={}
+    battleStatusData ={
+        battleTurn:0,
+        winstreak:0
+    }
 
     localStorage.setItem('battleStatusData', JSON.stringify(battleStatusData));
 
