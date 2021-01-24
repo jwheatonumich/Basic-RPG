@@ -29,7 +29,7 @@ function selectEnemy(list,battleStatus,enemyStats){
     let enemyID = list[Math.floor(Math.random()*list.length)];//Determine a random enemy from the list of enemies
 
     //If battle is in progress, use saved date
-    if (battleStatus.inProgress){
+    if (battleStatusData.result == "active"){
         enemyID = battleStatus.enemyID;
     };
 
@@ -62,7 +62,7 @@ function playerSetup(playerStats,battleStatus){
     playerBattleStats.status = "";
 
     //If battle is in-progress, override with in-progress stats
-    if(battleStatus.inProgress){
+    if(battleStatusData.result == "active"){
         playerBattleStats.health = battleStatus.playerHealth;
         playerBattleStats.poison = battleStatus.playerPoison;
         playerBattleStats.stun = battleStatus.playerStun;
@@ -101,7 +101,7 @@ function enemySetup(enemyStats,battleStatusData,playerStats){
     tempStats.status = "";
 
     //If battle is in-progress, override with in-progress stats
-    if(battleStatusData.inProgress){
+    if(battleStatusData.result == "active"){
 
         tempStats.health = battleStatusData.enemyHealth;
         tempStats.poison = battleStatusData.enemyPoison;
@@ -152,8 +152,13 @@ function setBattleData(){
 
 function setBattleStatusData(battleStatusData){
 
-    battleStatusData.inProgress = true;
-    battleStatusData.result = "active";
+    if (!battleStatusData.hasOwnProperty("result")){
+        battleStatusData.result = "active";
+    }
+
+    if (!battleStatusData.hasOwnProperty("playerAlive")){
+        battleStatusData.playerAlive = true 
+    }
 
     storeJSON(battleStatusData, 'battleStatusData');
 

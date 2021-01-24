@@ -36,7 +36,7 @@ function determinePlayerStunned(playerAbility, playerBattleStats){
 };
 
 function storeDefaultStatus(){
-    battleStatusData.inProgress = false;
+    //battleStatusData.inProgress = false;
     battleStatusData.result = "";
     storeJSON(battleStatusData, 'battleStatusData')
 };
@@ -48,14 +48,19 @@ function storeDefaultSettings(){
     storeJSON(battleSettingData, 'battleSettings')
 };
 
-function flee(playerAlive,battleStatusData,escapeSetting){
-    if(!playerAlive){
+function flee(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
+    if(playerBattleStats.health <= 0){
 
         gameOver();
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
         return "Player was dead, game over"; //Stop the function
 
-    } else if(battleStatusData.result == "win"){
+    } else if(!playerAlive){
+
+        window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
+        return "Player fleed after losing battle"; //Stop the function
+
+    }else if(battleStatusData.result == "win"){
 
         storeDefaultStatus() //Don't save battle progress when you exit
         storeDefaultSettings() //Load default settings into global variables
@@ -83,7 +88,7 @@ function flee(playerAlive,battleStatusData,escapeSetting){
 
         } else{ //If flee not successful, player stunned for a round of battle
 
-            playerStun = 1;
+            playerBattleStats.stun = 1;
             return "Battle in progress, player tried and failed to escape";//Stop the function
 
         };
@@ -122,7 +127,7 @@ function gameOver(){
     localStorage.setItem('dailyEvents',  JSON.stringify(dailyEvents));
 
     //Set battle status to false to prevent from being redirected into battle
-    battleStatusData.inProgress = false;
+    //battleStatusData.inProgress = false;
     battleStatusData.result = "";
 
 
@@ -429,6 +434,7 @@ function loseBattle(battleStatusData, enemyBattleStats){
     //Attack buttons stop working
     stopPlayerAttack();
 
+    battleStatusData.playerAlive = false
     battleStatusData.result = "lose";
     battleStatusData.winstreak = 0;
     enemyBattleStats.health = enemyBattleStats.maxhealth;
@@ -483,24 +489,6 @@ function calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakRewa
     };
 
     return enemyBattleStats
-};
-
-function setBattleStatus(battleStatusData){
-
-    if(battleStatusData.result == "active"){//If battle is in progress
-
-        //Save battle status in array
-        battleStatusData.inProgress = true;
-
-    }else {
-
-        battleStatusData.inProgress = false;//Set battle status to false
-    };
-
-    //Save battle status array in local storage
-    localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
-
-    return battleStatusData
 };
 
 function updatePlayerCoins(playerBattleStats,enemyBattleStats){
@@ -588,7 +576,7 @@ function battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatu
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
-        flee(playerBattleStats.health>0,battleStatusData,battleSettingData.escape)
+        flee(battleStatusData.playerAlive,battleStatusData,battleSettingData.escape,playerBattleStats)
     }
 
     let enemyAbility = determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
@@ -722,8 +710,6 @@ function attack(playerAbility){
         }
 
         setBattleText(battleData.battleText);
-
-        battleStatusData = setBattleStatus(battleStatusData);
 
         if (enemyBattleStats.health <= 0 && playerBattleStats.health > 0){
 

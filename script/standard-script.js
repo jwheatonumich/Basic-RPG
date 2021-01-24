@@ -97,7 +97,7 @@ function activeBattleCheck(){
     //Check that we are on a normal game screen, not the settings screen
     if(document.body.contains(document.getElementById("game-div"))){
 
-        if (battleStatusData.inProgress){//Check if a battle is in progress
+        if (battleStatusData.result == "active"){//Check if a battle is in progress
             window.location.href = "../battle/battle.html"//If in progress, go to battle
         }
 
