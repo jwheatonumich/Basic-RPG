@@ -93,17 +93,17 @@
             <div id="battle-text-div">Click an attack to begin.<br><br></div>
 
             <div id="abilities">
-                <a id="attack1" class="attack-link" onclick="attack('None')"></a>
-                <a id="attack2" class="attack-link" onclick="attack('Charge')"></a>
-                <a id="attack3" class="attack-link" onclick="attack('Block')"></a>
-                <a id="attack4" class="attack-link" onclick="attack('Powerup')"></a>
+                <a id="attack1" class="attack-link" onclick="func.attack('None')"></a>
+                <a id="attack2" class="attack-link" onclick="func.attack('Charge')"></a>
+                <a id="attack3" class="attack-link" onclick="func.attack('Block')"></a>
+                <a id="attack4" class="attack-link" onclick="func.attack('Powerup')"></a>
             </div>
 
             <br><br>
 
             <div id="control-div">
-                <button id="restart-button" onclick=" battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatusData, battleSettingData);">Restart</button>
-                <button id="back-button" onclick="attack('flee')">Back</button>
+                <button id="restart-button" onclick="func.battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatusData, battleSettingData);">Restart</button>
+                <button id="back-button" onclick="func.attack('flee')">Back</button>
             </div>
         
 

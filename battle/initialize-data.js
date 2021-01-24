@@ -1,14 +1,16 @@
+initializeFunc = {}
+
 //----------------------LOAD DATA FUNCTIONS----------------------------
 
 //Loads JSON data from local storage into an object
-function loadJSON(jsonName){
+initializeFunc.loadJSON = function(jsonName){
     let retrievedObject = localStorage.getItem(jsonName);
     let parsedObject = JSON.parse(retrievedObject);
     return parsedObject;
 };
 
 //Loads list data from local storage into a list
-function loadList(listName){
+initializeFunc.loadList = function(listName){
     let retrievedObject = localStorage.getItem(listName);
     let parsedObject = retrievedObject.split(",").map(x=>+x);
     return parsedObject
@@ -17,14 +19,14 @@ function loadList(listName){
 //----------------------STORE DATA FUNCTIONS----------------------------
 
 //Store an object as a JSON in local storage
-function storeJSON(objectName, JSONName){
+initializeFunc.storeJSON = function(objectName, JSONName){
     localStorage.setItem(JSONName, JSON.stringify(objectName));
 }
 
 //----------------------SETUP BATTLE FUNCTIONS----------------------------
 
 //Select enemy
-function selectEnemy(list,battleStatus,enemyStats){
+initializeFunc.selectEnemy = function(list,battleStatus,enemyStats){
 
     let enemyID = list[Math.floor(Math.random()*list.length)];//Determine a random enemy from the list of enemies
 
@@ -41,13 +43,13 @@ function selectEnemy(list,battleStatus,enemyStats){
         };
     };
 
-    storeJSON(battleStatusData, 'battleStatusData');
+    initializeFunc.storeJSON(battleStatusData, 'battleStatusData');
 
     return chosenEnemy
 }
 
 //Store player stats in an object
-function playerSetup(playerStats,battleStatus){
+initializeFunc.playerSetup = function(playerStats,battleStatus){
 
     //Load base player stats
     playerBattleStats = playerStats;
@@ -81,7 +83,7 @@ function playerSetup(playerStats,battleStatus){
 };
 
 //Store enemy stats in an object
-function enemySetup(enemyStats,battleStatusData,playerStats){
+initializeFunc.enemySetup = function(enemyStats,battleStatusData,playerStats){
 
     let tempStats = {};
 
@@ -117,8 +119,6 @@ function enemySetup(enemyStats,battleStatusData,playerStats){
         tempStats.attackMultiplier = battleStatusData.enemyAttackMultiplier;
         tempStats.defenseMultiplier = battleStatusData.enemyDefenseMultiplier;
         tempStats.armor = battleStatusData.enemyArmor;
-        
-        console.log(battleStatusData)
 
     }
 
@@ -135,7 +135,7 @@ function enemySetup(enemyStats,battleStatusData,playerStats){
 };
 
 //Load enemy abilities into the object with other enemy stats
-function setEnemyAbilities(stats){
+initializeFunc.setEnemyAbilities = function(stats){
 
     stats.enemyAbility1 = abilityData[speciesData[stats.species]["attack1Name"]];
     stats.enemyAbility2 = abilityData[speciesData[stats.species]["attack2Name"]];
@@ -146,7 +146,7 @@ function setEnemyAbilities(stats){
 };
 
 //Load player abilities into the object with other player stats
-function setPlayerAbilities(playerStats){
+initializeFunc.setPlayerAbilities = function(playerStats){
     playerStats.playerAbility1 = abilityData[speciesData[playerStats.species].attack1Name];
     playerStats.playerAbility2 = abilityData[speciesData[playerStats.species].attack2Name];
     playerStats.playerAbility3 = abilityData[speciesData[playerStats.species].attack3Name];
@@ -156,7 +156,7 @@ function setPlayerAbilities(playerStats){
 };
 
 //Set initial battle text
-function setBattleData(){
+initializeFunc.setBattleData = function(){
     battleData = {}
     battleData.battleText = `Press an attack button to begin.`;
 
@@ -164,7 +164,7 @@ function setBattleData(){
 };
 
 //Add 'result' and 'playerAlive' default values if none exist
-function setBattleStatusData(battleStatusData){
+initializeFunc.setBattleStatusData = function(battleStatusData){
 
     if (!battleStatusData.hasOwnProperty("result")){
         battleStatusData.result = "active";
@@ -174,14 +174,14 @@ function setBattleStatusData(battleStatusData){
         battleStatusData.playerAlive = true 
     }
 
-    storeJSON(battleStatusData, 'battleStatusData');
+    initializeFunc.storeJSON(battleStatusData, 'battleStatusData');
 
     return battleStatusData
 
 }
 
 //Save battle status data to local storage
-function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
+initializeFunc.saveProgress = function(chosenEnemy,playerBattleStats,enemyBattleStats){
 
     battleStatusData.enemyID = chosenEnemy.enemyID;
     battleStatusData.playerHealth = playerBattleStats.health;
@@ -209,54 +209,60 @@ function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
     return battleStatusData;
 };
 
-
 //----------------------LOAD DATA AND SETUP BATTLE----------------------------
 
-function initializeBattle(){
+initializeFunc.initializeBattle = function(){
 
     //Load data from local storage
-    battleSettingData = loadJSON('battleSettings');
-    battleStatusData = loadJSON('battleStatusData');
-    playerStats = loadJSON('storedPlayerStats');
-    enemyList = loadList('enemyList')
+    battleSettingData = initializeFunc.loadJSON('battleSettings');
+    battleStatusData = initializeFunc.loadJSON('battleStatusData');
+    playerStats = initializeFunc.loadJSON('storedPlayerStats');
+    enemyList = initializeFunc.loadList('enemyList')
     winstreakReward = localStorage.getItem('winstreakReward')
 
     winstreakList = [0,0,1,0,2,0,0,0,0,10];
 
-    chosenEnemy = selectEnemy(enemyList,battleStatusData,enemyStats) //Select enemy
+    chosenEnemy = initializeFunc.selectEnemy(enemyList,battleStatusData,enemyStats) //Select enemy
 
-    let playerBattleStats = playerSetup(playerStats,battleStatusData); //Populate player data for battle
+    let playerBattleStats = initializeFunc.playerSetup(playerStats,battleStatusData); //Populate player data for battle
 
-    playerBattleStats = setPlayerAbilities(playerBattleStats); //Setup player abilities
+    playerBattleStats = initializeFunc.setPlayerAbilities(playerBattleStats); //Setup player abilities
 
-    enemyBattleStats = enemySetup(chosenEnemy.stats,battleStatusData,playerBattleStats) //Populate enemy data for battle
+    enemyBattleStats = initializeFunc.enemySetup(chosenEnemy.stats,battleStatusData,playerBattleStats) //Populate enemy data for battle
 
-    enemyBattleStats = setEnemyAbilities(enemyBattleStats); //Setup enemy abilities
+    enemyBattleStats = initializeFunc.setEnemyAbilities(enemyBattleStats); //Setup enemy abilities
 
-    let battleData = setBattleData();
+    let battleData = initializeFunc.setBattleData();
 
-    battleStatusData = setBattleStatusData(battleStatusData);
+    battleStatusData = initializeFunc.setBattleStatusData(battleStatusData);
 
-    battleStatusData = saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats)
+    battleStatusData = initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats)
 
 }
 
-function restartBattle(){
+initializeFunc.restartBattle = function(){
     
-        let chosenEnemy = selectEnemy(enemyList,battleStatusData,enemyStats) //Select enemy
+        let chosenEnemy = initializeFunc.selectEnemy(enemyList,battleStatusData,enemyStats) //Select enemy
     
-        let playerBattleStats = playerSetup(playerStats,battleStatusData); //Populate player data for battle
+        let playerBattleStats = initializeFunc.playerSetup(playerStats,battleStatusData); //Populate player data for battle
     
-        playerBattleStats = setPlayerAbilities(playerBattleStats); //Setup player abilities
+        playerBattleStats = initializeFunc.setPlayerAbilities(playerBattleStats); //Setup player abilities
     
-        enemyBattleStats = enemySetup(chosenEnemy.stats,battleStatusData,playerBattleStats) //Populate enemy data for battle
+        enemyBattleStats = initializeFunc.enemySetup(chosenEnemy.stats,battleStatusData,playerBattleStats) //Populate enemy data for battle
     
-        enemyBattleStats = setEnemyAbilities(enemyBattleStats); //Setup enemy abilities
+        enemyBattleStats = initializeFunc.setEnemyAbilities(enemyBattleStats); //Setup enemy abilities
     
-        battleStatusData = setBattleStatusData(battleStatusData);
+        battleStatusData = initializeFunc.setBattleStatusData(battleStatusData);
 
-        let battleData = setBattleData();
+        let battleData = initializeFunc.setBattleData();
 };
 
-window.onload = initializeBattle();
+//If running in a browser, initialize the battle
+if (typeof exports !== 'object'){
+    window.onload = initializeFunc.initializeBattle();
+}
 
+//If running in node, export all functions
+if (typeof exports === 'object'){
+    module.exports = {initializeFunc}
+}

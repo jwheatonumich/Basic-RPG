@@ -1,4 +1,6 @@
-function determineEnemyAbility(enemyBattleStats){
+func = {};
+
+func.determineEnemyAbility = function(enemyBattleStats){
 
     //Randomly choose enemy's ability
     let enemyAbilityNumber = Math.random();
@@ -19,7 +21,7 @@ function determineEnemyAbility(enemyBattleStats){
 
 };
 
-function determineEnemyStunned(enemyAbility, enemyBattleStats){
+func.determineEnemyStunned = function(enemyAbility, enemyBattleStats){
 
     if(enemyBattleStats.stun == 1){
         enemyAbility = abilityData["stunned"]; //If yes, swich the ability used to the stunned ability
@@ -27,7 +29,7 @@ function determineEnemyStunned(enemyAbility, enemyBattleStats){
     return enemyAbility
 };
 
-function determinePlayerStunned(playerAbility, playerBattleStats){
+func.determinePlayerStunned = function(playerAbility, playerBattleStats){
 
     if(playerBattleStats.stun == 1){
         playerAbility = "stunned"; //If yes, swich the ability used to the stunned ability
@@ -35,30 +37,30 @@ function determinePlayerStunned(playerAbility, playerBattleStats){
     return playerAbility
 };
 
-function storeDefaultStatus(){
+func.storeDefaultStatus = function(){
     battleStatusData.result = "";
-    storeJSON(battleStatusData, 'battleStatusData')
+    initializeFunc.storeJSON(battleStatusData, 'battleStatusData')
 };
 
-function storeDefaultSettings(){
+func.storeDefaultSettings = function(){
     battleSettingData.escape = true;
     battleSettingData.singleBattle = false;
     battleSettingData.mandatory = false;
     storeJSON(battleSettingData, 'battleSettings')
 };
 
-function flee(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
+func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
     if(playerBattleStats.health <= 0){
 
         //Game is over, go to start screen
-        gameOver();
+        func.gameOver();
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
         return true;
 
     } else if(!playerAlive){
 
         //Battle is no longer active
-        storeDefaultStatus()
+        func.storeDefaultStatus()
 
         //Go to prior page
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
@@ -66,8 +68,8 @@ function flee(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
 
     }else if(battleStatusData.result == "win"){
 
-        storeDefaultStatus() //Don't save battle progress when you exit
-        storeDefaultSettings() //Load default settings into global variables
+        func.storeDefaultStatus() //Don't save battle progress when you exit
+        func.storeDefaultSettings() //Load default settings into global variables
         window.location.href = localStorage.getItem("lastPage"); //Exit to the prior page
         return true;
 
@@ -84,9 +86,9 @@ function flee(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
 
         if (fleeChance > 0.5){//If flee successful, leave battle
             
-            [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats); //Save changes to player stats
-            storeDefaultStatus(); //Don't save the battle progress when you exit
-            storeDefaultSettings();//Load default settings into global variables
+            [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats); //Save changes to player stats
+            func.storeDefaultStatus(); //Don't save the battle progress when you exit
+            func.storeDefaultSettings();//Load default settings into global variables
             window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
 
             console.log(battleStatusData.result);
@@ -102,9 +104,9 @@ function flee(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
     };
 };
 
-function empty(){};//Empty function used when player cannot attack
+func.empty = function(){};//Empty function used when player cannot attack
 
-function gameOver(){
+func.gameOver = function(){
 
     //Reset player stats
     playerStats.acorncoin = 0;
@@ -149,7 +151,7 @@ function gameOver(){
     localStorage.setItem('battleSettings',  JSON.stringify(battleSettingData));
 
     //Can't load a new enemy
-    document.getElementById("restart-button").setAttribute('onClick',"empty();");
+    document.getElementById("restart-button").setAttribute('onClick',"func.empty();");
 
     //Back button redirects to spaceship
     document.getElementById("back-button").setAttribute('onClick',"location.href='../spaceship-inside/control.html';");
@@ -161,7 +163,7 @@ function gameOver(){
 
 };
 
-function battleCleanup(playerBattleStats, enemyBattleStats){
+func.battleCleanup = function(playerBattleStats, enemyBattleStats){
 
         //Save health and xp after battle ends
         if (playerBattleStats.health < 0) {playerBattleStats.health = 0};
@@ -171,7 +173,7 @@ function battleCleanup(playerBattleStats, enemyBattleStats){
         playerStats.bearclawcoin = playerBattleStats.bearclawcoin; 
         playerStats.leafcoin = playerBattleStats.leafcoin; 
     
-        storeJSON(playerStats, 'storedPlayerStats'); //Store updated player data in local storage
+        initializeFunc.storeJSON(playerStats, 'storedPlayerStats'); //Store updated player data in local storage
     
         //Reset variables at the end of battle
         playerBattleStats.armor = 0;
@@ -186,7 +188,7 @@ function battleCleanup(playerBattleStats, enemyBattleStats){
 
 };
 
-function setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats){
+func.setPlayerMultipliers = function(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats){
     playerBattleStats.attackMultiplier = parseInt(abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"]);
     playerBattleStats.defenseMultiplier = parseInt(abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"]);
     enemyBattleStats.attackMultiplier = parseInt(abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"]);
@@ -195,7 +197,7 @@ function setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBa
     return [playerBattleStats, enemyBattleStats];
 };
 
-function calculatePlayerAttack(playerBattleStats,enemyBattleStats){
+func.calculatePlayerAttack = function(playerBattleStats,enemyBattleStats){
     playerAttackDamage = Math.max(Math.floor(
         //Avg damage of 1, central outcomes more likely
         1.25 * Math.random()*playerBattleStats.attack*playerBattleStats.attackMultiplier 
@@ -210,7 +212,7 @@ function calculatePlayerAttack(playerBattleStats,enemyBattleStats){
         return playerAttackDamage
 };
 
-function calculateEnemyAttack(playerBattleStats,enemyBattleStats){
+func.calculateEnemyAttack = function(playerBattleStats,enemyBattleStats){
     enemyAttackDamage = Math.max(Math.floor(
         //Avg damage of 1, central outcomes more likely
         1.25 * Math.random()*enemyBattleStats.attack*enemyBattleStats.attackMultiplier
@@ -225,7 +227,7 @@ function calculateEnemyAttack(playerBattleStats,enemyBattleStats){
         return enemyAttackDamage;
 };
 
-function playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage){
+func.playerZeroDamage = function(playerAbility, abilityData, playerBattleStats, playerAttackDamage){
 //Determine if player should deal zero damage this turn
     if(
         playerBattleStats.stun == 1 ||
@@ -237,7 +239,7 @@ function playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerA
     return playerAttackDamage;
 };
 
-function enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage){
+func.enemyZeroDamage = function(enemyAbility, enemyBattleStats, enemyAttackDamage){
 //Determine if the enemy should deal zero damage this turn
     if(
         enemyBattleStats.stun == 1 ||
@@ -249,7 +251,7 @@ function enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage){
     return enemyAttackDamage;
 };
 
-function resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData){
+func.resetSingleTurnEffects = function(playerBattleStats,enemyBattleStats,battleData){
     //Abilities that only last one turn
     enemyBattleStats.stun = 0;
     playerBattleStats.stun = 0;
@@ -264,7 +266,7 @@ function resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData){
     return [playerBattleStats,enemyBattleStats,battleData]
 };
 
-function dealDamage(damage, stats){
+func.dealDamage = function(damage, stats){
 //Update enemy armor and health based on enemy damage
     stats.armor = Math.max(stats.armor - damage,0);//Damage goes to armor first
     stats.health -= Math.max((damage - stats.armor),0);//Remaining damage goes to health
@@ -272,9 +274,9 @@ function dealDamage(damage, stats){
     return stats;
 };
 
-function playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
+func.playerPriorityAttack = function(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
 
-    enemyBattleStats = dealDamage(playerAttackDamage, enemyBattleStats);
+    enemyBattleStats = func.dealDamage(playerAttackDamage, enemyBattleStats);
 
     battleData.battleText = battleData.battleText.concat(`You strike fast with `);
     battleData.battleText = battleData.battleText.concat(abilityData[playerAbility]["name"]);
@@ -286,9 +288,9 @@ function playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemy
 
 };
 
-function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
+func.enemyPriorityAttack = function(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
 
-    playerBattleStats = dealDamage(enemyAttackDamage, playerBattleStats);
+    playerBattleStats = func.dealDamage(enemyAttackDamage, playerBattleStats);
 
     battleData.battleText = battleData.battleText.concat(`The enemy strike fast with `);
     battleData.battleText = battleData.battleText.concat(enemyAbility["name"]);
@@ -300,9 +302,9 @@ function enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,ba
 
 };
 
-function executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
+func.executePlayerAttack = function(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData){
 
-    enemyBattleStats = dealDamage(playerAttackDamage, enemyBattleStats);
+    enemyBattleStats = func.dealDamage(playerAttackDamage, enemyBattleStats);
 
     battleData.battleText = battleData.battleText.concat(`You use `);
     battleData.battleText = battleData.battleText.concat(abilityData[playerAbility]["name"]);
@@ -314,9 +316,9 @@ function executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyB
 
 };
 
-function executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
+func.executeEnemyAttack = function(enemyAttackDamage,enemyAbility,playerBattleStats,battleData){
 
-    playerBattleStats = dealDamage(enemyAttackDamage, playerBattleStats);
+    playerBattleStats = func.dealDamage(enemyAttackDamage, playerBattleStats);
 
     battleData.battleText = battleData.battleText.concat(`The enemy uses `);
     battleData.battleText = battleData.battleText.concat(enemyAbility["name"]);
@@ -328,7 +330,7 @@ function executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,bat
 
 };
 
-function calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison){
+func.calculatePlayerPoison = function(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison){
 
     enemyBattleStats.poison += playerAbilityPoison;
 
@@ -338,7 +340,7 @@ function calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleS
 
 };
 
-function calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison){
+func.calculateEnemyPoison = function(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison){
 
     playerBattleStats.poison += enemyAbilityPoison;
 
@@ -348,7 +350,7 @@ function calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbi
 
 };
 
-function deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage){
+func.deadNoDamage = function(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage){
     if (playerBattleStats.health <= 0){
         playerAttackDamage = 0
     }
@@ -358,7 +360,7 @@ function deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, en
     return [playerAttackDamage,enemyAttackDamage]
 };
 
-function calculateEnemyStunned(abilityData, playerAbility, enemyBattleStats){
+func.calculateEnemyStunned = function(abilityData, playerAbility, enemyBattleStats){
     if(abilityData[playerAbility]["stun"] >= Math.random()){
         enemyBattleStats.stun = 1
     } else{
@@ -372,7 +374,7 @@ function calculateEnemyStunned(abilityData, playerAbility, enemyBattleStats){
     return enemyBattleStats
 };
 
-function calculatePlayerStunned(enemyAbility, playerBattleStats){
+func.calculatePlayerStunned = function(enemyAbility, playerBattleStats){
     if(enemyAbility["stun"] >= Math.random()){
         playerBattleStats.stun = 1
     } else{
@@ -386,7 +388,7 @@ function calculatePlayerStunned(enemyAbility, playerBattleStats){
     return playerBattleStats
 };
 
-function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
+func.setStatChanges = function(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
     if (abilityData[playerAbility]["selfAttack"] !== null) {
         playerBattleStats.attackMultiplier *= abilityData[playerAbility]["selfAttack"];
         battleData.battleText = battleData.battleText.concat(`You have increased your attack.<br>`);
@@ -424,7 +426,7 @@ function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, pl
     return battleData
 };
 
-function setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData){
+func.setPoisonStunBattletext = function(playerBattleStats,enemyBattleStats, battleData){
     if(playerBattleStats.poison>0){battleData.battleText = battleData.battleText.concat(`Poison deals you `+playerBattleStats.poison+` damage<br>`)};
     if(enemyBattleStats.poison>0){battleData.battleText = battleData.battleText.concat(`Poison deals the enemy `+enemyBattleStats.poison+` damage<br>`)};
     if(playerBattleStats.stun==1){battleData.battleText = battleData.battleText.concat(`You have been stunned!<br>`)};
@@ -433,7 +435,7 @@ function setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData)
     return battleData;
 };
 
-function loseBattle(battleStatusData, enemyBattleStats){
+func.loseBattle = function(battleStatusData, enemyBattleStats){
 
     //Clear enemy stats and image on the page
     setEnemyStats({name:"None",health:0,maxhealth:0,armor:0,status:"",enemyPowerlevel:0},"../images/blank.png");
@@ -452,7 +454,7 @@ function loseBattle(battleStatusData, enemyBattleStats){
     return [battleStatusData, enemyBattleStats];
 };
 
-function rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats){
+func.rewardBattleText = function(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats){
     
     let rewardName
 
@@ -482,7 +484,7 @@ function rewardBattleText(winstreakReward, winstreakList, battleSettingData, bat
     return [battleData, playerBattleStats];
 };
 
-function calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData){
+func.calculateWinstreakReward = function(enemyBattleStats, winstreakList, winstreakReward,battleStatusData){
     if (winstreakReward == "acorncoin" && winstreakList[battleStatusData.winstreak-1]){//If arena rewards acorn coins
         enemyBattleStats.acorncoin += winstreakList[battleStatusData.winstreak-1];//Add acorncoins according to the winstreak list
     };
@@ -498,10 +500,10 @@ function calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakRewa
     return enemyBattleStats
 };
 
-function updatePlayerCoins(playerBattleStats,enemyBattleStats){
+func.updatePlayerCoins = function(playerBattleStats,enemyBattleStats){
     if (playerBattleStats.health <= 0){
 
-        [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats)
+        [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats)
 
     }
 
@@ -511,13 +513,13 @@ function updatePlayerCoins(playerBattleStats,enemyBattleStats){
         playerBattleStats.mushroomcoin += enemyBattleStats.mushroomcoin;
         playerBattleStats.bearclawcoin += enemyBattleStats.bearclawcoin;
 
-        [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats)
+        [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats)
     }
 
     return [playerBattleStats, enemyBattleStats];
 };
 
-function generateRewardImages(enemyBattleStats){
+func.generateRewardImages = function(enemyBattleStats){
             //Loop to create acorn icons
             var i = 1;
             while (i <= enemyBattleStats.acorncoin){
@@ -561,7 +563,7 @@ function generateRewardImages(enemyBattleStats){
             }
 };
 
-function battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatusData, battleSettingData){
+func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, battleStatusData, battleSettingData){
 
     if(enemyBattleStats.health > 0 && playerBattleStats.health > 0){//Can't reset if player and enemy are both alive
 
@@ -569,7 +571,7 @@ function battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatu
         document.getElementById("battle-text-div").innerHTML = battleData.battleText; 
 
     }else if((battleStatusData.result == "lose") || (!battleSettingData.singleBattle)){//Can update if player is dead or repeatable battle
-        restartBattle();
+        initializeFunc.restartBattle();
         pageSetup();
     
     }else {//Can't repeat if not a repeatable battle
@@ -580,10 +582,10 @@ function battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatu
     };
 };
 
-function attack(playerAbility){
+func.attack = function(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
-        let fleeSuccessful = flee(battleStatusData.playerAlive,battleStatusData,battleSettingData.escape,playerBattleStats);
+        let fleeSuccessful = func.flee(battleStatusData.playerAlive,battleStatusData,battleSettingData.escape,playerBattleStats);
 
         if (fleeSuccessful){
             return;
@@ -591,12 +593,12 @@ function attack(playerAbility){
 
     }
 
-    let enemyAbility = determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
-    enemyAbility = determineEnemyStunned(enemyAbility, enemyBattleStats); //If enemy is stunned, overwrite enemy ability
-    playerAbility = determinePlayerStunned(playerAbility, playerBattleStats); //If player is stunned, overwrite player ability
+    let enemyAbility = func.determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
+    enemyAbility = func.determineEnemyStunned(enemyAbility, enemyBattleStats); //If enemy is stunned, overwrite enemy ability
+    playerAbility = func.determinePlayerStunned(playerAbility, playerBattleStats); //If player is stunned, overwrite player ability
 
     //Set attack and defense multipliers for this turn based on player and enemy abilities
-    [playerBattleStats, enemyBattleStats] = setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
+    [playerBattleStats, enemyBattleStats] = func.setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
     
     //Determine if either player's attack had priority
     let [playerPriority, enemyPriority] = [abilityData[playerAbility]["priority"],enemyAbility["priority"]];
@@ -608,64 +610,64 @@ function attack(playerAbility){
         playerBattleStats.armor += abilityData[playerAbility]["armor"];
         enemyBattleStats.armor += enemyAbility["armor"];
 
-        playerAttackDamage = calculatePlayerAttack(playerBattleStats,enemyBattleStats);
-        enemyAttackDamage = calculateEnemyAttack(playerBattleStats,enemyBattleStats);
+        playerAttackDamage = func.calculatePlayerAttack(playerBattleStats,enemyBattleStats);
+        enemyAttackDamage = func.calculateEnemyAttack(playerBattleStats,enemyBattleStats);
 
-        playerAttackDamage = playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
-        enemyAttackDamage = enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage);
+        playerAttackDamage = func.playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
+        enemyAttackDamage = func.enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage);
     
         playerAbilityPoison = abilityData[playerAbility]["poison"];
         enemyAbilityPoison = enemyAbility["poison"];
 
         //Reset single turn effects including stun, player status, and battle text
-        [playerBattleStats,enemyBattleStats,battleData] = resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData)
+        [playerBattleStats,enemyBattleStats,battleData] = func.resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData)
 
         //Player and enemy deal any priority attack damage
         if (playerPriority){
-            [enemyBattleStats,battleData] = playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
+            [enemyBattleStats,battleData] = func.playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
         };
 
         if(enemyPriority){
-            [playerBattleStats,battleData] = enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
+            [playerBattleStats,battleData] = func.enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
         }
 
         //Set player/enemy damage to zero if they are dead
-        [playerAttackDamage,enemyAttackDamage] = deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage);
+        [playerAttackDamage,enemyAttackDamage] = func.deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage);
     
         //Player and enemy calculate poison damage
         if (playerBattleStats.health >= 0){
-            [enemyBattleStats,battleData] = calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison);
+            [enemyBattleStats,battleData] = func.calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison);
         };
 
         if(enemyBattleStats.health >= 0){
-            [playerBattleStats,battleData] = calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison);
+            [playerBattleStats,battleData] = func.calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison);
         }
 
         //Player and enemy deal non-priority attack damage
         if (!playerPriority && (playerAttackDamage != 0)){
-            [enemyBattleStats,battleData] = executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
+            [enemyBattleStats,battleData] = func.executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
         };
 
         if(!enemyPriority && (enemyAttackDamage !=0)){
-            [playerBattleStats,battleData] = executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
+            [playerBattleStats,battleData] = func.executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
         }
 
         //Deal poison damage
         if(enemyBattleStats.poison>0){
-            dealDamage(enemyBattleStats.poison, enemyBattleStats);//Player takes poison damage
+            func.dealDamage(enemyBattleStats.poison, enemyBattleStats);//Player takes poison damage
         };
 
         if(playerBattleStats.poison>0){
-            dealDamage(playerBattleStats.poison, playerBattleStats);//Enemy takes poison damage
+            func.dealDamage(playerBattleStats.poison, playerBattleStats);//Enemy takes poison damage
         };
 
         //Determine if player/enemy are stunned next turn
-        enemyBattleStats = calculateEnemyStunned(abilityData, playerAbility,enemyBattleStats)
-        playerBattleStats = calculatePlayerStunned(enemyAbility, playerBattleStats)
+        enemyBattleStats = func.calculateEnemyStunned(abilityData, playerAbility,enemyBattleStats)
+        playerBattleStats = func.calculatePlayerStunned(enemyAbility, playerBattleStats)
 
         //Set battle text 
-        battleData = setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats);
-        battleData = setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData);
+        battleData = func.setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats);
+        battleData = func.setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData);
     
         battleStatusData.battleTurn +=1;
 
@@ -674,12 +676,12 @@ function attack(playerAbility){
         setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
         //Save battle status array in local storage
-        saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+        initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
         //Ending the turn if the player died
         if(playerBattleStats.health <= 0){
 
-            [battleStatusData, enemyBattleStats] = loseBattle(battleStatusData, enemyBattleStats);
+            [battleStatusData, enemyBattleStats] = func.loseBattle(battleStatusData, enemyBattleStats);
 
             //Revive if player has a leaf coin
             if(playerBattleStats.leafcoin > 0){
@@ -690,9 +692,9 @@ function attack(playerAbility){
                 battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
                 setBattleText(battleData.battleText);
 
-                [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats);
+                [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats);
                 setStats(playerBattleStats);
-                saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+                initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
                 enemyBattleStats.health = 0;
                 enemyBattleStats.acorncoin = 0;
@@ -703,7 +705,7 @@ function attack(playerAbility){
                 battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
                 setBattleText(battleData.battleText);
     
-                gameOver();
+                func.gameOver();
             };
 
         //Ending the turn if the player lived
@@ -715,7 +717,7 @@ function attack(playerAbility){
                 battleStatusData.winstreak += 1
                 battleData.battleText = battleData.battleText.concat("Your win streak is "+battleStatusData.winstreak+".<br>")
 
-                rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
+                func.rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
 
             }else{
 
@@ -723,7 +725,7 @@ function attack(playerAbility){
 
             }
 
-            saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
         }
 
@@ -733,19 +735,24 @@ function attack(playerAbility){
 
             stopPlayerAttack();
 
-            enemyBattleStats = calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
+            enemyBattleStats = func.calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
 
-            [playerBattleStats, enemyBattleStats] = updatePlayerCoins(playerBattleStats,enemyBattleStats);
+            [playerBattleStats, enemyBattleStats] = func.updatePlayerCoins(playerBattleStats,enemyBattleStats);
 
             setStats(playerBattleStats);
             setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
-            saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
-            generateRewardImages(enemyBattleStats);
+            func.generateRewardImages(enemyBattleStats);
 
         };
 
     };
 
+}
+
+//If running in node, export all functions
+if (typeof exports === 'object'){
+    module.exports = {func}
 }

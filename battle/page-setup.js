@@ -62,10 +62,10 @@ function setEnemyPowerlevel(stats){
 function stopPlayerAttack(){
 
      //Abilities use the empty function while player is dead
-     document.getElementById("attack1").setAttribute('onClick',"empty();");
-     document.getElementById("attack2").setAttribute('onClick',"empty();");
-     document.getElementById("attack3").setAttribute('onClick',"empty();");
-     document.getElementById("attack4").setAttribute('onClick',"empty();");  
+     document.getElementById("attack1").setAttribute('onClick',"func.empty();");
+     document.getElementById("attack2").setAttribute('onClick',"func.empty();");
+     document.getElementById("attack3").setAttribute('onClick',"func.empty();");
+     document.getElementById("attack4").setAttribute('onClick',"func.empty();");  
 
 }
 
