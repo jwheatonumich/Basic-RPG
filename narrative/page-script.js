@@ -70,6 +70,8 @@ function narrative(script, image, buttonName, buttonClick,heal=false,mandatory=f
         //Set battlesettings to mandatory
         battleSettings.mandatory = true
         localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
+
+
     }
 }
 

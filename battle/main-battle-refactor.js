@@ -405,19 +405,19 @@ function setStatChanges(abilityData, playerAbility, enemyAbility, battleData, pl
     };
 
     if (enemyAbility["selfAttack"] !== null) {
-        enemyAttack *= enemyAbility["selfAttack"];
+        enemyBattleStats.enemyAttack *= enemyAbility["selfAttack"];
         battleData.battleText = battleData.battleText.concat(`Your opponent increased their attack.<br>`);
     };
     if (enemyAbility["selfDefense"] !== null) {
-        enemyAttack *= enemyAbility["selfDefense"];
+        enemyBattleStats.enemyAttack *= enemyAbility["selfDefense"];
         battleData.battleText = battleData.battleText.concat(`Your opponent increased their defense<br>`);
     };
     if (enemyAbility["opponentAttack"] !== null) {
-        playerAttack *= enemyAbility["opponentAttack"];
+        playerBattleStats.playerAttack *= enemyAbility["opponentAttack"];
         battleData.battleText = battleData.battleText.concat(`Your opponent decreased your attack<br>`);
     };
     if (enemyAbility["opponentDefense"] !== null) {
-        playerAttack *= enemyAbility["opponentDefense"];
+        playerBattleStats.playerAttack *= enemyAbility["opponentDefense"];
         battleData.battleText = battleData.battleText.concat(`Your opponent decreased your defense<br>`);
     };
 
