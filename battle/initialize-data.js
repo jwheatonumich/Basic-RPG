@@ -67,6 +67,11 @@ function playerSetup(playerStats,battleStatus){
         playerBattleStats.poison = battleStatus.playerPoison;
         playerBattleStats.stun = battleStatus.playerStun;
         playerBattleStats.status = battleStatus.playerStatus;
+        playerBattleStats.attack = battleStatusData.playerAttack;
+        playerBattleStats.defense = battleStatusData.playerDefense;
+        playerBattleStats.attackMultiplier = battleStatusData.playerAttackMultiplier;
+        playerBattleStats.defenseMultiplier = battleStatusData.playerDefenseMultiplier;
+        playerBattleStats.armor = battleStatusData.playerArmor;
 
         playerBattleStats.battleTurn = battleStatus.battleTurn;
         playerBattleStats.winstreak = battleStatus.winstreak;
@@ -107,6 +112,13 @@ function enemySetup(enemyStats,battleStatusData,playerStats){
         tempStats.poison = battleStatusData.enemyPoison;
         tempStats.stun = battleStatusData.enemyStun;
         tempStats.status = battleStatusData.enemyStatus;
+        tempStats.attack = battleStatusData.enemyAttack;
+        tempStats.defense = battleStatusData.enemyDefense;
+        tempStats.attackMultiplier = battleStatusData.enemyAttackMultiplier;
+        tempStats.defenseMultiplier = battleStatusData.enemyDefenseMultiplier;
+        tempStats.armor = battleStatusData.enemyArmor;
+        
+        console.log(battleStatusData)
 
     }
 
@@ -180,6 +192,16 @@ function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
     battleStatusData.enemyStun = enemyBattleStats.stun;
     battleStatusData.playerStatus = playerBattleStats.status;
     battleStatusData.enemyStatus = enemyBattleStats.status;
+    battleStatusData.playerAttack = playerBattleStats.attack;
+    battleStatusData.enemyAttack = enemyBattleStats.attack;
+    battleStatusData.playerDefense = playerBattleStats.defense;
+    battleStatusData.enemyDefense = enemyBattleStats.defense;
+    battleStatusData.playerAttackMultiplier = playerBattleStats.attackMultiplier;
+    battleStatusData.enemyAttackMultiplier = enemyBattleStats.attackMultiplier;
+    battleStatusData.playerDefenseMultiplier = playerBattleStats.defenseMultiplier;
+    battleStatusData.enemyDefenseMultiplier = enemyBattleStats.defenseMultiplier;
+    battleStatusData.playerArmor = playerBattleStats.armor;
+    battleStatusData.enemyArmor = enemyBattleStats.armor;
 
     //Save battle status array in local storage
     localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));

@@ -36,7 +36,6 @@ function determinePlayerStunned(playerAbility, playerBattleStats){
 };
 
 function storeDefaultStatus(){
-    //battleStatusData.inProgress = false;
     battleStatusData.result = "";
     storeJSON(battleStatusData, 'battleStatusData')
 };
@@ -51,45 +50,53 @@ function storeDefaultSettings(){
 function flee(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
     if(playerBattleStats.health <= 0){
 
+        //Game is over, go to start screen
         gameOver();
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
-        return "Player was dead, game over"; //Stop the function
+        return true;
 
     } else if(!playerAlive){
 
+        //Battle is no longer active
+        storeDefaultStatus()
+
+        //Go to prior page
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
-        return "Player fleed after losing battle"; //Stop the function
+        return true;
 
     }else if(battleStatusData.result == "win"){
 
         storeDefaultStatus() //Don't save battle progress when you exit
         storeDefaultSettings() //Load default settings into global variables
         window.location.href = localStorage.getItem("lastPage"); //Exit to the prior page
-        return "Player won battle, succesfully left"; //Stop the function
+        return true;
 
     } else if(!escapeSetting){
 
         //Update the battle text for the current turn
         battleText = "You cannot flee this battle!";
         document.getElementById("battle-text-div").innerHTML = battleText;
-        return "Battle in progress, no escape allowed"; //Stop the function
+        return false;
 
     } else{ //Player attempts to flee from battle
         
         var fleeChance = Math.random(); //Determines flee success
 
         if (fleeChance > 0.5){//If flee successful, leave battle
-
+            
             [playerBattleStats, enemyBattleStats] = battleCleanup(playerBattleStats, enemyBattleStats); //Save changes to player stats
             storeDefaultStatus(); //Don't save the battle progress when you exit
             storeDefaultSettings();//Load default settings into global variables
             window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
-            return "Battle in progress, player succesfully escaped";//Stop the function
+
+            console.log(battleStatusData.result);
+
+            return true;
 
         } else{ //If flee not successful, player stunned for a round of battle
 
             playerBattleStats.stun = 1;
-            return "Battle in progress, player tried and failed to escape";//Stop the function
+            return false;
 
         };
     };
@@ -576,7 +583,12 @@ function battleReset(playerBattleStats,enemyBattleStats, battleData, battleStatu
 function attack(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
-        flee(battleStatusData.playerAlive,battleStatusData,battleSettingData.escape,playerBattleStats)
+        let fleeSuccessful = flee(battleStatusData.playerAlive,battleStatusData,battleSettingData.escape,playerBattleStats);
+
+        if (fleeSuccessful){
+            return;
+        }
+
     }
 
     let enemyAbility = determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
@@ -705,7 +717,13 @@ function attack(playerAbility){
 
                 rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
 
+            }else{
+
+            battleStatusData.result = "active"
+
             }
+
+            saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
 
         }
 
