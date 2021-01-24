@@ -143,6 +143,7 @@ function setPlayerAbilities(playerStats){
     return playerStats
 };
 
+//Set initial battle text
 function setBattleData(){
     battleData = {}
     battleData.battleText = `Press an attack button to begin.`;
@@ -150,6 +151,7 @@ function setBattleData(){
     return battleData;
 };
 
+//Add 'result' and 'playerAlive' default values if none exist
 function setBattleStatusData(battleStatusData){
 
     if (!battleStatusData.hasOwnProperty("result")){
@@ -166,6 +168,7 @@ function setBattleStatusData(battleStatusData){
 
 }
 
+//Save battle status data to local storage
 function saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats){
 
     battleStatusData.enemyID = chosenEnemy.enemyID;
