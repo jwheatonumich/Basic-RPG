@@ -1,14 +1,6 @@
-function match(x,y){
-    if(x===y){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-describe('match()', function() {
+describe('Testing the setPlayerMultipliers function', function() {
     it('tests if inputs match', function() {
-        var result = match(1,2);
-        wish(result);
+        var result = calculatePlayerAttack({attack:1000,attackMultiplier:1},{defense:0,defenseMultiplier:0});
+        expect(result) > 100;
     });
 });

@@ -2,7 +2,8 @@
   "name": "project",
   "version": "0.0.1",
   "devDependencies": {
-    "mocha": "2.1.0",
-    "wish": "1.0.1"
+    "chai": "1.10.0",
+    "mocha": "2.1.0"
   }
 }
+

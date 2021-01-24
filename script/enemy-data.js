@@ -193,7 +193,7 @@ enemyStats = [
     {
         "name":"Squirrel Master","enemyID":18,"enemyImage":"../images/squirrel-trainer-fight.png",
         "stats":{
-            "name":"Squirrel Master", "enemyID":18, "species":"mushroom",
+            "name":"Squirrel Master", "enemyID":18, "species":"squirrel",
             "health":100, "maxhealth":100, "attack":300, "defense":25, 
             "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
             "acorncoin":10, "mushroomcoin":0, "bearclawcoin":0 
