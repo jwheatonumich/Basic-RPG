@@ -46,7 +46,7 @@ func.storeDefaultSettings = function(){
     battleSettingData.escape = true;
     battleSettingData.singleBattle = false;
     battleSettingData.mandatory = false;
-    storeJSON(battleSettingData, 'battleSettings')
+    initializeFunc.storeJSON(battleSettingData, 'battleSettings')
 };
 
 func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
@@ -443,16 +443,23 @@ func.loseBattle = function(battleStatusData, enemyBattleStats){
     //Attack buttons stop working
     stopPlayerAttack();
 
+    //Reset player status and enemy health
+    [battleStatusData, enemyBattleStats] = func.resetBattleStatus(battleStatusData, enemyBattleStats)
+
+    //Save player and enemy stats in local storage
+    initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData);
+
+    return [battleStatusData, enemyBattleStats];
+};
+
+func.resetBattleStatus = function(battleStatusData, enemyBattleStats){
     battleStatusData.playerAlive = false
     battleStatusData.result = "lose";
     battleStatusData.winstreak = 0;
     enemyBattleStats.health = enemyBattleStats.maxhealth;
 
-    //Save player and enemy stats in local storage
-    saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
-
     return [battleStatusData, enemyBattleStats];
-};
+}
 
 func.rewardBattleText = function(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats){
     
@@ -676,7 +683,7 @@ func.attack = function(playerAbility){
         setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
         //Save battle status array in local storage
-        initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+        initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
 
         //Ending the turn if the player died
         if(playerBattleStats.health <= 0){
@@ -694,7 +701,7 @@ func.attack = function(playerAbility){
 
                 [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats);
                 setStats(playerBattleStats);
-                initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+                initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
 
                 enemyBattleStats.health = 0;
                 enemyBattleStats.acorncoin = 0;
@@ -725,7 +732,7 @@ func.attack = function(playerAbility){
 
             }
 
-            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
 
         }
 
@@ -742,7 +749,7 @@ func.attack = function(playerAbility){
             setStats(playerBattleStats);
             setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
-            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats);
+            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
 
             func.generateRewardImages(enemyBattleStats);
 

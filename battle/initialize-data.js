@@ -180,9 +180,7 @@ initializeFunc.setBattleStatusData = function(battleStatusData){
 
 }
 
-//Save battle status data to local storage
-initializeFunc.saveProgress = function(chosenEnemy,playerBattleStats,enemyBattleStats){
-
+initializeFunc.updateBattleStatusData = function(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData){
     battleStatusData.enemyID = chosenEnemy.enemyID;
     battleStatusData.playerHealth = playerBattleStats.health;
     battleStatusData.enemyHealth = enemyBattleStats.health;
@@ -202,6 +200,14 @@ initializeFunc.saveProgress = function(chosenEnemy,playerBattleStats,enemyBattle
     battleStatusData.enemyDefenseMultiplier = enemyBattleStats.defenseMultiplier;
     battleStatusData.playerArmor = playerBattleStats.armor;
     battleStatusData.enemyArmor = enemyBattleStats.armor;
+
+    return battleStatusData;
+}
+
+//Save battle status data to local storage
+initializeFunc.saveProgress = function(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData){
+
+    battleStatusData = initializeFunc.updateBattleStatusData(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
 
     //Save battle status array in local storage
     localStorage.setItem('battleStatusData',  JSON.stringify(battleStatusData));
@@ -236,7 +242,7 @@ initializeFunc.initializeBattle = function(){
 
     battleStatusData = initializeFunc.setBattleStatusData(battleStatusData);
 
-    battleStatusData = initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats)
+    battleStatusData = initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData);
 
 }
 

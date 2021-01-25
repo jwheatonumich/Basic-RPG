@@ -34,7 +34,7 @@ playerZeroDamage("powerDown", abilityData, {stun:0}, 10) === 0)){
     throw 'playerZeroDamage function not working correctly'
 }
 
-//Test playerZeroDamage function
+//Test enemyZeroDamage function
 if(!(enemyZeroDamage(abilityData["attack"], {stun:0}, 10) === 10 &&
 enemyZeroDamage(abilityData["attack"], {stun:1}, 10) === 0 &&
 enemyZeroDamage(abilityData["powerDown"], {stun:0}, 10) === 0)){
@@ -50,7 +50,7 @@ resetSingleTurnEffects({},{},{})[2].battleText ==="")){
     throw 'resetSingleTurnEffects function not working correctly'
 }
 
-//Testp dealDamage function
+//Test dealDamage function
 if(!(dealDamage(5, {armor:0, health:10}).armor === 0 &&
 dealDamage(5, {armor:0, health:10}).health === 5 &&
 dealDamage(5, {armor:10, health:10}).armor == 5 &&
