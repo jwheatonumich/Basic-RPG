@@ -189,10 +189,10 @@ func.battleCleanup = function(playerBattleStats, enemyBattleStats){
 };
 
 func.setPlayerMultipliers = function(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats){
-    playerBattleStats.attackMultiplier = parseInt(abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"]);
-    playerBattleStats.defenseMultiplier = parseInt(abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"]);
-    enemyBattleStats.attackMultiplier = parseInt(abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"]);
-    enemyBattleStats.defenseMultiplier = parseInt(abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"]); 
+    playerBattleStats.attackMultiplier = parseFloat(abilityData[playerAbility]["selfAttackMultiplier"]*enemyAbility["opponentAttackMultiplier"]);
+    playerBattleStats.defenseMultiplier = parseFloat(abilityData[playerAbility]["selfDefenseMultiplier"]*enemyAbility["opponentDefenseMultiplier"]);
+    enemyBattleStats.attackMultiplier = parseFloat(abilityData[playerAbility]["opponentAttackMultiplier"]*enemyAbility["selfAttackMultiplier"]);
+    enemyBattleStats.defenseMultiplier = parseFloat(abilityData[playerAbility]["opponentDefenseMultiplier"]*enemyAbility["selfDefenseMultiplier"]); 
 
     return [playerBattleStats, enemyBattleStats];
 };
@@ -223,6 +223,8 @@ func.calculateEnemyAttack = function(playerBattleStats,enemyBattleStats){
         - .75 * playerBattleStats.defense*playerBattleStats.defenseMultiplier
         - .25 * playerBattleStats.defense*playerBattleStats.defenseMultiplier
         ),1);//Minimum of one damage
+
+        console.log(enemyBattleStats.attack*enemyBattleStats.attackMultiplier)
 
         return enemyAttackDamage;
 };
@@ -390,25 +392,25 @@ func.calculatePlayerStunned = function(enemyAbility, playerBattleStats){
 
 func.setStatChanges = function(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
     if (abilityData[playerAbility]["selfAttack"] !== null) {
-        playerBattleStats.attackMultiplier *= abilityData[playerAbility]["selfAttack"];
+        playerBattleStats.attack *= abilityData[playerAbility]["selfAttack"];
         battleData.battleText = battleData.battleText.concat(`You have increased your attack.<br>`);
     };
     if (abilityData[playerAbility]["selfDefense"] !== null) {
-        playerBattleStats.defenseMultiplier *= abilityData[playerAbility]["selfDefense"];
+        playerBattleStats.defense *= abilityData[playerAbility]["selfDefense"];
         battleData.battleText = battleData.battleText.concat(`You have increased your defense.<br>`);
     };
     if (abilityData[playerAbility]["opponentAttack"] !== null) {
-        enemyBattleStats.attackMultiplier *= abilityData[playerAbility]["opponentAttack"];
+        enemyBattleStats.attack *= abilityData[playerAbility]["opponentAttack"];
         battleData.battleText = battleData.battleText.concat(`You have decreased your opponent's attack.<br>`);
     };
     if (abilityData[playerAbility]["opponentDefense"] !== null) {
-        enemyBattleStats.defenseMultiplier *= abilityData[playerAbility]["opponentDefense"];
+        enemyBattleStats.defense *= abilityData[playerAbility]["opponentDefense"];
         battleData.battleText = battleData.battleText.concat(`You have decreased your opponent's defense.<br>`);
     };
 
     if (enemyAbility["selfAttack"] !== null) {
         enemyBattleStats.attack *= enemyAbility["selfAttack"];
-        battleData.battleText = battleData.battleText.concat(`Your opponent   attack.<br>`);
+        battleData.battleText = battleData.battleText.concat(`Your opponent increased their attack.<br>`);
     };
     if (enemyAbility["selfDefense"] !== null) {
         enemyBattleStats.defense *= enemyAbility["selfDefense"];

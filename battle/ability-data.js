@@ -191,7 +191,7 @@ abilityData =
     {
         "name":"Honing Strike",
         //Current turn damage modifiers
-        "selfAttackMultiplier":0.5, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
+        "selfAttackMultiplier":0.9, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
         "selfAttack":1.2, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects

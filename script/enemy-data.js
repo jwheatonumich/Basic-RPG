@@ -259,5 +259,15 @@ enemyStats = [
                     "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
                 },
         },
+
+        {
+            "name":"Gold Spider","enemyID":25,"enemyImage":"../images/gold-spider.png",
+            "stats":{
+                    "name":"Gold Spider", "enemyID":24, "species":"spider",
+                    "health":40, "maxhealth":40, "attack":25, "defense":10,
+                    "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
+                    "acorncoin":5, "mushroomcoin":0, "bearclawcoin":0,
+                },
+        },
         
 ]
