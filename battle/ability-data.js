@@ -129,7 +129,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "leech":0.5, "priority":false,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":1, "priority":false,"skipAttack":false
     },
 
     "stunned": //Gets used when player or enemy is stunned

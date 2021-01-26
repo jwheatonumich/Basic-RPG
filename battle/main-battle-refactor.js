@@ -625,6 +625,10 @@ func.attack = function(playerAbility){
         playerAttackDamage = func.calculatePlayerAttack(playerBattleStats,enemyBattleStats);
         enemyAttackDamage = func.calculateEnemyAttack(playerBattleStats,enemyBattleStats);
 
+        //Add armor for leech attcks
+        playerBattleStats.armor += Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage);
+        enemyBattleStats.armor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
+
         playerAttackDamage = func.playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
         enemyAttackDamage = func.enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage);
     
