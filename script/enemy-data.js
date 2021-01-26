@@ -249,5 +249,15 @@ enemyStats = [
                     "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
                 },
         },
+
+        {
+            "name":"White Spider","enemyID":24,"enemyImage":"../images/white-spider.png",
+            "stats":{
+                    "name":"White Spider", "enemyID":24, "species":"spider",
+                    "health":20, "maxhealth":20, "attack":12, "defense":8, 
+                    "ability1prob":0,"ability2prob":1,"ability3prob":0,"ability4prob":0,
+                    "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
+                },
+        },
         
 ]

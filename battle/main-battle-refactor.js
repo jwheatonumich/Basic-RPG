@@ -407,19 +407,19 @@ func.setStatChanges = function(abilityData, playerAbility, enemyAbility, battleD
     };
 
     if (enemyAbility["selfAttack"] !== null) {
-        enemyBattleStats.enemyAttack *= enemyAbility["selfAttack"];
-        battleData.battleText = battleData.battleText.concat(`Your opponent increased their attack.<br>`);
+        enemyBattleStats.attack *= enemyAbility["selfAttack"];
+        battleData.battleText = battleData.battleText.concat(`Your opponent   attack.<br>`);
     };
     if (enemyAbility["selfDefense"] !== null) {
-        enemyBattleStats.enemyAttack *= enemyAbility["selfDefense"];
+        enemyBattleStats.defense *= enemyAbility["selfDefense"];
         battleData.battleText = battleData.battleText.concat(`Your opponent increased their defense<br>`);
     };
     if (enemyAbility["opponentAttack"] !== null) {
-        playerBattleStats.playerAttack *= enemyAbility["opponentAttack"];
+        playerBattleStats.attack *= enemyAbility["opponentAttack"];
         battleData.battleText = battleData.battleText.concat(`Your opponent decreased your attack<br>`);
     };
     if (enemyAbility["opponentDefense"] !== null) {
-        playerBattleStats.playerAttack *= enemyAbility["opponentDefense"];
+        playerBattleStats.defense *= enemyAbility["opponentDefense"];
         battleData.battleText = battleData.battleText.concat(`Your opponent decreased your defense<br>`);
     };
 
@@ -485,6 +485,9 @@ func.rewardBattleText = function(winstreakReward, winstreakList, battleSettingDa
     //Redirect the player to the post battle narrative, if it exists
     if(battleSettingData.postBattleNarrative){
         playerBattleStats.scriptedBattle = battleSettingData.postBattleNarrative;
+
+        localStorage.setItem('scriptName',battleSettingData.postBattleNarrative); //Store the narrative that comes after the fight
+
         localStorage.setItem('lastPage',  "../narrative/narrative.html");
     };
 

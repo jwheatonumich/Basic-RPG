@@ -51,8 +51,13 @@ initializeFunc.selectEnemy = function(list,battleStatus,enemyStats){
 //Store player stats in an object
 initializeFunc.playerSetup = function(playerStats,battleStatus){
 
+    playerBattleStats = {};
+
     //Load base player stats
-    playerBattleStats = playerStats;
+    for (i in playerStats){
+        playerBattleStats[i] = playerStats[i];
+    }
+    
 
     playerBattleStats.armor = 0;
     playerBattleStats.stun = 0;
