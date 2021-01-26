@@ -239,5 +239,15 @@ enemyStats = [
                 "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
             },
     },
+
+        {
+            "name":"Black Spider","enemyID":23,"enemyImage":"../images/black-spider.png",
+            "stats":{
+                    "name":"Black Spider", "enemyID":23, "species":"spider",
+                    "health":15, "maxhealth":15, "attack":10,"defense":5, 
+                    "ability1prob":0.25,"ability2prob":0.25,"ability3prob":0.25,"ability4prob":0.25,
+                    "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
+                },
+        },
         
 ]

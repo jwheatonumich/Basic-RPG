@@ -17,6 +17,14 @@ speciesData
             "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/charge-button.png","attackbutton3":"../images/berserk-button.png","attackbutton4":"../images/quickattack-button.png"
         },
 
+        "spider":
+        {
+            "attack1Name":"poisonJab","attack2Name":"disarmingStrike","attack3Name":"webStrike","attack4Name":"honingStrike",
+            "attack1DisplayName":"Poison Jab","attack2DisplayName":"Disarming Strike","attack3DisplayName":"Web Strike","attack4DisplayName":"Honing Strike",
+            "attack1":"func.attack('poisonJab')","attack2":"func.attack('disarmingStrike')","attack3":"func.attack('webStrike')","attack4":"func.attack('honingStrike')",
+            "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/charge-button.png","attackbutton3":"../images/berserk-button.png","attackbutton4":"../images/quickattack-button.png"
+        },
+
         "mushroom":
         {
             "attack1Name":"attack","attack2Name":"poison","attack3Name":"block","attack4Name":"absorb",
