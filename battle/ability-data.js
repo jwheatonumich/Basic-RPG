@@ -189,12 +189,12 @@ abilityData =
 
     "honingStrike":
     {
-        "name":"Web Strike",
+        "name":"Honing Strike",
         //Current turn damage modifiers
         "selfAttackMultiplier":0.5, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
         "selfAttack":1.2, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "leech":0, "priority":true,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
     },
 }

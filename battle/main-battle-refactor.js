@@ -484,7 +484,7 @@ func.rewardBattleText = function(winstreakReward, winstreakList, battleSettingDa
 
     //Redirect the player to the post battle narrative, if it exists
     if(battleSettingData.postBattleNarrative){
-        playerBattleStats.scriptedBattle = battleSettings.postBattleNarrative;
+        playerBattleStats.scriptedBattle = battleSettingData.postBattleNarrative;
         localStorage.setItem('lastPage',  "../narrative/narrative.html");
     };
 
