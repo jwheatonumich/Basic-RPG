@@ -243,3 +243,21 @@ describe('Test loseBattle function', function() {
         wish(result1[1].health === 100);
     });
 });
+
+describe('addBattleText', function() {
+    it('Check output array after adding element', function() {
+        var result = func.addTextToArray([,,,,,,,,,],"Line1",0);
+        wish(result[0] === "Line1");
+    });
+    it('Check output array after adding element', function() {
+        var result = func.addTextToArray([,,,,,,,,,],"Line5",4);
+        wish(result[4] === "Line5");
+    });
+});
+
+describe('battleTextArrayToString', function() {
+    it('Check concatenated string output', function() {
+        var result = func.arrayToString(["Line1",,"Line3",,,,,,,]);
+        wish(result === "Line1<br>Line3<br>");
+    });
+});

@@ -589,6 +589,34 @@ func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, batt
     };
 };
 
+func.addTextToArray = function(array, text, location){
+
+    //Add the input text to the input array at the input inde position
+    array[location] = text;
+    return array
+
+};
+
+func.arrayToString = function (array){
+
+    let outputString = ""
+
+    for (i in array){
+
+        if(array[i] != undefined){
+
+
+            tempString = array[i]+"<br>"
+            outputString += tempString
+
+        }
+
+    }
+
+    return outputString
+
+};
+
 func.attack = function(playerAbility){
 
     if(playerAbility == "flee"){ //If player tries to flee
