@@ -31,7 +31,7 @@ initializeFunc.selectEnemy = function(list,battleStatus,enemyStats){
     let enemyID = list[Math.floor(Math.random()*list.length)];//Determine a random enemy from the list of enemies
 
     //If battle is in progress, use saved date
-    if (battleStatusData.result == "active" || battleStatusData.result =="win"){
+    if (battleStatusData.result == "active" || battleStatusData.result =="win" || battleStatusData.result == "lose"){
         enemyID = battleStatus.enemyID;
     };
 
@@ -113,7 +113,7 @@ initializeFunc.enemySetup = function(enemyStats,battleStatusData,playerStats){
     tempStats.status = "";
 
     //If battle is in-progress, override with in-progress stats
-    if(battleStatusData.result == "active" || (battleStatusData.result == "win")){
+    if(battleStatusData.result == "active" || battleStatusData.result == "win" || battleStatusData.result == "lose"){
 
         tempStats.health = battleStatusData.enemyHealth;
         tempStats.poison = battleStatusData.enemyPoison;
