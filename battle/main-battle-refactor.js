@@ -58,6 +58,7 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
         return true;
 
     }else if(!escapeSetting){
+
         //Update the battle text for the current turn
         battleText = "You cannot flee this battle!";
         document.getElementById("battle-text-div").innerHTML = battleText;
@@ -259,6 +260,7 @@ func.resetSingleTurnEffects = function(playerBattleStats,enemyBattleStats,battle
 
     //Clear the battle text
     battleData.battleText = "";
+    battleData.battleTextArray = [,,,,,,,,,];
 
     return [playerBattleStats,enemyBattleStats,battleData]
 };
@@ -275,11 +277,13 @@ func.playerPriorityAttack = function(playerAttackDamage,playerAbility,abilityDat
 
     enemyBattleStats = func.dealDamage(playerAttackDamage, enemyBattleStats);
 
-    battleData.battleText = battleData.battleText.concat(`You strike fast with `);
-    battleData.battleText = battleData.battleText.concat(abilityData[playerAbility]["name"]);
-    battleData.battleText = battleData.battleText.concat(`. The enemy takes `);
-    battleData.battleText = battleData.battleText.concat(playerAttackDamage);
-    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+    battleData.battleTextArray[2] = func.arrayToString([
+        `You strike fast with `,
+        abilityData[playerAbility]["name"],
+        `. The enemy takes `,
+        playerAttackDamage,
+        ` damage.`
+    ]);
 
     return [enemyBattleStats,battleData]
 
@@ -289,11 +293,13 @@ func.enemyPriorityAttack = function(enemyAttackDamage,enemyAbility,playerBattleS
 
     playerBattleStats = func.dealDamage(enemyAttackDamage, playerBattleStats);
 
-    battleData.battleText = battleData.battleText.concat(`The enemy strike fast with `);
-    battleData.battleText = battleData.battleText.concat(enemyAbility["name"]);
-    battleData.battleText = battleData.battleText.concat(`. You take `);
-    battleData.battleText = battleData.battleText.concat(enemyAttackDamage);
-    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+    battleData.battleTextArray[3] = func.arrayToString([
+        `The enemy strike fast with `,
+        enemyAbility["name"],
+        `. You take `,
+        enemyAttackDamage,
+        ` damage.`
+    ]);
 
     return [playerBattleStats,battleData]
 
@@ -303,11 +309,13 @@ func.executePlayerAttack = function(playerAttackDamage,playerAbility,abilityData
 
     enemyBattleStats = func.dealDamage(playerAttackDamage, enemyBattleStats);
 
-    battleData.battleText = battleData.battleText.concat(`You use `);
-    battleData.battleText = battleData.battleText.concat(abilityData[playerAbility]["name"]);
-    battleData.battleText = battleData.battleText.concat(`. The enemy takes `);
-    battleData.battleText = battleData.battleText.concat(playerAttackDamage);
-    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+    battleData.battleTextArray[4] = func.arrayToString([
+        `You use `,
+        abilityData[playerAbility]["name"],
+        `. The enemy takes `,
+        playerAttackDamage,
+        ` damage.`
+    ]);
 
     return [enemyBattleStats,battleData]
 
@@ -317,11 +325,13 @@ func.executeEnemyAttack = function(enemyAttackDamage,enemyAbility,playerBattleSt
 
     playerBattleStats = func.dealDamage(enemyAttackDamage, playerBattleStats);
 
-    battleData.battleText = battleData.battleText.concat(`The enemy uses `);
-    battleData.battleText = battleData.battleText.concat(enemyAbility["name"]);
-    battleData.battleText = battleData.battleText.concat(`. You take `);
-    battleData.battleText = battleData.battleText.concat(enemyAttackDamage);
-    battleData.battleText = battleData.battleText.concat(` damage.<br>`);
+    battleData.battleTextArray[5] = func.arrayToString([
+        `The enemy uses `,
+        enemyAbility["name"],
+        `. You take `,
+        enemyAttackDamage,
+        ` damage.`
+    ])
 
     return [playerBattleStats,battleData]
 
@@ -331,7 +341,7 @@ func.calculatePlayerPoison = function(playerAbility,abilityData,battleData,enemy
 
     enemyBattleStats.poison += playerAbilityPoison;
 
-    if(playerAbilityPoison!=0){battleData.battleText = battleData.battleText.concat(`You poison the enemy!<br>`)};
+    if(playerAbilityPoison!=0){battleData.battleTextArray[6] = `You poison the enemy!`};
 
     return [enemyBattleStats,battleData]
 
@@ -341,7 +351,7 @@ func.calculateEnemyPoison = function(enemyAbility,battleData,playerBattleStats,e
 
     playerBattleStats.poison += enemyAbilityPoison;
 
-    if(enemyAbilityPoison!=0){battleData.battleText = battleData.battleText.concat(`The enemy poisons you!<br>`)};
+    if(enemyAbilityPoison!=0){battleData.battleTextArray[7] = `The enemy poisons you!`};
 
     return [playerBattleStats,battleData]
 
@@ -388,46 +398,46 @@ func.calculatePlayerStunned = function(enemyAbility, playerBattleStats){
 func.setStatChanges = function(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
     if (abilityData[playerAbility]["selfAttack"] !== null) {
         playerBattleStats.attack *= abilityData[playerAbility]["selfAttack"];
-        battleData.battleText = battleData.battleText.concat(`You have increased your attack.<br>`);
+        battleData.battleTextArray[8] = `You have increased your attack.`;
     };
     if (abilityData[playerAbility]["selfDefense"] !== null) {
         playerBattleStats.defense *= abilityData[playerAbility]["selfDefense"];
-        battleData.battleText = battleData.battleText.concat(`You have increased your defense.<br>`);
+        battleData.battleTextArray[9] = `You have increased your defense.`;
     };
     if (abilityData[playerAbility]["opponentAttack"] !== null) {
         enemyBattleStats.attack *= abilityData[playerAbility]["opponentAttack"];
-        battleData.battleText = battleData.battleText.concat(`You have decreased your opponent's attack.<br>`);
+        battleData.battleTextArray[10] = `You have decreased your opponent's attack.`;
     };
     if (abilityData[playerAbility]["opponentDefense"] !== null) {
         enemyBattleStats.defense *= abilityData[playerAbility]["opponentDefense"];
-        battleData.battleText = battleData.battleText.concat(`You have decreased your opponent's defense.<br>`);
+        battleData.battleTextArray[11] = `You have decreased your opponent's defense.`;
     };
 
     if (enemyAbility["selfAttack"] !== null) {
         enemyBattleStats.attack *= enemyAbility["selfAttack"];
-        battleData.battleText = battleData.battleText.concat(`Your opponent increased their attack.<br>`);
+        battleData.battleTextArray[12] = `Your opponent increased their attack.`;
     };
     if (enemyAbility["selfDefense"] !== null) {
         enemyBattleStats.defense *= enemyAbility["selfDefense"];
-        battleData.battleText = battleData.battleText.concat(`Your opponent increased their defense<br>`);
+        battleData.battleTextArray[13] = `Your opponent increased their defense`;
     };
     if (enemyAbility["opponentAttack"] !== null) {
         playerBattleStats.attack *= enemyAbility["opponentAttack"];
-        battleData.battleText = battleData.battleText.concat(`Your opponent decreased your attack<br>`);
+        battleData.battleTextArray[14] = `Your opponent decreased your attack`;
     };
     if (enemyAbility["opponentDefense"] !== null) {
         playerBattleStats.defense *= enemyAbility["opponentDefense"];
-        battleData.battleText = battleData.battleText.concat(`Your opponent decreased your defense<br>`);
+        battleData.battleTextArray[15] = `Your opponent decreased your defense`;
     };
 
     return battleData
 };
 
 func.setPoisonStunBattletext = function(playerBattleStats,enemyBattleStats, battleData){
-    if(playerBattleStats.poison>0){battleData.battleText = battleData.battleText.concat(`Poison deals you `+playerBattleStats.poison+` damage<br>`)};
-    if(enemyBattleStats.poison>0){battleData.battleText = battleData.battleText.concat(`Poison deals the enemy `+enemyBattleStats.poison+` damage<br>`)};
-    if(playerBattleStats.stun==1){battleData.battleText = battleData.battleText.concat(`You have been stunned!<br>`)};
-    if(enemyBattleStats.stun==1){battleData.battleText = battleData.battleText.concat(`The enemy has been stunned!<br>`)};
+    if(playerBattleStats.poison>0){battleData.battleTextArray[16] = `Poison deals you `+playerBattleStats.poison+` damage`};
+    if(enemyBattleStats.poison>0){battleData.battleTextArray[17] = `Poison deals the enemy `+enemyBattleStats.poison+` damage`};
+    if(playerBattleStats.stun==1){battleData.battleTextArray[18] = `You have been stunned!`};
+    if(enemyBattleStats.stun==1){battleData.battleTextArray[19] = `The enemy has been stunned!`};
 
     return battleData;
 };
@@ -476,7 +486,7 @@ func.rewardBattleText = function(winstreakReward, winstreakList, battleSettingDa
 
     //Add battletext describing the winstreak prize
     if (winstreakList[battleStatusData.winstreak-1] > 0){//Only if they win at least one coin as a winstreak prize
-        playerBattleStatsplayerBattleStatsplayerBattleStatsplayerBattleStats = battleData.battleText.concat(`You win `+winstreakList[battleStatusData.winstreak-1]+' extra '+rewardName+` as a win streak bonus!<br>`);
+        battleData.battleTextArray[20] = `You win `+winstreakList[battleStatusData.winstreak-1]+' extra '+rewardName+` as a win streak bonus!`;
     };
 
     //Redirect the player to the post battle narrative, if it exists
@@ -580,6 +590,7 @@ func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, batt
     }else if((battleStatusData.result == "lose") || (!battleSettingData.singleBattle)){//Can update if player is dead or repeatable battle
         initializeFunc.restartBattle();
         pageSetup();
+        battleStatusData.result = "active";
     
     }else {//Can't repeat if not a repeatable battle
 
@@ -597,7 +608,7 @@ func.addTextToArray = function(array, text, location){
 
 };
 
-func.arrayToString = function (array){
+func.arrayToString = function (array, breaks){
 
     let outputString = ""
 
@@ -606,7 +617,10 @@ func.arrayToString = function (array){
         if(array[i] != undefined){
 
 
-            tempString = array[i]+"<br>"
+            tempString = array[i]
+
+            if(breaks){tempString += "<br>"}
+
             outputString += tempString
 
         }
@@ -752,15 +766,17 @@ func.attack = function(playerAbility){
 
             if(enemyBattleStats.health <= 0){
 
-                battleStatusData.result = "win"
-                battleStatusData.winstreak += 1
-                battleData.battleText = battleData.battleText.concat("Your win streak is "+battleStatusData.winstreak+".<br>")
+                battleStatusData.result = "win";
+                console.log("Battle status win")
+                battleStatusData.winstreak += 1;
+                battleData.battleTextArray[21] = "Your win streak is "+battleStatusData.winstreak+".";
 
                 func.rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
 
             }else{
 
-            battleStatusData.result = "active"
+                battleStatusData.result = "active"
+                console.log("Battle status active")
 
             }
 
@@ -768,7 +784,9 @@ func.attack = function(playerAbility){
 
         }
 
-        setBattleText(battleData.battleText);
+        battleData.battleText = func.arrayToString(battleData.battleTextArray, true); //Convert battle text array to a string
+
+        setBattleText(battleData.battleText); //Display the battle text string on the page
 
         if (enemyBattleStats.health <= 0 && playerBattleStats.health > 0){
 

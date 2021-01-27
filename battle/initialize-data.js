@@ -164,7 +164,7 @@ initializeFunc.setPlayerAbilities = function(playerStats){
 initializeFunc.setBattleData = function(){
     battleData = {}
     battleData.battleText = `Press an attack button to begin.`;
-    battleData.battleTextArray = [,,,,,,,,,];
+    battleData.battleTextArray = [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
 
     return battleData;
 };
@@ -207,7 +207,6 @@ initializeFunc.updateBattleStatusData = function(chosenEnemy,playerBattleStats,e
     battleStatusData.playerArmor = playerBattleStats.armor;
     battleStatusData.enemyArmor = enemyBattleStats.armor;
 
-    battleStatusData.result = "active";
 
     return battleStatusData;
 }
@@ -269,6 +268,8 @@ initializeFunc.restartBattle = function(){
         battleStatusData = initializeFunc.setBattleStatusData(battleStatusData);
 
         let battleData = initializeFunc.setBattleData();
+
+        battleStatusData.result = "active";
 };
 
 //If running in a browser, initialize the battle
