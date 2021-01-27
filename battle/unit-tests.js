@@ -111,7 +111,7 @@ describe('Test playerPriorityAttack function', function() {
         var result = func.playerPriorityAttack(5,"attack",{"attack":{name:"Attack"}},{armor:0, health:10},{battleTextArray:[,,,,,,,,,]});
         wish(result[0].armor === 0);
         wish(result[0].health === 5);
-        wish(result[1].battleTextArray[2] === "You strike fast with Attack. The enemy takes 5 damage.<br>");
+        wish(result[1].battleTextArray[2] === "You strike fast with Attack. The enemy takes 5 damage.");
     });
 });
 
@@ -120,7 +120,7 @@ describe('Test enemyPriorityAttack function', function() {
         var result = func.enemyPriorityAttack(5,{name:"Attack"},{armor:0, health:10},{battleTextArray:[,,,,,,,,,]});
         wish(result[0].armor === 0);
         wish(result[0].health === 5);
-        wish(result[1].battleTextArray[3] === "The enemy strike fast with Attack. You take 5 damage.<br>");
+        wish(result[1].battleTextArray[3] === "The enemy strike fast with Attack. You take 5 damage.");
     });
 });
 
@@ -152,7 +152,7 @@ describe('Test executePlayerAttack function', function() {
         var result = func.executePlayerAttack(5,"attack",{"attack":{name:"Attack"}},{armor:0, health:10},{battleTextArray:[,,,,,,,,,]});
         wish(result[0].armor === 0);
         wish(result[0].health === 5);
-        wish(result[1].battleTextArray[4] === "You use Attack. The enemy takes 5 damage.<br>");
+        wish(result[1].battleTextArray[4] === "You use Attack. The enemy takes 5 damage.");
     });
 });
 
@@ -161,7 +161,7 @@ describe('Test executeEnemyAttack function', function() {
         var result = func.executeEnemyAttack(5,{name:"Attack"},{armor:0, health:10},{battleTextArray:[,,,,,,,,,]});
         wish(result[0].armor === 0);
         wish(result[0].health === 5);
-        wish(result[1].battleTextArray[5] === "The enemy uses Attack. You take 5 damage.<br>");
+        wish(result[1].battleTextArray[5] === "The enemy uses Attack. You take 5 damage.");
     });
 });
 
@@ -169,7 +169,7 @@ describe('Test calculatePlayerPoison function', function() {
     it('Outputs are as expected after poisoning for a fixed amount', function() {
         var result = func.calculatePlayerPoison("poison",{"poison":{"poison":3}},{battleTextArray:[,,,,,,,,,]},{"poison":0},3);
         wish(result[0].poison === 3);
-        wish(result[1].battleTextArray[6] === "You poison the enemy!<br>");
+        wish(result[1].battleTextArray[6] === "You poison the enemy!");
     });
 });
 
@@ -177,7 +177,7 @@ describe('Test calculateEnemyPoison function', function() {
     it('Outputs are as expected after poisoning for a fixed amount', function() {
         var result = func.calculateEnemyPoison({"poison":3},{battleTextArray:[,,,,,,,,,]},{"poison":0},3);
         wish(result[0].poison === 3);
-        wish(result[1].battleTextArray[7] === "The enemy poisons you!<br>");
+        wish(result[1].battleTextArray[7] === "The enemy poisons you!");
     });
 });
 
@@ -210,10 +210,10 @@ describe('Test calculatePlayerStunned function', function() {
 describe('Test setPoisonStunBattletext function', function() {
     it('Outputs are as expected after poisoning for a fixed amount', function() {
         var result = func.setPoisonStunBattletext({poison:5,stun:1},{poison:5,stun:1}, {battleTextArray:[,,,,,,,,,]});
-        wish(result.battleTextArray[16]  === "Poison deals you 5 damage<br>");
-        wish(result.battleTextArray[17]  === "Poison deals the enemy 5 damage<br>");
-        wish(result.battleTextArray[18]  === "You have been stunned!<br>");
-        wish(result.battleTextArray[19]  === "The enemy has been stunned!<br>");
+        wish(result.battleTextArray[16]  === "Poison deals you 5 damage");
+        wish(result.battleTextArray[17]  === "Poison deals the enemy 5 damage");
+        wish(result.battleTextArray[18]  === "You have been stunned!");
+        wish(result.battleTextArray[19]  === "The enemy has been stunned!");
     });
     it('Outputs are as expected after poisoning for a fixed amount', function() {
         var result = func.setPoisonStunBattletext({poison:0,stun:0},{poison:0,stun:0}, {battleText:""});
@@ -244,17 +244,6 @@ describe('Test loseBattle function', function() {
         wish(result1[0].result === "lose");
         wish(result1[0].winstreak === 0);
         wish(result1[1].health === 100);
-    });
-});
-
-describe('addBattleText', function() {
-    it('Check output array after adding element', function() {
-        var result = func.addTextToArray([,,,,,,,,,],"Line1",0);
-        wish(result[0] === "Line1");
-    });
-    it('Check output array after adding element', function() {
-        var result = func.addTextToArray([,,,,,,,,,],"Line5",4);
-        wish(result[4] === "Line5");
     });
 });
 

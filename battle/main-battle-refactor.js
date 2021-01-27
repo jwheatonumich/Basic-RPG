@@ -590,7 +590,6 @@ func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, batt
     }else if((battleStatusData.result == "lose") || (!battleSettingData.singleBattle)){//Can update if player is dead or repeatable battle
         initializeFunc.restartBattle();
         pageSetup();
-        battleStatusData.result = "active";
     
     }else {//Can't repeat if not a repeatable battle
 
@@ -598,14 +597,6 @@ func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, batt
         document.getElementById("battle-text-div").innerHTML = battleData.battleText;
 
     };
-};
-
-func.addTextToArray = function(array, text, location){
-
-    //Add the input text to the input array at the input inde position
-    array[location] = text;
-    return array
-
 };
 
 func.arrayToString = function (array, breaks){
