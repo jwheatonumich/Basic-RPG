@@ -263,11 +263,21 @@ enemyStats = [
         {
             "name":"Gold Spider","enemyID":25,"enemyImage":"../images/gold-spider.png",
             "stats":{
-                    "name":"Gold Spider", "enemyID":24, "species":"spider",
+                    "name":"Gold Spider", "enemyID":25, "species":"spider",
                     "health":40, "maxhealth":40, "attack":25, "defense":10,
                     "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
-                    "acorncoin":5, "mushroomcoin":0, "bearclawcoin":0,
+                    "acorncoin":0, "mushroomcoin":5, "bearclawcoin":0,
                 },
         },
         
+        {
+            "name":"Cave Spider","enemyID":26,"enemyImage":"../images/cave-spider.png",
+            "stats":{
+                    "name":"Cave Spider", "enemyID":26, "species":"spider",
+                    "health":160, "maxhealth":160, "attack":41, "defense":35, 
+                    "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
+                    "acorncoin":0, "mushroomcoin":0, "bearclawcoin":2,
+                },
+        },
+
 ]

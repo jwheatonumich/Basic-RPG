@@ -206,6 +206,8 @@ initializeFunc.updateBattleStatusData = function(chosenEnemy,playerBattleStats,e
     battleStatusData.playerArmor = playerBattleStats.armor;
     battleStatusData.enemyArmor = enemyBattleStats.armor;
 
+    battleStatusData.result = "active";
+
     return battleStatusData;
 }
 

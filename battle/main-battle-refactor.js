@@ -57,7 +57,13 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
         return true;
 
-    } else if(!playerAlive){
+    }else if(!escapeSetting){
+        //Update the battle text for the current turn
+        battleText = "You cannot flee this battle!";
+        document.getElementById("battle-text-div").innerHTML = battleText;
+        return true;
+
+    }else if(!playerAlive){
 
         //Battle is no longer active
         func.storeDefaultStatus()
@@ -73,14 +79,7 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
         window.location.href = localStorage.getItem("lastPage"); //Exit to the prior page
         return true;
 
-    } else if(!escapeSetting){
-
-        //Update the battle text for the current turn
-        battleText = "You cannot flee this battle!";
-        document.getElementById("battle-text-div").innerHTML = battleText;
-        return false;
-
-    } else{ //Player attempts to flee from battle
+    }else{ //Player attempts to flee from battle
         
         var fleeChance = Math.random(); //Determines flee success
 
@@ -90,8 +89,6 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
             func.storeDefaultStatus(); //Don't save the battle progress when you exit
             func.storeDefaultSettings();//Load default settings into global variables
             window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
-
-            console.log(battleStatusData.result);
 
             return true;
 
@@ -223,8 +220,6 @@ func.calculateEnemyAttack = function(playerBattleStats,enemyBattleStats){
         - .75 * playerBattleStats.defense*playerBattleStats.defenseMultiplier
         - .25 * playerBattleStats.defense*playerBattleStats.defenseMultiplier
         ),1);//Minimum of one damage
-
-        console.log(enemyBattleStats.attack*enemyBattleStats.attackMultiplier)
 
         return enemyAttackDamage;
 };

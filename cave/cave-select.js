@@ -2,7 +2,7 @@
 var page = "../cave/cave.html";
 
 //List of possible enemy IDs
-var enemyListEasy = [12,12,12,13,13,14,15];
+var enemyListEasy = [12,12,12,13,13,26,26,14,15];
 
 //Type of reward given for winstreaks in this arena
 var winstreakReward = "bearclawcoin";
@@ -55,25 +55,7 @@ function enterCave(enemyList) {
 
     }else{
 
-        battleSettings ={
-            "escape":true,
-            "singleBattle":false,
-            "mandatory":false, //Was used to prevent player from leaving narrative page
-            "postBattleNarrative":false
-        }
-    
-        localStorage.setItem('battleSettings', JSON.stringify(battleSettings));
-
-        
-        battleStatusData ={}
-
-        localStorage.setItem('battleStatusData', JSON.stringify(battleStatusData));
-
-        //Start the battle
-        localStorage.setItem('enemyList',enemyList);
-        localStorage.setItem('winstreakReward',winstreakReward)
-        window.location.href = "../battle/battle.html";
-        lastPage(page);
+        startBattle(enemyListEasy)
     }
 
     localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
