@@ -258,7 +258,7 @@ func.resetBattleText = function(playerBattleStats,enemyBattleStats,battleData){
 
     //Clear the battle text
     battleData.battleText = "";
-    battleData.battleTextArray = [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,]
+    battleData.battleTextArray = [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,]
 
     return [playerBattleStats,enemyBattleStats,battleData]
 };
@@ -865,7 +865,7 @@ func.attack = function(playerAbility){
     //Battle calculations
     func.battleCalculations(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
 
-    //Set battle text 
+    //Set battle text for stat changes, poison, and stun
     battleData = func.setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats);
     battleData = func.setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData);
 
@@ -881,11 +881,12 @@ func.attack = function(playerAbility){
     //Determine the battle result
     battleStatusData = func.determineBattleResult(battleStatusData);
 
-    //Convert battle text array to a string
-    if(battleData.battleText == ""){battleData.battleText = func.arrayToString(battleData.battleTextArray, true)};
 
     //End the turn
     func.executeTurnEnd();
+
+    //Convert battle text array to a string
+    if(battleData.battleText == ""){battleData.battleText = func.arrayToString(battleData.battleTextArray, true)};
 
     //Save progress
     initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)

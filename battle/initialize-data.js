@@ -164,7 +164,7 @@ initializeFunc.setPlayerAbilities = function(playerStats){
 initializeFunc.setBattleData = function(){
     battleData = {}
     battleData.battleText = `Press an attack button to begin.`;
-    battleData.battleTextArray = [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
+    battleData.battleTextArray = [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
 
     return battleData;
 };

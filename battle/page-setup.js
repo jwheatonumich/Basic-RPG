@@ -97,6 +97,8 @@ function pageSetup(){
     setEnemyPowerlevel(chosenEnemy.stats);
     setPlayerAbilityButtons(playerBattleStats);
     setBattleText(battleData.battleText);
+
+    if(playerBattleStats.health <= 0){stopPlayerAttack();}
 }
 
 window.onload = pageSetup();
