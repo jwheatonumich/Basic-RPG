@@ -113,7 +113,7 @@ initializeFunc.enemySetup = function(enemyStats,battleStatusData,playerStats){
     tempStats.status = "";
 
     //If battle is in-progress, override with in-progress stats
-    if(battleStatusData.result == "active"){
+    if(battleStatusData.result == "active" || battleStatusData.result == "win"){
 
         tempStats.health = battleStatusData.enemyHealth;
         tempStats.poison = battleStatusData.enemyPoison;

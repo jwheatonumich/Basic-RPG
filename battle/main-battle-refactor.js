@@ -57,7 +57,7 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
         return true;
 
-    }else if(!escapeSetting){
+    }else if(!escapeSetting && battleStatusData.result != "win"){
 
         //Update the battle text for the current turn
         battleText = "You cannot flee this battle!";
@@ -260,7 +260,7 @@ func.resetSingleTurnEffects = function(playerBattleStats,enemyBattleStats,battle
 
     //Clear the battle text
     battleData.battleText = "";
-    battleData.battleTextArray = [,,,,,,,,,];
+    battleData.battleTextArray = [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,]
 
     return [playerBattleStats,enemyBattleStats,battleData]
 };
@@ -317,6 +317,17 @@ func.executePlayerAttack = function(playerAttackDamage,playerAbility,abilityData
         ` damage.`
     ]);
 
+    if(Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage) > 0){
+        battleData.battleTextArray[4] = func.arrayToString([
+            `You use `,
+            abilityData[playerAbility]["name"],
+            '. ',
+            `You leech `,
+            Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage),
+            ' armor from your opponent.'
+        ])
+    }   
+
     return [enemyBattleStats,battleData]
 
 };
@@ -332,6 +343,17 @@ func.executeEnemyAttack = function(enemyAttackDamage,enemyAbility,playerBattleSt
         enemyAttackDamage,
         ` damage.`
     ])
+
+    if(Math.floor(enemyAbility["leech"]*enemyAttackDamage) > 0){
+        battleData.battleTextArray[5] = func.arrayToString([
+            `The enemy uses `,
+            enemyAbility["name"],
+            '. ',
+            `The enemy leeches `,
+            Math.floor(enemyAbility["leech"]*enemyAttackDamage),
+            ' armor from you.'
+        ])
+    }   
 
     return [playerBattleStats,battleData]
 
@@ -486,7 +508,7 @@ func.rewardBattleText = function(winstreakReward, winstreakList, battleSettingDa
 
     //Add battletext describing the winstreak prize
     if (winstreakList[battleStatusData.winstreak-1] > 0){//Only if they win at least one coin as a winstreak prize
-        battleData.battleTextArray[20] = `You win `+winstreakList[battleStatusData.winstreak-1]+' extra '+rewardName+` as a win streak bonus!`;
+        battleData.battleTextArray[28] = `You win `+winstreakList[battleStatusData.winstreak-1]+' extra '+rewardName+` as a win streak bonus!`;
     };
 
     //Redirect the player to the post battle narrative, if it exists
@@ -646,15 +668,26 @@ func.attack = function(playerAbility){
 
     if(playerBattleStats.health > 0 && enemyBattleStats.health > 0){ //Execute only if neither player nor enemy is dead
 
+        //Reset single turn effects including stun, player status, and battle text
+        [playerBattleStats,enemyBattleStats,battleData] = func.resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData)
+
         //Set player/enemy armor, attack damage, and poison
         playerBattleStats.armor += abilityData[playerAbility]["armor"];
+        if(abilityData[playerAbility]["armor"]>0){
+            battleData.battleTextArray[0] = `Your gain `+abilityData[playerAbility]["armor"]+' armor.';
+        }
+
         enemyBattleStats.armor += enemyAbility["armor"];
+        if(enemyAbility["armor"]>0){
+            battleData.battleTextArray[1] = `Your opponent gains `+enemyAbility["armor"]+' armor.';
+        }
 
         playerAttackDamage = func.calculatePlayerAttack(playerBattleStats,enemyBattleStats);
         enemyAttackDamage = func.calculateEnemyAttack(playerBattleStats,enemyBattleStats);
 
         //Add armor for leech attcks
         playerBattleStats.armor += Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage);
+
         enemyBattleStats.armor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
 
         playerAttackDamage = func.playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
@@ -662,9 +695,6 @@ func.attack = function(playerAbility){
     
         playerAbilityPoison = abilityData[playerAbility]["poison"];
         enemyAbilityPoison = enemyAbility["poison"];
-
-        //Reset single turn effects including stun, player status, and battle text
-        [playerBattleStats,enemyBattleStats,battleData] = func.resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData)
 
         //Player and enemy deal any priority attack damage
         if (playerPriority){
@@ -758,16 +788,14 @@ func.attack = function(playerAbility){
             if(enemyBattleStats.health <= 0){
 
                 battleStatusData.result = "win";
-                console.log("Battle status win")
                 battleStatusData.winstreak += 1;
-                battleData.battleTextArray[21] = "Your win streak is "+battleStatusData.winstreak+".";
+                battleData.battleTextArray[29] = "Your win streak is "+battleStatusData.winstreak+".";
 
                 func.rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
 
             }else{
 
                 battleStatusData.result = "active"
-                console.log("Battle status active")
 
             }
 
@@ -775,8 +803,8 @@ func.attack = function(playerAbility){
 
         }
 
-        battleData.battleText = func.arrayToString(battleData.battleTextArray, true); //Convert battle text array to a string
-
+        console.log(battleData.battleText)
+        if(battleData.battleText == ""){battleData.battleText = func.arrayToString(battleData.battleTextArray, true)}; //Convert battle text array to a string
         setBattleText(battleData.battleText); //Display the battle text string on the page
 
         if (enemyBattleStats.health <= 0 && playerBattleStats.health > 0){
