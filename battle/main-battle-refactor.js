@@ -50,26 +50,10 @@ func.storeDefaultSettings = function(){
 };
 
 func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStats){
-    if(playerBattleStats.health <= 0){
+    if(battleStatusData.result == "game over"){
 
         //Game is over, go to start screen
         func.gameOver();
-        window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
-        return true;
-
-    }else if(!escapeSetting && battleStatusData.result != "win"){
-
-        //Update the battle text for the current turn
-        battleText = "You cannot flee this battle!";
-        document.getElementById("battle-text-div").innerHTML = battleText;
-        return true;
-
-    }else if(!playerAlive){
-
-        //Battle is no longer active
-        func.storeDefaultStatus()
-
-        //Go to prior page
         window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
         return true;
 
@@ -78,6 +62,21 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
         func.storeDefaultStatus() //Don't save battle progress when you exit
         func.storeDefaultSettings() //Load default settings into global variables
         window.location.href = localStorage.getItem("lastPage"); //Exit to the prior page
+        return true;
+
+    }else if(!escapeSetting){
+
+        //Update the battle text for the current turn
+        battleText = "You cannot flee this battle!";
+        document.getElementById("battle-text-div").innerHTML = battleText;
+        return true;
+
+    }else if(battleStatusData.result == "lose"){
+
+        [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats); //Save changes to player stats
+        func.storeDefaultStatus() //Don't save battle progress when you exit
+        func.storeDefaultSettings() //Load default settings into global variables
+        window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
         return true;
 
     }else{ //Player attempts to flee from battle
@@ -483,7 +482,6 @@ func.loseBattle = function(battleStatusData, enemyBattleStats){
 
 func.resetBattleStatus = function(battleStatusData, enemyBattleStats){
     battleStatusData.playerAlive = false
-    battleStatusData.result = "lose";
     battleStatusData.winstreak = 0;
     enemyBattleStats.health = enemyBattleStats.maxhealth;
 
@@ -602,14 +600,45 @@ func.generateRewardImages = function(enemyBattleStats){
             }
 };
 
+func.healWithLeafcoin = function(){
+    playerBattleStats.leafcoin -= 1;
+    playerBattleStats.health = playerBattleStats.maxhealth;
+
+    battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
+    setBattleText(battleData.battleText);
+
+    [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats);
+    setStats(playerBattleStats);
+    initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
+
+    enemyBattleStats.health = 0;
+    enemyBattleStats.acorncoin = 0;
+    enemyBattleStats.mushroomcoin = 0;
+    enemyBattleStats.bearclawcoin = 0;
+
+}
+
 func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, battleStatusData, battleSettingData){
 
-    if(enemyBattleStats.health > 0 && playerBattleStats.health > 0){//Can't reset if player and enemy are both alive
+    if(battleStatusData.result == "game over"){
+
+        battleData.battleText = "You are dead and have no leaf coins. Click back to respawn.";
+        document.getElementById("battle-text-div").innerHTML = battleData.battleText; 
+
+
+    }else if(battleStatusData.result == "active"){//Can't reset if player and enemy are both alive
 
         battleData.battleText = "The current enemy is still alive!";
         document.getElementById("battle-text-div").innerHTML = battleData.battleText; 
 
-    }else if((battleStatusData.result == "lose") || (!battleSettingData.singleBattle)){//Can update if player is dead or repeatable battle
+    }else if(battleStatusData.result == "lose"){//Can update if player is dead or repeatable battle
+        
+        func.healWithLeafcoin()
+
+        initializeFunc.restartBattle();
+        pageSetup();
+    
+    }else if(!battleSettingData.singleBattle){//Can update if player is dead or repeatable battle
         initializeFunc.restartBattle();
         pageSetup();
     
@@ -620,6 +649,32 @@ func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, batt
 
     };
 };
+
+func.determineBattleResult = function(battleStatusData){
+
+    if(playerBattleStats.health <= 0 && playerBattleStats.leafcoin <= 0){
+
+        battleStatusData.result = "game over"
+
+    }else if(playerBattleStats.health <= 0){
+
+        battleStatusData.result = "lose"
+
+    }else if(enemyBattleStats.health <= 0){
+
+        battleStatusData.result = "win"
+
+    }else{
+
+        battleStatusData.result = "active" 
+
+    }
+
+    initializeFunc.storeJSON(battleStatusData, 'battleStatusData')
+
+    return battleStatusData
+
+}
 
 func.arrayToString = function (array, breaks){
 
@@ -752,77 +807,57 @@ func.attack = function(playerAbility){
         //Save battle status array in local storage
         initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
 
-        //Ending the turn if the player died
-        if(playerBattleStats.health <= 0){
+        //Determine the battle result
+        battleStatusData = func.determineBattleResult(battleStatusData);
+
+        //Convert battle text array to a string
+        if(battleData.battleText == ""){battleData.battleText = func.arrayToString(battleData.battleTextArray, true)};
+
+        //Ending the turn if the player died but has leaf coin
+        if(battleStatusData.result == "lose"){
 
             [battleStatusData, enemyBattleStats] = func.loseBattle(battleStatusData, enemyBattleStats);
 
-            //Revive if player has a leaf coin
-            if(playerBattleStats.leafcoin > 0){
+            battleData.battleText = "Your health has been reduced to zero.<br>Click 'Restart' to heal and battle again or 'Back' to exit.";
 
-                playerBattleStats.leafcoin -= 1;
-                playerBattleStats.health = playerBattleStats.maxhealth;
+        //Ending the turn if the player died with no leaf coin
+        }else if(battleStatusData.result == "game over"){
 
-                battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
-                setBattleText(battleData.battleText);
+            battleData.battleText = "Your health has been reduced to zero. You have no leaf coins to heal.<br>Click 'Back' to respawn.";
 
-                [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats);
-                setStats(playerBattleStats);
-                initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
+            func.gameOver();
 
-                enemyBattleStats.health = 0;
-                enemyBattleStats.acorncoin = 0;
-                enemyBattleStats.mushroomcoin = 0;
-                enemyBattleStats.bearclawcoin = 0;
+        }else if(battleStatusData.result == "win"){//Ending the turn if the player lived
 
-            }else{ //Game over if player has no leaf cons
-                battleData.battleText = "Your health has been reduced to zero. You use a leaf coin to heal.<br>Click Restart to battle again or back to exit.";
-                setBattleText(battleData.battleText);
-    
-                func.gameOver();
-            };
 
-        //Ending the turn if the player lived
-        }else{ 
+            battleStatusData.winstreak += 1;
+            battleData.battleTextArray[29] = "Your win streak is "+battleStatusData.winstreak+".";
 
-            if(enemyBattleStats.health <= 0){
-
-                battleStatusData.result = "win";
-                battleStatusData.winstreak += 1;
-                battleData.battleTextArray[29] = "Your win streak is "+battleStatusData.winstreak+".";
-
-                func.rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
-
-            }else{
-
-                battleStatusData.result = "active"
-
-            }
-
-            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
-
-        }
-
-        console.log(battleData.battleText)
-        if(battleData.battleText == ""){battleData.battleText = func.arrayToString(battleData.battleTextArray, true)}; //Convert battle text array to a string
-        setBattleText(battleData.battleText); //Display the battle text string on the page
-
-        if (enemyBattleStats.health <= 0 && playerBattleStats.health > 0){
+            func.rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
 
             stopPlayerAttack();
 
-            enemyBattleStats = func.calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
-
             [playerBattleStats, enemyBattleStats] = func.updatePlayerCoins(playerBattleStats,enemyBattleStats);
+
+            enemyBattleStats = func.calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
 
             setStats(playerBattleStats);
             setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
-            initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
+        }
 
-            func.generateRewardImages(enemyBattleStats);
+    };
 
-        };
+    //Save progress
+    initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
+
+    //Display the battle text string on the page
+    setBattleText(battleData.battleText); 
+
+    //Generate reward images
+    if (enemyBattleStats.health <= 0 && playerBattleStats.health > 0){
+
+        func.generateRewardImages(enemyBattleStats);
 
     };
 
