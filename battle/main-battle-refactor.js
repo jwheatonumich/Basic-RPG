@@ -1,5 +1,10 @@
 func = {};
 
+//If running in node, export all functions
+if (typeof exports === 'object'){
+    module.exports = {func}
+}
+
 func.determineEnemyAbility = function(enemyBattleStats){
 
     //Randomly choose enemy's ability
@@ -94,6 +99,7 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
 
         } else{ //If flee not successful, player stunned for a round of battle
 
+            battleData.battleTextArray[4] = "You fail to flee."
             playerBattleStats.stun = 1;
             return false;
 
@@ -248,14 +254,7 @@ func.enemyZeroDamage = function(enemyAbility, enemyBattleStats, enemyAttackDamag
     return enemyAttackDamage;
 };
 
-func.resetSingleTurnEffects = function(playerBattleStats,enemyBattleStats,battleData){
-    //Abilities that only last one turn
-    enemyBattleStats.stun = 0;
-    playerBattleStats.stun = 0;
-
-    //Clear player and enemy status
-    enemyBattleStats.status = "";
-    playerBattleStats.status = "";
+func.resetBattleText = function(playerBattleStats,enemyBattleStats,battleData){
 
     //Clear the battle text
     battleData.battleText = "";
@@ -648,6 +647,7 @@ func.battleReset = function(playerBattleStats,enemyBattleStats, battleData, batt
         document.getElementById("battle-text-div").innerHTML = battleData.battleText;
 
     };
+
 };
 
 func.determineBattleResult = function(battleStatusData){
@@ -699,9 +699,158 @@ func.arrayToString = function (array, breaks){
 
 };
 
+func.resetStun = function(enemyBattleStats,playerBattleStats){
+
+    //Abilities that only last one turn
+    enemyBattleStats.stun = 0;
+    playerBattleStats.stun = 0;
+    
+}
+
+func.resetStatus = function(enemyBattleStats,playerBattleStats){
+
+    //Clear player and enemy status
+    enemyBattleStats.status = "";
+    playerBattleStats.status = "";
+
+}
+
+func.initializeBattle = function(playerBattleStats,enemyBattleStats,battleData){
+
+    //Reset single turn effects including stun, player status, and battle text
+    [playerBattleStats,enemyBattleStats,battleData] = func.resetBattleText(playerBattleStats,enemyBattleStats,battleData)
+    func.resetStun(enemyBattleStats,playerBattleStats);
+    func.resetStatus(enemyBattleStats,playerBattleStats);
+
+    return [playerBattleStats,enemyBattleStats,battleData]
+}
+
+func.determineAbilities = function(playerAbility,enemyBattleStats,playerBattleStats){
+    enemyAbility = func.determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
+    enemyAbility = func.determineEnemyStunned(enemyAbility, enemyBattleStats); //If enemy is stunned, overwrite enemy ability
+    playerAbility = func.determinePlayerStunned(playerAbility, playerBattleStats); //If player is stunned, overwrite player ability
+
+    return [enemyAbility, playerAbility]
+}
+
+func.battleCalculations = function(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats){
+    //Set attack and defense multipliers for this turn based on player and enemy abilities
+    [playerBattleStats, enemyBattleStats] = func.setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
+        
+    //Determine if either player's attack had priority
+    let [playerPriority, enemyPriority] = [abilityData[playerAbility]["priority"],enemyAbility["priority"]];
+
+    //Set player/enemy armor, attack damage, and poison
+    playerBattleStats.armor += abilityData[playerAbility]["armor"];
+    if(abilityData[playerAbility]["armor"]>0){
+        battleData.battleTextArray[0] = `Your gain `+abilityData[playerAbility]["armor"]+' armor.';
+    }
+
+    enemyBattleStats.armor += enemyAbility["armor"];
+    if(enemyAbility["armor"]>0){
+        battleData.battleTextArray[1] = `Your opponent gains `+enemyAbility["armor"]+' armor.';
+    }
+
+    playerAttackDamage = func.calculatePlayerAttack(playerBattleStats,enemyBattleStats);
+    enemyAttackDamage = func.calculateEnemyAttack(playerBattleStats,enemyBattleStats);
+
+    //Add armor for leech attcks
+    playerBattleStats.armor += Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage);
+
+    enemyBattleStats.armor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
+
+    playerAttackDamage = func.playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
+    enemyAttackDamage = func.enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage);
+
+    playerAbilityPoison = abilityData[playerAbility]["poison"];
+    enemyAbilityPoison = enemyAbility["poison"];
+
+    //Player and enemy deal any priority attack damage
+    if (playerPriority){
+        [enemyBattleStats,battleData] = func.playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
+    };
+
+    if(enemyPriority){
+        [playerBattleStats,battleData] = func.enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
+    }
+
+    //Set player/enemy damage to zero if they are dead
+    [playerAttackDamage,enemyAttackDamage] = func.deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage);
+
+    //Player and enemy calculate poison damage
+    if (playerBattleStats.health >= 0){
+        [enemyBattleStats,battleData] = func.calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison);
+    };
+
+    if(enemyBattleStats.health >= 0){
+        [playerBattleStats,battleData] = func.calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison);
+    }
+
+    //Player and enemy deal non-priority attack damage
+    if (!playerPriority && (playerAttackDamage != 0)){
+        [enemyBattleStats,battleData] = func.executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
+    };
+
+    if(!enemyPriority && (enemyAttackDamage !=0)){
+        [playerBattleStats,battleData] = func.executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
+    }
+
+    //Deal poison damage
+    if(enemyBattleStats.poison>0){
+        func.dealDamage(enemyBattleStats.poison, enemyBattleStats);//Player takes poison damage
+    };
+
+    if(playerBattleStats.poison>0){
+        func.dealDamage(playerBattleStats.poison, playerBattleStats);//Enemy takes poison damage
+    };
+
+    //Determine if player/enemy are stunned next turn
+    enemyBattleStats = func.calculateEnemyStunned(abilityData, playerAbility,enemyBattleStats)
+    playerBattleStats = func.calculatePlayerStunned(enemyAbility, playerBattleStats)
+}
+
+func.executeTurnEnd = function(){
+    //Ending the turn if the player died but has leaf coin
+    if(battleStatusData.result == "lose"){
+
+        [battleStatusData, enemyBattleStats] = func.loseBattle(battleStatusData, enemyBattleStats);
+
+        battleData.battleText = "Your health has been reduced to zero.<br>Click 'Restart' to heal and battle again or 'Back' to exit.";
+
+    //Ending the turn if the player died with no leaf coin
+    }else if(battleStatusData.result == "game over"){
+
+        battleData.battleText = "Your health has been reduced to zero. You have no leaf coins to heal.<br>Click 'Back' to respawn.";
+
+        func.gameOver();
+
+    }else if(battleStatusData.result == "win"){//Ending the turn if the player lived
+
+
+        battleStatusData.winstreak += 1;
+        battleData.battleTextArray[29] = "Your win streak is "+battleStatusData.winstreak+".";
+
+        func.rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
+
+        stopPlayerAttack();
+
+        [playerBattleStats, enemyBattleStats] = func.updatePlayerCoins(playerBattleStats,enemyBattleStats);
+
+        enemyBattleStats = func.calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
+
+        setStats(playerBattleStats);
+        setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
+
+    }
+}
+
 func.attack = function(playerAbility){
 
-    if(playerAbility == "flee"){ //If player tries to flee
+    //Reset any temporary variables for the battle
+    [playerBattleStats,enemyBattleStats,battleData] = func.initializeBattle(playerBattleStats,enemyBattleStats,battleData)
+
+    //Determine if player is trying to flee the battle
+    if(playerAbility == "flee"){
         let fleeSuccessful = func.flee(battleStatusData.playerAlive,battleStatusData,battleSettingData.escape,playerBattleStats);
 
         if (fleeSuccessful){
@@ -710,143 +859,33 @@ func.attack = function(playerAbility){
 
     }
 
-    let enemyAbility = func.determineEnemyAbility(enemyBattleStats); //Randomly assign enemy's ability this turn
-    enemyAbility = func.determineEnemyStunned(enemyAbility, enemyBattleStats); //If enemy is stunned, overwrite enemy ability
-    playerAbility = func.determinePlayerStunned(playerAbility, playerBattleStats); //If player is stunned, overwrite player ability
+    //Determine abilities player and enemy used
+    [enemyAbility, playerAbility] = func.determineAbilities(playerAbility,enemyBattleStats,playerBattleStats);
 
-    //Set attack and defense multipliers for this turn based on player and enemy abilities
-    [playerBattleStats, enemyBattleStats] = func.setPlayerMultipliers(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
-    
-    //Determine if either player's attack had priority
-    let [playerPriority, enemyPriority] = [abilityData[playerAbility]["priority"],enemyAbility["priority"]];
+    //Battle calculations
+    func.battleCalculations(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
 
+    //Set battle text 
+    battleData = func.setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats);
+    battleData = func.setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData);
 
-    if(playerBattleStats.health > 0 && enemyBattleStats.health > 0){ //Execute only if neither player nor enemy is dead
+    battleStatusData.battleTurn +=1;
 
-        //Reset single turn effects including stun, player status, and battle text
-        [playerBattleStats,enemyBattleStats,battleData] = func.resetSingleTurnEffects(playerBattleStats,enemyBattleStats,battleData)
+    //Update stats on page
+    setStats(playerBattleStats);
+    setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
-        //Set player/enemy armor, attack damage, and poison
-        playerBattleStats.armor += abilityData[playerAbility]["armor"];
-        if(abilityData[playerAbility]["armor"]>0){
-            battleData.battleTextArray[0] = `Your gain `+abilityData[playerAbility]["armor"]+' armor.';
-        }
+    //Save battle status array in local storage
+    initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
 
-        enemyBattleStats.armor += enemyAbility["armor"];
-        if(enemyAbility["armor"]>0){
-            battleData.battleTextArray[1] = `Your opponent gains `+enemyAbility["armor"]+' armor.';
-        }
+    //Determine the battle result
+    battleStatusData = func.determineBattleResult(battleStatusData);
 
-        playerAttackDamage = func.calculatePlayerAttack(playerBattleStats,enemyBattleStats);
-        enemyAttackDamage = func.calculateEnemyAttack(playerBattleStats,enemyBattleStats);
+    //Convert battle text array to a string
+    if(battleData.battleText == ""){battleData.battleText = func.arrayToString(battleData.battleTextArray, true)};
 
-        //Add armor for leech attcks
-        playerBattleStats.armor += Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage);
-
-        enemyBattleStats.armor += Math.floor(enemyAbility["leech"]*enemyAttackDamage);
-
-        playerAttackDamage = func.playerZeroDamage(playerAbility, abilityData, playerBattleStats, playerAttackDamage);
-        enemyAttackDamage = func.enemyZeroDamage(enemyAbility, enemyBattleStats, enemyAttackDamage);
-    
-        playerAbilityPoison = abilityData[playerAbility]["poison"];
-        enemyAbilityPoison = enemyAbility["poison"];
-
-        //Player and enemy deal any priority attack damage
-        if (playerPriority){
-            [enemyBattleStats,battleData] = func.playerPriorityAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
-        };
-
-        if(enemyPriority){
-            [playerBattleStats,battleData] = func.enemyPriorityAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
-        }
-
-        //Set player/enemy damage to zero if they are dead
-        [playerAttackDamage,enemyAttackDamage] = func.deadNoDamage(playerBattleStats,enemyBattleStats, playerAttackDamage, enemyAttackDamage);
-    
-        //Player and enemy calculate poison damage
-        if (playerBattleStats.health >= 0){
-            [enemyBattleStats,battleData] = func.calculatePlayerPoison(playerAbility,abilityData,battleData,enemyBattleStats,playerAbilityPoison);
-        };
-
-        if(enemyBattleStats.health >= 0){
-            [playerBattleStats,battleData] = func.calculateEnemyPoison(enemyAbility,battleData,playerBattleStats,enemyAbilityPoison);
-        }
-
-        //Player and enemy deal non-priority attack damage
-        if (!playerPriority && (playerAttackDamage != 0)){
-            [enemyBattleStats,battleData] = func.executePlayerAttack(playerAttackDamage,playerAbility,abilityData,enemyBattleStats,battleData);
-        };
-
-        if(!enemyPriority && (enemyAttackDamage !=0)){
-            [playerBattleStats,battleData] = func.executeEnemyAttack(enemyAttackDamage,enemyAbility,playerBattleStats,battleData);
-        }
-
-        //Deal poison damage
-        if(enemyBattleStats.poison>0){
-            func.dealDamage(enemyBattleStats.poison, enemyBattleStats);//Player takes poison damage
-        };
-
-        if(playerBattleStats.poison>0){
-            func.dealDamage(playerBattleStats.poison, playerBattleStats);//Enemy takes poison damage
-        };
-
-        //Determine if player/enemy are stunned next turn
-        enemyBattleStats = func.calculateEnemyStunned(abilityData, playerAbility,enemyBattleStats)
-        playerBattleStats = func.calculatePlayerStunned(enemyAbility, playerBattleStats)
-
-        //Set battle text 
-        battleData = func.setStatChanges(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats);
-        battleData = func.setPoisonStunBattletext(playerBattleStats,enemyBattleStats, battleData);
-    
-        battleStatusData.battleTurn +=1;
-
-        //Update stats on page
-        setStats(playerBattleStats);
-        setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
-
-        //Save battle status array in local storage
-        initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
-
-        //Determine the battle result
-        battleStatusData = func.determineBattleResult(battleStatusData);
-
-        //Convert battle text array to a string
-        if(battleData.battleText == ""){battleData.battleText = func.arrayToString(battleData.battleTextArray, true)};
-
-        //Ending the turn if the player died but has leaf coin
-        if(battleStatusData.result == "lose"){
-
-            [battleStatusData, enemyBattleStats] = func.loseBattle(battleStatusData, enemyBattleStats);
-
-            battleData.battleText = "Your health has been reduced to zero.<br>Click 'Restart' to heal and battle again or 'Back' to exit.";
-
-        //Ending the turn if the player died with no leaf coin
-        }else if(battleStatusData.result == "game over"){
-
-            battleData.battleText = "Your health has been reduced to zero. You have no leaf coins to heal.<br>Click 'Back' to respawn.";
-
-            func.gameOver();
-
-        }else if(battleStatusData.result == "win"){//Ending the turn if the player lived
-
-
-            battleStatusData.winstreak += 1;
-            battleData.battleTextArray[29] = "Your win streak is "+battleStatusData.winstreak+".";
-
-            func.rewardBattleText(winstreakReward, winstreakList, battleSettingData, battleData, battleStatusData,playerBattleStats)[0];
-
-            stopPlayerAttack();
-
-            [playerBattleStats, enemyBattleStats] = func.updatePlayerCoins(playerBattleStats,enemyBattleStats);
-
-            enemyBattleStats = func.calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
-
-            setStats(playerBattleStats);
-            setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
-
-        }
-
-    };
+    //End the turn
+    func.executeTurnEnd();
 
     //Save progress
     initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
@@ -861,9 +900,4 @@ func.attack = function(playerAbility){
 
     };
 
-}
-
-//If running in node, export all functions
-if (typeof exports === 'object'){
-    module.exports = {func}
 }

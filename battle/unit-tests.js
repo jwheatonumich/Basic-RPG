@@ -241,7 +241,6 @@ describe('Test loseBattle function', function() {
     it('Check outputs are reset after running function', function() {
         var result1 = func.resetBattleStatus({},{maxhealth:100});
         wish(result1[0].playerAlive === false);
-        wish(result1[0].result === "lose");
         wish(result1[0].winstreak === 0);
         wish(result1[1].health === 100);
     });
