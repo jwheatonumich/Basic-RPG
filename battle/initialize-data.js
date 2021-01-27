@@ -251,6 +251,8 @@ initializeFunc.initializeBattle = function(){
 
     battleStatusData = initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData);
 
+    battleStatusData = func.determineBattleResult(battleStatusData);
+
 }
 
 initializeFunc.restartBattle = function(){

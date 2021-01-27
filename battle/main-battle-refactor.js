@@ -834,9 +834,9 @@ func.executeTurnEnd = function(){
 
         stopPlayerAttack();
 
-        [playerBattleStats, enemyBattleStats] = func.updatePlayerCoins(playerBattleStats,enemyBattleStats);
-
         enemyBattleStats = func.calculateWinstreakReward(enemyBattleStats, winstreakList, winstreakReward,battleStatusData);
+
+        [playerBattleStats, enemyBattleStats] = func.updatePlayerCoins(playerBattleStats,enemyBattleStats);
 
         setStats(playerBattleStats);
         setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
@@ -875,12 +875,8 @@ func.attack = function(playerAbility){
     setStats(playerBattleStats);
     setEnemyStats(enemyBattleStats,chosenEnemy["enemyImage"]);
 
-    //Save battle status array in local storage
-    initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData)
-
     //Determine the battle result
     battleStatusData = func.determineBattleResult(battleStatusData);
-
 
     //End the turn
     func.executeTurnEnd();
