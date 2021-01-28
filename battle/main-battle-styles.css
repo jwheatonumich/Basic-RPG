@@ -39,7 +39,8 @@ body{
 #battle-text-div{
     padding: 5px 20px 5px 20px;
     height:100px;
-    display:table; /*Expands the div area when text gets too big*/
+    /*display:table;*/ /*Expands the div area when text gets too big*/
+    overflow-y:auto;
 }
 
 #attack-button {

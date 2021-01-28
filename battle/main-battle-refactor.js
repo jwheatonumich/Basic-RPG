@@ -822,6 +822,8 @@ func.executeTurnEnd = function(){
 
         battleData.battleText = "Your health has been reduced to zero. You have no leaf coins to heal.<br>Click 'Back' to respawn.";
 
+        stopPlayerAttack();//Player can't attack
+
         func.gameOver();
 
     }else if(battleStatusData.result == "win"){//Ending the turn if the player lived

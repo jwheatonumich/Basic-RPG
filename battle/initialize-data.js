@@ -26,9 +26,13 @@ initializeFunc.storeJSON = function(objectName, JSONName){
 //----------------------SETUP BATTLE FUNCTIONS----------------------------
 
 //Select enemy
-initializeFunc.selectEnemy = function(list,battleStatus,enemyStats){
+initializeFunc.selectEnemy = function(list,battleStatus,enemyStats, battleSettings){
 
-    let enemyID = list[Math.floor(Math.random()*list.length)];//Determine a random enemy from the list of enemies
+    if (battleSettingData.enemyChoiceType == "random"){
+        enemyID = initializeFunc.randomSelectEnemy(list);
+    } else if(battleSettingData.enemyChoiceType == "sequence"){
+        enemyID = initializeFunc.sequenceSelectEnemy(list, battleStatusData);
+    }
 
     //If battle is in progress, use saved date
     if (battleStatusData.result == "active" || battleStatusData.result =="win" || battleStatusData.result == "lose"){
@@ -45,7 +49,25 @@ initializeFunc.selectEnemy = function(list,battleStatus,enemyStats){
 
     initializeFunc.storeJSON(battleStatusData, 'battleStatusData');
 
-    return chosenEnemy
+    return chosenEnemy;
+
+};
+
+initializeFunc.randomSelectEnemy = function(list){
+
+    let enemyID = list[Math.floor(Math.random()*list.length)];//Determine a random enemy from the list of enemies
+
+    return enemyID
+
+}
+
+initializeFunc.sequenceSelectEnemy = function(list, battleStatusData){
+
+    index = Math.min(battleStatusData.winstreak,list.length)
+    let enemyID = list[index];//Determine enemy based on number of wins
+
+    return enemyID
+
 }
 
 //Store player stats in an object
