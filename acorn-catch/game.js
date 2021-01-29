@@ -70,6 +70,32 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
+//Handle touchscreen controls
+
+addEventListener("touchstart", touchDown);
+document.addEventListener("touchend", touchUp);
+
+function touchDown(e) {
+
+	let touchPosition = e.touches[0].pageX - canvas.offsetLeft
+	if(touchPosition < canvas.width/2){
+		keysDown[[37]] = true
+	}
+	if(touchPosition > canvas.width/2){
+		keysDown[[39]] = true
+	}
+
+	console.log(keysDown)
+
+}
+
+function touchUp(e) {
+
+	delete keysDown[[37]]
+	delete keysDown[[39]]
+
+}
+
 // Reset the coin when the player catches it
 var resetCoin = function () {
 
@@ -92,7 +118,7 @@ var resetSpider = function () {
 // Update game objects
 var update = function (modifier) {
 
-	if (37 in keysDown && hero.x > 0) { // Player holding left
+	if ((37 in keysDown) && hero.x > 0) { // Player holding left
 		hero.x -= hero.speed * modifier;
 	}
 	if (39 in keysDown && hero.x < canvas.width - 100) { // Player holding right
