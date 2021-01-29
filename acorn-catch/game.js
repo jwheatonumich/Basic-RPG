@@ -249,6 +249,9 @@ var startScreen = function () {
 
 	if (37 in keysDown || 39 in keysDown){
 		
+		delete keysDown[[37]];
+		delete keysDown[[39]];
+		
 		gameStart = true
 
 	}
