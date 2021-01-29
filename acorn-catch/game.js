@@ -9,7 +9,9 @@ document.getElementById("game-canvas").appendChild(canvas);
 
 //Initialize variables
 fallSpeed = 2;
-gameOver = false;
+gameStatus = "";
+var coinsCaught = 0;
+gameStart = false;
 
 // Background image
 var bgReady = false;
@@ -57,7 +59,6 @@ var coin = {
 	x: 0,
 	y: 0
 };
-var coinsCaught = 0;
 
 // Handle keyboard controls
 var keysDown = {};
@@ -71,30 +72,29 @@ addEventListener("keyup", function (e) {
 }, false);
 
 //Handle touchscreen controls
-
 addEventListener("touchstart", touchDown);
-document.addEventListener("touchend", touchUp);
+addEventListener("touchend", touchUp);
 
 function touchDown(e) {
 
 	let touchPosition = e.touches[0].pageX - canvas.offsetLeft
 	if(touchPosition < canvas.width/2){
-		keysDown[[37]] = true
-	}
+		keysDown[[37]] = true;
+	};
 	if(touchPosition > canvas.width/2){
-		keysDown[[39]] = true
-	}
+		keysDown[[39]] = true;
+	};
 
-	console.log(keysDown)
+	console.log(keysDown);
 
-}
+};
 
 function touchUp(e) {
 
-	delete keysDown[[37]]
-	delete keysDown[[39]]
+	delete keysDown[[37]];
+	delete keysDown[[39]];
 
-}
+};
 
 // Reset the coin when the player catches it
 var resetCoin = function () {
@@ -134,9 +134,14 @@ var update = function (modifier) {
 		hero.x <= (coin.x + coinImage.width)
 		&& coin.x <= (hero.x + heroImage.width)
 		&& hero.y <= (coin.y + coinImage.height)
-        && coin.y <= (hero.y + coinImage.height)
+        && coin.y <= (hero.y + heroImage.height)
 	) {
 		++coinsCaught;
+
+		if (coinsCaught >= 5){
+			gameStatus = "win"
+		}
+
 		resetCoin();
     };
 
@@ -149,16 +154,16 @@ var update = function (modifier) {
     
     //Did player touch spider?
     if (
-		hero.x <= (spider.x + 100)
-		&& spider.x <= (hero.x + 80)
-		&& hero.y <= (spider.y + 100)
-        && spider.y <= (hero.y + 100)
+		hero.x <= (spider.x + spiderImage.width -8)
+		&& spider.x <= (hero.x + heroImage.width -8)
+		&& hero.y <= (spider.y + spiderImage.height-8)
+        && spider.y <= (hero.y + heroImage.height-8)
 	) {
-        resetSpider();
-        gameOver = true;
+        //resetSpider();
+        gameStatus = "lose";
     };
     
-    //Did player touch spider?
+    //Did the spider touch the ground?
     if (
         spider.y + 100 > canvas.height
     ) {
@@ -192,31 +197,78 @@ var render = function () {
 	ctx.fillText("Coins caught: " + coinsCaught, 32, 32);
 };
 
+var renderStartScreen = function (){
+
+	if (bgReady) {
+		ctx.drawImage(bgImage, 0, 0);
+	}
+
+	// Score
+	ctx.fillStyle = "rgb(250, 250, 250)";
+	ctx.font = "24px Helvetica";
+	ctx.textAlign = "left";
+	ctx.textBaseline = "top";
+	ctx.fillText("Click to start", 60, 32);
+}
+
 // The main game loop
 var main = function () {
-	var now = Date.now();
-	var delta = now - then;
 
-	update(delta / 1000);
-	render();
+	if(!gameStart){
 
-	then = now;
+		startScreen();
 
-    if (gameOver == true){
-        return
-    }
+	}else{
 
-	// Request to do this again ASAP
-    requestAnimationFrame(main);
-    
+		var now = Date.now();
+		var delta = now - then;
+
+		update(delta / 1000);
+		render();
+
+		then = now;
+
+		if (gameStatus == "lose"){
+			endGame();
+			return
+		}
+		
+		if (gameStatus == "win"){
+			endGame();
+			return
+		}
+
+		// Request to do this again ASAP
+		requestAnimationFrame(main);
+	}
 };
+
+var startScreen = function () {
+
+	renderStartScreen();
+
+	if (37 in keysDown || 39 in keysDown){
+		
+		gameStart = true
+
+	}
+
+	requestAnimationFrame(main);
+
+}
 
 // Cross-browser support for requestAnimationFrame
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
 // Let's play this game!
-var then = Date.now();
+
+then = Date.now();
+//startScreen();
+
 resetCoin();
 resetSpider();
 main();
+
+
+
