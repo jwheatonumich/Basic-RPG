@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <!--Control how browsers load and zoom on the page-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--Prevent page caching-->
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+
+        <!--Load CSS-->
+        <link rel="stylesheet" href= "../stylesheets/navbar.css">
+        <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
+
+        <!--Script to start a battle-->
+        <script src="../script/new-battle-script.js" defer></script>
+
+
+        <!--Standard page code-->
+        <script src="../script/daily-events-script.js"></script>
+        <script src="../script/standard-script.js" defer></script>
+        <script src="game.js" defer></script>
+      </head>
+
+    <body>
+        <div id="page-div">
+            <div class="navbar">
+                <a href="../home/index.html">Home</a>
+                <a href="../settings/settings.html">Settings</a>
+
+                <div id="currency-bar">
+                  <table id="currency-table">
+          
+                    <tr>
+                      <th><img class = "currency" alt = "Acorn Coins" src="../images/acorn-coin.png"></th>
+                      <th id="acorn-coin" class="currency-number">100</th>
+      
+                      <th><img class = "currency" alt = "Mushroom Coins" src="../images/mushroom-coin.png"></th>
+                      <th id="mushroom-coin" class="currency-number">5</th>
+      
+                      <th><img class = "currency" alt = "Bearclaw Coins" src="../images/bearclaw-coin.png"></th>
+                      <th id="bearclaw-coin" class="currency-number">1</th>
+      
+                      <th><img class = "currency" alt = "Leaf Coins" src="../images/leaf-coin.png"></th>
+                      <th id="leaf-coin" class="currency-number">1</th>
+                    </tr>
+          
+                    </table>
+                </div>
+
+            </div>
+
+          <div id = "character-div">
+            <p id="player-name">Name</p>
+            <img id="character-image" alt = "Character" src="../images/little-goblin.png">
+            <p id="character-stats">Stats</p>
+            <a class="button-link" onclick="sleep()">Sleep</a>
+          </div>
+
+          <div id="game-div">
+          <h1>Acorn Drop</h1>
+
+                <div id="game-canvas"></div>
+
+                <div id="control-div">
+
+                  <button id="back" class="button" onclick="location.href='../tree/tree.html';">Back</button>
+
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>
