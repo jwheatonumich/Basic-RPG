@@ -86,16 +86,7 @@ function touchDown(e) {
 		keysDown[[39]] = true;
 	};
 
-	event.returnValue = false;
-
-};
-
-function touchUp(e) {
-
-	delete keysDown[[37]];
-	delete keysDown[[39]];
-
-	event.returnValue = false;
+	console.log(keysDown);
 
 };
 
@@ -106,6 +97,13 @@ div1.addEventListener("touchcancel", absorbEvent);
 function absorbEvent(event) {
 	event.returnValue = false;
   }
+
+function touchUp(e) {
+
+	delete keysDown[[37]];
+	delete keysDown[[39]];
+
+};
 
 // Reset the coin when the player catches it
 var resetCoin = function () {
