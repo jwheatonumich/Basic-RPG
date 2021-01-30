@@ -1,4 +1,4 @@
-<html onselectstart='return false;'>
+<html>
     <head>
         <!--Control how browsers load and zoom on the page-->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -61,10 +61,10 @@
             <a class="button-link" onclick="sleep()">Sleep</a>
           </div>
 
-          <div id="game-div">
-          <h1>Acorn Drop v7</h1>
+          <div id="game-div" class="unselectable" unselectable="yes" onselectstart="return false;">
+          <h1 class="unselectable" unselectable="yes" onselectstart="return false;">Acorn Drop v6</h1>
 
-                <div id="game-canvas"></div>
+                <div id="game-canvas" class="unselectable" unselectable="yes" onselectstart="return false;"></div>
 
                 <div id="textbox"></div>
 
