@@ -100,7 +100,7 @@ function touchUp(e) {
 var resetCoin = function () {
 
 	// Throw the coin somewhere on the screen randomly
-	coin.x = (Math.random() * (canvas.width - coinImage.width-10));
+	coin.x = (Math.random() * (canvas.width - coinImage.width));
     coin.y = 0;
     
     coinFallSpeed = fallSpeed + 2*Math.random()
@@ -251,7 +251,7 @@ var startScreen = function () {
 		
 		delete keysDown[[37]];
 		delete keysDown[[39]];
-
+		
 		gameStart = true
 
 	}
