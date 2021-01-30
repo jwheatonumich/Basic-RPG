@@ -75,6 +75,7 @@ addEventListener("keyup", function (e) {
 addEventListener("touchstart", touchDown);
 addEventListener("touchend", touchUp);
 
+
 function touchDown(e) {
 
 	let touchPosition = e.touches[0].pageX - canvas.offsetLeft
@@ -88,6 +89,14 @@ function touchDown(e) {
 	console.log(keysDown);
 
 };
+
+//Ignore these touchscreen conrols
+div1.addEventListener("touchmove", absorbEvent);
+div1.addEventListener("touchcancel", absorbEvent);
+
+function absorbEvent(event) {
+	event.returnValue = false;
+  }
 
 function touchUp(e) {
 
