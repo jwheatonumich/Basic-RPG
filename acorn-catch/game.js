@@ -101,8 +101,8 @@ function touchUp(e) {
 };
 
 //Ignore these touchscreen conrols
-addEventListener("touchmove", absorbEvent);
-addEventListener("touchcancel", absorbEvent);
+div1.addEventListener("touchmove", absorbEvent);
+div1.addEventListener("touchcancel", absorbEvent);
 
 function absorbEvent(event) {
 	event.returnValue = false;
