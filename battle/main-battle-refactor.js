@@ -132,7 +132,8 @@ func.gameOver = function(){
 
     //Set daily events for first day
     dailyEvents ={
-        sleep:false
+        sleep:false,
+        acornCatch:true
     };
 
     //Store daily events in local storage

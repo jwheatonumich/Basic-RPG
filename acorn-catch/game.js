@@ -12,6 +12,8 @@ fallSpeed = 2;
 gameStatus = "";
 var coinsCaught = 0;
 gameStart = false;
+var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents')); //Load daily events data
+
 
 // Background image
 var bgReady = false;
@@ -208,7 +210,11 @@ var renderStartScreen = function (){
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Click to start", 60, 32);
+	if(dailyEvents.acornCatch == true){
+		ctx.fillText("Click to start", 60, 32);
+	}else{
+		ctx.fillText("Try again tomorrow", 30, 32)
+	}
 }
 
 // The main game loop
@@ -249,10 +255,16 @@ var startScreen = function () {
 
 	if (37 in keysDown || 39 in keysDown){
 		
-		delete keysDown[[37]];
-		delete keysDown[[39]];
-		
-		gameStart = true
+		if(dailyEvents.acornCatch == true){
+
+			dailyEvents.acornCatch = false;//Prevent player from taking again
+			localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));//Save in local storage
+
+			delete keysDown[[37]];
+			delete keysDown[[39]];
+			
+			gameStart = true
+		}
 
 	}
 

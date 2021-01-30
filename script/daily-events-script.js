@@ -6,6 +6,8 @@ function dailyEventGenerator(){
 
     dailyEvents.sleep=true;
 
+    dailyEvents.acornCatch=true;
+
     //Squirrel Challenge
     eventCheck = Math.random()
     console.log(eventCheck);

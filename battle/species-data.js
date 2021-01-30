@@ -3,17 +3,17 @@ speciesData
     {
         "gremlin":
         {
-            "attack1Name":"attack","attack2Name":"shield","attack3Name":"stun","attack4Name":"powerDown",
-            "attack1DisplayName":"Attack","attack2DisplayName":"Shield","attack3DisplayName":"Stun","attack4DisplayName":"Power Down",
-            "attack1":"func.attack('attack')","attack2":"func.attack('shield')","attack3":"func.attack('stun')","attack4":"func.attack('powerDown')",
+            "attack1Name":"attack","attack2Name":"none","attack3Name":"none","attack4Name":"none",
+            "attack1DisplayName":"Attack","attack2DisplayName":"","attack3DisplayName":"","attack4DisplayName":"",
+            "attack1":"func.attack('attack')","attack2":"func.empty()","attack3":"func.empty()","attack4":"func.empty()",
             "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/shield-button.png","attackbutton3":"../images/stun-button.png","attackbutton4":"../images/powerup-button.png"
         },
 
         "squirrel":
         {
-            "attack1Name":"attack","attack2Name":"charge","attack3Name":"berserk","attack4Name":"quickAttack",
-            "attack1DisplayName":"Attack","attack2DisplayName":"Charge","attack3DisplayName":"Berserk","attack4DisplayName":"Quick Attack",
-            "attack1":"func.attack('attack')","attack2":"func.attack('charge')","attack3":"func.attack('berserk')","attack4":"func.attack('quickAttack')",
+            "attack1Name":"attack","attack2Name":"quickAttack","attack3Name":"none","attack4Name":"none",
+            "attack1DisplayName":"Attack","attack2DisplayName":"Quick Attack","attack3DisplayName":"Berserk","attack4DisplayName":"Quick Attack",
+            "attack1":"func.attack('attack')","attack2":"func.attack('quickAttack')","attack3":"func.empty()","attack4":"func.empty()",
             "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/charge-button.png","attackbutton3":"../images/berserk-button.png","attackbutton4":"../images/quickattack-button.png"
         },
 

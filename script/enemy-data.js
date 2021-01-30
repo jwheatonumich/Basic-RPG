@@ -14,7 +14,7 @@ enemyStats = [
         "stats":{
                 "name":"Brown Squirrel", "enemyID":0, "species":"squirrel",
                 "health":15, "maxhealth":15, "attack":10, "defense":5, 
-                "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
+                "ability1prob":0.5,"ability2prob":0.5,"ability3prob":0,"ability4prob":0,
                 "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
             },
     },
@@ -24,7 +24,7 @@ enemyStats = [
         "stats":{
                 "name":"Red Squirrel", "enemyID":1, "species":"squirrel",
                 "health":17, "maxhealth":17, "attack":11, "defense":7, 
-                "ability1prob":0,"ability2prob":1,"ability3prob":0,"ability4prob":0,
+                "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
                 "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
             },
     },
@@ -34,7 +34,7 @@ enemyStats = [
         "stats":{
                 "name":"Black Squirrel", "enemyID":2, "species":"squirrel",
                 "health":20, "maxhealth":20, "attack":12, "defense":10, 
-                "ability1prob":0,"ability2prob":0,"ability3prob":1,"ability4prob":0,
+                "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
                 "acorncoin":1, "mushroomcoin":0, "bearclawcoin":0,
             },
     },
@@ -45,7 +45,7 @@ enemyStats = [
         "stats":{
             "name":"Two Brown Squirrels", "enemyID":3, "species":"squirrel",
             "health":30, "maxhealth":30, "attack":20, "defense":5, 
-            "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
+            "ability1prob":0.5,"ability2prob":0.5,"ability3prob":0,"ability4prob":0,
             "acorncoin":3,"mushroomcoin":0, "bearclawcoin":0 
         },
     },
@@ -55,7 +55,7 @@ enemyStats = [
         "stats":{
             "name":"Two Red Squirrels", "enemyID":4, "species":"squirrel",
             "health":34, "maxhealth":34, "attack":22, "defense":5, 
-            "ability1prob":0,"ability2prob":1,"ability3prob":0,"ability4prob":0,
+            "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
             "acorncoin":3,"mushroomcoin":0, "bearclawcoin":0 
         },
     },
@@ -65,7 +65,7 @@ enemyStats = [
         "stats":{
             "name":"Two Black Squirrels", "enemyID":5, "species":"squirrel",
             "health":40, "maxhealth":40, "attack":24, "defense":5, 
-            "ability1prob":0,"ability2prob":0,"ability3prob":1,"ability4prob":0,
+            "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
             "acorncoin":3,"mushroomcoin":0, "bearclawcoin":0 
         },
     },
@@ -195,7 +195,7 @@ enemyStats = [
         "stats":{
             "name":"Squirrel Master", "enemyID":18, "species":"squirrel",
             "health":100, "maxhealth":100, "attack":300, "defense":25, 
-            "ability1prob":0,"ability2prob":0,"ability3prob":0,"ability4prob":1,
+            "ability1prob":1,"ability2prob":0,"ability3prob":0,"ability4prob":0,
             "acorncoin":10, "mushroomcoin":0, "bearclawcoin":0 
             }
     },

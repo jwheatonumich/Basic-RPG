@@ -24,7 +24,8 @@ function dataLoad(){
     };
 
     dailyEvents ={
-        sleep:true
+        sleep:true,
+        acornCatch:true
     };
 };
 
