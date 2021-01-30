@@ -5,7 +5,8 @@ var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = 260;
 canvas.height = 350;
-document.getElementById("game-canvas").appendChild(canvas);
+canv = document.getElementById("game-canvas").appendChild(canvas);
+canv.classList.add("no_selection");
 
 //Initialize variables
 fallSpeed = 2;
