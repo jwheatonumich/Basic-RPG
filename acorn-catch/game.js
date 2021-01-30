@@ -5,7 +5,7 @@ var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = 260;
 canvas.height = 350;
-document.getElementById("game-canvas").appendChild(canvas);
+canv = document.getElementById("game-canvas").appendChild(canvas);
 
 //Initialize variables
 fallSpeed = 2;
@@ -72,8 +72,8 @@ addEventListener("keyup", function (e) {
 }, false);
 
 //Handle touchscreen controls
-addEventListener("touchstart", touchDown);
-addEventListener("touchend", touchUp);
+canv.addEventListener("touchstart", touchDown);
+canv.addEventListener("touchend", touchUp);
 
 function touchDown(e) {
 
