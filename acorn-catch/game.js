@@ -3,7 +3,7 @@
 //Create canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 260;
+canvas.width = 245;
 canvas.height = 350;
 canv = document.getElementById("game-canvas").appendChild(canvas);
 

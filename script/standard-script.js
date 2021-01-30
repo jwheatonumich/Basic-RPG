@@ -213,6 +213,21 @@ function leafcoinAlert(){
     , false);
 }
 
+//Heal player for 1 leaf coin
+function healMax(){
+
+    if (playerStats.leafcoin > 0){
+        playerStats.leafcoin-=1;
+        playerStats.health = playerStats.maxhealth ;
+    }
+    
+    //Store the updated data object in local storage, after turning the JSON to a string
+    localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+
+    playerSetup();
+    setStats();
+}
+
 window.onload = loadPlayerStats();
 window.onload = activeBattleCheck();//Check for active battle on page load
 window.onload = playerSetup();

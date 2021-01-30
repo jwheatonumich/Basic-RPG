@@ -98,3 +98,10 @@ body{
     margin:5;
     display:block;
 }
+
+.button-link-image{
+    border: black solid 1px;
+    padding:12;
+    margin:5;
+    display:block;
+}

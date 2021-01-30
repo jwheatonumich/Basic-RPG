@@ -17,7 +17,6 @@
 
           <script src="../script/new-battle-script.js" defer></script>
           <script src="arena-select.js" defer></script>
-          <script src="main-heal.js" defer></script>
 
           <script src="../script/daily-events-script.js"></script>
           <script src="../script/standard-script.js" defer></script>
@@ -58,6 +57,7 @@
             <img id="character-image" alt = "Character" src="../images/little-goblin.png">
             <p id="character-stats">Stats</p>
             <a class="button-link" onclick="sleep()">Sleep</a>
+            <a class="button-link-image" onClick="healMax();"><img class = "cost" alt = "Mushroom Coin" src="../images/leaf-coin.png"></a>
           </div>
 
           <div id="game-div">
@@ -65,19 +65,6 @@
             <div id="trainer-div">
               <img id="page-image" alt = "Trainer" src="../images/little-mushroom.png">
             </div>
-
-            <div id="cost-table-div">
-              <table id="cost-table">
-                <tr>
-                  <th>Heal</th>
-                </tr>
-                <tr>
-                  <th><a onClick="healMax();" href=?><img class = "cost" alt = "Mushroom Coin" src="../images/leaf-coin.png"></a></th>
-                </tr>
-                </table>
-              </div>
-              <br>
-              <br>
 
               <div id="battle-div">
 

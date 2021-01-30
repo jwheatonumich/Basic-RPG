@@ -22,9 +22,6 @@
 
           <!--Script to train-->
           <script src="train-select.js" defer></script>
-          
-            <!--Script to heal-->
-          <script src="main-heal.js" defer></script>
 
           <!--Standard page code-->
           <script src="../script/daily-events-script.js"></script>
@@ -66,6 +63,7 @@
               <img id="character-image" alt = "Character" src="../images/little-goblin.png">
               <p id="character-stats">Stats</p>
               <a class="button-link" onclick="sleep()">Sleep</a>
+              <a class="button-link-image" onClick="healMax();"><img class = "cost" alt = "Mushroom Coin" src="../images/leaf-coin.png"></a>
             </div>
 
           <div id="game-div">
@@ -97,11 +95,6 @@
                   <tr>
                     <th>Endurance</th>
                     <th><a onClick="bearclawTraining('endurance')" href=?><img class = "cost" alt = "Mushroom Coins" src="../images/bearclaw-coin.png"></a></th>
-                  </tr>
-  
-                  <tr>
-                    <th>Heal</th>
-                    <th><a onClick="healMax();" href=?><img class = "cost" alt = "Mushroom Coin" src="../images/leaf-coin.png"></a></th>
                   </tr>
 
                   </table>
