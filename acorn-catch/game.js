@@ -72,8 +72,8 @@ addEventListener("keyup", function (e) {
 }, false);
 
 //Handle touchscreen controls
-addEventListener("touchstart", touchDown);
-addEventListener("touchend", touchUp);
+//addEventListener("touchstart", touchDown);
+//addEventListener("touchend", touchUp);
 
 
 function touchDown(e) {
