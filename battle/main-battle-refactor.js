@@ -912,6 +912,20 @@ func.updateCoins = function(playerBattleStats, playerStats){
     initializeFunc.storeJSON(playerStats, 'storedPlayerStats'); //Store updated player data in local storage
 }
 
+func.battleHeal = function(playerBattleStats, enemyBattleStats, playerAbility, enemyAbility){
+
+    if(abilityData[playerAbility]["heal"]){
+        playerBattleStats.health = Math.min(playerBattleStats.health + playerBattleStats.maxhealth * abilityData[playerAbility]["heal"],playerBattleStats.maxhealth)
+    }
+
+    if(enemyAbility["heal"]){
+        enemyBattleStats.health = Math.min(enemyBattleStats.health + enemyBattleStats.maxhealth * enemyAbility["heal"], enemyBattleStats.maxhealth)
+    }
+
+    return [playerBattleStats,enemyBattleStats]
+
+}
+
 func.attack = function(playerAbility){
 
     //Reset any temporary variables for the battle
@@ -935,6 +949,9 @@ func.attack = function(playerAbility){
         setBattleText("You don't have enough coins to use this ability.")
         return;
     }
+
+    //Healing abilities
+    [playerBattleStats,enemyBattleStats] = func.battleHeal(playerBattleStats, enemyBattleStats, playerAbility, enemyAbility)
 
     //Battle calculations
     func.battleCalculations(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
