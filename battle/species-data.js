@@ -11,9 +11,9 @@ speciesData
 
         "squirrel":
         {
-            "attack1Name":"attack","attack2Name":"quickAttack","attack3Name":"none","attack4Name":"none",
-            "attack1DisplayName":"Attack","attack2DisplayName":"Quick Attack","attack3DisplayName":"Berserk","attack4DisplayName":"Quick Attack",
-            "attack1":"func.attack('attack')","attack2":"func.attack('quickAttack')","attack3":"func.empty()","attack4":"func.empty()",
+            "attack1Name":"attack","attack2Name":"quickAttack","attack3Name":"berserk","attack4Name":"none",
+            "attack1DisplayName":"Attack","attack2DisplayName":"Quick Attack","attack3DisplayName":"Berserk","attack4DisplayName":"",
+            "attack1":"func.attack('attack')","attack2":"func.attack('quickAttack')","attack3":"func.attack('berserk')","attack4":"func.empty()",
             "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/charge-button.png","attackbutton3":"../images/berserk-button.png","attackbutton4":"../images/quickattack-button.png"
         },
 
