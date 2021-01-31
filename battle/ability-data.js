@@ -197,4 +197,30 @@ abilityData =
         //Other efects
         "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
     },
+
+    "redLaser":
+    {
+        "name":"Red Laser",
+        //Current turn damage modifiers
+        "selfAttackMultiplier":1.5, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
+        //Multi-turn damage modifiers
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
+        //Other efects
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false,
+        //Costs
+        "acorncoin":1
+    },
+
+    "heal":
+    {
+        "name":"Heal",
+        //Current turn damage modifiers
+        "selfAttackMultiplier":1, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
+        //Multi-turn damage modifiers
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
+        //Other efects
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":true, "heal":1,
+        //Costs
+        "leafcoin":1
+    },
 }

@@ -210,10 +210,13 @@ var renderStartScreen = function (){
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	if(dailyEvents.acornCatch == true){
+	if(playerStats.health <= 0){
+		ctx.fillText("Heal before playing", 20, 32);
+	}
+	else if(dailyEvents.acornCatch == true){
 		ctx.fillText("Click to start", 60, 32);
 	}else{
-		ctx.fillText("Try again tomorrow", 30, 32)
+		ctx.fillText("Try again tomorrow", 20, 32)
 	}
 }
 
@@ -255,7 +258,7 @@ var startScreen = function () {
 
 	if (37 in keysDown || 39 in keysDown){
 		
-		if(dailyEvents.acornCatch == true){
+		if(dailyEvents.acornCatch == true && playerStats.health > 0){
 
 			dailyEvents.acornCatch = false;//Prevent player from taking again
 			localStorage.setItem('dailyEvents',JSON.stringify(dailyEvents));//Save in local storage

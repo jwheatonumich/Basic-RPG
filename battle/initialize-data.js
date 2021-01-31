@@ -229,6 +229,11 @@ initializeFunc.updateBattleStatusData = function(chosenEnemy,playerBattleStats,e
     battleStatusData.playerArmor = playerBattleStats.armor;
     battleStatusData.enemyArmor = enemyBattleStats.armor;
 
+    battleStatusData.leafcoin = playerBattleStats.leafcoin;
+    battleStatusData.acorncoin = playerBattleStats.acorncoin;
+    battleStatusData.mushroomcoin = playerBattleStats.mushroomcoin;
+    battleStatusData.bearclawcoin = playerBattleStats.bearclawcoin;
+
 
     return battleStatusData;
 }

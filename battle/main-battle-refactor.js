@@ -847,6 +847,71 @@ func.executeTurnEnd = function(){
     }
 }
 
+func.checkAbilityCost = function(playerAbility){
+
+    //Check if player has coins to pay for their attack
+
+    let playerHasCoins = true; //Defaults to yes since not all attacks have a cost
+
+
+    //Check if ability requires acorn coins
+    if(abilityData[playerAbility].hasOwnProperty("acorncoin")){
+        //If yes, check if player has enough acorn coins
+        if(playerBattleStats["acorncoin"] >= abilityData[playerAbility]["acorncoin"]){
+            //If yes, subtract the acorn coins from player stats
+            playerBattleStats["acorncoin"] -= abilityData[playerAbility]["acorncoin"];
+
+        } else{
+            //If player doesn't have enough acorn coins, return false
+            playerHasCoins = false;
+        }
+    }
+
+    if(abilityData[playerAbility].hasOwnProperty("mushroomcoin")){
+        if(playerBattleStats["mushroomcoin"] >= abilityData[playerAbility]["mushroomcoin"]){
+            playerBattleStats["mushroomcoin"] -= abilityData[playerAbility]["mushroomcoin"];
+
+        } else{
+            playerHasCoins = false;
+        }
+    }
+
+    if(abilityData[playerAbility].hasOwnProperty("bearclawcoin")){
+        if(playerBattleStats["mushroomcoin"] >= abilityData[playerAbility]["mushroomcoin"]){
+            playerBattleStats["mushroomcoin"] -= abilityData[playerAbility]["mushroomcoin"];
+
+        } else{
+            playerHasCoins = false;
+        }
+    }
+
+    if(abilityData[playerAbility].hasOwnProperty("leafcoin")){
+        if(playerBattleStats["leafcoin"] >= abilityData[playerAbility]["leafcoin"]){
+            playerBattleStats["leafcoin"] -= abilityData[playerAbility]["leafcoin"];
+
+        } else{
+            playerHasCoins = false;
+        }
+    }
+
+    //Save any changes to player coins
+    func.updateCoins(playerBattleStats, playerStats);
+
+    return playerHasCoins;
+
+}
+
+func.updateCoins = function(playerBattleStats, playerStats){
+
+    //Save player coin totals in battle to player stats
+    playerStats.acorncoin = playerBattleStats.acorncoin; 
+    playerStats.mushroomcoin = playerBattleStats.mushroomcoin; 
+    playerStats.bearclawcoin = playerBattleStats.bearclawcoin; 
+    playerStats.leafcoin = playerBattleStats.leafcoin; 
+
+    initializeFunc.storeJSON(playerStats, 'storedPlayerStats'); //Store updated player data in local storage
+}
+
 func.attack = function(playerAbility){
 
     //Reset any temporary variables for the battle
@@ -864,6 +929,12 @@ func.attack = function(playerAbility){
 
     //Determine abilities player and enemy used
     [enemyAbility, playerAbility] = func.determineAbilities(playerAbility,enemyBattleStats,playerBattleStats);
+
+    //Check if player has required resources to use their selected ability
+    if(!func.checkAbilityCost(playerAbility)){
+        setBattleText("You don't have enough coins to use this ability.")
+        return;
+    }
 
     //Battle calculations
     func.battleCalculations(playerAbility, enemyAbility, abilityData, playerBattleStats, enemyBattleStats);
