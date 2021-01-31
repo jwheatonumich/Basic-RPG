@@ -74,14 +74,14 @@ addEventListener("keyup", function (e) {
 }, false);
 
 //Handle touchscreen controls
-canv.addEventListener("touchstart", touchDown);
-canv.addEventListener("touchend", touchUp);
+//canv.addEventListener("touchstart", touchDown);
+//canv.addEventListener("touchend", touchUp);
 
 document.getElementById("move-left").addEventListener("touchstart", touchDownLeft);
 document.getElementById("move-left").addEventListener("touchend", touchUpLeft);
 
-document.getElementById("move-left").addEventListener("touchstart", touchDownRight);
-document.getElementById("move-left").addEventListener("touchend", touchUpRight);
+document.getElementById("move-right").addEventListener("touchstart", touchDownRight);
+document.getElementById("move-right").addEventListener("touchend", touchUpRight);
 
 function touchDownLeft(e) {
 
@@ -97,7 +97,7 @@ function touchUpLeft(e) {
 
 function touchDownRight(e) {
 
-		keysDown[[39]] = true;
+	keysDown[[39]] = true;
 
 };
 
