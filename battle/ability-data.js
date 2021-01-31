@@ -232,7 +232,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":1, "poison":0, "leech":0, "priority":false,"skipAttack":false,
+        "armor":0, "stun":0.25, "poison":0, "leech":0, "priority":false,"skipAttack":false,
         //Costs
         "acorncoin":1
     },
