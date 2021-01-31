@@ -99,7 +99,7 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
 
         } else{ //If flee not successful, player stunned for a round of battle
 
-            battleData.battleTextArray[4] = "You fail to flee."
+            battleData.battleTextArray[6] = "You fail to flee."
             playerBattleStats.stun = 1;
             return false;
 
@@ -276,7 +276,7 @@ func.playerPriorityAttack = function(playerAttackDamage,playerAbility,abilityDat
 
     enemyBattleStats = func.dealDamage(playerAttackDamage, enemyBattleStats);
 
-    battleData.battleTextArray[2] = func.arrayToString([
+    battleData.battleTextArray[4] = func.arrayToString([
         `You strike fast with `,
         abilityData[playerAbility]["name"],
         `. The enemy takes `,
@@ -292,7 +292,7 @@ func.enemyPriorityAttack = function(enemyAttackDamage,enemyAbility,playerBattleS
 
     playerBattleStats = func.dealDamage(enemyAttackDamage, playerBattleStats);
 
-    battleData.battleTextArray[3] = func.arrayToString([
+    battleData.battleTextArray[5] = func.arrayToString([
         `The enemy strike fast with `,
         enemyAbility["name"],
         `. You take `,
@@ -308,7 +308,7 @@ func.executePlayerAttack = function(playerAttackDamage,playerAbility,abilityData
 
     enemyBattleStats = func.dealDamage(playerAttackDamage, enemyBattleStats);
 
-    battleData.battleTextArray[4] = func.arrayToString([
+    battleData.battleTextArray[6] = func.arrayToString([
         `You use `,
         abilityData[playerAbility]["name"],
         `. The enemy takes `,
@@ -317,7 +317,7 @@ func.executePlayerAttack = function(playerAttackDamage,playerAbility,abilityData
     ]);
 
     if(Math.floor(abilityData[playerAbility]["leech"]*playerAttackDamage) > 0){
-        battleData.battleTextArray[4] = func.arrayToString([
+        battleData.battleTextArray[6] = func.arrayToString([
             `You use `,
             abilityData[playerAbility]["name"],
             '. ',
@@ -335,7 +335,7 @@ func.executeEnemyAttack = function(enemyAttackDamage,enemyAbility,playerBattleSt
 
     playerBattleStats = func.dealDamage(enemyAttackDamage, playerBattleStats);
 
-    battleData.battleTextArray[5] = func.arrayToString([
+    battleData.battleTextArray[7] = func.arrayToString([
         `The enemy uses `,
         enemyAbility["name"],
         `. You take `,
@@ -344,7 +344,7 @@ func.executeEnemyAttack = function(enemyAttackDamage,enemyAbility,playerBattleSt
     ])
 
     if(Math.floor(enemyAbility["leech"]*enemyAttackDamage) > 0){
-        battleData.battleTextArray[5] = func.arrayToString([
+        battleData.battleTextArray[7] = func.arrayToString([
             `The enemy uses `,
             enemyAbility["name"],
             '. ',
@@ -362,7 +362,7 @@ func.calculatePlayerPoison = function(playerAbility,abilityData,battleData,enemy
 
     enemyBattleStats.poison += playerAbilityPoison;
 
-    if(playerAbilityPoison!=0){battleData.battleTextArray[6] = `You poison the enemy!`};
+    if(playerAbilityPoison!=0){battleData.battleTextArray[8] = `You poison the enemy!`};
 
     return [enemyBattleStats,battleData]
 
@@ -372,7 +372,7 @@ func.calculateEnemyPoison = function(enemyAbility,battleData,playerBattleStats,e
 
     playerBattleStats.poison += enemyAbilityPoison;
 
-    if(enemyAbilityPoison!=0){battleData.battleTextArray[7] = `The enemy poisons you!`};
+    if(enemyAbilityPoison!=0){battleData.battleTextArray[9] = `The enemy poisons you!`};
 
     return [playerBattleStats,battleData]
 
@@ -419,46 +419,46 @@ func.calculatePlayerStunned = function(enemyAbility, playerBattleStats){
 func.setStatChanges = function(abilityData, playerAbility, enemyAbility, battleData, playerBattleStats, enemyBattleStats){
     if (abilityData[playerAbility]["selfAttack"] !== null) {
         playerBattleStats.attack *= abilityData[playerAbility]["selfAttack"];
-        battleData.battleTextArray[8] = `You have increased your attack.`;
+        battleData.battleTextArray[10] = `You have increased your attack.`;
     };
     if (abilityData[playerAbility]["selfDefense"] !== null) {
         playerBattleStats.defense *= abilityData[playerAbility]["selfDefense"];
-        battleData.battleTextArray[9] = `You have increased your defense.`;
+        battleData.battleTextArray[11] = `You have increased your defense.`;
     };
     if (abilityData[playerAbility]["opponentAttack"] !== null) {
         enemyBattleStats.attack *= abilityData[playerAbility]["opponentAttack"];
-        battleData.battleTextArray[10] = `You have decreased your opponent's attack.`;
+        battleData.battleTextArray[12] = `You have decreased your opponent's attack.`;
     };
     if (abilityData[playerAbility]["opponentDefense"] !== null) {
         enemyBattleStats.defense *= abilityData[playerAbility]["opponentDefense"];
-        battleData.battleTextArray[11] = `You have decreased your opponent's defense.`;
+        battleData.battleTextArray[13] = `You have decreased your opponent's defense.`;
     };
 
     if (enemyAbility["selfAttack"] !== null) {
         enemyBattleStats.attack *= enemyAbility["selfAttack"];
-        battleData.battleTextArray[12] = `Your opponent increased their attack.`;
+        battleData.battleTextArray[14] = `Your opponent increased their attack.`;
     };
     if (enemyAbility["selfDefense"] !== null) {
         enemyBattleStats.defense *= enemyAbility["selfDefense"];
-        battleData.battleTextArray[13] = `Your opponent increased their defense`;
+        battleData.battleTextArray[15] = `Your opponent increased their defense`;
     };
     if (enemyAbility["opponentAttack"] !== null) {
         playerBattleStats.attack *= enemyAbility["opponentAttack"];
-        battleData.battleTextArray[14] = `Your opponent decreased your attack`;
+        battleData.battleTextArray[16] = `Your opponent decreased your attack`;
     };
     if (enemyAbility["opponentDefense"] !== null) {
         playerBattleStats.defense *= enemyAbility["opponentDefense"];
-        battleData.battleTextArray[15] = `Your opponent decreased your defense`;
+        battleData.battleTextArray[17] = `Your opponent decreased your defense`;
     };
 
     return battleData
 };
 
 func.setPoisonStunBattletext = function(playerBattleStats,enemyBattleStats, battleData){
-    if(playerBattleStats.poison>0){battleData.battleTextArray[16] = `Poison deals you `+playerBattleStats.poison+` damage`};
-    if(enemyBattleStats.poison>0){battleData.battleTextArray[17] = `Poison deals the enemy `+enemyBattleStats.poison+` damage`};
-    if(playerBattleStats.stun==1){battleData.battleTextArray[18] = `You have been stunned!`};
-    if(enemyBattleStats.stun==1){battleData.battleTextArray[19] = `The enemy has been stunned!`};
+    if(playerBattleStats.poison>0){battleData.battleTextArray[18] = `Poison deals you `+playerBattleStats.poison+` damage`};
+    if(enemyBattleStats.poison>0){battleData.battleTextArray[19] = `Poison deals the enemy `+enemyBattleStats.poison+` damage`};
+    if(playerBattleStats.stun==1){battleData.battleTextArray[20] = `You have been stunned!`};
+    if(enemyBattleStats.stun==1){battleData.battleTextArray[21] = `The enemy has been stunned!`};
 
     return battleData;
 };
@@ -744,12 +744,12 @@ func.battleCalculations = function(playerAbility, enemyAbility, abilityData, pla
     //Set player/enemy armor, attack damage, and poison
     playerBattleStats.armor += abilityData[playerAbility]["armor"];
     if(abilityData[playerAbility]["armor"]>0){
-        battleData.battleTextArray[0] = `Your gain `+abilityData[playerAbility]["armor"]+' armor.';
+        battleData.battleTextArray[2] = `You gain `+abilityData[playerAbility]["armor"]+' armor.';
     }
 
     enemyBattleStats.armor += enemyAbility["armor"];
     if(enemyAbility["armor"]>0){
-        battleData.battleTextArray[1] = `Your opponent gains `+enemyAbility["armor"]+' armor.';
+        battleData.battleTextArray[3] = `Your opponent gains `+enemyAbility["armor"]+' armor.';
     }
 
     playerAttackDamage = func.calculatePlayerAttack(playerBattleStats,enemyBattleStats);
@@ -915,11 +915,19 @@ func.updateCoins = function(playerBattleStats, playerStats){
 func.battleHeal = function(playerBattleStats, enemyBattleStats, playerAbility, enemyAbility){
 
     if(abilityData[playerAbility]["heal"]){
+        
+        //How much did player heal?
+        var playerHeal = Math.min(playerBattleStats.health + playerBattleStats.maxhealth * abilityData[playerAbility]["heal"],playerBattleStats.maxhealth) - playerBattleStats.health
+        //Heal
         playerBattleStats.health = Math.min(playerBattleStats.health + playerBattleStats.maxhealth * abilityData[playerAbility]["heal"],playerBattleStats.maxhealth)
+        //Update battle text
+        battleData.battleTextArray[0] = `You gain `+playerHeal+' life.';
     }
 
     if(enemyAbility["heal"]){
+        var enemyHeal = Math.min(enemyBattleStats.health + enemyBattleStats.maxhealth * enemyAbility["heal"], enemyBattleStats.maxhealth) - enemyBattleStats.health
         enemyBattleStats.health = Math.min(enemyBattleStats.health + enemyBattleStats.maxhealth * enemyAbility["heal"], enemyBattleStats.maxhealth)
+        battleData.battleTextArray[1] = `Your enemy gains `+enemyHeal+' life.';
     }
 
     return [playerBattleStats,enemyBattleStats]
