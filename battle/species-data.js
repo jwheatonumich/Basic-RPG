@@ -4,7 +4,7 @@ speciesData
         "gremlin":
         {
             "attack1Name":"attack","attack2Name":"redLaser","attack3Name":"heal","attack4Name":"none",
-            "attack1DisplayName":"Attack","attack2DisplayName":"Red Laser","attack3DisplayName":"Heal","attack4DisplayName":"",
+            "attack1DisplayName":"Attack","attack2DisplayName":"Red Laser<br>{r}{r}","attack3DisplayName":"Heal<br>{gr}","attack4DisplayName":"",
             "attack1":"func.attack('attack')","attack2":"func.attack('redLaser')","attack3":"func.attack('heal')","attack4":"func.empty()",
             "attackbutton1":"../images/attack-button.png","attackbutton2":"../images/shield-button.png","attackbutton3":"../images/stun-button.png","attackbutton4":"../images/powerup-button.png"
         },

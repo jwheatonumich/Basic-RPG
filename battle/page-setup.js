@@ -88,6 +88,59 @@ function setPlayerAbilityButtons(playerStats){
     document.getElementById("attack3").setAttribute("onClick", speciesData[playerStats.species].attack3);
     document.getElementById("attack4").setAttribute("onClick", speciesData[playerStats.species].attack4);
 
+    //Replace cost text with images
+    var list, index, element, abilityName;
+
+    //Add cost images
+    costImages()
+
+}
+
+function costImages(){
+    //Get a list of all attack uttons
+    list = document.getElementsByClassName('attack-link');
+
+    for (index = 0; index < list.length; ++index){ //For each attack button
+        element = list[index]; //Store the attack button
+        abilityName = element.innerHTML //Get the text in the attack button
+        console.log(abilityName)
+
+        if (abilityName.includes('{gr}')){ //Check if the text contains the cost
+            replaceTextWithImage("{gr}","../images/leaf-coin.png",element,abilityName)
+        }
+        if (abilityName.includes('{r}')){ //Check if the text contains the cost
+            replaceTextWithImage("{r}","../images/acorn-coin.png",element,abilityName)
+        }
+        if (abilityName.includes('{s}')){ //Check if the text contains the cost
+            replaceTextWithImage("{s}","../images/mushroom-coin.png",element,abilityName)
+        }
+        if (abilityName.includes('{g}')){ //Check if the text contains the cost
+            replaceTextWithImage("{g}","../images/bearclaw-coin.png",element,abilityName)
+        }
+        
+    }
+}
+
+function replaceTextWithImage(textInput,imageInput,element,abilityName){
+    if (abilityName.includes(textInput)){ //Check if the text contains the cost
+        var costCount = abilityName.match(new RegExp(textInput, "g"))//Number of cost images
+
+        element.innerHTML = abilityName.replaceAll(textInput,"");//Remove the cost text
+
+        var div = document.createElement("div");//Create a div to store the cost images
+        element.appendChild(div);
+
+        for(i in costCount){//Add a cost image for each one removed
+
+            var elem = document.createElement("img");
+            elem.setAttribute("src", imageInput);
+            elem.setAttribute("height", "30");
+            elem.setAttribute("width", "30");
+            elem.setAttribute("class", "ability-cost");
+
+            div.appendChild(elem);
+        }
+    }
 }
 
 function pageSetup(){
