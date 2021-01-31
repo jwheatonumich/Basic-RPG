@@ -223,4 +223,17 @@ abilityData =
         //Costs
         "leafcoin":1
     },
+
+    "acornToss":
+    {
+        "name":"Acorn Toss",
+        //Current turn damage modifiers
+        "selfAttackMultiplier":1.4, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
+        //Multi-turn damage modifiers
+        "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
+        //Other efects
+        "armor":0, "stun":0.25, "poison":0, "leech":0, "priority":false,"skipAttack":false,
+        //Costs
+        "acorncoin":1
+    },
 }
