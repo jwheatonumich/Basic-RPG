@@ -73,16 +73,27 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
-//Handle touchscreen controls
-//canv.addEventListener("touchstart", touchDown);
-//canv.addEventListener("touchend", touchUp);
+//Detect if touch device
+function isTouchDevice() {
+	return (('ontouchstart' in window) ||
+	   (navigator.maxTouchPoints > 0) ||
+	   (navigator.msMaxTouchPoints > 0));
+  };
 
-document.getElementById("move-left").addEventListener("touchstart", touchDownLeft);
-document.getElementById("move-left").addEventListener("touchend", touchUpLeft);
+if(!isTouchDevice()){
+	document.getElementById("touch-controls").parentElement.removeChild(document.getElementById("touch-controls"));
+}else{
+	//Handle touch controls
+	document.getElementById("move-left").addEventListener("touchstart", touchDownLeft);
+	document.getElementById("move-left").addEventListener("touchend", touchUpLeft);
+	document.getElementById("move-right").addEventListener("touchstart", touchDownRight);
+	document.getElementById("move-right").addEventListener("touchend", touchUpRight);
+}
 
-document.getElementById("move-right").addEventListener("touchstart", touchDownRight);
-document.getElementById("move-right").addEventListener("touchend", touchUpRight);
 
+
+
+//Functions to move left and right
 function touchDownLeft(e) {
 
 		keysDown[[37]] = true;
