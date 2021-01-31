@@ -35,7 +35,7 @@ endGame = function(){
     }
 
     if(gameStatus == "lose"){
-        startBattle(enemyList);
+        startBattle(enemyList,false,true,true);
     }
 
 }
