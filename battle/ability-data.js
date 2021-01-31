@@ -136,11 +136,11 @@ abilityData =
     {
         "name":"Stunned",
         //Current turn damage modifiers
-        "selfAttackMultiplier":0, "opponentAttackMultiplier":0, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
+        "selfAttackMultiplier":1, "opponentAttackMultiplier":1, "selfDefenseMultiplier":1, "opponentDefenseMultiplier":1,
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":false
+        "armor":0, "stun":0, "poison":0, "leech":0, "priority":false,"skipAttack":true
     },
 
     "rollout":
@@ -232,7 +232,7 @@ abilityData =
         //Multi-turn damage modifiers
         "selfAttack":null, "opponentAttack":null, "selfDefense":null, "opponentDefense":null,
         //Other efects
-        "armor":0, "stun":0.25, "poison":0, "leech":0, "priority":false,"skipAttack":false,
+        "armor":0, "stun":1, "poison":0, "leech":0, "priority":false,"skipAttack":false,
         //Costs
         "acorncoin":1
     },

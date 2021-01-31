@@ -720,7 +720,6 @@ func.initializeBattle = function(playerBattleStats,enemyBattleStats,battleData){
 
     //Reset single turn effects including stun, player status, and battle text
     [playerBattleStats,enemyBattleStats,battleData] = func.resetBattleText(playerBattleStats,enemyBattleStats,battleData)
-    func.resetStun(enemyBattleStats,playerBattleStats);
     func.resetStatus(enemyBattleStats,playerBattleStats);
 
     return [playerBattleStats,enemyBattleStats,battleData]
@@ -804,6 +803,9 @@ func.battleCalculations = function(playerAbility, enemyAbility, abilityData, pla
     if(playerBattleStats.poison>0){
         func.dealDamage(playerBattleStats.poison, playerBattleStats);//Enemy takes poison damage
     };
+
+    //Reset stuns
+    func.resetStun(enemyBattleStats,playerBattleStats);
 
     //Determine if player/enemy are stunned next turn
     enemyBattleStats = func.calculateEnemyStunned(abilityData, playerAbility,enemyBattleStats)
