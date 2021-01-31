@@ -1,7 +1,6 @@
 //Reward if you win
 rewardType = "acorncoin";
 rewardImage = '../images/acorn-coin.png'
-rewardQuantity = 5
 var page = "../acorn-catch/acorn-catch.html";
 
 //Enemy you battle if you lose
@@ -13,14 +12,14 @@ endGame = function(){
     if(gameStatus == "win"){
         document.getElementById("textbox").innerHTML = 'You win!<br>'
 
-        playerStats[rewardType] +=rewardQuantity;
+        playerStats[rewardType] +=coinsCaught;
         localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
         playerSetup();
         setStats();
         
         //Loop to create leaf icons
         var i = 1;
-        while (i <= rewardQuantity){
+        while (i <= coinsCaught){
 
             //Create the images
             var elem = document.createElement("img");
@@ -35,6 +34,11 @@ endGame = function(){
     }
 
     if(gameStatus == "lose"){
+        playerStats[rewardType] +=coinsCaught;
+        localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
+        playerSetup();
+        setStats();
+
         startBattle(enemyList,false,true,true);
     }
 

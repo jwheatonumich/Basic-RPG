@@ -8,10 +8,11 @@ canvas.height = 350;
 canv = document.getElementById("game-canvas").appendChild(canvas);
 
 //Initialize variables
-fallSpeed = 2;
-gameStatus = "";
-var coinsCaught = 0;
+fallSpeed = 2; //Base speed things fall
+gameStatus = ""; //Has player won or lost game yet
+var coinsCaught = 0; //How many coins player has caught
 gameStart = false;
+spiderDrops = 0 //How many spiders have dropped
 var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents')); //Load daily events data
 
 
@@ -39,6 +40,14 @@ spiderImage.onload = function () {
 };
 spiderImage.src = "../images/acorn-drop-spider.png";
 
+// Spider2 image
+var spider2Ready = false;
+var spider2Image = new Image();
+spider2Image.onload = function () {
+	spider2Ready = true;
+};
+spider2Image.src = "../images/acorn-drop-spider.png";
+
 // Coin image
 var coinReady = false;
 var coinImage = new Image();
@@ -54,6 +63,10 @@ var hero = {
 	y: canvas.height - 100
 };
 var spider = {
+	x: 0,
+	y: 0
+};
+var spider2 = {
 	x: 0,
 	y: 0
 };
@@ -136,6 +149,15 @@ var resetSpider = function () {
     spiderFallSpeed = fallSpeed + 2*Math.random()
 };
 
+var resetSpider2 = function () {
+
+	// Throw the coin somewhere on the screen randomly
+	spider2.x = (Math.random() * (canvas.width - spider2Image.width));
+    spider2.y = 0;
+    
+    spider2FallSpeed = fallSpeed + 2*Math.random()
+};
+
 // Update game objects
 var update = function (modifier) {
 
@@ -146,9 +168,16 @@ var update = function (modifier) {
 		hero.x += hero.speed * modifier;
 	}
 
+	//Move coin down
     coin.y += coinFallSpeed;
 
-    spider.y += spiderFallSpeed;
+	//Move spider down
+	spider.y += spiderFallSpeed;
+	
+	//Move second spider down if enough drops have happened
+	if(spiderDrops > 5){
+		spider2.y += spider2FallSpeed;
+	}
 
 	// Did player catch coin?
 	if (
@@ -159,7 +188,7 @@ var update = function (modifier) {
 	) {
 		++coinsCaught;
 
-		if (coinsCaught >= 5){
+		if (coinsCaught >= 10){
 			gameStatus = "win"
 		}
 
@@ -180,7 +209,6 @@ var update = function (modifier) {
 		&& hero.y <= (spider.y + spiderImage.height-8)
         && spider.y <= (hero.y + heroImage.height-8)
 	) {
-        //resetSpider();
         gameStatus = "lose";
     };
     
@@ -188,8 +216,27 @@ var update = function (modifier) {
     if (
         spider.y + 100 > canvas.height
     ) {
+		spiderDrops += 1
+		fallSpeed += .5 //Everything moves faster
         resetSpider();
-    };
+	};
+	
+	//Did player touch spider2?
+	if (
+		hero.x <= (spider2.x + spider2Image.width -8)
+		&& spider2.x <= (hero.x + heroImage.width -8)
+		&& hero.y <= (spider2.y + spider2Image.height-8)
+		&& spider2.y <= (hero.y + heroImage.height-8)
+	) {
+		gameStatus = "lose";
+	};
+	
+	//Did the spider touch the ground?
+	if (
+		spider2.y + 100 > canvas.height
+	) {
+		resetSpider2();
+	};
 };
 
 // Draw everything
@@ -208,6 +255,10 @@ var render = function () {
     
     if (spiderReady) {
 		ctx.drawImage(spiderImage, spider.x, spider.y);
+	}
+
+	if (spider2Ready && spiderDrops > 5) {
+		ctx.drawImage(spider2Image, spider2.x, spider2.y);
 	}
 
 	// Score
@@ -305,6 +356,7 @@ then = Date.now();
 
 resetCoin();
 resetSpider();
+resetSpider2();
 main();
 
 
