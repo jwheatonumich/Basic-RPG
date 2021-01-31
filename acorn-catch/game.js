@@ -77,25 +77,33 @@ addEventListener("keyup", function (e) {
 canv.addEventListener("touchstart", touchDown);
 canv.addEventListener("touchend", touchUp);
 
-function touchDown(e) {
+document.getElementById("move-left").addEventListener("touchstart", touchDownLeft);
+document.getElementById("move-left").addEventListener("touchend", touchUpLeft);
 
-	let touchPosition = e.touches[0].pageX - canvas.offsetLeft
-	if(touchPosition < canvas.width/2){
+document.getElementById("move-left").addEventListener("touchstart", touchDownRight);
+document.getElementById("move-left").addEventListener("touchend", touchUpRight);
+
+function touchDownLeft(e) {
+
 		keysDown[[37]] = true;
-	};
-	if(touchPosition > canvas.width/2){
-		keysDown[[39]] = true;
-	};
-
-	console.log(keysDown);
 
 };
 
-function touchUp(e) {
+function touchUpLeft(e) {
 
 	delete keysDown[[37]];
-	delete keysDown[[39]];
 
+};
+
+function touchDownRight(e) {
+
+		keysDown[[39]] = true;
+
+};
+
+function touchUpRight(e) {
+
+	delete keysDown[[39]];
 };
 
 // Reset the coin when the player catches it
