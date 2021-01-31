@@ -76,6 +76,13 @@ function setBattleText(battletext){
 //Function that sets up player's attack buttons
 function setPlayerAbilityButtons(playerStats){
 
+    let attack1 = abilityData[speciesData[playerStats.species].attack1Name];
+    let attack2 = abilityData[speciesData[playerStats.species].attack2Name];
+    let attack3 = abilityData[speciesData[playerStats.species].attack3Name];
+    let attack4 = abilityData[speciesData[playerStats.species].attack4Name];
+
+    let attacks = [attack1,attack2,attack3,attack4];
+
     //Set ability button text
     document.getElementById("attack1").innerHTML = speciesData[playerStats.species].attack1DisplayName;
     document.getElementById("attack2").innerHTML = speciesData[playerStats.species].attack2DisplayName;
@@ -92,45 +99,38 @@ function setPlayerAbilityButtons(playerStats){
     var list, index, element, abilityName;
 
     //Add cost images
-    costImages()
+    costImages(attacks)
 
 }
 
-function costImages(){
-    //Get a list of all attack uttons
+function costImages(attacks){
+
+    //Get a list of all attack buttons
     list = document.getElementsByClassName('attack-link');
 
-    for (index = 0; index < list.length; ++index){ //For each attack button
-        element = list[index]; //Store the attack button
-        abilityName = element.innerHTML //Get the text in the attack button
-        console.log(abilityName)
+    for (index = 0; index < list.length - 1; ++index){ //For each attack button
+        let element = list[index]; //Store the attack button
+        let ability = attacks[index]; //Store the ability associated with the attack button
+        let div = document.createElement("div");//Create a div to store the cost images
+        element.appendChild(div);//Append the newly created div to the attack button
 
-        if (abilityName.includes('{gr}')){ //Check if the text contains the cost
-            replaceTextWithImage("{gr}","../images/leaf-coin.png",element,abilityName)
-        }
-        if (abilityName.includes('{r}')){ //Check if the text contains the cost
-            replaceTextWithImage("{r}","../images/acorn-coin.png",element,abilityName)
-        }
-        if (abilityName.includes('{s}')){ //Check if the text contains the cost
-            replaceTextWithImage("{s}","../images/mushroom-coin.png",element,abilityName)
-        }
-        if (abilityName.includes('{g}')){ //Check if the text contains the cost
-            replaceTextWithImage("{g}","../images/bearclaw-coin.png",element,abilityName)
-        }
-        
+        //Add cost images
+        replaceTextWithImage("leafcoin","../images/leaf-coin.png",ability,div)
+        replaceTextWithImage("acorncoin","../images/acorn-coin.png",ability,div)
+        replaceTextWithImage("mushroomcoin","../images/mushroom-coin.png",ability,div)
+        replaceTextWithImage("bearclawcoin","../images/bearclaw-coin.png",ability,div)
     }
 }
 
-function replaceTextWithImage(textInput,imageInput,element,abilityName){
-    if (abilityName.includes(textInput)){ //Check if the text contains the cost
-        var costCount = abilityName.match(new RegExp(textInput, "g"))//Number of cost images
+function replaceTextWithImage(textInput,imageInput,ability,div){
 
-        element.innerHTML = abilityName.replaceAll(textInput,"");//Remove the cost text
+    var costCount = 0; //Default to not needing any of the input cost
 
-        var div = document.createElement("div");//Create a div to store the cost images
-        element.appendChild(div);
-
-        for(i in costCount){//Add a cost image for each one removed
+    if(ability.hasOwnProperty(textInput)){//If this ability uses the input cost
+        costCount = ability[textInput]//Determine how many of the cost are needed
+    } 
+        
+        for(let step = 0; step < costCount; step++){//Add the input image for each cost
 
             var elem = document.createElement("img");
             elem.setAttribute("src", imageInput);
@@ -138,9 +138,9 @@ function replaceTextWithImage(textInput,imageInput,element,abilityName){
             elem.setAttribute("width", "30");
             elem.setAttribute("class", "ability-cost");
 
-            div.appendChild(elem);
+            div.appendChild(elem); //Append the images to the input div
         }
-    }
+
 }
 
 function pageSetup(){
