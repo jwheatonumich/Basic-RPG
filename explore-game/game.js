@@ -162,10 +162,8 @@ var renderStartScreen = function (){
 	if(playerStats.health <= 0){
 		ctx.fillText("Heal before playing", 20, 32);
 	}
-	else if(dailyEvents.acornCatch == true){
+	else {
 		ctx.fillText("Click to start", 60, 32);
-	}else{
-		ctx.fillText("Try again tomorrow", 20, 32)
 	}
 }
 
