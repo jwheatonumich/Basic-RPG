@@ -39,13 +39,14 @@ var hero = {
 };
 
 // Enemy constructor
-
 class Enemy{
-	constructor(characterID,characterImage){
+	constructor(characterID,characterImage,characterX,characterY){
 		this.id = characterID;
-		this.x = 0;
-		this.y = 0;
-		this.image = characterImage;
+		this.x = characterX;
+		this.y = characterX;
+		this.image = new Image();
+		this.image.src = characterImage;
+
 	}
 	move(moveX,moveY){
 		this.x += moveX;
@@ -53,8 +54,29 @@ class Enemy{
 	}
 }
 
-let enemy1 = new Enemy(1,"../images/little-mushroom.png");
-let enemy2 = new Enemy(2,"../images/little-mushroom.png");
+let enemyList = [6,7,8,9,10,11];
+let enemyCount = 2;
+let enemies = [];
+let chosenEnemy;
+
+// Randomly select enemies
+
+for (let i = 0; i < enemyCount; i++){
+	let enemyID  = enemyList[Math.floor(Math.random()*enemyList.length)];//Random enemy ID from list
+
+	for (j in enemyStats){//Find enemy data based on selected ID
+		if (enemyStats[j]["enemyID"] == enemyID){
+			chosenEnemy = enemyStats[j];
+		};
+	};
+
+	let enemyImage = chosenEnemy.enemyImage;//Store image location in variable
+
+	let randomX = Math.max(Math.random()*canvas.width - 70,0);//Random x coordinage
+	let randomY = Math.max(Math.random()*canvas.height - 150,0);//Random y coordinate
+
+	enemies[i] = new Enemy(i,enemyImage,randomX,randomY)//Create an instance of the enemy
+}
 
 // Handle keyboard controls
 var keysDown = {};
@@ -151,6 +173,10 @@ var update = function (modifier) {
 	if (40 in keysDown && hero.y < canvas.height - heroImage.height) { // Player holding right
 		hero.y += hero.speed * modifier;
 	}
+
+	for (i in enemies){
+		enemies[i].y--
+	}
 };
 
 // Draw everything
@@ -161,6 +187,10 @@ var render = function () {
 
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
+	}
+
+	for (i in enemies){
+		ctx.drawImage(enemies[i].image,enemies[i].x,enemies[i].y)
 	}
 
 };
