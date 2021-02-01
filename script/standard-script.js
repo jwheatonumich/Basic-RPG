@@ -1,3 +1,4 @@
+
 var playerStats;
 var winstreakReward;
 
@@ -119,7 +120,7 @@ function activeNarrativeCheck(){
         //Check if we are already on the narrative screen
         if(!(window.location.href.indexOf("narrative") > -1)){
 
-            if (battleSettings.postBattleNarrative){//Check if a mandatory narrative is active
+            if (battleSettings.postBattleNarrative && battleSettings.mandatory){//Check if a mandatory narrative is active
                 console.log("narrative")
                 window.location.href = "../narrative/narrative.html"//If in progress, go to battle
             }
