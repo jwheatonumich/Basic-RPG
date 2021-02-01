@@ -4,7 +4,7 @@ var healText = ``;
 
 function transform(){
     //Save health and xp after battle ends
-    if (playerStats.acorncoin >= 50 && playerStats.costume != "squirrel"){
+    if (playerStats.acorncoin >= 50 && playerStats.species != "squirrel"){
         playerStats.acorncoin -= 50;
         playerStats.species = "squirrel" ;
         playerStats.image = "../images/squirrel-avatar.png" ;

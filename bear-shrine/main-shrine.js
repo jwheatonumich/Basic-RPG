@@ -5,9 +5,9 @@ var healText = ``;
 //Relative link back to this page
 var page = "../riku-training/train.html";
 
-function healMax(){
+function transform(){
     //Save health and xp after battle ends
-    if (playerStats.bearclawcoin >= 10 && playerStats.costume != "bear"){
+    if (playerStats.bearclawcoin >= 10 && playerStats.species != "bear"){
         playerStats.bearclawcoin-=10;
         playerStats.species = "bear" ;
         playerStats.image = "../images/small-bear-avatar.png" ;

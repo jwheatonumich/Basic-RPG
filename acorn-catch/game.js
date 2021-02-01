@@ -30,7 +30,7 @@ var heroImage = new Image();
 heroImage.onload = function () {
 	heroReady = true;
 };
-heroImage.src = "../images/acorn-drop-character.png";
+heroImage.src = playerStats.image;
 
 // Spider image
 var spiderReady = false;
