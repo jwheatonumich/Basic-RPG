@@ -103,9 +103,6 @@ if(!isTouchDevice()){
 	document.getElementById("move-right").addEventListener("touchend", touchUpRight);
 }
 
-
-
-
 //Functions to move left and right
 function touchDownLeft(e) {
 
