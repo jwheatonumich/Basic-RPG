@@ -15,7 +15,6 @@ gameStart = false;
 spiderDrops = 0 //How many spiders have dropped
 var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents')); //Load daily events data
 
-
 // Background image
 var bgReady = false;
 var bgImage = new Image();
@@ -38,6 +37,24 @@ var hero = {
 	x: canvas.width/2 - 40,
 	y: canvas.height - 100
 };
+
+// Enemy constructor
+
+class Enemy{
+	constructor(characterID,characterImage){
+		this.id = characterID;
+		this.x = 0;
+		this.y = 0;
+		this.image = characterImage;
+	}
+	move(moveX,moveY){
+		this.x += moveX;
+		this.y += moveY;
+	}
+}
+
+let enemy1 = new Enemy(1,"../images/little-mushroom.png");
+let enemy2 = new Enemy(2,"../images/little-mushroom.png");
 
 // Handle keyboard controls
 var keysDown = {};
