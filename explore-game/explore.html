@@ -1,29 +1,30 @@
 <html>
+    <head>
+        <!--Control how browsers load and zoom on the page-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <head>
-          <!--Control how browsers load and zoom on the page-->
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Prevent page caching-->
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
 
-          <!--Prevent page caching-->
-          <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-          <meta http-equiv="Pragma" content="no-cache">
-          <meta http-equiv="Expires" content="0">
+        <!--Load CSS-->
+        <link rel="stylesheet" href= "../stylesheets/navbar.css">
+        <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
+        <link rel="stylesheet" href= "game.css">
 
-          <!--Load CSS-->
-          <link rel="stylesheet" href= "page-styles.css">
-          <link rel="stylesheet" href= "../stylesheets/navbar.css">
-          <link rel="stylesheet" href= "../stylesheets/standardlayout.css">
+        <!--Script to start a battle-->
+        <script src="../script/new-battle-script.js" defer></script>
 
-          <script src="arena-select.js" defer></script>
 
-          <!--Enemy specific data-->
-          <script src="../script/enemy-data.js"></script>
+        <!--Standard page code-->
+        <script src="../script/daily-events-script.js"></script>
+        <script src="../script/standard-script.js" defer></script>
+        <script src="game-over.js" defer></script>
+        <script src="game.js" defer></script>
 
-          <!--Standard page code-->
-          <script src="../script/daily-events-script.js"></script>
-          <script src="../script/standard-script.js" defer></script>
-        </head>
-    
+      </head>
+
     <body>
         <div id="page-div">
             <div class="navbar">
@@ -53,30 +54,32 @@
             </div>
 
           <div id = "character-div">
-
             <p id="player-name">Name</p>
             <img id="character-image" alt = "Character" src="../images/little-goblin.png">
             <p id="character-stats">Stats</p>
             <a class="button-link" onclick="sleep()">Sleep</a>
             <a class="button-link-image" onClick="healMax();"><img class = "cost" alt = "Mushroom Coin" src="../images/leaf-coin.png"></a>
-
           </div>
 
           <div id="game-div">
-            <h1>Squirrel Arena</h1>
-            <div id="trainer-div">
-              <img id="page-image" alt = "Trainer" src="../images/two-squirrels-red.png">
-            </div>
+          <h1>Explore</h1>
 
-              <div id="battle-div">
+                <div id="game-canvas"></div>
+
+                <div id="textbox"></div>
+
                 <div id="control-div">
-                  <br><br>
-                    <button id="startBattle" class="button" onclick='startBattle(enemyListEasy,undefined,undefined,undefined,undefined,enemyChoiceType = "sequence")'>Arena</button><br>
-                    <button id="back" class="button" onclick="location.href='../tree/tree.html';">Back</button>
+
+                  <button id="back" class="button" onclick="location.href='../tree/tree.html';">Back</button>
+
                 </div>
             </div>
-
+        
         </div>
-
+        <div id="touch-controls">
+          <a id="blank" class="blank-game-control">a</a><a id="move-up" class="game-control">&#8593</a><a id="blank" class="blank-game-control">a</a>
+          <a id="move-left" class="game-control">&#8592</a><a id="blank" class="blank-game-control">a</a><a id="move-right" class="game-control">&#8594</a>
+          <a id="blank" class="blank-game-control">a</a><a id="move-down" class="game-control">&#8595</a><a id="blank" class="blank-game-control">a</a>
+        </div>
     </body>
 </html>
