@@ -463,7 +463,7 @@ func.setPoisonStunBattletext = function(playerBattleStats,enemyBattleStats, batt
     return battleData;
 };
 
-func.loseBattle = function(battleStatusData, enemyBattleStats){
+func.loseBattle = function(battleStatusData, enemyBattleStats, battleSettingData){
 
     //Clear enemy stats and image on the page
     setEnemyStats({name:"None",health:0,maxhealth:0,armor:0,status:"",enemyPowerlevel:0},"../images/blank.png");
@@ -474,10 +474,12 @@ func.loseBattle = function(battleStatusData, enemyBattleStats){
     //Reset player status and enemy health
     [battleStatusData, enemyBattleStats] = func.resetBattleStatus(battleStatusData, enemyBattleStats)
 
+    func.storeDefaultSettings();
+
     //Save player and enemy stats in local storage
     initializeFunc.saveProgress(chosenEnemy,playerBattleStats,enemyBattleStats,battleStatusData);
 
-    return [battleStatusData, enemyBattleStats];
+    return [battleStatusData, enemyBattleStats, battleSettingData];
 };
 
 func.resetBattleStatus = function(battleStatusData, enemyBattleStats){
@@ -816,7 +818,7 @@ func.executeTurnEnd = function(){
     //Ending the turn if the player died but has leaf coin
     if(battleStatusData.result == "lose"){
 
-        [battleStatusData, enemyBattleStats] = func.loseBattle(battleStatusData, enemyBattleStats);
+        [battleStatusData, enemyBattleStats, battleSettingData] = func.loseBattle(battleStatusData, enemyBattleStats, battleSettingData);
 
         battleData.battleText = "Your health has been reduced to zero.<br>Click 'Restart' to heal and battle again or 'Back' to exit.";
 
