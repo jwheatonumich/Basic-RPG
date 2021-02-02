@@ -230,6 +230,13 @@ function healMax(){
     setStats();
 }
 
+function startExplore(inputEnemies, inputEnemyCount){
+    let exploreData = {};
+    exploreData.enemyList = inputEnemies;
+    exploreData.enemyCount = inputEnemyCount;
+    localStorage.setItem('exploreData', JSON.stringify(exploreData));
+};
+
 window.onload = loadPlayerStats();
 window.onload = activeBattleCheck();//Check for active battle on page load
 window.onload = playerSetup();

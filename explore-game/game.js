@@ -1,15 +1,21 @@
 //Based on tutorial from http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/
 
+//Load data from local storage
+let retrievedObject = localStorage.getItem('exploreData');
+
+//Parse the JSON data into an object
+let exploreData = JSON.parse(retrievedObject);
+
 //Create canvas
-var canvas = document.createElement("canvas");
-var ctx = canvas.getContext("2d");
+let canvas = document.createElement("canvas");
+let ctx = canvas.getContext("2d");
 canvas.width = 245;
 canvas.height = 350;
 canv = document.getElementById("game-canvas").appendChild(canvas);
 
 //Initialize variables
 let gameStatus = ""; //Has player won or lost game yet
-var coinsCaught = 0; //How many coins player has caught
+let coinsCaught = 0; //How many coins player has caught
 let gameStart = false;
 let spiderDrops = 0 //How many spiders have dropped
 let dailyEvents = JSON.parse(localStorage.getItem('dailyEvents')); //Load daily events data
@@ -18,8 +24,8 @@ let enemySpeed = 2;
 let objectIdCount = 0;
 
 // Background image
-var bgReady = false;
-var bgImage = new Image();
+let bgReady = false;
+let bgImage = new Image();
 bgImage.onload = function () {
 	bgReady = true;
 };
@@ -67,13 +73,13 @@ let hero = new characterObject("empty",playerStats.image,canvas.width/2 - 40,can
 objects.push(hero); // Add hero to list of objects
 
 //Define variables to create enemies
-let enemyList = [0,1,2];
-let enemyCount = 2;
+//let enemyList = [0,1,2];
+//let enemyCount = 2;
 let chosenEnemy;
 
 // Randomly select enemies
-for (let i = 0; i < enemyCount; i++){
-	let enemyID  = enemyList[Math.floor(Math.random()*enemyList.length)];//Random enemy ID from list
+for (let i = 0; i < exploreData.enemyCount; i++){
+	let enemyID  = exploreData.enemyList[Math.floor(Math.random()*exploreData.enemyList.length)];//Random enemy ID from list
 
 	for (j in enemyStats){//Find enemy data based on selected ID
 		if (enemyStats[j]["enemyID"] == enemyID){
