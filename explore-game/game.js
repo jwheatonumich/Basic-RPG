@@ -8,12 +8,14 @@ canvas.height = 350;
 canv = document.getElementById("game-canvas").appendChild(canvas);
 
 //Initialize variables
-fallSpeed = 2; //Base speed things fall
-gameStatus = ""; //Has player won or lost game yet
+let gameStatus = ""; //Has player won or lost game yet
 var coinsCaught = 0; //How many coins player has caught
-gameStart = false;
-spiderDrops = 0 //How many spiders have dropped
-var dailyEvents = JSON.parse(localStorage.getItem('dailyEvents')); //Load daily events data
+let gameStart = false;
+let spiderDrops = 0 //How many spiders have dropped
+let dailyEvents = JSON.parse(localStorage.getItem('dailyEvents')); //Load daily events data
+let enemyMove = {}
+let enemySpeed = 2;
+let objectIdCount = 1;
 
 // Background image
 var bgReady = false;
@@ -23,44 +25,45 @@ bgImage.onload = function () {
 };
 bgImage.src = "../images/explore-game-bg.png";
 
-// Character image
-var heroReady = false;
-var heroImage = new Image();
-heroImage.onload = function () {
-	heroReady = true;
-};
-heroImage.src = playerStats.image;
-
-// Game objects
-var hero = {
-	speed: 256, // movement in pixels per second
-	x: canvas.width/2 - 40,
-	y: canvas.height - 100
-};
-
 // Enemy constructor
-class Enemy{
-	constructor(characterID,characterImage,characterX,characterY){
+class characterObject{
+	constructor(characterID,characterImage,characterX,characterY,inputSpeed, inputMoveX, inputMoveY){
 		this.id = characterID;
+		this.objectID = objectIdCount;
+		objectIdCount++;
 		this.x = characterX;
-		this.y = characterX;
+		this.y = characterY;
+		this.moveX = inputMoveX;
+		this.moveY = inputMoveY;
+		this.collision = -1;
 		this.image = new Image();
 		this.image.src = characterImage;
-
+		this.speed = inputSpeed;
 	}
 	move(moveX,moveY){
 		this.x += moveX;
 		this.y += moveY;
 	}
+	changeDirection(inputX,inputY){
+		this.moveX = inputX;
+		this.moveY = inputY;
+	}
 }
 
+let objects = []; // List of all objects
+let enemies = []; // List of enemy objects
+
+//Create instance of hear
+let hero = new characterObject(objectIdCount,playerStats.image,canvas.width/2 - 40,canvas.height - 100,256,0,0)
+objects.push(hero); // Add hero to list of objects
+
+//Define variables to create enemies
 let enemyList = [6,7,8,9,10,11];
-let enemyCount = 2;
-let enemies = [];
+let enemyCount = 4;
+
 let chosenEnemy;
 
 // Randomly select enemies
-
 for (let i = 0; i < enemyCount; i++){
 	let enemyID  = enemyList[Math.floor(Math.random()*enemyList.length)];//Random enemy ID from list
 
@@ -74,8 +77,12 @@ for (let i = 0; i < enemyCount; i++){
 
 	let randomX = Math.max(Math.random()*canvas.width - 70,0);//Random x coordinage
 	let randomY = Math.max(Math.random()*canvas.height - 150,0);//Random y coordinate
+	let randomMoveX = 2*Math.random() - 1;//Initial movement direction
+	let randomMoveY = 2*Math.random() - 1;//Initial movement direction
 
-	enemies[i] = new Enemy(i,enemyImage,randomX,randomY)//Create an instance of the enemy
+	enemies[i] = new characterObject(i,enemyImage,randomX,randomY,256,randomMoveX,randomMoveY)//Create an instance of the enemy
+	objects.push(enemies[i]); // Add enemy to list of objects
+
 }
 
 // Handle keyboard controls
@@ -157,26 +164,72 @@ function touchUpDown(e) {
 	delete keysDown[[40]];
 };
 
+function collision(objectA,objectB){
+	if(
+		objectA.x <= (objectB.x + objectB.image.width)
+		&& objectB.x <= (objectA.x + objectA.image.width)
+		&& objectA.y <= (objectB.y + objectB.image.height)
+		&& objectB.y <= (objectA.y + objectA.image.height)
+	){
+		objectA.collision = objectB.objectID;
+		objectB.collision = objectA.objectID;
+	}
+}
 
 // Update game objects
 var update = function (modifier) {
 
+	//Player inputs
 	if ((37 in keysDown) && hero.x > 0) { // Player holding left
 		hero.x -= hero.speed * modifier;
 	}
 	if ((38 in keysDown) && hero.y > 0) { // Player holding left
 		hero.y -= hero.speed * modifier;
 	}
-	if (39 in keysDown && hero.x < canvas.width - heroImage.width) { // Player holding right
+	if (39 in keysDown && hero.x < canvas.width - hero.image.width) { // Player holding right
 		hero.x += hero.speed * modifier;
 	}
-	if (40 in keysDown && hero.y < canvas.height - heroImage.height) { // Player holding right
+	if (40 in keysDown && hero.y < canvas.height - hero.image.height) { // Player holding right
 		hero.y += hero.speed * modifier;
 	}
 
-	for (i in enemies){
-		enemies[i].y--
+	// Detect collisions
+	for (i in objects){
+		objects[i].collision = ""
 	}
+
+	for (i in enemies){
+		for (j in enemies){
+			if (i != j){
+				collision(enemies[i],enemies[j])
+			}
+		}
+	}
+
+	//Enemy movement
+	for (i in enemies){
+
+		if(enemies[i].collision !=""){
+			enemies[i].changeDirection(-enemies[i].moveX,-enemies[i].moveY);
+		}
+
+		if(
+			enemies[i].y <=0
+			|| enemies[i].y >= canvas.height - enemies[i].image.height
+		){
+			enemies[i].moveY = -enemies[i].moveY;
+		}
+
+		if(
+			enemies[i].x <=0
+			|| enemies[i].x >= canvas.width - enemies[i].image.width
+		){
+			enemies[i].moveX = -enemies[i].moveX;
+		}
+
+		enemies[i].move(enemies[i].moveX,enemies[i].moveY)
+	}
+
 };
 
 // Draw everything
@@ -185,9 +238,7 @@ var render = function () {
 		ctx.drawImage(bgImage, 0, 0);
 	}
 
-	if (heroReady) {
-		ctx.drawImage(heroImage, hero.x, hero.y);
-	}
+	ctx.drawImage(hero.image, hero.x, hero.y);
 
 	for (i in enemies){
 		ctx.drawImage(enemies[i].image,enemies[i].x,enemies[i].y)
