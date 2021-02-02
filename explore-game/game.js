@@ -15,7 +15,7 @@ let spiderDrops = 0 //How many spiders have dropped
 let dailyEvents = JSON.parse(localStorage.getItem('dailyEvents')); //Load daily events data
 let enemyMove = {}
 let enemySpeed = 2;
-let objectIdCount = 1;
+let objectIdCount = 0;
 
 // Background image
 var bgReady = false;
@@ -27,18 +27,27 @@ bgImage.src = "../images/explore-game-bg.png";
 
 // Enemy constructor
 class characterObject{
-	constructor(characterID,characterImage,characterX,characterY,inputSpeed, inputMoveX, inputMoveY){
-		this.id = characterID;
+	constructor(inputSpeciesID,characterImage,characterX,characterY,inputSpeed, inputMoveX, inputMoveY,inputName){
+		
 		this.objectID = objectIdCount;
+		this.speciesID = inputSpeciesID;
+		this.name = inputName;
 		objectIdCount++;
-		this.x = characterX;
-		this.y = characterY;
-		this.moveX = inputMoveX;
-		this.moveY = inputMoveY;
-		this.collision = -1;
 		this.image = new Image();
 		this.image.src = characterImage;
+
+		//X and Y location
+		this.x = characterX;
+		this.y = characterY;
+
+		//X and Y velocity
+		this.moveX = inputMoveX;
+		this.moveY = inputMoveY;
 		this.speed = inputSpeed;
+
+		//Is the character touching another character, and which one
+		this.collision = -1;
+
 	}
 	move(moveX,moveY){
 		this.x += moveX;
@@ -54,13 +63,12 @@ let objects = []; // List of all objects
 let enemies = []; // List of enemy objects
 
 //Create instance of hear
-let hero = new characterObject(objectIdCount,playerStats.image,canvas.width/2 - 40,canvas.height - 100,256,0,0)
+let hero = new characterObject("empty",playerStats.image,canvas.width/2 - 40,canvas.height - 100,256,0,0,"player")
 objects.push(hero); // Add hero to list of objects
 
 //Define variables to create enemies
-let enemyList = [6,7,8,9,10,11];
-let enemyCount = 4;
-
+let enemyList = [0,1,2];
+let enemyCount = 2;
 let chosenEnemy;
 
 // Randomly select enemies
@@ -80,9 +88,18 @@ for (let i = 0; i < enemyCount; i++){
 	let randomMoveX = 2*Math.random() - 1;//Initial movement direction
 	let randomMoveY = 2*Math.random() - 1;//Initial movement direction
 
-	enemies[i] = new characterObject(i,enemyImage,randomX,randomY,256,randomMoveX,randomMoveY)//Create an instance of the enemy
+	enemies[i] = new characterObject(enemyID,enemyImage,randomX,randomY,256,randomMoveX,randomMoveY,"enemy")//Create an instance of the enemy
 	objects.push(enemies[i]); // Add enemy to list of objects
 
+}
+
+// Prevent enemies from spawning on eachother
+for (i in enemies){
+	for (j in enemies){
+		if (i != j){
+			collision(enemies[i],enemies[j])
+		}
+	}
 }
 
 // Handle keyboard controls
@@ -176,6 +193,11 @@ function collision(objectA,objectB){
 	}
 }
 
+// Determine what the input object is colliding with, output the collided object
+function lookupCollide(collideInput){
+	return objects[objects[collideInput].collision]
+}
+
 // Update game objects
 var update = function (modifier) {
 
@@ -195,21 +217,29 @@ var update = function (modifier) {
 
 	// Detect collisions
 	for (i in objects){
-		objects[i].collision = ""
+		objects[i].collision = -1
 	}
 
-	for (i in enemies){
-		for (j in enemies){
+	for (i in objects){
+		for (j in objects){
 			if (i != j){
-				collision(enemies[i],enemies[j])
+				collision(objects[i],objects[j])
 			}
 		}
 	}
 
-	//Enemy movement
+	// Start Battle
+	if (objects[0].collision != -1){
+		enemyList = [];
+		enemyList.push(lookupCollide(0).speciesID);
+		gameStatus = "lose"
+	}
+
+
+	// Enemy movement
 	for (i in enemies){
 
-		if(enemies[i].collision !=""){
+		if(enemies[i].collision !=-1){
 			enemies[i].changeDirection(-enemies[i].moveX,-enemies[i].moveY);
 		}
 
