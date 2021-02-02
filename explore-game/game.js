@@ -73,8 +73,6 @@ let hero = new characterObject("empty",playerStats.image,canvas.width/2 - 40,can
 objects.push(hero); // Add hero to list of objects
 
 //Define variables to create enemies
-//let enemyList = [0,1,2];
-//let enemyCount = 2;
 let chosenEnemy;
 
 // Randomly select enemies
