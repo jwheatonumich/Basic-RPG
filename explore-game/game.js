@@ -107,6 +107,7 @@ function spawnObjects(){
 }
 
 //Fix any enemies that spawned touching
+
 function badSpawn(){
 
 	for (i in objects){
@@ -223,8 +224,8 @@ function collision(objectA,objectB){
 }
 
 // Determine what the input object is colliding with, output the collided object
-function lookupCollide(collideInput){
-	return objects[objects[collideInput].collision]
+function lookupCollision(collideInput, arrayInput){
+	return arrayInput[arrayInput[collideInput].collision]
 }
 
 // Update game objects
@@ -245,11 +246,11 @@ function update(modifier) {
 	}
 
 	// Detect collisions
-	for (i in objects){
+	for (let i in objects){
 		objects[i].collision = -1
 	}
 
-	for (i in objects){
+	for (let i in objects){
 		for (j in objects){
 			if (i != j){
 				collision(objects[i],objects[j])
@@ -257,35 +258,49 @@ function update(modifier) {
 		}
 	}
 
-	// Start Battle
+	// Chack if player collided
 	if (objects[0].collision != -1){
 		enemyList = [];
-		enemyList.push(lookupCollide(0).speciesID);
+		enemyList.push(lookupCollision(0,objects).speciesID);//Use the collided ID to start
 		gameStatus = "lose"
 	}
 
+	// Store the movement direction of each enemy
+	let tempMoveX = [];
+	let tempMoveY = [];
 
-	// Enemy movement
-	for (i in enemies){
+	for (let i in enemies){
+		tempMoveX.push(enemies[i].moveX);
+		tempMoveY.push(enemies[i].moveY)
+	}
 
-		if(enemies[i].collision !=-1){
-			enemies[i].changeDirection(-enemies[i].moveX,-enemies[i].moveY);
+	// Set enemy movement
+	for (let i in enemies){
+
+		if(enemies[i].collision !=-1){//Enemies trade directions if they bump
+			let newMoveX = tempMoveX[enemies[i].collision-1]
+			let newMoveY = tempMoveY[enemies[i].collision-1]
+			enemies[i].changeDirection(newMoveX,newMoveY);
 		}
 
-		if(
+		if(//Reverse y movement when hitting top or bottom wall
 			enemies[i].y <=0
 			|| enemies[i].y >= canvas.height - enemies[i].image.height
 		){
 			enemies[i].moveY = -enemies[i].moveY;
 		}
 
-		if(
+		if(//Reverse x movement when hitting left or right wall
 			enemies[i].x <=0
 			|| enemies[i].x >= canvas.width - enemies[i].image.width
 		){
 			enemies[i].moveX = -enemies[i].moveX;
 		}
+		
+	}
 
+	//Move enemies
+	for (let i in enemies){
 		enemies[i].move(enemies[i].moveX,enemies[i].moveY)
 	}
 };
