@@ -106,6 +106,7 @@ function spawnObjects(){
 
 }
 
+//Fix any enemies that spawned touching
 function badSpawn(){
 
 	for (i in objects){
@@ -207,6 +208,7 @@ function touchUpDown(e) {
 	delete keysDown[[40]];
 };
 
+//Determine if objects are touching
 function collision(objectA,objectB){
 	if(
 		objectA.x <= (objectB.x + objectB.image.width)
@@ -357,7 +359,7 @@ function startScreen() {
 
 	renderStartScreen();
 
-	badSpawn();
+	badSpawn(); //Fix any enemies that spawned on eachother
 
 	if (37 in keysDown || 38 in keysDown || 39 in keysDown || 40 in keysDown){
 		
