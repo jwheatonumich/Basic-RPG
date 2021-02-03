@@ -40,6 +40,7 @@ class characterObject{
 		this.name = inputName;
 		objectIdCount++;
 		this.image = new Image();
+		this.image.onload = function () {};
 		this.image.src = characterImage;
 
 		//X and Y location
@@ -63,45 +64,66 @@ class characterObject{
 		this.moveX = inputX;
 		this.moveY = inputY;
 	}
+	respawn(){
+		this.x = Math.max(Math.random()*(canvas.width - 70),0);
+		this.y = Math.max(Math.random()*(canvas.height - 200),0);
+	}
 }
 
 let objects = []; // List of all objects
 let enemies = []; // List of enemy objects
 
-//Create instance of hear
-let hero = new characterObject("empty",playerStats.image,canvas.width/2 - 40,canvas.height - 100,256,0,0,"player")
-objects.push(hero); // Add hero to list of objects
+// Spawn game objects
+function spawnObjects(){
 
-//Define variables to create enemies
-let chosenEnemy;
+	// Create instance of hero
+	hero = new characterObject("empty",playerStats.image,canvas.width/2 - 40,canvas.height - 100,256,0,0,"player")
+	objects.push(hero); // Add hero to list of objects
 
-// Randomly select enemies
-for (let i = 0; i < exploreData.enemyCount; i++){
-	let enemyID  = exploreData.enemyList[Math.floor(Math.random()*exploreData.enemyList.length)];//Random enemy ID from list
+	//Define variables to create enemies
+	let chosenEnemy;
 
-	for (j in enemyStats){//Find enemy data based on selected ID
-		if (enemyStats[j]["enemyID"] == enemyID){
-			chosenEnemy = enemyStats[j];
+	// Create instances of enemies
+	for (let i = 0; i < exploreData.enemyCount; i++){
+		let enemyID  = exploreData.enemyList[Math.floor(Math.random()*exploreData.enemyList.length)];//Random enemy ID from list
+
+		for (j in enemyStats){//Find enemy data based on selected ID
+			if (enemyStats[j]["enemyID"] == enemyID){
+				chosenEnemy = enemyStats[j];
+			};
 		};
-	};
 
-	let enemyImage = chosenEnemy.enemyImage;//Store image location in variable
+		let enemyImage = chosenEnemy.enemyImage;//Store image location in variable
 
-	let randomX = Math.max(Math.random()*canvas.width - 70,0);//Random x coordinage
-	let randomY = Math.max(Math.random()*canvas.height - 150,0);//Random y coordinate
-	let randomMoveX = 2*Math.random() - 1;//Initial movement direction
-	let randomMoveY = 2*Math.random() - 1;//Initial movement direction
+		let randomX = Math.max(Math.random()*(canvas.width - 70),0);//Random x coordinage
+		let randomY = Math.max(Math.random()*(canvas.height - 200),0);//Random y coordinate
+		let randomMoveX = 2*Math.random() - 1;//Initial movement direction
+		let randomMoveY = 2*Math.random() - 1;//Initial movement direction
 
-	enemies[i] = new characterObject(enemyID,enemyImage,randomX,randomY,256,randomMoveX,randomMoveY,"enemy")//Create an instance of the enemy
-	objects.push(enemies[i]); // Add enemy to list of objects
+		enemies[i] = new characterObject(enemyID,enemyImage,randomX,randomY,256,randomMoveX,randomMoveY,"enemy")//Create an instance of the enemy
+		objects.push(enemies[i]); // Add enemy to list of objects
+	}
 
 }
 
-// Prevent enemies from spawning on eachother
-for (i in enemies){
-	for (j in enemies){
-		if (i != j){
-			collision(enemies[i],enemies[j])
+function badSpawn(){
+
+	for (i in objects){
+		objects[i].collision = -1
+	}
+
+	for (let i in objects){
+		for (let j in objects){
+			if (i != j){
+
+				collision(objects[i],objects[j])
+				if(objects[i].collision != -1){
+					console.log("respawn")
+					objects[i].respawn();
+					badSpawn();
+
+				}
+			}
 		}
 	}
 }
@@ -195,6 +217,7 @@ function collision(objectA,objectB){
 		objectA.collision = objectB.objectID;
 		objectB.collision = objectA.objectID;
 	}
+	return objectA.collision;
 }
 
 // Determine what the input object is colliding with, output the collided object
@@ -203,7 +226,7 @@ function lookupCollide(collideInput){
 }
 
 // Update game objects
-var update = function (modifier) {
+function update(modifier) {
 
 	//Player inputs
 	if ((37 in keysDown) && hero.x > 0) { // Player holding left
@@ -263,11 +286,10 @@ var update = function (modifier) {
 
 		enemies[i].move(enemies[i].moveX,enemies[i].moveY)
 	}
-
 };
 
 // Draw everything
-var render = function () {
+function render() {
 	if (bgReady) {
 		ctx.drawImage(bgImage, 0, 0);
 	}
@@ -280,7 +302,7 @@ var render = function () {
 
 };
 
-var renderStartScreen = function (){
+function renderStartScreen(){
 
 	if (bgReady) {
 		ctx.drawImage(bgImage, 0, 0);
@@ -300,7 +322,7 @@ var renderStartScreen = function (){
 }
 
 // The main game loop
-var main = function () {
+function main(){
 
 	if(!gameStart){
 
@@ -331,9 +353,11 @@ var main = function () {
 	}
 };
 
-var startScreen = function () {
+function startScreen() {
 
 	renderStartScreen();
+
+	badSpawn();
 
 	if (37 in keysDown || 38 in keysDown || 39 in keysDown || 40 in keysDown){
 		
@@ -360,9 +384,5 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // Let's play this game!
 
 then = Date.now();
-//startScreen();
-
 main();
-
-
-
+spawnObjects();
