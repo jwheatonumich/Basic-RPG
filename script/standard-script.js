@@ -150,9 +150,33 @@ function narrativeStore(name){
     window.location.href = '../narrative/narrative.html'
 };
 
-//Function to set the link on the 'Back' button
+function defaultLastPage(){//Default page behaviour is to store the current page in the list of last pages
+    if(typeof page === 'undefined'){
+        page = window.location.href;
+    }
+    lastPage(page);
+}
+
+//Store the prior pages in local storage
 function lastPage(page){
-    localStorage.setItem('lastPage', page);
+
+    if (localStorage.getItem('lastPage') === null){//If no local storage, create new array
+        pageList = [];
+    }else{
+        pageList = JSON.parse(localStorage.getItem('lastPage')); //If local storage exists, store it
+    }
+    
+    pageList.unshift(page) //Add the new page to the front of the list
+
+    if(pageList.length > 10){ //If the list is more than 10 items long, get rid of the oldest
+        pageList.pop();
+    }
+
+    localStorage.setItem('lastPage', JSON.stringify(pageList)); //Store the updated list
+}
+
+function backButton(){//Navigate to the prior page
+    window.location.href = JSON.parse(localStorage.getItem('lastPage'))[1]; //Uses [1] because [0] is the current page
 }
 
 //Start the battle
@@ -178,8 +202,9 @@ function startBattle(enemyList, escape = true, singleBattle = false, mandatory =
     localStorage.setItem('enemyList',enemyList)
     localStorage.setItem('winstreakReward',winstreakReward)
 
-    window.location.href = "../battle/battle.html"
     lastPage(page);
+    window.location.href = "../battle/battle.html"
+    
 }
 
 //Player gets three daily leaf coins
@@ -244,3 +269,4 @@ window.onload = setStats();
 window.onload = scriptedBattleCheck();
 window.onload = leafcoinAlert();
 window.onload = activeNarrativeCheck();
+window.onload = defaultLastPage();

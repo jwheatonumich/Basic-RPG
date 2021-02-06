@@ -59,14 +59,14 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
 
         //Game is over, go to start screen
         func.gameOver();
-        window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
+        window.location.href = JSON.parse(localStorage.getItem('lastPage'))[0];//Exit to the prior page
         return true;
 
     }else if(battleStatusData.result == "win"){
 
         func.storeDefaultStatus() //Don't save battle progress when you exit
         func.storeDefaultSettings() //Load default settings into global variables
-        window.location.href = localStorage.getItem("lastPage"); //Exit to the prior page
+        window.location.href = JSON.parse(localStorage.getItem('lastPage'))[0]; //Exit to the prior page
         return true;
 
     }else if(!escapeSetting){
@@ -81,7 +81,7 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
         [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats); //Save changes to player stats
         func.storeDefaultStatus() //Don't save battle progress when you exit
         func.storeDefaultSettings() //Load default settings into global variables
-        window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
+        window.location.href = JSON.parse(localStorage.getItem('lastPage'))[0];//Exit to the prior page
         return true;
 
     }else{ //Player attempts to flee from battle
@@ -93,7 +93,7 @@ func.flee = function(playerAlive,battleStatusData,escapeSetting,playerBattleStat
             [playerBattleStats, enemyBattleStats] = func.battleCleanup(playerBattleStats, enemyBattleStats); //Save changes to player stats
             func.storeDefaultStatus(); //Don't save the battle progress when you exit
             func.storeDefaultSettings();//Load default settings into global variables
-            window.location.href = localStorage.getItem("lastPage");//Exit to the prior page
+            window.location.href = JSON.parse(localStorage.getItem('lastPage'))[0];//Exit to the prior page
 
             return true;
 

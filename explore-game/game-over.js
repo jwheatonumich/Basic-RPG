@@ -1,7 +1,6 @@
 //Reward if you win
 rewardType = "acorncoin";
 rewardImage = '../images/acorn-coin.png'
-var page = "../acorn-catch/acorn-catch.html";
 
 //Enemy you battle if you lose
 enemyList = [23];
