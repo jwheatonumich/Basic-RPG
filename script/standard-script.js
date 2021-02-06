@@ -258,12 +258,30 @@ function healMax(){
     setStats();
 }
 
-function startExplore(inputEnemies, inputEnemyCount){
+function startExplore(inputEnemies, inputEnemyCount){ //Start the exploration game
     let exploreData = {};
     exploreData.enemyList = inputEnemies;
     exploreData.enemyCount = inputEnemyCount;
     localStorage.setItem('exploreData', JSON.stringify(exploreData));
 };
+
+function setMandatoryPage(page){ //Store a mandatory page
+    localStorage.setItem('mandatoryPage', JSON.stringify(page));
+}
+
+function gotoMandatoryPage(){ //If a mandatory page is stored, go to it
+
+    targetPage = JSON.parse(localStorage.getItem('mandatoryPage'));
+
+    if (targetPage != window.location.href && targetPage){
+        window.location.href = targetPage;
+    }
+
+}
+
+function clearMandatoryPage(){
+    localStorage.removeItem('mandatoryPage');
+}
 
 window.onload = loadPlayerStats();
 window.onload = activeBattleCheck();//Check for active battle on page load
@@ -273,3 +291,4 @@ window.onload = scriptedBattleCheck();
 window.onload = leafcoinAlert();
 window.onload = activeNarrativeCheck();
 window.onload = defaultLastPage();
+window.onload = gotoMandatoryPage();
