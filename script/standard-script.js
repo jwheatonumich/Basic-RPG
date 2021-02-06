@@ -162,6 +162,9 @@ function lastPage(page){
 
     if (localStorage.getItem('lastPage') === null){//If no local storage, create new array
         pageList = [];
+    }else if(JSON.parse(localStorage.getItem('lastPage'))[0].includes(page)){
+        pageList = JSON.parse(localStorage.getItem('lastPage'));
+        pageList.shift();
     }else{
         pageList = JSON.parse(localStorage.getItem('lastPage')); //If local storage exists, store it
     }
