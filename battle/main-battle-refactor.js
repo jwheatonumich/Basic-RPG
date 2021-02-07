@@ -517,7 +517,7 @@ func.rewardBattleText = function(winstreakReward, winstreakList, battleSettingDa
 
         localStorage.setItem('scriptName',battleSettingData.postBattleNarrative); //Store the narrative that comes after the fight
 
-        localStorage.setItem('lastPage',  "../narrative/narrative.html");
+        lastPage("../narrative/narrative.html")
     };
 
     return [battleData, playerBattleStats];

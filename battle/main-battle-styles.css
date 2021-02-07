@@ -46,7 +46,7 @@ body{
 
 #battle-text-div{
     padding: 5px 20px 5px 20px;
-    height:100px;
+    height:150px;
     /*display:table;*/ /*Expands the div area when text gets too big*/
     overflow-y:auto;
 }
@@ -117,6 +117,10 @@ body{
 
 .meter{
     max-width:30px;
+}
+
+.healthbar{
+    max-width:40px;
 }
 
 .ability-cost{

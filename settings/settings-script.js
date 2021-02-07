@@ -27,6 +27,7 @@ function dataLoad(){
         sleep:true,
         acornCatch:true
     };
+
 };
 
 //Function to store player stats variable to local storage
@@ -38,6 +39,8 @@ function dataStore(){
     localStorage.setItem('battleSettings',  JSON.stringify(battleSettings));
 
     localStorage.setItem('dailyEvents',  JSON.stringify(dailyEvents));
+
+    localStorage.removeItem('lastPage')
 
     //Store the script for the console
     controlStore("Crash1");

@@ -22,8 +22,8 @@ function leafcoinAlert(){
 function setStats(stats) {
     
     document.getElementById("player-name").innerHTML = stats.name;
-    document.getElementById("player-health").innerHTML =stats.health + '/' +  stats.maxhealth;
-    document.getElementById("player-armor").innerHTML = stats.armor;
+    document.getElementById("player-health").innerHTML =" ("+ stats.health + '/' +  stats.maxhealth + ") ";
+    document.getElementById("player-armor").innerHTML = " (" + stats.armor + ") ";
     document.getElementById("player-status").innerHTML = stats.status;
 
     //Set the coin balances equal to the loaded variables
@@ -35,17 +35,29 @@ function setStats(stats) {
     //Set the player image to their costume
     document.getElementById("character-image").src = stats.image;
 
+    //Set the player health and armor bars
+    document.getElementById("player-health-bar").value = stats.health;
+    document.getElementById("player-health-bar").max = stats.maxhealth;
+    document.getElementById("player-armor-bar").value = stats.armor;
+    document.getElementById("player-armor-bar").max = stats.maxhealth;
+
 }
 
 //Function that sets text on the website equal to various enemy stat variables
 function setEnemyStats(stats, image){
 
     document.getElementById("enemy-name").innerHTML = stats.name;
-    document.getElementById("enemy-health").innerHTML = stats.health + '/' + stats.maxhealth;
-    document.getElementById("enemy-armor").innerHTML = stats.armor;
+    document.getElementById("enemy-health").innerHTML = " (" + stats.health + '/' + stats.maxhealth + ") ";
+    document.getElementById("enemy-armor").innerHTML = " (" + stats.armor + ") ";
     document.getElementById("enemy-status").innerHTML = stats.status;
 
-    document.getElementById("enemy-image").src = image; //Set the image source equal to the nth item in the picture list, where n is the value of the dropdown
+    document.getElementById("enemy-image").src = image;
+
+    //Set the enemy health and armor bars
+    document.getElementById("enemy-health-bar").value = stats.health;
+    document.getElementById("enemy-health-bar").max = stats.maxhealth;
+    document.getElementById("enemy-armor-bar").value = stats.armor;
+    document.getElementById("enemy-armor-bar").max = stats.maxhealth;
 };
 
 function setEnemyPowerlevel(stats){
