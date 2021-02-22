@@ -16,6 +16,7 @@
       <!--Load dynamic page data-->
       <script src= "../battle/species-data.js" defer></script>
       <script src= "character-select.js" defer></script>
+      <script src="../settings/settings-script.js" defer></script>
       <script src="../script/standard-script.js" defer></script>
       <script src="../script/control-script.js" defer></script>
     </head>
@@ -54,26 +55,35 @@
           
           <div class="character-select-option">
             <a id="option1-link" class="option-link" onclick = "clickOption('option1')">
-              <img id="option1-image" class="option-image">
-              <p id = "option1-text" class="option-text"></p>
+              <div class="option-div">
+                <img id="option1-image" class="option-image">
+                <p id = "option1-text" class="option-text"></p>
+            </div>
             </a>
           </div>
 
           <div class="character-select-option">
             <a id="option2-link" class="option-link" onclick = "clickOption('option2')">
-              <img id="option2-image" class="option-image">
-              <p id = "option2-text" class="option-text"></p>
+              <div class="option-div">
+                <img id="option2-image" class="option-image">
+                <p id = "option2-text" class="option-text"></p>
+              </div>
             </a>
           </div>
 
           <div class="character-select-option">
             <a id="option3-link" class="option-link" onclick = "clickOption('option3')">
-              <img id="option3-image" class="option-image">
-              <p id = "option3-text" class="option-text"></p>
+              <div class="option-div">
+                <img id="option3-image" class="option-image">
+                <p id = "option3-text" class="option-text"></p>
+              </div>
             </a>
           </div>
 
         </div>
+
+        <br>
+        <button class="button" onclick="window.location.href = './stats-select.html'">Select Species</button>
 
       </div>
     </body>

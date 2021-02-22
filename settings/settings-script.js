@@ -60,7 +60,7 @@ function newGame(){
     dataLoad();
     dataStore();
     setStats();
-    window.location.href = '../narrative/narrative.html'; //Go to the narrative page
+    window.location.href = '../character-select/character-select.html'; //Go to the narrative page
 };
 
 //Load current player stats when the page loads

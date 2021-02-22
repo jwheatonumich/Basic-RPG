@@ -22,18 +22,20 @@
     height:175px;
     width:125px;
 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display:flex; 
+    justify-content: flex-end; 
+    flex-direction: column;
+    border:1px white solid;
 }
 
 .option-link-selected{
     height:175px;
     width:125px;
     
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display:flex; 
+    justify-content: flex-end; 
+    flex-direction: column;
+
     border:1px black solid;
 }
 
@@ -48,4 +50,8 @@
 
 .option-text{
     text-align:center;
+}
+
+.option-div{
+
 }
