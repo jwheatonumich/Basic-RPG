@@ -267,13 +267,14 @@ function startExplore(inputEnemies, inputEnemyCount){ //Start the exploration ga
 
 function setMandatoryPage(page){ //Store a mandatory page
     localStorage.setItem('mandatoryPage', JSON.stringify(page));
+    gotoMandatoryPage();
 }
 
 function gotoMandatoryPage(){ //If a mandatory page is stored, go to it
 
     targetPage = JSON.parse(localStorage.getItem('mandatoryPage'));
 
-    if (targetPage != window.location.href && targetPage){
+    if (!window.location.href.includes(targetPage.replace(/^\.*/g, ''))){ //Check if on the target page, ignoring any '.' at begining of the relative url
         window.location.href = targetPage;
     }
 

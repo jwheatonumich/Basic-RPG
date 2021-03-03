@@ -45,6 +45,7 @@ function finalizeStats(){
         playerStats.endurance =parseInt(endurance);
         playerStats.maxhealth = 4 * playerStats.endurance;
         playerStats.health = playerStats.maxhealth;
+        playerStats.leafcoin = 3;
         localStorage.setItem('storedPlayerStats', JSON.stringify(playerStats));
     }
 }
